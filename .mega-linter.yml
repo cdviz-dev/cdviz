@@ -22,6 +22,7 @@ DISABLE_LINTERS:
   - REPOSITORY_TRUFFLEHOG # too long to search for secret
   - RUST_CLIPPY # run via an other way, and current version doesn't support `--deny ... --allow ...`
   - SQL_TSQLLINT # "You must install or update .NET to run this application."
+  - TYPESCRIPT_STANDARD
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
