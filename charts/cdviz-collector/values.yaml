@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-collector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.2.3"
+  tag: "0.4.0"
 
 imagePullSecrets: []
 nameOverride: ""
