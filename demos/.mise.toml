@@ -10,9 +10,11 @@ kind = "0.26.0"                                                       # to have 
 "ubi:helmwave/helmwave" = { version = "0.41", matching = "helmwave" }
 
 [tasks."clean"]
-run = ["mise run stack:compose:clean"]
+description = "Clean / Delete every stacks"
+depends = ["stack:*:delete"]
 
 [tasks."stack:compose:up"]
+description = "Launch the docker compose demo (in foreground)"
 dir = "stack-compose"
 run = [
     "mkdir -p tmp/postgres/data || true",
@@ -21,10 +23,12 @@ run = [
 ]
 
 [tasks."stack:compose:down"]
+description = "Stop the docker compose demo"
 dir = "stack-compose"
 run = ["docker compose -f docker-compose.yaml stop"]
 
-[tasks."stack:compose:clean"]
+[tasks."stack:compose:delete"]
+description = "Stop & remove the docker compose demo (and local data)"
 dir = "stack-compose"
 run = [
     "mise run stack:compose:down",
@@ -33,12 +37,15 @@ run = [
 ]
 
 [tasks."stack:grafana:view"]
+description = "Open the Grafana dashboard (compose demo, k8s demo (after port-forward))"
 run = ["open http://127.0.0.1:3000"]
 
 [tasks."stack:db-admin:view"]
+description = "Open the db-admin UI, adminer (compose demo)"
 run = ["open http://127.0.0.1:5499"]
 
 [tasks."example_01:run"]
+description = "Launch cdviz-collector cli with content (data & configuration) of the example_01 folder"
 dir = "example_01"
 env = { OTEL_TRACES_SAMPLER = "always_off", OTEL_EXPORTER_OTLP_TRACES_ENDPOINT = "http://127.0.0.1:4317", CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED = "false" }
 run = [
@@ -51,6 +58,7 @@ run = [
 ]
 
 [tasks."stack:k8s:create"]
+description = "Create a k8s cluster (kind)"
 dir = "stack-k8s"
 run = [
     "ctlptl create registry ctlptl-registry --port=5005",
@@ -71,12 +79,14 @@ run = [
 ]
 
 [tasks."stack:k8s:delete:pre-req"]
+description = "Delete the pre-requirement for cdviz (postgresql, grafana, ...) on a k8s cluster"
 depends = ["stack:k8s:delete:cdviz"]
 dir = "stack-k8s"
 run = ["helmwave down --build  -t pre-req"]
 
 [tasks."stack:k8s:deploy:cdviz"]
 description = "Deploy cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
+wait_for = ["stack:k8s:deploy:pre-req"]
 dir = "stack-k8s"
 run = [
     "kubectl create namespace cdviz-dev || true",
@@ -84,6 +94,7 @@ run = [
 ]
 
 [tasks."stack:k8s:delete:cdviz"]
+description = "Delete cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
 dir = "stack-k8s"
 run = ["helmwave down --build  -t cdviz", "kubectl delete namespace cdviz-dev"]
 
@@ -93,19 +104,35 @@ dir = "stack-k8s"
 run = ["helmwave up --build --progress --skip-unchanged -t integration"]
 
 [tasks."stack:k8s:delete:integration"]
+description = "Delete the integrations app (kubewatch,...) on a k8s cluster"
 dir = "stack-k8s"
 run = ["helmwave down --build  -t integration"]
 
 [tasks."stack:k8s:port-forward:grafana"]
+description = "Port-forward the Grafana dashboard to localhost:3000"
 run = ["kubectl port-forward svc/grafana -n grafana 3000:80"]
 
+[tasks."stask:k8s:show:grafana:admin-password"]
+description = "Show the Grafana admin password"
+run = [
+    'kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo',
+]
+
 [tasks."stack:k8s:port-forward:cdviz-db"]
+description = "Port-forward the PostgreSQL database to localhost:5432"
 run = ["kubectl port-forward svc/cdviz-db-rw -n cdviz-dev 5432:5432"]
 
 [tasks."stack:k8s:port-forward:cdviz-collector"]
+description = "Port-forward the cdviz-collector to localhost:8080"
 run = ["kubectl port-forward svc/cdviz-collector -n cdviz-dev 8080:8080"]
 
+[tasks."stack:k8s:deploy"]
+description = "Deploy all the resources (pre-req, cdviz, integrations,...) on a k8s cluster"
+depends = "stack:k8s:deploy:*"
+dir = "stack-k8s"
+
 [tasks."stack:k8s:delete"]
+description = "Delete a k8s cluster (kind) and its resources"
 dir = "stack-k8s"
 depends = ["stack:k8s:delete:*"]
 run = [
@@ -114,9 +141,10 @@ run = [
 ]
 
 [tasks."stack:k8s:check"]
+description = "check the helwave config to deploy the stack"
 dir = "stack-k8s"
 run = ["helmwave build"]
 
-
 [tasks."ci"]
+description = "Run all the ci tasks"
 depends = ["stack:k8s:check"]

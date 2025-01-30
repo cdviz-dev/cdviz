@@ -1,7 +1,8 @@
 {
-  "cSpell.words": [
-    "cdevents",
-    "cdviz",
-    "sdlc"
-  ],
+  "cSpell.words": ["cdevents", "cdviz", "sdlc"],
+  "languageToolLinter.languageTool.ignoredWordsInWorkspace": [
+    "adminer",
+    "cloudnativepg",
+    "kubewatch"
+  ]
 }

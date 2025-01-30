@@ -46,7 +46,7 @@ releases:
   - name: cdviz-db
     namespace: cdviz-dev
     # depends_on:
-    #   - cnpg@cnpg
+    #   - name: cnpg@cnpg
     chart: ../../charts/cdviz-db
     # chart:
     #   name: oci://ghcr.io/cdviz-dev/charts/cdviz-db
@@ -66,8 +66,8 @@ releases:
   - name: cdviz-grafana
     namespace: cdviz-dev
     depends_on:
-      # - grafana@grafana
-      - cdviz-db@cdviz-dev
+      # - name: grafana@grafana
+      - name: cdviz-db@cdviz-dev
     chart: ../../charts/cdviz-grafana
     # chart:
     #   name: oci://ghcr.io/cdviz-dev/charts/cdviz-grafana
