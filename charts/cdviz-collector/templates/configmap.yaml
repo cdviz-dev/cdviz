@@ -3,5 +3,8 @@ kind: ConfigMap
 metadata:
   name: {{ include "my.fullname" . }}
 data:
-  cdviz-collector.toml: |
-    {{- tpl .Values.config $ | nindent 4 }}
+{{ (.Files.Glob "config_files/**").AsConfig | indent 2 }}
+{{- range $path, $content :=  .Values.configFiles }}
+  {{ $path | quote }}: |
+    {{ $content | nindent 4 }}
+{{- end }}
