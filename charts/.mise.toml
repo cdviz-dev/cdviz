@@ -2,7 +2,7 @@
 # local kubernetes (k8s)
 # docker = "latest"     # to build, to run containers, should be available for some of thoses tools
 # dive = "latest"       # to explore content of image container
-helm = "3"       # to check helm chart
+helm = "3"         # to check helm chart
 kubectl = "1.32.0" # to interact with k8s cluster
 
 # TODO upgrade version only if change in the context of the Dockerfile
@@ -39,6 +39,7 @@ mkdir -p build || true
 # get version from git descibe
 # TODO? use a static version (like 0.0.0-dev) when not on exact tag to simplify the local build/test
 # of the cdviz chart OR find a way to use "file://..." instead of "oci://..." on dev/test only
+git fetch --tags --force # Retrieve annotated tags. THIS TRICK REALLY HELPS (on CI)
 if [[ -d ../${MODULE} ]] ; then
     git describe --always "$(git log -n 1 --pretty=format:%h -- ../${MODULE})" > build/version-${MODULE}.txt
 else
