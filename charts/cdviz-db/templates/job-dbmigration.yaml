@@ -16,6 +16,10 @@ spec:
       labels:
         {{- include "my.labels" . | nindent 8 }}
     spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: dbmigration
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -32,13 +36,13 @@ spec:
           - name: {{ $key }}
             {{- tpl (toYaml $value) $ | nindent 12 }}
         {{- end}}
-        # securityContext:
-        #   allowPrivilegeEscalation: false
-        #   capabilities:
-        #     drop:
-        #       - ALL
-        #   readOnlyRootFilesystem: true
-        #   runAsNonRoot: true
-        #   runAsUser: 10001
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 10001
       restartPolicy: Never
   backoffLimit: 2

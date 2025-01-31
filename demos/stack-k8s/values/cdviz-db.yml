@@ -1,5 +1,5 @@
 image:
-  tag: 0.0.0-277-g42a7cc1
+  tag: 0.0.0-301-g06265ad
 
 env:
   # DATABASE_URL children node could be any env's value definition supported by kubernetes's pod manifest
