@@ -40,19 +40,27 @@ mkdir -p build || true
 # TODO? use a static version (like 0.0.0-dev) when not on exact tag to simplify the local build/test
 # of the cdviz chart OR find a way to use "file://..." instead of "oci://..." on dev/test only
 git fetch --tags --force # Retrieve annotated tags. THIS TRICK REALLY HELPS (on CI)
+
+CHART_SRC_HASH=$(git log -n 1 --pretty=format:%h -- ${MODULE})
+MODULE_SRC_HASH=$(git log -n 1 --pretty=format:%h -- ${MODULE})
 if [[ -d ../${MODULE} ]] ; then
-    git describe --always "$(git log -n 1 --pretty=format:%h -- ../${MODULE})" > build/version-${MODULE}.txt
-else
-    git describe --always "$(git log -n 1 --pretty=format:%h -- ${MODULE})" > build/version-${MODULE}.txt
+    MODULE_SRC_HASH=$(git log -n 1 --pretty=format:%h -- ../${MODULE})
 fi
-VERSION=$(cat build/version-${MODULE}.txt)
+APP_VERSION=$(git describe --always "$MODULE_SRC_HASH")
+
+VERSION=$(git describe --always "$CHART_SRC_HASH")
+if not git merge-base --is-ancestor "$MODULE_SRC_HASH" "$CHART_SRC_HASH"; then
+    VERSION="$APP_VERSION"
+fi
+
+echo "$MODULE, VERSION: $VERSION, APP_VERSION: $APP_VERSION"
 
 # build container (for x86_64 and arm64) with version as tag & publish on ghcr.io
 if [[ -f "../${MODULE}/Dockerfile" ]]; then
     docker buildx build \
         --output type=image,compression=zstd,oci-mediatypes=true \
         --platform linux/amd64,linux/arm64 \
-        -t "ghcr.io/cdviz-dev/${MODULE}:${VERSION}" \
+        -t "ghcr.io/cdviz-dev/${MODULE}:${APP_VERSION}" \
         --push \
         -f "../${MODULE}/Dockerfile" \
         "../${MODULE}"
@@ -61,7 +69,7 @@ fi
 
 # build & publish chart as oci
 # set version in Chart.yaml & values.yaml (using go-yq) not needed because the version of the image is set to appVersion, and the version (& appVersion) are set via cli during the package
-helm package -d build "${MODULE}" --app-version "$VERSION" --version "$VERSION"
+helm package -d build "${MODULE}" --app-version "$APP_VERSION" --version "$VERSION"
 helm push "build/${MODULE}-${VERSION}.tgz" oci://ghcr.io/cdviz-dev/charts
 """
 
