@@ -1,7 +1,0 @@
-{{- range $_, $extraResource := .Values.extraResources }}
-{{- if $extraResource.enabled }}
-{{- $def := unset $extraResource "enabled" }}
----
-{{- tpl (toYaml $def) $ }}
-{{- end}}
-{{- end }}

@@ -1,0 +1,9 @@
+{{- range $_, $manifest := .Values.extraObjects }}
+---
+{{- if typeIs "string" $manifest }}
+{{ tpl $manifest $ }}
+{{- else if ne $manifest.enabled false }}
+{{- $def := unset $manifest "enabled" }}
+{{ tpl (toYaml $def) $ }}
+{{- end }}
+{{- end }}
