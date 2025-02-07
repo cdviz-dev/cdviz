@@ -1,6 +1,8 @@
 datasources:
   definitions:
-    cdviz:
+    cdviz-db:
+      type: grafana-postgresql-datasource
+      access: proxy
       # Use the syntax "$..." to inject the values from the grafana environment
       url: "{{ $.Values.secrets.CDVIZ_DASHBOARDS_POSTGRES_HOST }}"
       user: "{{ $.Values.secrets.CDVIZ_DASHBOARDS_POSTGRES_USER }}"
@@ -8,3 +10,10 @@ datasources:
         password: "{{ $.Values.secrets.CDVIZ_DASHBOARDS_POSTGRES_PASSWORD }}"
       jsonData:
         database: "{{ $.Values.secrets.POSTGRES_DB }}"
+        sslmode: "disable" # disable/require/verify-ca/verify-full
+        maxOpenConns: 100 # Grafana v5.4+
+        maxIdleConns: 100 # Grafana v5.4+
+        maxIdleConnsAuto: true # Grafana v9.5.1+
+        connMaxLifetime: 14400 # Grafana v5.4+
+        postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+        timescaledb: false
