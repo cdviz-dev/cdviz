@@ -10,7 +10,7 @@ env:
         name: "cdviz-db-su" # secret defined below
         key: DATABASE_URL
 
-extraResources:
+extraObjects:
   postgresql:
     enabled: true
     apiVersion: postgresql.cnpg.io/v1
@@ -26,7 +26,7 @@ extraResources:
       bootstrap:
         initdb:
           database: cdviz
-          owner: "{{ .Values.secrets.values.CDVIZ_SU_POSTGRES_USER }}"
+          owner: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER }}"
           secret:
             name: cdviz-db-owner-secret
   cdviz-db-owner-secret:
@@ -37,8 +37,8 @@ extraResources:
       name: cdviz-db-owner-secret
     type: kubernetes.io/basic-auth
     data:
-      username: "{{ .Values.secrets.values.CDVIZ_SU_POSTGRES_USER | b64enc }}"
-      password: "{{ .Values.secrets.values.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"
+      username: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER | b64enc }}"
+      password: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"
   migration-secret:
     enabled: true
     apiVersion: v1
@@ -48,4 +48,4 @@ extraResources:
     type: Opaque
     data:
       DATABASE_URL: |-
-        {{ .Values.secrets.values.DATABASE_URL | default (printf "postgres://%s:%s@%s:%s/%s" .Values.secrets.values.CDVIZ_SU_POSTGRES_USER .Values.secrets.values.CDVIZ_SU_POSTGRES_PASSWORD .Values.secrets.values.POSTGRES_HOST .Values.secrets.values.POSTGRES_PORT_NUMBER .Values.secrets.values.POSTGRES_DB) | b64enc }}
+        {{ $.Values.secrets.DATABASE_URL | default (printf "postgres://%s:%s@%s:%s/%s" $.Values.secrets.CDVIZ_SU_POSTGRES_USER $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD $.Values.secrets.POSTGRES_HOST $.Values.secrets.POSTGRES_PORT_NUMBER $.Values.secrets.POSTGRES_DB) | b64enc }}

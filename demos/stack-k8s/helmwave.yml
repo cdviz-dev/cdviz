@@ -29,7 +29,7 @@ releases:
       name: grafana/grafana
       version: 8.8.1
     values:
-      - ./values/grafana.yml
+      - ./values/grafana.yaml
     <<: *options
     tags:
       - dashboard
@@ -54,10 +54,10 @@ releases:
     <<: *options
     create_namespace: false
     values:
-      - src: values/secret.yml
+      - src: values/secret.yaml
         renderer: copy
         strict: true
-      - src: values/cdviz-db.yml
+      - src: values/cdviz-db.yaml
         renderer: copy
         strict: true
     tags:
@@ -75,10 +75,10 @@ releases:
     <<: *options
     create_namespace: false
     values:
-      - src: values/secret.yml
+      - src: values/secret.yaml
         renderer: copy
         strict: true
-      - src: values/cdviz-grafana.yml
+      - src: values/cdviz-grafana.yaml
         renderer: copy
         strict: true
     tags:
@@ -93,10 +93,10 @@ releases:
     <<: *options
     create_namespace: false
     values:
-      - src: values/secret.yml
+      - src: values/secret.yaml
         renderer: copy
         strict: true
-      - src: values/cdviz-collector.yml
+      - src: values/cdviz-collector.yaml
         renderer: copy
         strict: true
     tags:
@@ -106,7 +106,7 @@ releases:
     chart: robusta/kubewatch
     <<: *options
     values:
-      - src: values/kubewatch.yml
+      - src: values/kubewatch.yaml
         renderer: copy
         strict: true
     tags:
