@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-collector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.4.0"
+  tag: "0.5.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -33,6 +33,9 @@ podSecurityContext:
   seccompProfile:
     type: RuntimeDefault
   # fsGroup: 2000
+
+# Additional arguments to pass to the collector
+podExtraArgs: []
 
 securityContext:
   allowPrivilegeEscalation: false
@@ -90,45 +93,46 @@ tolerations: []
 
 affinity: {}
 
-# List of config files to provide as a configMap mounted on the /etc/config folder.
+# List of config files to provide as a configMap mounted on the /mnt/config folder.
+# cdviz-collector is launched with `--direcory /mnt/config`.
+# The container of cdviz-collector includes some configuration files in the /etc/cdviz-collector folder.
+#
 # Adding & overriding files provided as part of the chart is allowed
 # Content could set by override of the values
 # or via `helm ... --set-file 'configFiles.config\.toml'=custom-config.toml`
-# currently, the following config files are provided:
-# - cdviz-collector.toml
-# - cnv_github_events.vrl
 configFiles:
   "cdviz-collector.toml": |-
     [sinks.debug]
     enabled = true
 
-    [sinks.cdviz_db]
-    enabled = true
+    # [sinks.cdviz_db]
+    # enabled = true
 
-    [sources.cdevents_webhook]
-    enabled = false
+    # [sources.cdevents_webhook]
+    # enabled = false
 
-    [sources.cdevents_webhook.extractor]
-    type = "webhook"
-    id = "000"
+    # [sources.cdevents_webhook.extractor]
+    # type = "webhook"
+    # id = "000"
 
-    [sources.github_webhook]
-    enabled = true
-    transformers_ref = [ "github_events"]
+    # [sources.github_webhook]
+    # enabled = true
+    # transformers_ref = [ "github_events" ]
 
-    [sources.github_webhook.extractor]
-    type = "webhook"
-    id = "001"
-    headers_to_keep = []
-    signature = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", header = "x-hub-signature-256", token = "changeme" }
+    # [sources.github_webhook.extractor]
+    # type = "webhook"
+    # id = "001"
+    # headers_to_keep = []
+    # signature = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", header = "x-hub-signature-256", token = "changeme" }
 
-    [transformers.github_events]
-    type = "vrl"
-    template_file = "/etc/config/cnv_github_events.vrl"
+    # [transformers.github_events]
+    # type = "vrl"
+    # template_file = "/etc/cdviz-collector/transformers/github_events.vrl"
+
+log:
+  level: info # debug, info, warn, error
 
 env:
-  RUST_LOG:
-    value: info
   CDVIZ_COLLECTOR__HTTP__PORT:
     value: "{{ .Values.service.port }}"
   # CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__URL:
@@ -161,3 +165,30 @@ extraObjects: {}
   #     data:
   #       - key: api-token
   #         name: api-token
+  # http-route:
+  #   enabled: true
+  #   apiVersion: gateway.networking.k8s.io/v1
+  #   kind: HTTPRoute
+  #   metadata:
+  #     name: cdviz-collector
+  #     labels:
+  #       app.kubernetes.io/instance: cdviz-collector
+  #       app.kubernetes.io/name: cdviz-collector
+  #   spec:
+  #     parentRefs:
+  #       - group: gateway.networking.k8s.io
+  #         kind: Gateway
+  #         name: traefik-gateway
+  #         namespace: traefik
+  #     rules:
+  #       - backendRefs:
+  #           - group: ""
+  #             kind: Service
+  #             name: cdviz-collector
+  #             port: port: 8080 # see service.port
+  #             weight: 1
+  #         matches:
+  #           # no strip, bind the gateway's `/webhook/*` to cdviz-collector's `/webhook/*` (and hide other endpoints)
+  #           - path:
+  #               type: PathPrefix
+  #               value: /webhook/

@@ -38,12 +38,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-            - connect
-            - --directory
-            - /etc/config
-            - --config
-            - /etc/config/cdviz-collector.toml
+            {{ concat (list "connect" "--directory" "/mnt/config" "--config" "/mnt/config/cdviz-collector.toml") .Values.podExtraArgs | toYaml | nindent 12 }}
           env:
+            - name: RUST_LOG
+              value: {{ .Values.log.level }}
+            - name: OTEL_LOG_LEVEL
+              value: {{ .Values.log.level }}
           {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               {{- tpl (toYaml $value) $ | nindent 14 }}
@@ -64,7 +64,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config-volume
-              mountPath: /etc/config
+              mountPath: /mnt/config
       volumes:
         - name: config-volume
           configMap:
