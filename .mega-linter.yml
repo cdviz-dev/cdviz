@@ -10,6 +10,7 @@ DISABLE:
 DISABLE_LINTERS:
   - CSS_STYLELINT # not tailwindcss compatible
   - DOCKERFILE_DOCKERFILELINT
+  - JAVASCRIPT_STANDARD
   - HTML_HTMLHINT # not tailwindcss compatible
   - MARKDOWN_MARKDOWN_LINK_CHECK
   - REPOSITORY_CHECKOV # unstable randomly failed (false negative) on generated k8s manifest

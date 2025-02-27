@@ -15,12 +15,11 @@
       }
     ]
   },
-  "description": "",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 3,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -31,47 +30,46 @@
       "description": "Count by Subject & Predicate over the time window",
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "mappings": []
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 4,
+        "h": 8,
+        "w": 6,
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 3,
       "options": {
-        "displayLabels": [],
-        "legend": {
-          "displayMode": "list",
-          "placement": "right",
-          "showLegend": false,
-          "values": ["value"]
+        "afterRender": "// TODO Add [brush](https://d3js.org/d3-brush#d3-brush) to select a region, like with grafana panel\n// TODO Add configuration (from DB ?) to define: order of environment, collor & shape of environment / service / artifact /...\n// based on https://observablehq.com/@d3/zoomable-sunburst\nimport(\"https://esm.sh/d3@7.9.0\").then((d3) => {\n  const data = context.data[0];\n  const marginTop = 20;\n  const marginRight = 20;\n  const marginBottom = 30;\n  // TODO use the width on label on Y axis\n  const marginLeft = 100;\n\n  // Create the SVG container.\n  // try to fit the container to the size of the panel\n  const container = context.element;\n  const rect = container.parentNode.getBoundingClientRect();\n  //const rect = container.getBoundingClientRect();\n  const width = rect.width; //640;\n  const height = rect.height; //400;\n  const side = Math.min(width, height);\n\n  // Create the SVG container.\n  const svg = d3\n    .create(\"svg\")\n    //.attr(\"width\", width)\n    //.attr(\"height\", height)\n    //.attr(\"width\", \"100%\")\n    .attr(\"font-family\", \"sans-serif\")\n    .attr(\"font-size\", side/40)\n    .style(\"display\", \"block\");\n  //.style(\"max-width\", \"100%\")\n  //.style(\"height\", \"auto\")\n  svg\n    //.attr(\"viewBox\", [0, 0, width, height])\n    .attr(\"viewBox\", [-width/2, -height/2, width, height])\n    .attr(\"preserveAspectRatio\", \"none\")\n    //.attr(\"preserveAspectRation\", \"xMaxYMax\")\n    ;\n  //.append(\"g\")\n  //.attr(\"transform\", \"translate(\" + marginLeft + \",\" + marginTop + \")\")\n\n\n\n  // Transform data into a hierarchy\n  const data_hierarchy = { name: \"\", children: [] };\n\n  data.forEach(({ count, subject, predicate }) => {\n    let l1 = data_hierarchy.children.find(d => d.name === subject);\n    if (!l1) {\n      l1 = { name: subject, children: [] };\n      data_hierarchy.children.push(l1);\n    }\n    l1.children.push({ name: predicate, value: count });\n  });\n\n  // Compute the layout.\n  const hierarchy = d3.hierarchy(data_hierarchy)\n    .sum(d => d.value)\n    .sort((a, b) => b.value - a.value);\n  const root = d3.partition().size([2 * Math.PI, hierarchy.height + 1])(hierarchy);\n  root.each(d => d.current = d);\n\n  // Create the color scale.\n  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data_hierarchy.children.length + 1));\n\n  // Create the arc generator.\n  const radius = side / 6;\n  const arc = d3.arc()\n    .startAngle(d => d.x0)\n    .endAngle(d => d.x1)\n    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))\n    .padRadius(radius * 1.5)\n    .innerRadius(d => d.y0 * radius)\n    .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1))\n\n  // Append the arcs.\n  const path = svg.append(\"g\")\n    .selectAll(\"path\")\n    .data(root.descendants().slice(1))\n    .join(\"path\")\n    .attr(\"fill\", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })\n    .attr(\"fill-opacity\", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)\n    .attr(\"pointer-events\", d => arcVisible(d.current) ? \"auto\" : \"none\")\n    .attr(\"d\", d => arc(d.current));\n\n  // Make them clickable if they have children.\n  path.filter(d => d.children)\n    .style(\"cursor\", \"pointer\")\n    .on(\"click\", clicked);\n\n  const format = d3.format(\",d\");\n  path.append(\"title\")\n    .text(d => `${d.ancestors().map(d => d.data.name).reverse().join(\"/\")}\\n${format(d.value)}`);\n\n  const label = svg.append(\"g\")\n    .attr(\"pointer-events\", \"none\")\n    .attr(\"text-anchor\", \"middle\")\n    .style(\"user-select\", \"none\")\n    .selectAll(\"text\")\n    .data(root.descendants().slice(1))\n    .join(\"text\")\n    .attr(\"dy\", \"0.35em\")\n    .attr(\"fill-opacity\", d => +labelVisible(d.current))\n    .attr(\"transform\", d => labelTransform(d.current))\n    .text(d => d.data.name);\n\n  const parent = svg.append(\"circle\")\n    .datum(root)\n    .attr(\"r\", radius)\n    .attr(\"fill\", \"none\")\n    .attr(\"pointer-events\", \"all\")\n    .on(\"click\", clicked);\n\n  // Handle zoom on click.\n  function clicked(event, p) {\n    parent.datum(p.parent || root);\n\n    root.each(d => d.target = {\n      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n      y0: Math.max(0, d.y0 - p.depth),\n      y1: Math.max(0, d.y1 - p.depth)\n    });\n\n    const t = svg.transition().duration(event.altKey ? 7500 : 750);\n\n    // Transition the data on all arcs, even the ones that aren’t visible,\n    // so that if this transition is interrupted, entering arcs will start\n    // the next transition from the desired position.\n    path.transition(t)\n      .tween(\"data\", d => {\n        const i = d3.interpolate(d.current, d.target);\n        return t => d.current = i(t);\n      })\n      .filter(function (d) {\n        return +this.getAttribute(\"fill-opacity\") || arcVisible(d.target);\n      })\n      .attr(\"fill-opacity\", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)\n      .attr(\"pointer-events\", d => arcVisible(d.target) ? \"auto\" : \"none\")\n\n      .attrTween(\"d\", d => () => arc(d.current));\n\n    label.filter(function (d) {\n      return +this.getAttribute(\"fill-opacity\") || labelVisible(d.target);\n    }).transition(t)\n      .attr(\"fill-opacity\", d => +labelVisible(d.target))\n      .attrTween(\"transform\", d => () => labelTransform(d.current));\n  }\n\n  function arcVisible(d) {\n    return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;\n  }\n\n  function labelVisible(d) {\n    return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;\n  }\n\n  function labelTransform(d) {\n    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;\n    const y = (d.y0 + d.y1) / 2 * radius;\n    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;\n  }\n\n  //svg.on(\"mousemove\", mousemove);\n  container.replaceChildren(svg.node());\n  //container.appendChild(tooltip.node());\n\n});",
+        "content": "",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "none",
+          "language": "html"
         },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": ["allValues"],
-          "fields": "/^count$/",
-          "values": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "asc"
-        }
+        "editors": ["afterRender"],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "data",
+        "styles": "",
+        "wrap": false
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "5.6.0",
       "targets": [
         {
           "datasource": {
@@ -123,7 +121,7 @@
       ],
       "title": "How many events?",
       "transparent": true,
-      "type": "piechart"
+      "type": "marcusolsson-dynamictext-panel"
     },
     {
       "datasource": {
@@ -131,6 +129,109 @@
         "type": "grafana-postgresql-datasource",
         "uid": "cdviz-db"
       },
+      "description": "Count by Context'source over the time window",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 7,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "afterRender": "// TODO Add [brush](https://d3js.org/d3-brush#d3-brush) to select a region, like with grafana panel\n// TODO Add configuration (from DB ?) to define: order of environment, collor & shape of environment / service / artifact /...\n// based on https://observablehq.com/@d3/zoomable-sunburst\nimport(\"https://esm.sh/d3@7.9.0\").then((d3) => {\n  const data = context.data[0];\n  const marginTop = 20;\n  const marginRight = 20;\n  const marginBottom = 30;\n  // TODO use the width on label on Y axis\n  const marginLeft = 100;\n\n  // Create the SVG container.\n  // try to fit the container to the size of the panel\n  const container = context.element;\n  const rect = container.parentNode.getBoundingClientRect();\n  //const rect = container.getBoundingClientRect();\n  const width = rect.width; //640;\n  const height = rect.height; //400;\n  const side = Math.min(width, height);\n  const levelDisplayed = 3 + 1; // +1 for the center\n\n  // Create the SVG container.\n  const svg = d3\n    .create(\"svg\")\n    //.attr(\"width\", width)\n    //.attr(\"height\", height)\n    //.attr(\"width\", \"100%\")\n    .attr(\"font-family\", \"sans-serif\")\n    .attr(\"font-size\", side/40)\n    .style(\"display\", \"block\");\n  //.style(\"max-width\", \"100%\")\n  //.style(\"height\", \"auto\")\n  svg\n    //.attr(\"viewBox\", [0, 0, width, height])\n    .attr(\"viewBox\", [-width/2, -height/2, width, height])\n    .attr(\"preserveAspectRatio\", \"none\")\n    //.attr(\"preserveAspectRation\", \"xMaxYMax\")\n    ;\n  //.append(\"g\")\n  //.attr(\"transform\", \"translate(\" + marginLeft + \",\" + marginTop + \")\")\n\n\n\n  // Transform data into a hierarchy\n  const data_hierarchy = { name: \"\", children: [] };\n\n  data.forEach(({ count, context_source }) => {\n    let fragments = context_source.split(\"/\").filter((v) => !!v && !v.endsWith(\":\"));\n    let parent = data_hierarchy;\n    let i = 0;\n    for (; i < fragments.length -1; i++){\n      let n = parent.children.find(d => d.name === fragments[i]);\n      if (!n) {\n        n = {name: fragments[i], children:[]};\n        parent.children.push(n);\n      }\n      parent = n;\n    }\n    parent.children.push({name: fragments[i], value: count});\n  });\n\n  // Compute the layout.\n  const hierarchy = d3.hierarchy(data_hierarchy)\n    .sum(d => d.value)\n    .sort((a, b) => b.value - a.value);\n  const root = d3.partition().size([2 * Math.PI, hierarchy.height + 1])(hierarchy);\n  root.each(d => d.current = d);\n\n  // Create the color scale.\n  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data_hierarchy.children.length + 1));\n\n  // Create the arc generator.\n  const radius = side / (levelDisplayed * 2);\n  const arc = d3.arc()\n    .startAngle(d => d.x0)\n    .endAngle(d => d.x1)\n    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))\n    .padRadius(radius * 1.5)\n    .innerRadius(d => d.y0 * radius)\n    .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1))\n\n  // Append the arcs.\n  const path = svg.append(\"g\")\n    .selectAll(\"path\")\n    .data(root.descendants().slice(1))\n    .join(\"path\")\n    .attr(\"fill\", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })\n    .attr(\"fill-opacity\", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)\n    .attr(\"pointer-events\", d => arcVisible(d.current) ? \"auto\" : \"none\")\n    .attr(\"d\", d => arc(d.current));\n\n  // Make them clickable if they have children.\n  path.filter(d => d.children)\n    .style(\"cursor\", \"pointer\")\n    .on(\"click\", clicked);\n\n  const format = d3.format(\",d\");\n  path.append(\"title\")\n    .text(d => `${d.ancestors().map(d => d.data.name).reverse().join(\"/\")}\\n${format(d.value)}`);\n\n  const label = svg.append(\"g\")\n    .attr(\"pointer-events\", \"none\")\n    .attr(\"text-anchor\", \"middle\")\n    .style(\"user-select\", \"none\")\n    .selectAll(\"text\")\n    .data(root.descendants().slice(1))\n    .join(\"text\")\n    .attr(\"dy\", \"0.35em\")\n    .attr(\"fill-opacity\", d => +labelVisible(d.current))\n    .attr(\"transform\", d => labelTransform(d.current))\n    .text(d => d.data.name);\n\n  const parent = svg.append(\"circle\")\n    .datum(root)\n    .attr(\"r\", radius)\n    .attr(\"fill\", \"none\")\n    .attr(\"pointer-events\", \"all\")\n    .on(\"click\", clicked);\n\n  // Handle zoom on click.\n  function clicked(event, p) {\n    parent.datum(p.parent || root);\n\n    root.each(d => d.target = {\n      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n      y0: Math.max(0, d.y0 - p.depth),\n      y1: Math.max(0, d.y1 - p.depth)\n    });\n\n    const t = svg.transition().duration(event.altKey ? 7500 : 750);\n\n    // Transition the data on all arcs, even the ones that aren’t visible,\n    // so that if this transition is interrupted, entering arcs will start\n    // the next transition from the desired position.\n    path.transition(t)\n      .tween(\"data\", d => {\n        const i = d3.interpolate(d.current, d.target);\n        return t => d.current = i(t);\n      })\n      .filter(function (d) {\n        return +this.getAttribute(\"fill-opacity\") || arcVisible(d.target);\n      })\n      .attr(\"fill-opacity\", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)\n      .attr(\"pointer-events\", d => arcVisible(d.target) ? \"auto\" : \"none\")\n\n      .attrTween(\"d\", d => () => arc(d.current));\n\n    label.filter(function (d) {\n      return +this.getAttribute(\"fill-opacity\") || labelVisible(d.target);\n    }).transition(t)\n      .attr(\"fill-opacity\", d => +labelVisible(d.target))\n      .attrTween(\"transform\", d => () => labelTransform(d.current));\n  }\n\n  function arcVisible(d) {\n    return d.y1 <= levelDisplayed && d.y0 >= 1 && d.x1 > d.x0;\n  }\n\n  function labelVisible(d) {\n    return d.y1 <= levelDisplayed && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;\n  }\n\n  function labelTransform(d) {\n    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;\n    const y = (d.y0 + d.y1) / 2 * radius;\n    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;\n  }\n\n  //svg.on(\"mousemove\", mousemove);\n  container.replaceChildren(svg.node());\n  //container.appendChild(tooltip.node());\n\n});",
+        "content": "",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "none",
+          "language": "html"
+        },
+        "editors": ["afterRender"],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "data",
+        "styles": "",
+        "wrap": false
+      },
+      "pluginVersion": "5.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "cdviz-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) as count, \"payload\" -> 'context' ->> 'source' as \"context_source\"\nFROM cdevents_lake\nWHERE $__timeFilter(imported_at)\nGROUP BY context_source\nORDER BY context_source\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "*",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "subject",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "predicate",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "cdevents_lake"
+        }
+      ],
+      "title": "How many sources?",
+      "transparent": true,
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "grafana-postgresql-datasource",
+        "uid": "cdviz-db"
+      },
+      "description": "List the ${limit} first events",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -141,7 +242,7 @@
             "cellOptions": {
               "type": "auto"
             },
-            "filterable": false,
+            "filterable": true,
             "inspect": true,
             "minWidth": 50
           },
@@ -215,7 +316,7 @@
         "h": 22,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 8
       },
       "id": 1,
       "options": {
@@ -235,7 +336,7 @@
           }
         ]
       },
-      "pluginVersion": "11.2.2",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "datasource": {
@@ -270,16 +371,15 @@
       "type": "table"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": "",
         "current": {
-          "selected": true,
-          "text": ["All"],
+          "text": "All",
           "value": ["$__all"]
         },
         "datasource": {
@@ -287,7 +387,6 @@
           "uid": "cdviz-db"
         },
         "definition": "SELECT DISTINCT \"subject\" FROM \"cdevents_lake\" WHERE \"subject\" LIKE '$__searchFilter' AND $__timeFilter(imported_at)",
-        "hide": 0,
         "includeAll": true,
         "label": "subjects",
         "multi": true,
@@ -296,15 +395,12 @@
         "query": "SELECT DISTINCT \"subject\" FROM \"cdevents_lake\" WHERE \"subject\" LIKE '$__searchFilter' AND $__timeFilter(imported_at)",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 5,
         "type": "query"
       },
       {
-        "allValue": "",
         "current": {
-          "selected": true,
-          "text": ["All"],
+          "text": "All",
           "value": ["$__all"]
         },
         "datasource": {
@@ -312,7 +408,6 @@
           "uid": "cdviz-db"
         },
         "definition": "SELECT DISTINCT \"predicate\" FROM \"cdevents_lake\" WHERE \"predicate\" LIKE '$__searchFilter' AND subject IN ($subjects) AND $__timeFilter(imported_at)",
-        "hide": 0,
         "includeAll": true,
         "label": "predicates",
         "multi": true,
@@ -321,21 +416,17 @@
         "query": "SELECT DISTINCT \"predicate\" FROM \"cdevents_lake\" WHERE \"predicate\" LIKE '$__searchFilter' AND subject IN ($subjects) AND $__timeFilter(imported_at)",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 5,
         "type": "query"
       },
       {
         "current": {
-          "selected": true,
           "text": "50",
           "value": "50"
         },
         "description": "Maximum number of value retrieved",
-        "hide": 0,
         "includeAll": false,
         "label": "limit",
-        "multi": false,
         "name": "limit",
         "options": [
           {
@@ -360,29 +451,39 @@
           }
         ],
         "query": "50,100,500,1000",
-        "queryValue": "",
-        "skipUrlSync": false,
         "type": "custom"
       },
       {
         "current": {
-          "selected": false,
-          "text": "$__timeFilter(imported_at) AND predicate IN ('%') AND subject IN ('%')",
-          "value": "$__timeFilter(imported_at) AND predicate IN ('%') AND subject IN ('%')"
+          "text": "$__timeFilter(imported_at) AND predicate IN ({finished",
+          "value": "$__timeFilter(imported_at) AND predicate IN ({finished"
         },
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "where",
         "options": [
           {
             "selected": true,
-            "text": "$__timeFilter(imported_at) AND predicate IN ('%') AND subject IN ('%')",
-            "value": "$__timeFilter(imported_at) AND predicate IN ('%') AND subject IN ('%')"
+            "text": "$__timeFilter(imported_at) AND predicate IN ({finished",
+            "value": "$__timeFilter(imported_at) AND predicate IN ({finished"
+          },
+          {
+            "selected": false,
+            "text": "queued",
+            "value": "queued"
+          },
+          {
+            "selected": false,
+            "text": "started}) AND subject IN ({pipelinerun",
+            "value": "started}) AND subject IN ({pipelinerun"
+          },
+          {
+            "selected": false,
+            "text": "taskrun})",
+            "value": "taskrun})"
           }
         ],
         "query": "$__timeFilter(imported_at) AND predicate IN ($predicates) AND subject IN ($subjects)",
-        "skipUrlSync": false,
         "type": "custom"
       }
     ]
@@ -391,11 +492,10 @@
     "from": "now-24h",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "",
-  "title": "cdevents activity",
-  "uid": "a6eeda5f-2550-438c-9477-8ed28ab50ce6",
+  "title": "cdevents activity wip",
+  "uid": "0",
   "version": 1,
   "weekStart": ""
 }
