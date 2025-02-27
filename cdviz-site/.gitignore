@@ -143,5 +143,7 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
-.vite
-dist
+**/.vite
+**/dist
+**/.vitepress/dist
+**/.vitepress/cache
