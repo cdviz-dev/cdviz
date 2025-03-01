@@ -10,10 +10,10 @@ atlas = "0.29"
 [tasks."plan"]
 description = "update the migrations to reflect target `src/schema.sql`"
 run = [
-    "atlas migrate diff --env local",
-    "atlas migrate lint --env local --latest 2",
-    "atlas migrate validate --env local",
-    "atlas migrate hash",
+  "atlas migrate diff --env local",
+  "atlas migrate lint --env local --latest 2",
+  "atlas migrate validate --env local",
+  "atlas migrate hash",
 ]
 
 [tasks."apply"]
@@ -21,24 +21,34 @@ description = "apply the schema & data migrations"
 run = ["atlas migrate apply --env local"]
 
 # cmd: atlas schema apply --env local
+
 [tasks."db-local:start-empty"]
+depends = ["build:cdviz-db-pg"]
 description = "start a container for the local db (empty: no data, no schema)"
 run = [
-    "mise run db-local:stop",
-    "docker run --name cdviz-db -e \"POSTGRES_PASSWORD=$PG_LOCAL_PWD\" -e \"POSTGRES_USER=$PG_LOCAL_USER\" -p 5432:5432 -d postgres:16.1",
+  "mise run db-local:stop",
+  """docker run --name cdviz-db \
+    -e \"POSTGRES_PASSWORD=$PG_LOCAL_PWD\" \
+    -e \"POSTGRES_USER=$PG_LOCAL_USER\" \
+    -p 5432:5432 \
+    -d \
+    ghcr.io/cdviz-dev/cdviz-db-pg:latest \
+    postgres \
+    -c "shared_preload_libraries=timescaledb"
+  """,
 ]
 
 [tasks."db-local:start"]
 description = "start a container for the local db with the migrations applied"
 run = [
-    "docker run --name cdviz-db -e \"POSTGRES_PASSWORD=$PG_LOCAL_PWD\" -e \"POSTGRES_USER=$PG_LOCAL_USER\" -p 5432:5432 -d postgres:16.1",
-    "sleep 6",
-    "mise run apply",
+  "mise run db-local:start-empty",
+  "sleep 3",
+  "mise run apply",
 ]
 
 [tasks."db-local:stop"]
 description = "stop the container of the local db"
-run = ["docker rm -f cdviz-db"]
+run = ["docker rm -f cdviz-db || true"]
 
 [tasks."test"]
 run = ["mise run db-local:start", "mise run db-local:stop"]
@@ -46,7 +56,41 @@ run = ["mise run db-local:start", "mise run db-local:stop"]
 [tasks."ci"]
 description = "set of tasks run by CI"
 run = [
-    "mise run test",
-    # "mise run check"
-    # "mise run lint"
+  "mise run test",
+  # "mise run check"
+  # "mise run lint"
 ]
+
+[tasks."list:containers"]
+description = "list all containers images"
+run = ["""docker image ls --tree --filter "reference=*/*/cdviz-db*""""]
+
+[tasks."debug:bake"]
+description = "show the 'resovled' bake definition"
+run = ["docker buildx bake --print"]
+
+[tasks."build:cdviz-db-pg"]
+description = "build the docker image for the postgresql + extension (tag is based on posgresql version)"
+run = ["docker buildx bake --progress=plain cdviz-db-pg"]
+
+[tasks."publish:cdviz-db-pg"]
+description = "build the docker image for the postgresql + extension and push it to ghcr.io (tag is based on posgresql version)"
+run = ["docker buildx bake --push cdviz-db-pg"]
+
+[tasks."build:cdviz-db-migration"]
+description = "build the docker image for the migration"
+run = ["docker buildx bake --progress=plain cdviz-db-migration"]
+
+[tasks."publish:cdviz-db-migration"]
+description = "build the docker image for the migration and push it to ghcr.io (tag is the latest migrations name)"
+run = """
+MIGRATION_VERSION=$(ls -1 migrations/*.sql | tail -1)
+MIGRATION_VERSION=${MIGRATION_VERSION#migrations/}
+MIGRATION_VERSION=${MIGRATION_VERSION%.sql}
+MIGRATION_VERSION="0.$MIGRATION_VERSION.0"
+docker buildx bake --push cdviz-db-migration
+"""
+
+[tasks."publish"]
+description = "publish all containers images"
+depends = ["publish:*"]

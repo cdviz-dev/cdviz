@@ -1,7 +1,8 @@
+{{ $name := (printf "%s-migration-%s" (.ReleaseName | default .Chart.Name) (.Values.image.tag | default .Chart.AppVersion) | replace "+" "_" | replace "." "_" | trunc 63 | trimSuffix "-") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: '{{ include "my.fullname" . }}-dbmigration-{{ now | date "20060102150405" }}'
+  name: '{{ $name }}'
   labels:
     {{- include "my.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
@@ -12,7 +13,7 @@ spec:
   ttlSecondsAfterFinished: {{ .Values.ttlSecondsAfterFinished }}
   template:
     metadata:
-      name: '{{ include "my.fullname" . }}-dbmigration-{{ now | date "20060102150405" }}'
+      name: '{{ $name }}'
       labels:
         {{- include "my.labels" . | nindent 8 }}
     spec:
@@ -21,7 +22,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-      - name: dbmigration
+      - name: 'cdviz-db-migration'
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         # args for https://atlasgo.io/declarative/apply
         args:

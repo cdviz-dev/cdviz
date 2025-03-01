@@ -37,6 +37,12 @@ jobs:
       - uses: jdx/mise-action@v2
       - run: mise install
         shell: bash
+        working-directory: cdviz-db
+      - run: mise run publish
+        shell: bash
+        working-directory: cdviz-db
+      - run: mise install
+        shell: bash
         working-directory: charts
       - run: mise run publish
         shell: bash

@@ -1,9 +1,9 @@
 ttlSecondsAfterFinished: 7200
 image:
-  repository: ghcr.io/cdviz-dev/cdviz-db
+  repository: ghcr.io/cdviz-dev/cdviz-db-migration
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "20241217160243"
 annotations: {}
   # "helm.sh/hook": post-install,post-upgrade
   # "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
@@ -33,16 +33,29 @@ extraObjects:
       name: cdviz-db
     spec:
       instances: 1
-      storage:
-        size: 100Mi
-      monitoring:
-        enablePodMonitor: true
+      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.2
+      imagePullPolicy: IfNotPresent
+      # postgresUID: 26
+      # postgresGID: 26
+      # Parameters configuration will be append
+      # to the default ones to make the cluster work
+      postgresql:
+        parameters:
+          shared_preload_libraries: "timescaledb"
+          # auto_explain.log_min_duration: "10s"
       bootstrap:
         initdb:
           database: cdviz
           owner: cdviz
           secret:
             name: cdviz-db-owner-secret
+          postInitTemplateSQL:
+            - CREATE EXTENSION IF NOT EXISTS timescaledb;
+            - CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
+      storage:
+        size: 100Mi
+      monitoring:
+        enablePodMonitor: true
   cdviz-db-owner-secret:
     enabled: false
     apiVersion: v1
