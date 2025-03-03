@@ -4,7 +4,7 @@ variable "local_url" {
   default = getenv("PG_LOCAL_URL")
 }
 
-env "local" {
+env "db-local" {
   // Declare where the schema definition resides.
   // Also supported: ["file://multi.hcl", "file://schema.hcl"].
   src = "file://src/schema.sql"
@@ -18,5 +18,8 @@ env "local" {
 
   // Define the URL of the Dev Database for this environment
   // See: https://atlasgo.io/concepts/dev-database
-  dev = "docker://postgres/16/dev?search_path=public"
+  //
+  // but the shared_preload_libraries is not set => failed to load extensions.
+  // dev = "docker+postgres://ghcr.io/cdviz-dev/cdviz-db-pg:latest/dev?search_path=public"
+  dev = var.local_url
 }

@@ -1,28 +1,46 @@
+CREATE EXTENSION IF NOT EXISTS timescaledb;
+-- CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
+
 -- cdevents_lake
 CREATE TABLE IF NOT EXISTS "cdevents_lake" (
-  "id" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  -- "id" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "imported_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL,
   "payload" JSONB NOT NULL,
   "subject" VARCHAR(100) NOT NULL,
   "predicate" VARCHAR(100) NOT NULL,
   "version" INTEGER[3],
-  "context_id" VARCHAR(100) UNIQUE NOT NULL
+  "context_id" VARCHAR(100) NOT NULL
 );
 
 COMMENT ON TABLE "cdevents_lake" IS 'table of stored cdevents without transformation';
 COMMENT ON COLUMN "cdevents_lake"."imported_at" IS 'the timestamp when the cdevent was stored into the table';
 COMMENT ON COLUMN "cdevents_lake"."timestamp" IS 'timestamp of cdevents extracted from context.timestamp in the json';
 COMMENT ON COLUMN "cdevents_lake"."payload" IS 'the full cdevent in json format';
-COMMENT ON COLUMN "cdevents_lake"."subject" IS 'subject extracted from context.type in the json';
-COMMENT ON COLUMN "cdevents_lake"."predicate" IS 'predicate of the subject, extracted from context.type in the json';
+COMMENT ON COLUMN "cdevents_lake"."subject" IS 'subject extracted from context.type in the json (in lower case)';
+COMMENT ON COLUMN "cdevents_lake"."predicate" IS 'predicate of the subject, extracted from context.type in the json (in lower case)';
 COMMENT ON COLUMN "cdevents_lake"."version" IS 'the version of the suject s type, extracted from context.type. The version number are split in 0 for major, 1 for minor, 2 for patch';
 COMMENT ON COLUMN "cdevents_lake"."context_id" IS 'the id of the event, extracted from context.id';
 
-CREATE INDEX IF NOT EXISTS "idx_cdevents" ON "cdevents_lake" USING GIN("payload");
-CREATE INDEX IF NOT EXISTS "idx_timestamp" ON "cdevents_lake" USING BRIN("timestamp");
-CREATE INDEX IF NOT EXISTS "idx_subject" ON "cdevents_lake"("subject");
+-- Use TimescaleDB to "boost" the performance of the queries instead of using indexes
+-- CREATE INDEX IF NOT EXISTS "idx_timestamp" ON "cdevents_lake" USING BRIN("timestamp");
+SELECT create_hypertable('cdevents_lake', by_range('timestamp', INTERVAL '7 day'), if_not_exists => TRUE, migrate_data => TRUE);
+SELECT add_dimension('cdevents_lake', by_hash('subject', 2));
+CREATE UNIQUE INDEX IF NOT EXISTS "idx_context_id" ON "cdevents_lake"("context_id", "subject", "timestamp" DESC);
 
+-- see [Timescale Documentation | JSONB support for semi-structured data](https://docs.timescale.com/use-timescale/latest/schema-management/json/)
+CREATE INDEX IF NOT EXISTS "idx_cdevents" ON "cdevents_lake" USING GIN("payload");
+
+-- compress cdevents (after 15 days)
+-- [Timescale Documentation | Compression](https://docs.timescale.com/use-timescale/latest/compression/)
+ALTER TABLE "cdevents_lake" SET (
+  timescaledb.compress,
+  timescaledb.compress_segmentby = 'subject'
+);
+SELECT add_compression_policy('cdevents_lake', INTERVAL '15 days');
+
+-- remove cdevents older than 13 months
+SELECT add_retention_policy('cdevents_lake', INTERVAL '13 months');
 
 -- store_cdevent
 create or replace procedure store_cdevent(
@@ -39,8 +57,8 @@ declare
 begin
     context_id := (cdevent -> 'context' ->> 'id');
     tpe := (cdevent -> 'context' ->> 'type');
-    tpe_subject := SPLIT_PART(tpe, '.', 3);
-    tpe_predicate := SPLIT_PART(tpe, '.', 4);
+    tpe_subject := LOWER(SPLIT_PART(tpe, '.', 3));
+    tpe_predicate := LOWER(SPLIT_PART(tpe, '.', 4));
     tpe_version[0]:= SPLIT_PART(tpe, '.', 5)::INTEGER;
     tpe_version[1]:= SPLIT_PART(tpe, '.', 6)::INTEGER;
     tpe_version[2]:= SPLIT_PART(SPLIT_PART(tpe, '.', 7), '-', 1)::INTEGER;

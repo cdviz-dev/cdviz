@@ -10,15 +10,19 @@ atlas = "0.29"
 [tasks."plan"]
 description = "update the migrations to reflect target `src/schema.sql`"
 run = [
-  "atlas migrate diff --env local",
-  "atlas migrate lint --env local --latest 2",
-  "atlas migrate validate --env local",
+  "mise run db-local:start-empty",
+  "atlas migrate diff --env db-local",
+  "atlas migrate lint --env db-local --latest 10",
+  "atlas migrate validate --env db-local",
   "atlas migrate hash",
+  "mise run db-local:stop",
 ]
 
 [tasks."apply"]
 description = "apply the schema & data migrations"
-run = ["atlas migrate apply --env local"]
+run = [
+  "atlas migrate apply --env db-local",
+]
 
 # cmd: atlas schema apply --env local
 
@@ -36,19 +40,26 @@ run = [
     postgres \
     -c "shared_preload_libraries=timescaledb"
   """,
+  "sleep 3 # wait for the container to be ready",
 ]
 
 [tasks."db-local:start"]
 description = "start a container for the local db with the migrations applied"
 run = [
   "mise run db-local:start-empty",
-  "sleep 3",
   "mise run apply",
 ]
 
 [tasks."db-local:stop"]
 description = "stop the container of the local db"
 run = ["docker rm -f cdviz-db || true"]
+
+[tasks."db-local:psql"]
+description = "connect to the local db with psql"
+run = [
+  "echo password=$PG_LOCAL_PWD",
+  "docker run -it --rm --network host postgres psql -h 127.0.0.1 --username {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}",
+]
 
 [tasks."test"]
 run = ["mise run db-local:start", "mise run db-local:stop"]
