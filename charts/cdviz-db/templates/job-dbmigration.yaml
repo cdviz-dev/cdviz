@@ -1,4 +1,4 @@
-{{ $name := (printf "%s-migration-%s" (.ReleaseName | default .Chart.Name) (.Values.image.tag | default .Chart.AppVersion) | replace "+" "_" | replace "." "_" | trunc 63 | trimSuffix "-") }}
+{{ $name := (printf "%s-migration-%s" (.ReleaseName | default .Chart.Name) (.Values.image.tag | default .Chart.AppVersion) | replace "+" "-" | replace "." "-" | trunc 63 | trimSuffix "-") }}
 apiVersion: batch/v1
 kind: Job
 metadata:

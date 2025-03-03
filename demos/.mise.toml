@@ -74,9 +74,15 @@ run = [
     "ctlptl create cluster kind --name \"$CLUSTER_NAME\" --registry=ctlptl-registry",
     "kubectl cluster-info --context \"$CLUSTER_NAME\"",
 ]
+[tasks."stack:k8s:use-context"]
+description = "Use the k8s cluster (kind) context"
+dir = "stack-k8s"
+run = ["kubectl config use-context kind-local"]
+wait_for = ["stack:k8s:create"]
 
 [tasks."stack:k8s:deploy:pre-req"]
 description = "Deploy the pre-requirement for cdviz (postgresql, grafana, ...) on a k8s cluster"
+depends = ["stack:k8s:use-context"]
 dir = "stack-k8s"
 run = [
     "helmwave up --build --progress --skip-unchanged -t pre-req",
@@ -95,6 +101,7 @@ run = ["helmwave down --build  -t pre-req"]
 
 [tasks."stack:k8s:deploy:cdviz"]
 description = "Deploy cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
+depends = ["stack:k8s:use-context"]
 wait_for = ["stack:k8s:deploy:pre-req"]
 dir = "stack-k8s"
 run = [
@@ -104,46 +111,52 @@ run = [
 
 [tasks."stack:k8s:delete:cdviz"]
 description = "Delete cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
+depends = ["stack:k8s:use-context"]
 dir = "stack-k8s"
-run = ["helmwave down --build  -t cdviz", "kubectl delete namespace cdviz-dev"]
+run = ["helmwave down --build  -t cdviz", "kubectl delete namespace cdviz-dev || true"]
 
 [tasks."stack:k8s:deploy:integration"]
 description = "Deploy the integrations app (kubewatch,...) on a k8s cluster"
+depends = ["stack:k8s:use-context"]
 dir = "stack-k8s"
 run = ["helmwave up --build --progress --skip-unchanged -t integration"]
 
 [tasks."stack:k8s:delete:integration"]
 description = "Delete the integrations app (kubewatch,...) on a k8s cluster"
+depends = ["stack:k8s:use-context"]
 dir = "stack-k8s"
 run = ["helmwave down --build  -t integration"]
 
 [tasks."stack:k8s:port-forward:grafana"]
 description = "Port-forward the Grafana dashboard to localhost:3000"
+depends = ["stack:k8s:use-context"]
 run = ["kubectl port-forward svc/grafana -n grafana 3000:80"]
 
 [tasks."stask:k8s:show:grafana:admin-password"]
 description = "Show the Grafana admin password"
+depends = ["stack:k8s:use-context"]
 run = [
     'kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo',
 ]
 
 [tasks."stack:k8s:port-forward:cdviz-db"]
 description = "Port-forward the PostgreSQL database to localhost:5432"
+depends = ["stack:k8s:use-context"]
 run = ["kubectl port-forward svc/cdviz-db-rw -n cdviz-dev 5432:5432"]
 
 [tasks."stack:k8s:port-forward:cdviz-collector"]
 description = "Port-forward the cdviz-collector to localhost:8080"
+depends = ["stack:k8s:use-context"]
 run = ["kubectl port-forward svc/cdviz-collector -n cdviz-dev 8080:8080"]
 
 [tasks."stack:k8s:deploy"]
 description = "Deploy all the resources (pre-req, cdviz, integrations,...) on a k8s cluster"
-depends = "stack:k8s:deploy:*"
-dir = "stack-k8s"
+depends = ["stack:k8s:use-context", "stack:k8s:deploy:*"]
 
 [tasks."stack:k8s:delete"]
 description = "Delete a k8s cluster (kind) and its resources"
-dir = "stack-k8s"
 depends = ["stack:k8s:delete:*"]
+dir = "stack-k8s"
 run = [
     "ctlptl delete cluster \"$CLUSTER_NAME\"",
     "ctlptl delete registry ctlptl-registry",
@@ -151,9 +164,11 @@ run = [
 
 [tasks."stack:k8s:check"]
 description = "check the helwave config to deploy the stack"
+depends = ["stack:k8s:use-context"]
 dir = "stack-k8s"
 run = ["helmwave build"]
 
 [tasks."ci"]
 description = "Run all the ci tasks"
-depends = ["stack:k8s:check"]
+depends = ["stack:k8s:create", "stack:k8s:check"]
+depends_post = ["stack:k8s:delete"]

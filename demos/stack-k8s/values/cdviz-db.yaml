@@ -1,6 +1,3 @@
-image:
-  tag: 0.0.0-301-g06265ad
-
 env:
   # DATABASE_URL children node could be any env's value definition supported by kubernetes's pod manifest
   # helm template could be used
@@ -11,31 +8,18 @@ env:
         key: DATABASE_URL
 
 extraObjects:
-  postgresql:
+  cloudnative-pg-basic:
     enabled: true
-    apiVersion: postgresql.cnpg.io/v1
-    kind: Cluster
-    metadata:
-      name: cdviz-db
     spec:
-      instances: 1
       storage:
         size: 100Mi
       monitoring:
         enablePodMonitor: true
       bootstrap:
         initdb:
-          database: cdviz
           owner: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER }}"
-          secret:
-            name: cdviz-db-owner-secret
   cdviz-db-owner-secret:
     enabled: true
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: cdviz-db-owner-secret
-    type: kubernetes.io/basic-auth
     data:
       username: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER | b64enc }}"
       password: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"

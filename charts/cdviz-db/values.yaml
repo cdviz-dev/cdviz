@@ -37,12 +37,13 @@ extraObjects:
       imagePullPolicy: IfNotPresent
       # postgresUID: 26
       # postgresGID: 26
-      # Parameters configuration will be append
-      # to the default ones to make the cluster work
       postgresql:
-        parameters:
-          shared_preload_libraries: "timescaledb"
-          # auto_explain.log_min_duration: "10s"
+        shared_preload_libraries:
+          - timescaledb
+        # Parameters configuration will be append
+        # to the default ones to make the cluster work
+        # parameters:
+        #   auto_explain.log_min_duration: "10s"
       bootstrap:
         initdb:
           database: cdviz
