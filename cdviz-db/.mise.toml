@@ -98,7 +98,7 @@ run = """
 MIGRATION_VERSION=$(ls -1 migrations/*.sql | tail -1)
 MIGRATION_VERSION=${MIGRATION_VERSION#migrations/}
 MIGRATION_VERSION=${MIGRATION_VERSION%.sql}
-MIGRATION_VERSION="0.$MIGRATION_VERSION.0"
+export MIGRATION_VERSION="0.$MIGRATION_VERSION.0"
 docker buildx bake --push cdviz-db-migration
 """
 

@@ -35,15 +35,15 @@ jobs:
       - name: Set up Docker Buildx # to support buildx, multi-arch builds
         uses: docker/setup-buildx-action@v3
       - uses: jdx/mise-action@v2
-      - run: mise install
+      - run: mise install # cdviz-db
         shell: bash
         working-directory: cdviz-db
-      - run: mise run publish
+      - run: mise run publish # cdviz-db
         shell: bash
         working-directory: cdviz-db
-      - run: mise install
+      - run: mise install # charts
         shell: bash
         working-directory: charts
-      - run: mise run publish
+      - run: mise run publish  # charts
         shell: bash
         working-directory: charts
