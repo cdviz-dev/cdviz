@@ -1,7 +1,8 @@
 # version: "3.9"
 services:
   postgres:
-    image: docker.io/library/postgres:16
+    image: ghcr.io/cdviz-dev/cdviz-db-pg:latest
+    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     restart: always
     # platform: linux/amd64
     shm_size: 128mb
@@ -17,7 +18,7 @@ services:
     # network_mode: host
     ports:
       - "5432:5432"
-    user: "${UID}:${GID}"
+    user: "${MY_UID}:${MY_GID}"
     volumes:
       # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
       # It means that every time the repository is modifying the data inside
@@ -75,7 +76,7 @@ services:
     # network_mode: host
     ports:
       - "3000:3000"
-    user: "${UID}:${GID}"
+    user: "${MY_UID}:${MY_GID}"
     # user: "0"
     volumes:
       # - ./tmp/grafana/data/:/var/lib/grafana/:rw

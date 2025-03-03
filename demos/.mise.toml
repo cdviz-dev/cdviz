@@ -17,15 +17,24 @@ depends = ["stack:*:delete"]
 description = "Launch the docker compose demo (in foreground)"
 dir = "stack-compose"
 run = [
-    "mkdir -p tmp/postgres/data || true",
-    "chown -R \"$UID:$GID\" tmp",
-    "docker compose -f docker-compose.yaml up",
+    """
+    mkdir -p tmp/postgres/data || true
+    export MY_UID=$(id -u)
+    export MY_GID=$(id -g)
+    chown -R \"$MY_UID:$MY_GID\" tmp
+    docker compose -f docker-compose.yaml up
+    """,
 ]
 
 [tasks."stack:compose:down"]
 description = "Stop the docker compose demo"
 dir = "stack-compose"
-run = ["docker compose -f docker-compose.yaml stop"]
+run = ["""
+  export MY_UID=$(id -u)
+  export MY_GID=$(id -g)
+  docker compose -f docker-compose.yaml stop
+  """
+]
 
 [tasks."stack:compose:delete"]
 description = "Stop & remove the docker compose demo (and local data)"
