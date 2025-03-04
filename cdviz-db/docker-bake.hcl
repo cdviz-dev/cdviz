@@ -7,7 +7,7 @@ variable "MIGRATION_VERSION" {
 }
 
 variable "PG_VERSION" {
-  default = "17.2"
+  default = "17.4"
 }
 
 target "cdviz-db-migration" {

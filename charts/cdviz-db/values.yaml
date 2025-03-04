@@ -33,7 +33,7 @@ extraObjects:
       name: cdviz-db
     spec:
       instances: 1
-      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.2
+      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.4
       imagePullPolicy: IfNotPresent
       # postgresUID: 26
       # postgresGID: 26
