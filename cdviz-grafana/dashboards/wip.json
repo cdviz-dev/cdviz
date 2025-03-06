@@ -155,7 +155,9 @@
           "format": "none",
           "language": "html"
         },
-        "editors": ["afterRender"],
+        "editors": [
+          "afterRender"
+        ],
         "externalStyles": [],
         "helpers": "",
         "renderMode": "data",
@@ -185,13 +187,13 @@
     "list": []
   },
   "time": {
-    "from": "2023-12-31T23:00:00.000Z",
-    "to": "2024-01-31T23:00:00.000Z"
+    "from": "now-7d",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "experimentation",
-  "uid": "ee1q9cq5yqtxce",
-  "version": 3,
+  "uid": "wip",
+  "version": 2025031013,
   "weekStart": ""
 }
