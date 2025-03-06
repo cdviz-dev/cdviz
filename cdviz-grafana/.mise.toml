@@ -1,0 +1,27 @@
+[tools]
+"yq" = "latest"
+
+[tasks.build]
+description = "build, normalize/reset dashboard (uid, title, version,..."
+run = [
+  """
+  #!/usr/bin/env bash
+  for file in $(find dashboards -name '*.json'); do
+    dash_uid=$(basename $file .json)
+    # dash_version=$(stat -c %y $file | awk '{print $1 $2}' | tr -d '-:' | cut -c1-12)
+    # dash_version=$(git log -1 --format="%ad" --date=format:'%Y%m%d%H' -- $file)
+    dash_version=$(yq -r '.version' $file)
+    if git status --porcelain $file | grep -q .; then
+      echo "The file $file is dirty, use current datetime as version"
+      dash_version=$(date +'%Y%m%d%H')
+      # exit 1
+    fi
+    echo $file - $dash_uid - $dash_version
+    # export to be used in yq
+    export dash_uid
+    export dash_version
+    yq eval '(.uid = strenv(dash_uid)) | (.version = env(dash_version)) | (.title |= sub(" wip", ""))' -i $file
+    yq eval '(.time.from = "now-7d") | (.time.to = "now") | (.timezone = "browser")' -i $file
+  done
+  """
+]
