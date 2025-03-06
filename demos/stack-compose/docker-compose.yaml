@@ -57,7 +57,7 @@ services:
       # see https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
       # To override an option, use a predefined pattern GF_<SectionName>_<KeyName>.
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
-      - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel,volkovlabs-table-panel
+      - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel,volkovlabs-table-panel,volkovlabs-echarts-panel
       # - GF_SECURITY_ADMIN_USER=admin
       # - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
