@@ -42,7 +42,7 @@ dir = "stack-compose"
 run = [
     "mise run stack:compose:down",
     "docker compose -f docker-compose.yaml rm",
-    "sudo rm -rf tmp",
+    "rm -rf tmp",
 ]
 
 [tasks."stack:grafana:view"]
