@@ -18,14 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
   "links": [],
   "panels": [
     {
       "datasource": {
-        "default": true,
         "type": "grafana-postgresql-datasource",
-        "uid": "cdviz-db"
+        "uid": "${datasource}"
       },
       "description": "Count by Subject & Predicate over the time window",
       "fieldConfig": {
@@ -62,24 +61,26 @@
           "format": "none",
           "language": "html"
         },
-        "editors": ["afterRender"],
+        "editors": [
+          "afterRender"
+        ],
         "externalStyles": [],
         "helpers": "",
         "renderMode": "data",
         "styles": "",
         "wrap": false
       },
-      "pluginVersion": "5.6.0",
+      "pluginVersion": "5.7.0",
       "targets": [
         {
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "cdviz-db"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) as count, subject, predicate\nFROM cdevents_lake\nWHERE $__timeFilter(imported_at)\nGROUP BY subject, predicate\nORDER BY subject, predicate",
+          "rawSql": "SELECT COUNT(*) as count, subject, predicate\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))\nGROUP BY subject, predicate\nORDER BY subject, predicate",
           "refId": "A",
           "sql": {
             "columns": [
@@ -120,14 +121,143 @@
         }
       ],
       "title": "How many events?",
-      "transparent": true,
       "type": "marcusolsson-dynamictext-panel"
     },
     {
       "datasource": {
-        "default": true,
         "type": "grafana-postgresql-datasource",
-        "uid": "cdviz-db"
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.5,
+            "drawStyle": "bars",
+            "fillOpacity": 49,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": true,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  concat(subject,'.', predicate) AS kind,\n  COUNT(*)\nFROM cdevents_lake \nWHERE $__timeFilter(timestamp)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))\nGROUP BY time, kind\nORDER BY time, kind",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Events By Hours",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "kind"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": true
+            }
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
       },
       "description": "Count by Context'source over the time window",
       "fieldConfig": {
@@ -151,7 +281,7 @@
       "gridPos": {
         "h": 8,
         "w": 6,
-        "x": 7,
+        "x": 18,
         "y": 0
       },
       "id": 4,
@@ -164,24 +294,26 @@
           "format": "none",
           "language": "html"
         },
-        "editors": ["afterRender"],
+        "editors": [
+          "afterRender"
+        ],
         "externalStyles": [],
         "helpers": "",
         "renderMode": "data",
         "styles": "",
         "wrap": false
       },
-      "pluginVersion": "5.6.0",
+      "pluginVersion": "5.7.0",
       "targets": [
         {
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "cdviz-db"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) as count, \"payload\" -> 'context' ->> 'source' as \"context_source\"\nFROM cdevents_lake\nWHERE $__timeFilter(imported_at)\nGROUP BY context_source\nORDER BY context_source\n",
+          "rawSql": "SELECT COUNT(*) as count, \"payload\" -> 'context' ->> 'source' as \"context_source\"\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))\nGROUP BY context_source\nORDER BY context_source\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -222,29 +354,18 @@
         }
       ],
       "title": "How many sources?",
-      "transparent": true,
       "type": "marcusolsson-dynamictext-panel"
     },
     {
       "datasource": {
-        "default": true,
         "type": "grafana-postgresql-datasource",
-        "uid": "cdviz-db"
+        "uid": "${datasource}"
       },
       "description": "List the ${limit} first events",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "filterable": true,
-            "inspect": true,
-            "minWidth": 50
           },
           "mappings": [],
           "thresholds": {
@@ -267,87 +388,540 @@
               "id": "byName",
               "options": "subject"
             },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 107
-              }
-            ]
+            "properties": []
           },
           {
             "matcher": {
               "id": "byName",
               "options": "predicate"
             },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 127
-              }
-            ]
+            "properties": []
           },
           {
             "matcher": {
               "id": "byName",
               "options": "imported_at"
             },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 177
-              }
-            ]
+            "properties": []
           },
           {
             "matcher": {
               "id": "byName",
               "options": "timestamp"
             },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 206
-              }
-            ]
+            "properties": []
           }
         ]
       },
       "gridPos": {
-        "h": 22,
+        "h": 20,
         "w": 24,
         "x": 0,
         "y": 8
       },
       "id": 1,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": ["sum"],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": [
+        "nestedObjects": [],
+        "tables": [
           {
-            "desc": true,
-            "displayName": "timestamp"
+            "actionsColumnConfig": {
+              "alignment": "start",
+              "fontSize": "md",
+              "label": "",
+              "width": {
+                "auto": false,
+                "value": 100
+              }
+            },
+            "addRow": {
+              "enabled": false,
+              "permission": {
+                "mode": "",
+                "userRole": []
+              },
+              "request": {
+                "datasource": "",
+                "payload": {}
+              }
+            },
+            "deleteRow": {
+              "enabled": false,
+              "permission": {
+                "mode": "",
+                "userRole": []
+              },
+              "request": {
+                "datasource": "",
+                "payload": {}
+              }
+            },
+            "expanded": true,
+            "items": [
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 100,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "timestamp",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "left",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": true,
+                  "enabled": true
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 130,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "subject",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 130,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "predicate",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "min": 300,
+                    "value": 100
+                  },
+                  "wrap": false
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "payload_subject",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "json"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "min": 300,
+                    "value": 100
+                  },
+                  "wrap": false
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "payload_context",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "json"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 100,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "imported_at",
+                  "source": "A"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              }
+            ],
+            "name": "Events",
+            "pagination": {
+              "defaultPageSize": 10,
+              "enabled": true,
+              "mode": "query",
+              "query": {
+                "offsetVariable": "offset",
+                "pageIndexVariable": "pageIndex",
+                "pageSizeVariable": "pageSize",
+                "totalCountField": {
+                  "name": "count",
+                  "source": "B"
+                }
+              }
+            },
+            "rowHighlight": {
+              "backgroundColor": "transparent",
+              "columnId": "",
+              "enabled": false,
+              "scrollTo": "",
+              "smooth": false,
+              "variable": ""
+            },
+            "showHeader": true,
+            "update": {
+              "datasource": "",
+              "payload": {}
+            }
           }
-        ]
+        ],
+        "toolbar": {
+          "alignment": "left",
+          "export": true
+        }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "2.3.0",
       "targets": [
         {
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "cdviz-db"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  \"imported_at\",\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(imported_at)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))\nORDER BY\n  imported_at DESC\nLIMIT\n  $limit",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(*)\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(imported_at)\n  AND ('${subjects:raw}' = '' OR subject IN (${subjects:sqlstring}))\n  AND ('${predicates:raw}' = '' OR predicate IN (${predicates:sqlstring}))",
+          "refId": "B",
           "sql": {
             "columns": [
               {
@@ -368,7 +942,7 @@
         }
       ],
       "title": "Events Logs",
-      "type": "table"
+      "type": "volkovlabs-table-panel"
     }
   ],
   "preload": false,
@@ -378,9 +952,27 @@
   "templating": {
     "list": [
       {
+        "allowCustomValue": false,
         "current": {
-          "text": "All",
-          "value": ["$__all"]
+          "text": "cdviz-db",
+          "value": "P6DDDCA02457485AA"
+        },
+        "hide": 1,
+        "name": "datasource",
+        "options": [],
+        "query": "grafana-postgresql-datasource",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "grafana-postgresql-datasource",
@@ -401,7 +993,9 @@
       {
         "current": {
           "text": "All",
-          "value": ["$__all"]
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "grafana-postgresql-datasource",
@@ -421,81 +1015,64 @@
       },
       {
         "current": {
-          "text": "50",
-          "value": "50"
+          "text": "10",
+          "value": "10"
         },
-        "description": "Maximum number of value retrieved",
+        "description": "The number of rows per page. Specify as a dashboard variable name.",
+        "hide": 2,
         "includeAll": false,
-        "label": "limit",
-        "name": "limit",
+        "label": "pageSize",
+        "name": "pageSize",
         "options": [
           {
             "selected": true,
-            "text": "50",
-            "value": "50"
-          },
-          {
-            "selected": false,
-            "text": "100",
-            "value": "100"
-          },
-          {
-            "selected": false,
-            "text": "500",
-            "value": "500"
-          },
-          {
-            "selected": false,
-            "text": "1000",
-            "value": "1000"
+            "text": "10",
+            "value": "10"
           }
         ],
-        "query": "50,100,500,1000",
+        "query": "10",
         "type": "custom"
       },
       {
         "current": {
-          "text": "$__timeFilter(imported_at) AND predicate IN ({finished",
-          "value": "$__timeFilter(imported_at) AND predicate IN ({finished"
+          "text": "",
+          "value": ""
         },
+        "description": "Page order number. Specify as a dashboard variable name.",
         "hide": 2,
-        "includeAll": false,
-        "name": "where",
+        "name": "pageIndex",
+        "options": [],
+        "query": "",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "description": "How many rows to skip starting from the first. Specify as a dashboard variable name.",
+        "hide": 2,
+        "name": "offset",
         "options": [
           {
             "selected": true,
-            "text": "$__timeFilter(imported_at) AND predicate IN ({finished",
-            "value": "$__timeFilter(imported_at) AND predicate IN ({finished"
-          },
-          {
-            "selected": false,
-            "text": "queued",
-            "value": "queued"
-          },
-          {
-            "selected": false,
-            "text": "started}) AND subject IN ({pipelinerun",
-            "value": "started}) AND subject IN ({pipelinerun"
-          },
-          {
-            "selected": false,
-            "text": "taskrun})",
-            "value": "taskrun})"
+            "text": "0",
+            "value": "0"
           }
         ],
-        "query": "$__timeFilter(imported_at) AND predicate IN ($predicates) AND subject IN ($subjects)",
+        "query": "0",
         "type": "custom"
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
-  "title": "cdevents activity wip",
-  "uid": "0",
-  "version": 1,
+  "timezone": "browser",
+  "title": "cdevents activity",
+  "uid": "cdevents-activity",
+  "version": 2025030621,
   "weekStart": ""
 }
