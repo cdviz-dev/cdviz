@@ -1,0 +1,129 @@
+[sinks.debug]
+enabled = true
+
+[sinks.cdviz_db]
+enabled = true
+type = "db"
+url = "postgresql://cdviz:postgres-password@127.0.0.1:5432/cdviz"
+pool_connections_min = 1
+pool_connections_max = 10
+
+[sources.cdevents_local_json]
+enabled = true
+
+[sources.cdevents_local_json.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "60s"
+parameters = { root = "./events/cdevents.in.d" }
+recursive = true
+path_patterns = ["*.json"]
+parser = "json"
+
+[sources.service_deployed_local_csv]
+enabled = true
+
+[sources.service_deployed_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/service_deployed.in.d" }
+recursive = false
+path_patterns = ["*.csv"]
+parser = "csv_row"
+
+[[sources.service_deployed_local_csv.transformers]]
+type = "vrl"
+template = """
+[{
+    "metadata": .metadata,
+    "header": .header,
+    "body": {
+        "context": {
+            "version": "0.4.1",
+            "id": .boby.id,
+            "source": "/demo/use_cases",
+            "type": "dev.cdevents.service.deployed.0.1.1",
+            "timestamp": .body.timestamp,
+            # "chainId": ??
+            # "links": ??
+        },
+        "subject": {
+            "id": .body.id,
+            # "source": ,
+            "type": "service",
+            "content": {
+                "environment": {
+                    "id": .body.env
+                },
+                "artifactId": .body.artifact_id
+            }
+        }
+    }
+}]
+"""
+
+[sources.pipelinerun_x_local_csv]
+enabled = true
+transformer_refs = ["pipelinerun_x", "log"]
+
+[sources.pipelinerun_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/pipelinerun_x.in.d" }
+recursive = false
+path_patterns = ["*.csv"]
+parser = "csv_row"
+
+[transformers.pipelinerun_x]
+type = "vrl"
+template_file = "./transformers/pipelinerun_x.vrl"
+# template = """
+# output = []
+# for_each(["queued", "started", "finished"]) -> |_index, value| {
+#   delta_duration = -1.0
+#   if value == "queued" {
+#     delta_duration = parse_duration!(.body.queued, unit: "s")
+#   } else if value == "started" {
+#     delta_duration = parse_duration!(.body.started, unit: "s")
+#   } else if value == "finished" {
+#     delta_duration = parse_duration!(.body.finished, unit: "s")
+#   }
+#   if delta_duration >= 0 {
+#     delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+#     ts = parse_timestamp(.body.timestamp, "%+") ?? now()
+#     ts = from_unix_timestamp(to_unix_timestamp(ts) + to_int(delta_duration)) ?? ts
+#     ts = format_timestamp!(ts, format: "%+")
+#     pipeline_name = .body.name
+#     event = {
+#       "metadata": .metadata,
+#       "header": .header,
+#       "body": {
+#         "context": {
+#           "version": "0.4.1",
+#           "id": "0",
+#           # "chainId": "0",
+#           "source": "/demo/use_cases",
+#           "type": "dev.cdevents.pipelinerun.{{ value }}.0.2.0",
+#           "timestamp": ts,
+#         },
+#         "subject": {
+#           "id": .body.id,
+#           # "source": "/event/source/123",
+#           "type": "pipelineRun",
+#           "content": {
+#             "url": "https://www.example.com/pipeline/{{ pipeline_name }}" ?? null,
+#             "pipelineName": pipeline_name,
+#           }
+#         }
+#       }
+#     }
+#     if .body.outcome != null {
+#       event.body.subject.content.outcome = .body.outcome
+#     }
+#     push(output, event)
+#   }
+# }
+# output
+# """
