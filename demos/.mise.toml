@@ -3,7 +3,7 @@ CLUSTER_NAME = "kind-local"
 
 [tools]
 # docker = "latest"      # to build, to run containers, should be available for some of thoses tools
-"ubi:cdviz-dev/cdviz-collector" = "latest"
+"ubi:cdviz-dev/cdviz-collector" = "0.5.1"
 kubectl = "1.32.0"                                                    # to interact with k8s cluster
 ctlptl = "0.8"                                                        # to setup / manage local k8s (kind) cluster
 kind = "0.27.0"                                                       # to have a local k8s cluster (on top of docker)
@@ -53,9 +53,9 @@ run = ["open http://127.0.0.1:3000"]
 description = "Open the db-admin UI, adminer (compose demo)"
 run = ["open http://127.0.0.1:5499"]
 
-[tasks."example_01:run"]
-description = "Launch cdviz-collector cli with content (data & configuration) of the example_01 folder"
-dir = "example_01"
+[tasks."use_cases:run"]
+description = "Launch cdviz-collector cli with content (data & configuration) of the use_cases folder"
+dir = "use_cases"
 env = { OTEL_TRACES_SAMPLER = "always_off", OTEL_EXPORTER_OTLP_TRACES_ENDPOINT = "http://127.0.0.1:4317", CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED = "false" }
 run = [
     "cdviz-collector connect -vv --config ./cdviz-collector.toml",
