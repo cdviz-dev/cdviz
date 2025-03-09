@@ -9,7 +9,7 @@ All commands are run from this folder via `mise` (look at `./.mise.toml` for mor
 Name                                    Description
 ci                                      Run all the ci tasks
 clean                                   Clean / Delete every stacks
-example_01:run                          Launch cdviz-collector cli with content (data & configuration) of the example_01 folder
+use_cases:run                          Launch cdviz-collector cli with content (data & configuration) of the use_cases folder
 stack:compose:delete                    Stop & remove the docker compose demo (and local data)
 stack:compose:down                      Stop the docker compose demo
 stack:compose:up                        Launch the docker compose demo (in foreground)
@@ -39,12 +39,12 @@ This demo is launched via a Docker Compose demo environment:
 - Adminer: to manage the PostgreSQL database
 - Grafana: to visualize the data
 
-Currently, the [`cdviz-collector`] is not launched as part of the docker compose, but it should be launched manually from the host (e.g. via `mise run example_01:run`).
+Currently, the [`cdviz-collector`] is not launched as part of the docker compose, but it should be launched manually from the host (e.g. via `mise run use_cases:run`).
 The [`cdviz-collector`] executable is downloaded from the [release page](https://github.com/cdviz-dev/cdviz-collector/releases) by `mise`.
 
 ```bash
 mise run stack:compose:up
-mise run example_01:run
+mise run use_cases:run
 #...
 mise run stack:grafana:view
 #...

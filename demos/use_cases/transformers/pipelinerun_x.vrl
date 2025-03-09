@@ -1,0 +1,52 @@
+output = []
+for_each(["queued", "started", "finished"]) -> |_index, value| {
+  delta_duration = -1.0
+  # log(value, level: "info")
+  if value == "queued" && !is_nullish(.body.queued) {
+    # log(.body.queued)
+    delta_duration = parse_duration(.body.queued, unit: "s") ?? -1.0
+  } else if value == "started" && !is_nullish(.body.started) {
+    # log(.body.started)
+    delta_duration = parse_duration(.body.started, unit: "s") ?? -1.0
+  } else if value == "finished" && !is_nullish(.body.finished) {
+    # log(.body.finished)
+    delta_duration = parse_duration(.body.finished, unit: "s") ?? -1.0
+  }
+  # log(delta_duration, level: "info")
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+    ts = parse_timestamp(.body.timestamp, "%+") ?? now()
+    ts = from_unix_timestamp(to_unix_timestamp(ts) + to_int(delta_duration)) ?? ts
+    ts = format_timestamp!(ts, format: "%+")
+    # log(ts, level: "info", rate_limit_secs: 60)
+    pipeline_name = .body.name
+    event = {
+      "metadata": .metadata,
+      "header": .header,
+      "body": {
+        "context": {
+          "version": "0.4.1",
+          "id": "0",
+          # "chainId": "0",
+          "source": "/demo/use_cases",
+          "type": "dev.cdevents.pipelinerun.{{ value }}.0.2.0",
+          "timestamp": ts,
+        },
+        "subject": {
+          "id": .body.id,
+          # "source": "/event/source/123",
+          "type": "pipelineRun",
+          "content": {
+            "url": "https://www.example.com/pipeline/{{ pipeline_name }}" ?? null,
+            "pipelineName": pipeline_name,
+          }
+        }
+      }
+    }
+    if value == "finished" && !is_nullish(.body.outcome) {
+      event.body.subject.content.outcome = .body.outcome
+    }
+    output = push(output, event)
+  }
+}
+output
