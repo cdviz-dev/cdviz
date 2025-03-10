@@ -14,7 +14,7 @@ metadata:
     {{- include "my.labels" $ | nindent 4 }}
 data:
   {{ include "my.fullname" $ }}-{{ base $path }}: |-
-    {{ tpl ($.Files.Get $path) $ | nindent 4 }}
+    {{ $.Files.Get $path | nindent 4 }}
 {{- end }}
 {{- end }}
 {{- end -}}
