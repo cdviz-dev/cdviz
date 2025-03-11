@@ -3,7 +3,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-db-migration
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: "0.20250303171541.0"
+  tag: "0.20250306201500.0"
 annotations: {}
   # "helm.sh/hook": post-install,post-upgrade
   # "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
