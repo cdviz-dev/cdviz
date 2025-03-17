@@ -1,17 +1,23 @@
 # cdviz-db
 
+> [!IMPORTANT]
+> CDviz is in **alpha / preview** stage.
+
 ## Overview
 
 ## Installation
 
-## Configuration
+### Requirements
 
-## Usage
+### Database Schema
 
-## Troubleshooting
+[schema.sql](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/schema.sql) or [migrations files](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-db/migrations)
 
-## Contributing
+<<< ../../../../cdviz-db/src/schema.sql
 
-## License
 
-## Acknowledgments
+[cdviz-db-migration](https://github.com/orgs/cdviz-dev/packages/container/package/cdviz-db-migration)
+
+[cdviz-db-pg](https://github.com/orgs/cdviz-dev/packages/container/package/cdviz-db-pg)
+
+[charts/cdviz-db](https://github.com/orgs/cdviz-dev/packages/container/package/charts%2Fcdviz-db)
