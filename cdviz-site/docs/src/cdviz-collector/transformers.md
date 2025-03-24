@@ -32,10 +32,15 @@ Every message are passed to the next transformer or loader.
 type = "passthrough"
 ```
 
-### `type = "vrl"`
+## `type = "vrl"`
 
-[Vector Remap Language (VRL)](https://vector.dev/docs/reference/vrl/) is an expression-oriented language designed for transforming observability data (logs and metrics) in a safe and performant manner. It features a simple syntax and a rich set of built-in functions tailored specifically to observability use cases.
- It is built for [Vector by Datadog](https://vector.dev/), A lightweight, ultra-fast tool for building observability pipelines.
+For more custom transformations, can be used to transform the body or headers,
+to split into multiple messages, to discard or to skip messages with a condition...
+
+[Vector Remap Language (VRL)](https://vector.dev/docs/reference/vrl/) is an expression-oriented language designed for transforming
+observability data (logs and metrics) in a safe and performant manner. It features a simple syntax and a rich set of built-in
+functions tailored specifically to observability use cases. It is built for transformation in [Vector by Datadog](https://vector.dev/),
+a lightweight, ultra-fast tool for building observability pipelines.
 
 The VRL transformer processes messages by:
 - If the template evaluates to `null`, pass through the original message unchanged (clearer meaning of skip)
@@ -61,6 +66,35 @@ if err != null {
 }
 # Return array with transformed message
 [.]
+"""
+
+[transformers.vrl_example2]
+type = "vrl"
+template = """
+[{
+    "metadata": .metadata,
+    "header": .header,
+    "body": {
+        "context": {
+            "version": "0.4.1",
+            "id": "0",
+            "source": "/event/source/123",
+            "type": "dev.cdevents.service.deployed.0.1.1",
+            "timestamp": .body.timestamp,
+        },
+        "subject": {
+            "id": .body.id,
+            "source": "/event/source/123",
+            "type": "service",
+            "content": {
+                "environment": {
+                    "id": .body.env,
+                },
+                "artifactId": .body.artifact_id,
+            }
+        }
+    }
+}]
 """
 ```
 

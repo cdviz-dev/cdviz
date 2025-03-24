@@ -65,8 +65,8 @@ Parameters:
 - `headers_to_keep`: A list of header names to save into message's header (optional)
 - `signature`: Optional verification of request signature (unset => no verification)
   - `signature_encoding`: The encoding format: `base64` or `hex` (default: `hex`)
-  - `signature_on`: The content to sign: `body` or headers-then-body (default: `body`)
-    for headers-then-body, it means that the signature (digest) is computed on
+  - `signature_on`: The content to sign: `body` or `headers_then_body` (default: `body`)
+    for `headers_then_body`, it means that the signature (digest) is computed on
     the concatenation of the value of some headers and the body2 fields are required:
       - `separator`: the separator used to concatenate the parts
       - `headers`: A list (same order than in the signature) of header names to concatenate
@@ -94,7 +94,7 @@ id = "000"
 headers_to_keep = []
 signature = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", header = "x-hub-signature-256", token = "changeme" }
 ```
-Signature on `header-then-body` like [Svix]
+Signature on `headers_then_body` like [Svix]
 
 ```toml
 [sources.aaaa.extractor]
@@ -104,7 +104,7 @@ headers_to_keep = []
 
 [sources.aaaa.extractor.signature]
 signature_encoding = "hex"
-signature_on = { headers = ["svix-id", "svix-timestamp"], separator = "." }
+signature_on = { headers_then_body = {separator = ".", headers = ["svix-id", "svix-timestamp"]}}
 signature_prefix = "v1,"
 header = "svix-signature"
 token = "changeme"
