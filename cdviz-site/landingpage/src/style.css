@@ -74,8 +74,8 @@ Color conversion: https://oklch.com/
 
 .dark {
   --text: oklch(93.65% 0.011 243.66);
-  --background: oklch(28.19% 0.026 255.73);
-  --primary: oklch(75.84% 0.168 64.71);
+  --background: oklch(22.38% 0.0077 285.76);
+  --primary: oklch(73.11% 0.1673 62.62);
   --secondary: oklch(39.60% 0.077 296.74);
   --accent: oklch(59.84% 0.100 307.64);
 }
