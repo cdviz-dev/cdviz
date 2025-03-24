@@ -1,4 +1,6 @@
 import { defineConfig } from "vitepress";
+// import { defineConfig as viteDefineConfig } from 'vite'
+import tailwindcss from "@tailwindcss/vite";
 // import { configureDiagramsPlugin } from "vitepress-plugin-diagrams";
 
 // https://vitepress.dev/reference/site-config
@@ -125,15 +127,56 @@ export default defineConfig({
     }
   },
   ignoreDeadLinks: [
-      // ignore exact url "/playground"
-      // '/playground',
-      // ignore all localhost links
-      /^https?:\/\/localhost/
-      // ignore all links include "/repl/""
-      // /\/repl\//,
-      // custom function, ignore all links include "ignore"
-      // (url) => {
-      //   return url.toLowerCase().includes('ignore')
-      // }
+    // ignore exact url "/playground"
+    // '/playground',
+    // ignore all localhost links
+    /^https?:\/\/localhost/
+    // ignore all links include "/repl/""
+    // /\/repl\//,
+    // custom function, ignore all links include "ignore"
+    // (url) => {
+    //   return url.toLowerCase().includes('ignore')
+    // }
+  ],
+
+  // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
+  vite: {
+    plugins: [
+      tailwindcss() as any,
+      {
+        name: 'vp-tw-order-fix',
+        configResolved(c) {
+          movePlugin(
+            c.plugins as any,
+            '@tailwindcss/vite:scan',
+            'after',
+            'vitepress'
+          )
+        },
+      },
     ]
+  }
 });
+
+function movePlugin(
+  plugins: { name: string }[],
+  pluginAName: string,
+  order: 'before' | 'after',
+  pluginBName: string
+) {
+  const pluginBIndex = plugins.findIndex((p) => p.name === pluginBName)
+  if (pluginBIndex === -1) return
+
+  const pluginAIndex = plugins.findIndex((p) => p.name === pluginAName)
+  if (pluginAIndex === -1) return
+
+  if (order === 'before' && pluginAIndex > pluginBIndex) {
+    const pluginA = plugins.splice(pluginAIndex, 1)[0]
+    plugins.splice(pluginBIndex, 0, pluginA)
+  }
+
+  if (order === 'after' && pluginAIndex < pluginBIndex) {
+    const pluginA = plugins.splice(pluginAIndex, 1)[0]
+    plugins.splice(pluginBIndex, 0, pluginA)
+  }
+}

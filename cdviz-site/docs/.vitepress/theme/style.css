@@ -1,0 +1,63 @@
+@import "tailwindcss" source("../../components/");
+
+@plugin "@iconify/tailwind4";
+
+@theme {
+  /* see [Perfect Ratios & How to Find Them - YouTube](https://www.youtube.com/watch?v=r1DANFZYJDw) */
+  --spacing-2xs: 0.3rem;
+  --spacing-xs: 0.486rem;
+  --spacing-sm: 0.7862rem;
+  --spacing-md: 1.272rem; /* "1rem", the base */
+  --spacing-lg: 2.058rem;
+  --spacing-xl: 3.330rem;
+  --spacing-2xl: 5.388rem;
+  --spacing-4xl: 8.778rem;
+  /*
+  // theme build with:
+  // - https://www.realtimecolors.com/?colors=0e151b-c9d2de-f29107-a294c2-725190&fonts=DroidSans-DroidSans
+  // - alternative: https://www.realtimecolors.com/?colors=0e0d0b-f9f8f6-fbbd23-abbfb9-8d9daa&fonts=DroidSans-DroidSans
+  // - manually set `DEFAULT` when export in Tailwind CSS + Themes + Shades
+  // - export in Tailwind CSS + Themes  in HSL (to be able to use opacity `/5`)
+  // - in source of realtime the number suffixing the color is the opacity
+
+  // fontSize: {
+  //   sm: "0.750rem",
+  //   base: "1rem",
+  //   xl: "1.333rem",
+  //   "2xl": "1.777rem",
+  //   "3xl": "2.369rem",
+  //   "4xl": "3.158rem",
+  //   "5xl": "4.210rem",
+  // },
+  */
+
+  --color-background: var(--background);
+  --color-text: var(--text);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+}
+
+:root {
+  --text: var(--vp-c-text-1);
+  --background: var(--vp-c-bg);
+  /* --text: oklch(19.15% 0.016 244.65);
+  --background: oklch(86.05% 0.019 255.54); */
+  --primary: oklch(74.22% 0.166 64.29);
+  --secondary: oklch(69.49% 0.068 298.56);
+  --accent: oklch(49.68% 0.104 307.15);
+}
+
+/* Enhanced scrollbar */
+/* ::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-primary/50;
+  @apply hover:bg-primary;
+} */
