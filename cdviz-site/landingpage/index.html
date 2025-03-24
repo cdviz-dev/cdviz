@@ -65,12 +65,12 @@
   </head>
 
   <body class="mx-auto max-w-6xl bg-background font-body text-text">
-    <div
+    <!-- <div
       id="rubberband"
       class="fixed right-1/2 translate-x-1/2 top-20 z-50 border-spacing-5 rounded-xl bg-red-700 px-10 text-center text-xl font-bold uppercase text-red-100 opacity-90 ring-4 ring-red-700 ring-offset-2"
     >
       work in progress
-    </div>
+    </div> -->
 
     <header class="sticky top-0 z-10 bg-background/50 shadow-xs backdrop-blur-sm">
       <div
@@ -133,7 +133,7 @@
           </div>
           <div id="hero-actions" class="my-lg flex flex-row gap-md">
             <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
-            <a href="/docs" class="clickable btn btn-primary isDisabled">Learn More</a>
+            <a href="/docs" class="clickable btn btn-primary">Learn More</a>
           </div>
           <div id="hero-social-proof" class="mt-auto py-2 opacity-50">
             <!--
@@ -155,7 +155,7 @@
             affects your software factory, your customers, and your business.
           </p> -->
 
-          <p class="bg-primary/5 w-full rounded-xl p-sm leading-normal md:p-md">
+          <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want to annotate your dashboards with events from your software
             pipeline (where and when a software version was deployed).
           </p>
@@ -163,11 +163,11 @@
             You want to see the evolution of your pipelines over time, and
             understand what is going on.
           </p> -->
-          <p class="bg-primary/5 w-full rounded-xl p-sm leading-normal md:p-md">
+          <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want to enhance your "software factory / platform" with a
             dashboard, and a set of metrics.
           </p>
-          <p class="bg-primary/5 w-full rounded-xl p-sm leading-normal md:p-md">
+          <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want an event driven software factory (reduce cost &amp; increase
             flexibility) without losing the benefits of a centralized dashboard.
           </p>
@@ -240,7 +240,7 @@
           </div>
           <div class="my-md">
             <img
-              src="./assets/architectures/Drawing_2024-11-22-cdviz-architecture.excalidraw.svg"
+              src="./assets/architectures/overview_04.excalidraw.svg"
               class="rounded-xl object-cover"
               alt="cdviz architecture"
               width="100%"
@@ -259,7 +259,7 @@
         </p>
         <div class="grid gap-xl md:grid-cols-3">
           <div
-            class="bg-primary/20 flex flex-col justify-between rounded-xl p-8 pt-4 text-center"
+            class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-primary border-2"
           >
             <div>
               <h3 class="m-2">Community</h3>
@@ -285,7 +285,7 @@
               >
           </div>
           <div
-            class="bg-secondary/10 flex flex-col justify-between rounded-xl p-8 pt-4 text-center"
+            class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-secondary border-2"
           >
             <div>
               <h3 class="m-2">Commercial</h3>
@@ -314,7 +314,7 @@
             >
           </div>
           <div
-            class="bg-secondary/10 flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative"
+            class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-secondary border-2"
           >
             <div class="absolute z-10 right-2 top-1 rotate-6 rounded-md px-2 py-0.5 text-center align-middle text-accent ring-accent ring-1 bg-accent/10 ring-offset-accent/20 ring-offset-1">preview</div>
             <div class="isDisabled">

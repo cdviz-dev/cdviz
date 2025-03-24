@@ -60,6 +60,10 @@ The plugin iconify is not working (yet?) with the plugin system of tailwindcss v
   --color-accent: var(--accent);
 }
 
+/*
+Color conversion: https://oklch.com/
+*/
+
 :root {
   --text: oklch(19.15% 0.016 244.65);
   --background: oklch(86.05% 0.019 255.54);
@@ -144,9 +148,6 @@ section {
   @apply transition-all duration-300;
 }
 
-body {
-  @apply bg-gradient-to-r from-primary/10 to-accent/10;
-}
 /* Enhanced hero section */
 #hero {
   @apply relative overflow-hidden;
