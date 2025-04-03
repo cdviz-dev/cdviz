@@ -1,3 +1,7 @@
+---
+version: 0.6.4
+---
+
 # Installation of cdviz-collector
 
 ## CLI
@@ -7,7 +11,7 @@
 Install prebuilt binaries via shell script
 
 ```bash
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/0.5.1/cdviz-collector-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/{{ $params.version }}/cdviz-collector-installer.sh | sh
 ```
 
 Install prebuilt binaries via Homebrew
@@ -20,7 +24,7 @@ Install prebuilt binaries via `mise` (and `.mise.toml`):
 
 ```toml
 [tools]
-"ubi:cdviz-dev/cdviz-collector" = "0.5.1"
+"ubi:cdviz-dev/cdviz-collector" = "latest"
 ```
 
 Install prebuilt binaries via `cargo-binstall`:
@@ -40,7 +44,7 @@ cargo install cdviz-collector
 see [GitHub's package page](https://github.com/cdviz-dev/cdviz-collector/pkgs/container/cdviz-collector)
 
 ``` bash
-docker pull ghcr.io/cdviz-dev/cdviz-collector:0.5.1
+docker pull ghcr.io/cdviz-dev/cdviz-collector:latest
 ```
 
 ## Kubernetes

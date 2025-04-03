@@ -61,6 +61,7 @@ A request is received then:
 the configured URL path is `/webhook/{id}` where `id` is the value configured.
 
 Parameters:
+
 - `id`: An identifier used in the URL path (to identify the target webhook)
 - `headers_to_keep`: A list of header names to save into message's header (optional)
 - `signature`: Optional verification of request signature (unset => no verification)
@@ -68,8 +69,8 @@ Parameters:
   - `signature_on`: The content to sign: `body` or `headers_then_body` (default: `body`)
     for `headers_then_body`, it means that the signature (digest) is computed on
     the concatenation of the value of some headers and the body2 fields are required:
-      - `separator`: the separator used to concatenate the parts
-      - `headers`: A list (same order than in the signature) of header names to concatenate
+    - `separator`: the separator used to concatenate the parts
+    - `headers`: A list (same order than in the signature) of header names to concatenate
   - `signature_prefix`: A prefix to add to the computed signature (default: `""`)
   - `header`: Header name containing the signature to verify
   - `token`: Token/secret used to sign and to verify
@@ -94,6 +95,7 @@ id = "000"
 headers_to_keep = []
 signature = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", header = "x-hub-signature-256", token = "changeme" }
 ```
+
 Signature on `headers_then_body` like [Svix]
 
 ```toml
@@ -130,9 +132,10 @@ parser = "json" # how/what to extract to build a message
 
 - The possible values of `kind` match the [service]'s `scheme`, and the `parameters` corresponding to Configurations section in the selected [service].
 - `parser` can be one of the following:
-  - `json`: read the content of the file as json and place it as message's body (and extract metadata)
-  - `metadata`: only extract metadata from the file (=> empty body), can be useful to react to activity (creation, modification => artifact's publication)
   - `csv_row`: read the content of the file and create one message per row, content of the row as message's body (and extract metadata)
+  - `json`: read the content of the file as json and place it as message's body (and extract metadata)
+  - `jsonl`: read the content of the file and parse each line as a json and place it as message's body (and extract metadata)
+  - `metadata`: only extract metadata from the file (=> empty body), can be useful to react to activity (creation, modification => artifact's publication)
 
 Only service with the following capabilities can be used as an extractor:
 
@@ -190,7 +193,6 @@ Translated from Configurations of [S3](https://docs.rs/opendal/latest/opendal/se
 > - `enable_virtual_host_style`: Enable virtual host style.
 > - `disable_write_with_if_match`: Disable write with if match.
 
-
 ```toml
 [sources.aaaa.extractor]
 type = "opendal"
@@ -198,6 +200,7 @@ kind = "fs"
 parameters = { root = "/source", bucket ="...", endpoint ="...", region ="...", access_key_id ="...", secret_access_key ="...", ... }
 ...
 ```
+
 If the inline "table" is too long, with toml, you can also use the following syntax:
 
 ```toml
@@ -307,8 +310,6 @@ template = """
 """
 ```
 
-[cdevents]: <https://cdevents.dev/>
-[Sources]: sources
 [Sinks]: sinks
 [Transformers]: transformers
 [service]: <https://docs.rs/opendal/latest/opendal/services/index.html>
