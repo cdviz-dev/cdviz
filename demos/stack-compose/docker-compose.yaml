@@ -3,7 +3,7 @@ services:
   postgres:
     image: ghcr.io/cdviz-dev/cdviz-db-pg:latest
     command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
-    restart: always
+    # restart: always
     # platform: linux/amd64
     shm_size: 128mb
     environment:
@@ -18,7 +18,7 @@ services:
     # network_mode: host
     ports:
       - "5432:5432"
-    # user: "${MY_UID}:${MY_GID}"
+    # user: "${MY_UID:-1000}:${MY_GID:-1000}"
     # volumes:
       # # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
       # # It means that every time the repository is modifying the data inside
@@ -29,33 +29,36 @@ services:
       # # The init script will be executed when the database is first run
       # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   cdviz-db-migrate:
-    image: docker.io/arigaio/atlas:latest
-    command: >
-      migrate apply
-      --url postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
+    image: ghcr.io/cdviz-dev/cdviz-db-migration:latest
+    command:
+      - migrate
+      - apply
+      - --url
+      - postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
+      - --dir
+      - file:///migrations/
     # network_mode: host
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ../../cdviz-db/migrations:/migrations:ro
-  adminer:
-    image: docker.io/library/adminer
-    restart: always
-    environment:
-      - ADMINER_DESIGN=pepa-linha-dark
-      - ADMINER_DEFAULT_SERVER=postgres
-      - ADMINER_DEFAULT_DB_DRIVER=pgsql
-      - ADMINER_DEFAULT_DB_NAME=cdviz
-    ports:
-      - 5499:8080
+  # adminer:
+  #   image: docker.io/library/adminer
+  #   # restart: always
+  #   environment:
+  #     - ADMINER_DESIGN=pepa-linha-dark
+  #     - ADMINER_DEFAULT_SERVER=postgres
+  #     - ADMINER_DEFAULT_DB_DRIVER=pgsql
+  #     - ADMINER_DEFAULT_DB_NAME=cdviz
+  #   ports:
+  #     - 5499:8080
   grafana:
     image: docker.io/grafana/grafana-oss:11.6.0
     # container_name: grafana
-    restart: unless-stopped
+    # restart: unless-stopped
     environment:
       # see https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
       # To override an option, use a predefined pattern GF_<SectionName>_<KeyName>.
+      # - GF_SERVER_ROOT_URL=http://my.grafana.server/
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
       - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel,volkovlabs-form-panel,volkovlabs-table-panel
       # - GF_SECURITY_ADMIN_USER=admin
@@ -76,7 +79,7 @@ services:
     # network_mode: host
     ports:
       - "3000:3000"
-    user: "${MY_UID}:${MY_GID}"
+    # user: "${MY_UID:-1000}:${MY_GID:-1000}"
     volumes:
       # - ./tmp/grafana/data/:/var/lib/grafana/:rw
       - ../../cdviz-grafana/datasources:/etc/grafana/provisioning/datasources:ro
@@ -92,6 +95,7 @@ services:
       - /var/use_cases
       - --config
       - ./cdviz-collector.toml
+    # restart: unless-stopped
     environment:
       - CDVIZ_COLLECTOR__HTTP__PORT=8080
       - CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED=true
@@ -99,10 +103,11 @@ services:
       - CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__URL=postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
       - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_WEBHOOK__ENABLED=true
       - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_WEBHOOK__EXTRACTOR__ID=000-cdevents
+      - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_LOCAL_JSON__ENABLED=false
     # network_mode: host
     ports:
       - "8080:8080"
-    user: "${MY_UID}:${MY_GID}"
+    # user: "${MY_UID:-1000}:${MY_GID:-1000}"
     volumes:
       # - ./tmp/cdviz-collector:/var/cdviz-collector:ro
       - ../use_cases:/var/use_cases:rw
