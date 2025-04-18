@@ -90,7 +90,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select \n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at  - started_at)) AS run_duration,\n  -- \n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\n  FROM pipelinerun\n  WHERE \n    ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n    AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${pipelineNames:sqlstring}]::text[]))\n  ORDER BY at DESC\n  LIMIT $limit\n;",
+          "rawSql": "select \n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at  - started_at)) AS run_duration,\n  -- \n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\n  FROM pipelinerun\n  WHERE \n    ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n    AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${pipelineNames:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit\n;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -176,5 +176,5 @@
   "timezone": "browser",
   "title": "pipelines",
   "uid": "pipelinerun",
-  "version": 2025041021
+  "version": 2025041720
 }

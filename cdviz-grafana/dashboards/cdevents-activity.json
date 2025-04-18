@@ -79,7 +79,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) as count, subject, predicate\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[]))\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[]))\nGROUP BY subject, predicate\nORDER BY subject, predicate",
+          "rawSql": "SELECT COUNT(*) as count, subject, predicate, ARRAY[${subjects:sqlstring}]::text[]\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
           "refId": "A",
           "sql": {
             "columns": [
@@ -214,7 +214,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  concat(subject,'.', predicate) AS kind,\n  COUNT(*)\nFROM cdevents_lake \nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[]))\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[]))\nGROUP BY time, kind\nORDER BY time, kind",
+          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  concat(subject,'.', predicate) AS kind,\n  COUNT(*)\nFROM cdevents_lake \nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
           "refId": "A",
           "sql": {
             "columns": [
@@ -310,7 +310,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT COUNT(*) as count, \"payload\" -> 'context' ->> 'source' as \"context_source\"\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[]))\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[]))\nGROUP BY context_source\nORDER BY context_source\n",
+          "rawSql": "SELECT COUNT(*) as count, \"payload\" -> 'context' ->> 'source' as \"context_source\"\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY context_source\nORDER BY context_source\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -925,7 +925,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[]))\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[]))\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1107,5 +1107,5 @@
   "timezone": "browser",
   "title": "cdevents activity",
   "uid": "cdevents-activity",
-  "version": 2025041021
+  "version": 2025041720
 }
