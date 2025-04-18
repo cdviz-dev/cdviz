@@ -16,8 +16,8 @@ The plugin iconify is not working (yet?) with the plugin system of tailwindcss v
   font-weight: 400;
   font-display: swap;
   src:
-    url("./assets/fonts/droid-sans/DroidSans-webfont.woff2") format("woff2"),
-    url("./assets/fonts/droid-sans/DroidSans-webfont.woff") format("woff");
+    url("/assets/fonts/droid-sans/DroidSans-webfont.woff2") format("woff2"),
+    url("/assets/fonts/droid-sans/DroidSans-webfont.woff") format("woff");
 }
 
 @theme {
@@ -130,7 +130,7 @@ h3 {
 }
 
 .check-circle {
-  background-image: url("assets/icons/check-circle.svg");
+  background-image: url("/assets/icons/check-circle.svg");
   background-position: 0em 0.2em;
   background-repeat: no-repeat;
 }
@@ -182,7 +182,7 @@ section {
 .svg-cdevents {
   /* width: 444px;
   height: 184px; */
-  --svg: url("./assets/logos/cdevents_monochrome.svg");
+  --svg: url("/assets/logos/cdevents_monochrome.svg");
 }
 /* } */
 
