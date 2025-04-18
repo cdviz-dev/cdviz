@@ -72,7 +72,7 @@ export default defineConfig({
         text: "Overview",
         link: "/",
         items: [
-          { text: "Alternatives", link: "/alternatives" },
+          { text: "Quickstart", link: "/quickstart" },
         ],
       },
       {
@@ -111,6 +111,7 @@ export default defineConfig({
         //   { text: "Installation", link: "/cdviz-grafana/install" },
         // ],
       },
+      { text: "Alternatives", link: "/alternatives" },
     ],
     aside: true,
     outline: {
@@ -123,4 +124,16 @@ export default defineConfig({
       pattern: 'https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path'
     }
   },
+  ignoreDeadLinks: [
+      // ignore exact url "/playground"
+      // '/playground',
+      // ignore all localhost links
+      /^https?:\/\/localhost/
+      // ignore all links include "/repl/""
+      // /\/repl\//,
+      // custom function, ignore all links include "ignore"
+      // (url) => {
+      //   return url.toLowerCase().includes('ignore')
+      // }
+    ]
 });
