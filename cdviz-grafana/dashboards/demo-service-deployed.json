@@ -134,17 +134,228 @@
       }
     ]
   },
+  "description": "Demo for service annotations, a playground to send events",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 2,
   "links": [],
   "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# Playground & Demo\n\n1. Use the forms to send event to the collector\n2. The database is updated\n3. The dashboard should reflect the event\n\nThis dashboard focus on **service** artifact (and **incident**) and show how to\ncompute some metrics and how to annotate (eg to enhance runtime metrics)\n\n## Notes\n\n- RAW form can be used to send any cdevent in json like in [cdevents'example](https://github.com/cdevents/spec/tree/spec-v0.4/conformance)\n- You can edit and customize the dashboard to explore visualization of data\n- The database is the same used in other dashboard\n- The timeserie is a random, used to show annotation",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "description": "nb (deployed, upgraded, rolledback) * 7 / nb days",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 10,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red"
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.25
+              },
+              {
+                "color": "dark-green",
+                "value": 1
+              },
+              {
+                "color": "dark-blue",
+                "value": 5
+              }
+            ]
+          },
+          "unit": "per week"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 9
+      },
+      "id": 5,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^df$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT  count(*)::decimal * (1000*60*60*24*7) / (${__to} - ${__from}) as df\nFROM  cdevents_lake\nWHERE \n  $__timeFilter(timestamp)\nAND subject = 'service' AND predicate IN ('deployed', 'upgraded', 'rolledback')\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])\nAND payload -> 'subject' ->> 'id' = ANY(ARRAY[${services:sqlstring}]::text[])\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Deployment frequency",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "dark-red",
+                "value": 4
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 9
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select count(DISTINCT payload -> 'subject' ->> 'id')\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'incident' AND predicate IN ('detected', 'reported')\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'service' ->> 'id' = ANY(ARRAY[${services:sqlstring}]::text[])\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Count incidents",
+      "type": "stat"
+    },
     {
       "datasource": {
         "type": "datasource",
         "uid": "grafana"
       },
+      "description": "Annotated with service deployment and incidents",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -200,10 +411,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 0
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 9
       },
       "id": 2,
       "options": {
@@ -225,7 +436,7 @@
           "refId": "A"
         }
       ],
-      "title": "Panel Title",
+      "title": "Random data",
       "type": "timeseries"
     },
     {
@@ -239,10 +450,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 15
       },
       "id": 1,
       "options": {
@@ -443,10 +654,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 14,
+        "h": 16,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 23
       },
       "id": 3,
       "options": {
@@ -641,7 +852,7 @@
         },
         "sync": true,
         "update": {
-          "code": "/**\n * Set body / payload\n */\ntry {\n  const payload = {\n    \"context\": {\n      \"version\": \"0.4.1\",\n      \"id\": \"0\", // automatically set by cdviz-collector\n      \"source\": \"/manual/\",\n      \"type\": \"dev.cdevents.service.deployed.0.2.0\",\n      \"timestamp\": \"\",\n    },\n    \"subject\": {\n      \"id\": \"\",\n      // \"source\": \"/event/source/123\",\n      \"type\": \"incident\",\n      \"content\": {\n        \"description\": \"\",\n        \"environment\": {\n          \"source\": \"/manual/\",\n          \"id\": \"\"\n        },\n        \"service\": {\n          \"source\": \"/manual/\",\n          \"id\": \"\"\n        },\n        \"artifactId\": null,\n        \"ticketURI\": null  // unset for detected & resolved\n      }\n    }\n  };\n  context.panel.elements.forEach((element) => {\n    if (!element.value) {\n      return;\n    }\n    //TODO check format,...\n    switch (element.id) {\n      case \"subject_id\":\n        payload.subject.id = element.value;\n        break;\n      case \"predicate\":\n        payload.context.type = `dev.cdevents.incident.${element.value}.0.2.0`;\n        break;\n      case \"artifact_id\":\n        payload.subject.content.artifactId = element.value;\n        break;\n      case \"environment_id\":\n        payload.subject.content.environment.id = element.value;\n        break;\n      case \"service_id\":\n        payload.subject.content.service.id = element.value;\n        break;\n      case \"description\":\n        payload.subject.content.description = element.value;\n        break;\n      case \"ticketURI\":\n        payload.subject.content.ticketURI = element.value;\n        break;\n      case \"timestamp\":\n        payload.context.timestamp = element.value;\n        break;\n    }\n  });\n  let ts = new Date(payload.context.timestamp) || Date.now();\n  payload.context.timestamp = ts.toISOString();\n  //console.log(payload);\n\n  /**\n  * Set URL\n  */\n  const url = context.grafana.templateService.getVariables().find((x) => x.name == 'collectorUrl').query;\n\n  /**\n  * Fetch\n  */\n  const resp = fetch(url, {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\",\n      // \"PRIVATE-TOKEN\": \"$token\",\n    },\n    body: JSON.stringify(payload),\n  })\n    .catch((error) => {\n      //console.error(error);\n      context.grafana.notifyError(['Error on Update', error]);\n      //context.grafana.refresh();\n    })\n    .then((resp) => {\n      //console.log(resp);\n      if (resp && resp.ok) {\n        context.grafana.notifySuccess(['Update', 'Event sent successfully.']);\n        context.grafana.refresh();\n      } else {\n        context.grafana.notifyError(['Update', 'An error occurred sending event.']);\n        //context.grafana.refresh();\n      }\n    });\n} catch (error) {\n  // console.error(error);\n  context.grafana.notifyError(['Error on Update', error]);\n}\n",
+          "code": "/**\n * Set body / payload\n */\ntry {\n  const payload = {\n    \"context\": {\n      \"version\": \"0.4.1\",\n      \"id\": \"0\", // automatically set by cdviz-collector\n      \"source\": \"/manual/\",\n      \"type\": \"dev.cdevents.service.deployed.0.2.0\",\n      \"timestamp\": \"\",\n    },\n    \"subject\": {\n      \"id\": \"\",\n      // \"source\": \"/event/source/123\",\n      \"type\": \"incident\",\n      \"content\": {\n        \"description\": \"\",\n        \"environment\": {\n          \"source\": \"/manual/\",\n          \"id\": \"\"\n        },\n        \"service\": {\n          \"source\": \"/manual/\",\n          \"id\": \"\"\n        }\n        //\"artifactId\": null,\n        //\"ticketURI\": null  // unset for detected & resolved\n      }\n    }\n  };\n  context.panel.elements.forEach((element) => {\n    if (!element.value) {\n      return;\n    }\n    //TODO check format,...\n    switch (element.id) {\n      case \"subject_id\":\n        payload.subject.id = element.value;\n        break;\n      case \"predicate\":\n        payload.context.type = `dev.cdevents.incident.${element.value}.0.2.0`;\n        break;\n      case \"artifact_id\":\n        payload.subject.content.artifactId = element.value;\n        break;\n      case \"environment_id\":\n        payload.subject.content.environment.id = element.value;\n        break;\n      case \"service_id\":\n        payload.subject.content.service.id = element.value;\n        break;\n      case \"description\":\n        payload.subject.content.description = element.value;\n        break;\n      case \"ticketURI\":\n        payload.subject.content.ticketURI = element.value;\n        break;\n      case \"timestamp\":\n        payload.context.timestamp = element.value;\n        break;\n    }\n  });\n  let ts = new Date(payload.context.timestamp) || Date.now();\n  payload.context.timestamp = ts.toISOString();\n  //console.log(payload);\n\n  /**\n  * Set URL\n  */\n  const url = context.grafana.templateService.getVariables().find((x) => x.name == 'collectorUrl').query;\n\n  /**\n  * Fetch\n  */\n  const resp = fetch(url, {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\",\n      // \"PRIVATE-TOKEN\": \"$token\",\n    },\n    body: JSON.stringify(payload),\n  })\n    .catch((error) => {\n      //console.error(error);\n      context.grafana.notifyError(['Error on Update', error]);\n      //context.grafana.refresh();\n    })\n    .then((resp) => {\n      //console.log(resp);\n      if (resp && resp.ok) {\n        context.grafana.notifySuccess(['Update', 'Event sent successfully.']);\n        context.grafana.refresh();\n      } else {\n        context.grafana.notifyError(['Update', 'An error occurred sending event.']);\n        //context.grafana.refresh();\n      }\n    });\n} catch (error) {\n  // console.error(error);\n  context.grafana.notifyError(['Error on Update', error]);\n}\n",
           "confirm": false,
           "contentType": "application/json",
           "getPayload": "",
@@ -675,10 +886,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 39
       },
       "id": 4,
       "options": {
@@ -817,7 +1028,10 @@
   ],
   "preload": false,
   "schemaVersion": 41,
-  "tags": [],
+  "tags": [
+    "sandbox",
+    "cd"
+  ],
   "templating": {
     "list": [
       {
@@ -899,7 +1113,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "demo for service annotations",
+  "title": "demo service deployed",
   "uid": "demo-service-deployed",
-  "version": 2025041021
+  "version": 2025041812
 }
