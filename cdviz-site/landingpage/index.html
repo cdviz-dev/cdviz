@@ -118,22 +118,27 @@
             alt="illustrations"
           />
         </div>
-        <div class="overflow-hidden rounded-xl p-2">
-          <h1 id="hero-title">
+        <div class="overflow-hidden rounded-xl p-8">
+          <h1 id="hero-title" class="text-5xl font-bold leading-tight mb-6">
             <!-- Explain the value we provide -->
-            Observability on your CI/CD pipelines
-            <span class="font-outline italic">&amp; SDLC</span>
+            Monitor Your Software Delivery Pipeline
+            <span class="font-outline italic text-accent">With Confidence</span>
           </h1>
-          <div id="hero-subtitle" class="my-lg leading-loose">
+          <div id="hero-subtitle" class="my-lg text-xl leading-relaxed text-text/80">
             <!-- Explain how we'll create the value -->
             <!-- TODO? maybe add a rotation between different subtitles -->
-            A collection of components to collect, store and view information
+            <!-- A collection of components to collect, store and view information
             about which version of services are deployed in each environment,
-            what test ran,...
+            what test ran,... -->
+            Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
+            deployment tracking, and real-time monitoring - all in one place.
           </div>
           <div id="hero-actions" class="my-lg flex flex-row gap-md">
             <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
-            <a href="/docs" class="clickable btn btn-primary">Learn More</a>
+            <div id="hero-actions" class="my-lg flex flex-row gap-md">
+              <a href="/docs" class="clickable btn btn-primary text-lg px-8 py-3">Get Started</a>
+              <a href="#how" class="clickable btn btn-secondary text-lg px-8 py-3">See How It Works</a>
+            </div>
           </div>
           <div id="hero-social-proof" class="mt-auto py-2 opacity-50">
             <!--
@@ -145,32 +150,51 @@
           </div>
         </div>
       </section>
-      <section class="my-xl md:my-2xl">
-        <!-- benefits -->
-        <a id="why"></a>
-        <h2>Why CDviz?</h2>
-        <div class="flex flex-col items-stretch gap-sm md:flex-row">
+      <section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl"> <!-- Added background -->
+        <a name="why"></a>
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose CDviz?</h2>
+        <div class="flex flex-col items-stretch gap-8 md:flex-row max-w-5xl mx-auto">
+          <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold mb-4">Enhanced Visibility</h3>
+            <p class="leading-relaxed">
+              Seamlessly annotate your dashboards with pipeline events and deployment tracking,
+              giving you clear insights into your software delivery process.
+            </p>
+          </div>
+          <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold mb-4">Seamless Integration</h3>
+            <p class="leading-relaxed">
+              Seamlessly integrate CDviz with your existing tools and workflows,
+              providing a unified view of your software delivery process.
+            </p>
+          </div>
+          <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold mb-4">Enhanced Tools Collaboration</h3>
+            <p class="leading-relaxed">
+              You want an event driven software factory (reduce cost &amp; increase
+              flexibility) without losing the benefits of a centralized dashboard.
+            </p>
+          </div>
           <!-- <p>
             You want to know what is happening in your pipeline, and how it
             affects your software factory, your customers, and your business.
           </p> -->
-
-          <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
+          <!-- <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want to annotate your dashboards with events from your software
             pipeline (where and when a software version was deployed).
-          </p>
+          </p> -->
           <!-- <p>
             You want to see the evolution of your pipelines over time, and
             understand what is going on.
           </p> -->
-          <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
+          <!-- <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want to enhance your "software factory / platform" with a
             dashboard, and a set of metrics.
           </p>
           <p class="bg-secondary/20 w-full rounded-xl p-sm leading-normal md:p-md">
             You want an event driven software factory (reduce cost &amp; increase
             flexibility) without losing the benefits of a centralized dashboard.
-          </p>
+          </p> -->
         </div>
       </section>
 
@@ -178,18 +202,17 @@
         <a id="features"></a>
       </section> -->
       <section class="my-xl md:my-2xl">
-        <a id="how"></a>
-        <div class="glass-card rounded-xl p-md">
-          <h3 class="mb-md text-xl font-bold">How Does it Work?</h3>
-          <div class="grid gap-md md:grid-cols-2 md:grid-rows-2">
-            <div class="flex flex-row flex-nowrap justify-start gap-xs">
-              <p class="text-2xl font-extrabold text-accent">1</p>
-              <div class="text-sm leading-relaxed">
-                <p>
-                Pull or received events from sources and sends cdevents to
-                various destinations.
+        <div class="glass-card rounded-xl p-8">
+          <a name="how"></a>
+          <h3 class="text-3xl font-bold text-center mb-12">How CDviz Works</h3>
+          <div class="grid gap-8 md:grid-cols-2 md:grid-rows-2">
+            <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
+              <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">1</div>
+              <div class="flex-1">
+                <h4 class="text-xl font-semibold mb-2">Event Collection</h4>
+                <p class="text-base leading-relaxed mb-4">
+                  Pull or receive events from multiple sources and convert them to standardized cdevents.
                 </p>
-                <p class="mt-2">
                 <span class="icon-[simple-icons--github] h-5 w-5"></span>
                 <span class="icon-[simple-icons--gitlab] h-5 w-5"></span>
                 <span class="icon-[simple-icons--kubernetes] h-5 w-5"></span>
@@ -200,41 +223,41 @@
                 <span class="icon-[simple-icons--natsdotio] h-5 w-5"></span>
                 <span class="icon-[simple-icons--apachekafka] h-5 w-5"></span>
                 ...
-              </p>
+              </div>
             </div>
-            </div>
-            <div class="flex flex-row flex-nowrap justify-start gap-xs">
-              <p class="text-2xl font-extrabold text-accent">2</p>
-              <div class="text-sm leading-relaxed">
-                <p>Store cdevents.</p>
-                <p class="mt-2">
+            <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
+              <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">2</div>
+              <div class="flex-1">
+                <h4 class="text-xl font-semibold mb-2">Store Events</h4>
+                <p class="text-base leading-relaxed mb-4">
+                  <!-- Pull or receive events from multiple sources and convert them to standardized cdevents. -->
+                  Keep events in a database for later analysis. And pre-process them for further analysis.
+                </p>
                 <span class="icon-[simple-icons--postgresql] h-5 w-5"></span>
-                </p>
               </div>
             </div>
-            <div class="flex flex-row flex-nowrap justify-start gap-xs">
-              <p class="text-2xl font-extrabold text-accent">3</p>
-              <div class="text-sm leading-relaxed">
-                <p>
-                Observe the activity of your software factory with dashboard,
-                alerts,... And build your own analytics.
+            <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
+              <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">3</div>
+              <div class="flex-1">
+                <h4 class="text-xl font-semibold mb-2">Event Monitoring</h4>
+                <p class="text-base leading-relaxed mb-4">
+                  Observe the activity of your software factory with dashboard,
+                  alerts,... And build your own analytics.
                 </p>
-                <p class="mt-2">
                 <span class="icon-[simple-icons--grafana] h-5 w-5"></span>
-                </p>
+                ...
               </div>
             </div>
-            <div class="flex flex-row flex-nowrap justify-start gap-xs">
-              <p class="text-2xl font-extrabold text-accent">4</p>
-              <div class="text-sm leading-relaxed">
-                <p>
-                Trigger reaction on cdevents.
+            <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
+              <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">4</div>
+              <div class="flex-1">
+                <h4 class="text-xl font-semibold mb-2">Event Reaction</h4>
+                <p class="text-base leading-relaxed mb-4">
+                  Trigger reaction on cdevents.
                 </p>
-                <p class="mt-2">
                 <span class="icon-[simple-icons--n8n] h-5 w-5"></span>
                 <span class="icon-[simple-icons--make] h-5 w-5"></span>
                 <span class="icon-[simple-icons--argo] h-5 w-5"></span>
-                </p>
               </div>
             </div>
           </div>
@@ -249,20 +272,19 @@
           </div>
         </div>
       </section>
-      <section class="my-xl md:my-2xl">
-        <a id="pricing"></a>
-        <h2>Plans &amp; Pricing</h2>
-        <p class="my-lg text-center">
-          We love Open Source, and we love to collaborate with others.<br />
-          Core components are Open Source.
+      <section class="my-xl md:my-2xl bg-gradient-to-b from-background to-secondary/5 py-16">
+        <a name="pricing"></a>
+        <h2 class="text-3xl font-bold text-center mb-4">Pricing & Editions</h2>
+        <p class="text-xl text-center mb-12 max-w-3xl mx-auto">
+          Choose the plan that works best for your team. Our commitment to Open Source
+          means core components are always free.
         </p>
-        <div class="grid gap-xl md:grid-cols-3">
+        <div class="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
           <div
             class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-primary border-2"
           >
             <div>
               <h3 class="m-2">Community</h3>
-
               <ul class="my-md ml-2 text-left">
                 <li class="check-circle mb-4 pl-8">
                   Free to use (commercial &amp; non-commercial)
@@ -287,7 +309,7 @@
             class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-secondary border-2"
           >
             <div>
-              <h3 class="m-2">Commercial</h3>
+              <h3 class="m-2">Enterprise</h3>
               <!-- <p>We can offer consulting to help you with your cdevents needs.</p> -->
               <ul class="my-md ml-2 text-left">
                 <li class="check-circle mb-4 pl-8">
@@ -345,68 +367,69 @@
           </div>
         </div>
       </section>
-      <section class="my-xl md:my-2xl">
+      <!-- <section class="my-xl md:my-2xl"> -->
         <!-- More social proof -->
-        <a id="testimonials"></a>
+        <!-- <a id="testimonials"></a> -->
         <!-- <div>No testimonials yet, but we love to hear from you!</div> -->
-      </section>
-      <section class="my-xl md:my-2xl">
-        <!-- Handle Objections -->
-        <a id="faq"></a>
-        <h2>Frequently Asked Questions</h2>
-        <details  class="clickable bg-secondary/20 my-md rounded-xl p-md">
-          <summary class="font-bold">Is it free to use?</summary>
-          <p class="pt-md leading-snug">
-            Yes, you can use the Open Source components for free.</br>
+      <!-- </section> -->
+      <section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl">
+        <a name="faq"></a>
+        <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+        <div class="max-w-3xl mx-auto">
+          <details class="clickable bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+            <summary class="text-xl font-semibold cursor-pointer">Is it free to use?</summary>
+            <div class="pt-4 text-text/80 space-y-4">
+              Yes, you can use the Open Source components for free.</br>
               No, self-hosting is not free, as you have spend time and money on
               configuration, maintenance, and support of your own
               infrastructure.
-            <br/>
-            No, some components could not be available for free.
-          </p>
+              <br/>
+              No, some components could not be available for free.
+            </div>
         </details>
-        <details  class="clickable bg-secondary/20 my-md rounded-xl p-md">
-          <summary class="font-bold">What is the plan for Saas?</summary>
-            <p class="pt-md leading-snug">
+        <details class="clickable bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+          <summary class="text-xl font-semibold cursor-pointer">What is the plan for Saas?</summary>
+            <div class="pt-4 text-text/80 space-y-4">
               We are currently working on a SaaS plan. We don't know yet what
               will provide in term of features and pricing (plan). We are open
               to discussions and to partnerships.
             <br/>
               If you are interested in a SaaS plan, please
               <a href="mailto:contact@cdviz.io">contact us</a>.
-            </p>
-        </details>
-        <details  class="clickable bg-secondary/20 my-md rounded-xl p-md">
-          <summary class="font-bold">
-            What is the relationship between CDviz and cdevents?
-          </summary>
-            <p class="pt-md leading-snug">
-              CDviz is a set of components to provide a view of which version of
-              services are deployed and which environment, what test ran,...
-              CDviz components are built on top of cdevents. CDviz'team is part
-              of the cdevents community.
-            </p>
-        </details>
-        <details  class="clickable bg-secondary/20 my-md rounded-xl p-md">
-          <summary class="font-bold">
-            Why do dashboard tools, like Grafana, have access (read-only) to the
-            DB (PostgreSQL), and NOT go through an API (micro)service?
-          </summary>
-          <p class="pt-md leading-snug">
-            <ul class="list-disc pl-4">
-              <li>The data is your value, not the service.</li>
-              <li>
-                Allow dashboards to use the full query power of SQL to query
-                data, and to plug any analytics tools, no incomplete, frustrated
-                custom query language.
-              </li>
-              <li>
-                Allow Data Ops to split the DB with read-only replicas if
-                needed,...
-              </li>
-            </ul>
-          </p>
-        </details>
+            </div>
+          </details>
+          <details class="clickable bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+            <summary class="text-xl font-semibold cursor-pointer">
+              What is the relationship between CDviz and cdevents?
+            </summary>
+              <div class="pt-4 text-text/80 space-y-4">
+                CDviz is a set of components to provide a view of which version of
+                services are deployed and which environment, what test ran,...
+                CDviz components are built on top of cdevents. CDviz'team is part
+                of the cdevents community.
+              </div>
+          </details>
+          <details class="clickable bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+            <summary class="text-xl font-semibold cursor-pointer">
+              Why do dashboard tools, like Grafana, have access (read-only) to the
+              DB (PostgreSQL), and NOT go through an API (micro)service?
+            </summary>
+            <div class="pt-4 text-text/80 space-y-4">
+              <ul class="list-disc pl-4">
+                <li>The data is your value, not the service.</li>
+                <li>
+                  Allow dashboards to use the full query power of SQL to query
+                  data, and to plug any analytics tools, no incomplete, frustrated
+                  custom query language.
+                </li>
+                <li>
+                  Allow Data Ops to split the DB with read-only replicas if
+                  needed,...
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
       </section>
       <!-- <a id="featured-posts"></a>
       <section>
