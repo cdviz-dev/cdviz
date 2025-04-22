@@ -33,11 +33,11 @@ Some of the key features of CDviz include:
 > [!NOTE]
 > The 3 main components of CDviz are independent and can be used separately or together. You can used 1, 2 or the 3 components.
 
-1. A [dashboard](/cdviz-grafana/) tool, to be able to visualize (and analyze, alert) and to combine existing runtime, business metrics with SDLC metrics. CDviz provides dashboards & panelsfor [Grafana](https://grafana.com/), but it could be adapted to other tools.
+1. A [dashboard](/docs/cdviz-grafana/) tool, to be able to visualize (and analyze, alert) and to combine existing runtime, business metrics with SDLC metrics. CDviz provides dashboards & panelsfor [Grafana](https://grafana.com/), but it could be adapted to other tools.
   ![step01](/architectures/overview_01.excalidraw.svg)
-2. A [database](/cdviz-db/) to store the data for visualization (dashboards). CDviz provides support for a PostgreSQL database.
+2. A [database](/docs/cdviz-db/) to store the data for visualization (dashboards). CDviz provides support for a PostgreSQL database.
   ![step02](/architectures/overview_02.excalidraw.svg)
-3. A [collector](/cdviz-collector/) (mini data pipeline) to collect and process data from various sources and to push the data to the database.
+3. A [collector](/docs/cdviz-collector/) (mini data pipeline) to collect and process data from various sources and to push the data to the database.
   ![step03](/architectures/overview_03.excalidraw.svg)
 4. A data pipeline to trigger actions into other systems.
   ![step03](/architectures/overview_04.excalidraw.svg)

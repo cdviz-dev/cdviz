@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "CDviz's Documentation",
+  title: "CDviz",
   titleTemplate: ':title - CDviz',
   description: "Documentation of CDviz's components",
   head: [
@@ -49,7 +49,7 @@ export default defineConfig({
   //     `
   //   ],
   ],
-  base: "/docs/",
+  // base: "/docs/",
   srcDir: "./src",
   // markdown: {
   //   config: (md) => {
@@ -65,55 +65,54 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: '/favicon.svg',
     nav: [
-      { text: "Home", link: "https://cdviz.dev/" },
-      { text: "Documentation", link: "/" },
-      { text: "Pricing", link: "https://cdviz.dev/#pricing" },
+      { text: "Documentation", link: "/docs" },
+      { text: "Pricing", link: "/#pricing" },
     ],
     sidebar: [
       {
         text: "Overview",
-        link: "/",
+        link: "/docs/",
         items: [
-          { text: "Quickstart", link: "/quickstart" },
+          { text: "Quickstart", link: "/docs/quickstart" },
         ],
       },
       {
         text: "Collector",
         collapsed: true,
-        link: "/cdviz-collector/",
+        link: "/docs/cdviz-collector/",
         items: [
-          { text: "Installation", link: "/cdviz-collector/install" },
-          { text: "Usage", link: "/cdviz-collector/usage" },
-          { text: "Configuration", link: "/cdviz-collector/configuration",
+          { text: "Installation", link: "/docs/cdviz-collector/install" },
+          { text: "Usage", link: "/docs/cdviz-collector/usage" },
+          { text: "Configuration", link: "/docs/cdviz-collector/configuration",
             items: [
-              { text: "Sources", link: "/cdviz-collector/sources" },
-              { text: "Transformers", link: "/cdviz-collector/transformers" },
-              { text: "Sinks", link: "/cdviz-collector/sinks" },
+              { text: "Sources", link: "/docs/cdviz-collector/sources" },
+              { text: "Transformers", link: "/docs/cdviz-collector/transformers" },
+              { text: "Sinks", link: "/docs/cdviz-collector/sinks" },
             ]
           },
-          // { text: "Usage", link: "/cdviz-collector/usage" },
-          // { text: "Troubleshooting", link: "/cdviz-collector/troubleshooting" },
-          // { text: "Contributing", link: "/cdviz-collector/contributing" },
+          // { text: "Usage", link: "/docs/cdviz-collector/usage" },
+          // { text: "Troubleshooting", link: "/docs/cdviz-collector/troubleshooting" },
+          // { text: "Contributing", link: "/docs/cdviz-collector/contributing" },
         ],
       },
       {
         text: "Database (postgresql)",
         collapsed: true,
-        link: "/cdviz-db/",
+        link: "/docs/cdviz-db/",
         items: [
           // { text: "Installation", link: "/cdviz-db/#install" },
-          { text: "Hosting", link: "/cdviz-db/hosting" },
+          { text: "Hosting", link: "/docs/cdviz-db/hosting" },
         ],
       },
       {
         text: "Dashboard (grafana)",
         collapsed: true,
-        link: "/cdviz-grafana/",
+        link: "/docs/cdviz-grafana/",
         // items: [
         //   { text: "Installation", link: "/cdviz-grafana/install" },
         // ],
       },
-      { text: "Alternatives", link: "/alternatives" },
+      { text: "Alternatives", link: "/docs/alternatives" },
     ],
     aside: true,
     outline: {

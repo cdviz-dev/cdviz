@@ -41,24 +41,11 @@ jobs:
 
       - uses: jdx/mise-action@v2
         with:
-          working_directory: ./cdviz-site/landingpage
+          working_directory: ./cdviz-site
       - run: |
           mise run install
           mise run build
-        working-directory: ./cdviz-site/landingpage
-
-      - uses: jdx/mise-action@v2
-        with:
-          working_directory: ./cdviz-site/docs
-      - run: |
-          mise run install
-          mise run build
-        working-directory: ./cdviz-site/docs
-
-      - run: |
-          mkdir -p ./cdviz-site/dist/docs
-          cp -r ./cdviz-site/landingpage/dist/* ./cdviz-site/dist
-          cp -r ./cdviz-site/docs/.vitepress/dist/* ./cdviz-site/dist/docs
+        working-directory: ./cdviz-site
 
       # - uses: actions/configure-pages@v4
       # - uses: actions/upload-pages-artifact@v3
@@ -72,7 +59,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: ./cdviz-site
-          command: pages deploy ./dist --project-name=cdviz
+          command: pages deploy ./.vitepress/dist --project-name=cdviz
           # Optional: Enable this if you want to have GitHub Deployments triggered
           # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: print deployment-url

@@ -1,8 +1,0 @@
-[tools]
-"bun" = "latest"
-
-[tasks]
-install = "bun install"
-dev = "bun run vite dev"
-build = "bun run vite build"
-preview = "bun run vite preview"
