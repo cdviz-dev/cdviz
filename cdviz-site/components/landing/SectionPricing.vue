@@ -6,7 +6,7 @@ import H3 from './H3.vue';
 
 <template>
   <section class="my-xl md:my-2xl bg-gradient-to-b from-background to-secondary/5 py-16">
-    <a name="pricing"></a>
+    <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
     <div class="text-xl text-center mb-12 max-w-3xl mx-auto">
       Choose the plan that works best for your team. Our commitment to Open Source

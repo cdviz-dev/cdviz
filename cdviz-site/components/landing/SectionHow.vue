@@ -10,7 +10,7 @@ import H3 from './H3.vue';
     dark:border-white/10 dark:bg-black/10
     rounded-xl shadow-xl
     ">
-      <a name="how"></a>
+      <a id="how"></a>
       <H2>How CDviz Works</H2>
       <div class="grid gap-8 md:grid-cols-2 md:grid-rows-2">
         <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">

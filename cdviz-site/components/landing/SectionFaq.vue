@@ -3,7 +3,7 @@ import H2 from './H2.vue';
 </script>
 <template>
   <section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl">
-    <a name="faq"></a>
+    <a id="faq"></a>
     <H2>Frequently Asked Questions</H2>
     <div class="max-w-3xl mx-auto">
       <details class="cursor-pointer transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-lg bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">

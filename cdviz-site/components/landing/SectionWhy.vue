@@ -4,7 +4,7 @@ import H3 from './H3.vue';
 </script>
 <template>
 <section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl"> <!-- Added background -->
-  <a name="why"></a>
+  <a id="why"></a>
   <H2>Why Choose CDviz?</H2>
   <div class="flex flex-col items-stretch gap-8 md:flex-row max-w-5xl mx-auto">
     <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
