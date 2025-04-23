@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -79,7 +79,7 @@
         "wrap": false
       },
       "pluginVersion": "5.7.0",
-      "repeat": "pipelineName",
+      "repeat": "pipelineNames",
       "repeatDirection": "h",
       "targets": [
         {
@@ -176,5 +176,5 @@
   "timezone": "browser",
   "title": "pipelines",
   "uid": "pipelinerun",
-  "version": 2025041720
+  "version": 2025042320
 }

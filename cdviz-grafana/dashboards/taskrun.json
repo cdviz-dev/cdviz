@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -66,7 +66,7 @@
         "wrap": true
       },
       "pluginVersion": "5.7.0",
-      "repeat": "taskName",
+      "repeat": "taskNames",
       "repeatDirection": "h",
       "targets": [
         {
@@ -162,5 +162,5 @@
   "timezone": "browser",
   "title": "tasks",
   "uid": "taskrun",
-  "version": 2025041021
+  "version": 2025042320
 }
