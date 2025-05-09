@@ -15,7 +15,7 @@ export default defineConfig({
     ],
     [
       'link',
-      { rel: 'icon', type: 'image/svg+xml', href: '/assets/favicon.svg' }
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
     ]
   //   [
   //     // alternative using vitepress-plugin-diagrams (and generate diagrams at build time, but duplicate configuration in every diagrams)
@@ -137,6 +137,9 @@ export default defineConfig({
     //   return url.toLowerCase().includes('ignore')
     // }
   ],
+  sitemap: {
+    hostname: 'https://cdviz.dev'
+  },
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
   vite: {
