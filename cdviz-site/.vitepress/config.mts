@@ -137,6 +137,9 @@ export default defineConfig({
     //   return url.toLowerCase().includes('ignore')
     // }
   ],
+  sitemap: {
+    hostname: 'https://cdviz.dev'
+  },
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
   vite: {
