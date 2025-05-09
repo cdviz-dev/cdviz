@@ -17,18 +17,13 @@ import H3 from './H3.vue';
         class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-primary border-2"
       >
         <div>
-          <H3>Community</H3>
+          <H3>Open Source / Community</H3>
+          <!-- <div class="text-4xl font-bold mx-auto my-8">0€ + Your time</div> -->
           <ul class="my-md ml-2 text-left">
-            <li class="check-circle mb-4 pl-8">
-              Free to use (commercial &amp; non-commercial)
-            </li>
-            <li class="check-circle mb-4 pl-8">
-              Free to contribute (code, docs, ideas,...)
-            </li>
-            <li class="check-circle mb-4 pl-8">Free to sponsor</li>
-            <li class="check-circle mb-4 pl-8">
-              Pay with your time &amp; resources
-            </li>
+            <li class="check-circle mb-4 pl-8">Collectors (AGPL v3)</li>
+            <li class="check-circle mb-4 pl-8">Database schemas (ASL v2)</li>
+            <li class="check-circle mb-4 pl-8">Grafana components (ASL v2)</li>
+            <li class="check-circle mb-4 pl-8">Community Support</li>
           </ul>
         </div>
         <Btn
@@ -42,21 +37,24 @@ import H3 from './H3.vue';
       >
         <div>
           <H3>Enterprise</H3>
-          <!-- <p>We can offer consulting to help you with your cdevents needs.</p> -->
+          <!-- <div class="text-4xl font-bold mx-auto my-8">109 €/dc/m</div> -->
+          <!-- <div class="my-2 italic opacity-70">For your on-premise installation</div> -->
+          <!-- <p>We can offer consulting to help you with your cdviz/cdevents needs.</p> -->
           <ul class="my-md ml-2 text-left">
+            <li class="check-circle mb-4 pl-8">Collector (Commercial License)</li>
             <li class="check-circle mb-4 pl-8">
               More sources &amp; sinks for collector
             </li>
             <li class="check-circle mb-4 pl-8">
-              Support to configure and deploy
+              Professional support
             </li>
-            <li class="check-circle mb-4 pl-8">
+            <!-- <li class="check-circle mb-4 pl-8">
               Create a custom source or sink
             </li>
             <li class="check-circle mb-4 pl-8">
               Create a custom dashboard or alert
             </li>
-            <li class="check-circle mb-4 pl-8">Adapt to your needs</li>
+            <li class="check-circle mb-4 pl-8">Adapt to your needs</li> -->
           </ul>
         </div>
         <!-- href="mailto:contact@cdviz.dev?subject=Consulting%20inquiry" -->
@@ -74,7 +72,7 @@ import H3 from './H3.vue';
         </p> -->
           <ul class="my-md ml-2 text-left">
             <li class="check-circle mb-4 pl-8">
-              More sources &amp; sinks for collector
+              Collector with same features than Enterprise
             </li>
             <li class="check-circle mb-4 pl-8">
               Collector operated by us (on our infrastucture)
