@@ -1,8 +1,23 @@
 [tools]
 "bun" = "latest"
+# "magick" = "latest" # imagemagick
 
 [tasks]
 install = "bun install"
 dev = "bun run docs:dev"
 build = "bun run docs:build"
 preview = "bun run docs:preview"
+
+[tasks."build:favicon"]
+description="rebuild favicon.{ico,png,webp} from favicon.svg"
+dir = "assets"
+run=[
+  # limit to browser resolution see https://favicon.im/blog/favicon-formats-sizes-best-practices
+  # use imagemagick
+  "magick favicon.svg -background none -define icon:auto-resize=16,32,48,64 favicon.ico",
+  "magick favicon.svg -background none -resize 48x48 favicon.png",
+  "magick favicon.svg -background none -resize 48x48 favicon.webp",
+  "magick favicon.svg -background none -resize 320x320 ../logos/cdviz-320x320-c.png",
+]
+sources = ["favicon.svg"]
+outputs = ["favicon.ico", "favicon.png", "favicon.webp"]

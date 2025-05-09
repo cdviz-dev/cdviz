@@ -15,7 +15,7 @@ export default defineConfig({
     ],
     [
       'link',
-      { rel: 'icon', type: 'image/svg+xml', href: '/assets/favicon.svg' }
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
     ]
   //   [
   //     // alternative using vitepress-plugin-diagrams (and generate diagrams at build time, but duplicate configuration in every diagrams)
