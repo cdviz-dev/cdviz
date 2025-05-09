@@ -1,9 +1,9 @@
 <script setup>
+import Faq from './landing/SectionFaq.vue';
 import Hero from './landing/SectionHero.vue';
-import Why from './landing/SectionWhy.vue';
 import How from './landing/SectionHow.vue';
 import Pricing from './landing/SectionPricing.vue';
-import Faq from './landing/SectionFaq.vue';
+import Why from './landing/SectionWhy.vue';
 </script>
 
 <template>
@@ -29,7 +29,7 @@ import Faq from './landing/SectionFaq.vue';
     <section class="my-xl md:my-2xl">
       <!-- End & Last CTA -->
       <a id="end"></a>
-      <div class="text-center italic text-lg">Thank you for reading!</div>
+      <div class="text-center italic text-lg">Thank you!</div>
     </section>
   </main>
 </template>

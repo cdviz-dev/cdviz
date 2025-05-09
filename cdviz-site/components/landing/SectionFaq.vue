@@ -25,7 +25,7 @@ import H2 from './H2.vue';
           to discussions and to partnerships.
         <br/>
           If you are interested in a SaaS plan, please
-          <a href="mailto:contact@cdviz.io">contact us</a>.
+          <a href="/contact">contact us</a>.
         </div>
       </details>
       <details class="cursor-pointer transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-lg bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">

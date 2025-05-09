@@ -59,10 +59,8 @@ import H3 from './H3.vue';
             <li class="check-circle mb-4 pl-8">Adapt to your needs</li>
           </ul>
         </div>
-        <Btn
-          href="mailto:contact@cdviz.dev?subject=Consulting%20inquiry"
-          aria-label="send us an email"
-          >Contact Us</Btn>
+        <!-- href="mailto:contact@cdviz.dev?subject=Consulting%20inquiry" -->
+        <Btn href="/contact" aria-label="Join the waitlist">Join Waitlist</Btn>
       </div>
       <div
         class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-secondary border-2"
@@ -87,12 +85,9 @@ import H3 from './H3.vue';
             <li class="check-circle mb-4 pl-8">Dashboard operated by ???</li>
           </ul>
         </div>
-        <Btn
-          href="mailto:contact@cdviz.dev?subject=SaaS%20plan%20inquiry"
-          aria-label="send us an email"
-          >Contact Us</Btn>
+        <!-- href="mailto:contact@cdviz.dev?subject=SaaS%20plan%20inquiry" -->
+        <Btn href="/contact" aria-label="Join the waitlist">Join Waitlist</Btn>
 
-        <!--a href="" aria-label="subscribe to Waitlist">Subscribe to waitlist</a-->
       </div>
     </div>
   </section>
