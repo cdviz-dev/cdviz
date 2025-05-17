@@ -26,6 +26,7 @@ jobs:
       matrix:
         folder:
           # - cdviz-db
+          - cdviz-grafana
           - charts
           - demos
     steps:
