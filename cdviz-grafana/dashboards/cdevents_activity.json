@@ -1,0 +1,816 @@
+{
+  "timezone": "browser",
+  "editable": true,
+  "graphTooltip": 0,
+  "fiscalYearStartMonth": 0,
+  "schemaVersion": 39,
+  "templating": {
+    "list": [
+      {
+        "type": "datasource",
+        "name": "datasource",
+        "skipUrlSync": false,
+        "multi": false,
+        "includeAll": false,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "query": "grafana-postgresql-datasource",
+        "regex": "cdviz.*"
+      },
+      {
+        "type": "query",
+        "name": "subjects",
+        "skipUrlSync": false,
+        "multi": true,
+        "includeAll": true,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "label": "Subjects",
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${datasource}"
+        },
+        "query": "SELECT DISTINCT \"subject\"\nFROM \"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"subject\" LIKE '$__searchFilter'",
+        "sort": 0,
+        "refresh": 2,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "type": "query",
+        "name": "predicates",
+        "skipUrlSync": false,
+        "multi": true,
+        "includeAll": true,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "label": "Predicates",
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${datasource}"
+        },
+        "query": "SELECT DISTINCT \"predicate\"\nFROM \"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
+        "sort": 0,
+        "refresh": 2,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "type": "custom",
+        "name": "pageSize",
+        "skipUrlSync": false,
+        "multi": false,
+        "includeAll": false,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "description": "Page order number. Specify as a dashboard variable name.",
+        "hide": 2,
+        "current": {
+          "text": "10",
+          "value": "10"
+        }
+      },
+      {
+        "type": "custom",
+        "name": "offset",
+        "skipUrlSync": false,
+        "multi": false,
+        "includeAll": false,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "description": "How many rows to skip starting from the first. Specify as a dashboard variable name.",
+        "hide": 2,
+        "current": {
+          "text": "0",
+          "value": "0"
+        }
+      }
+    ]
+  },
+  "annotations": {},
+  "title": "CDEvents Activity",
+  "uid": "cdevents_activity",
+  "tags": [
+    "cdviz"
+  ],
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "type": "marcusolsson-dynamictext-panel",
+      "transparent": false,
+      "repeatDirection": "h",
+      "options": {
+        "afterRender": "import(\"https://esm.sh/d3@7.9.0\").then((d3) => {\n// src/panels/browser_scripts/utils.ts\nfunction newSvgArea(container) {\n  const rect = container.parentNode.getBoundingClientRect();\n  const width = rect.width;\n  const height = rect.height;\n  const svg = d3.create(\"svg\").attr(\"width\", \"93%\").attr(\"font-family\", \"sans-serif\").style(\"display\", \"block\");\n  svg.attr(\"viewBox\", [0, 0, width, height]).attr(\"preserveAspectRatio\", \"none\");\n  container.replaceChildren(svg.node());\n  return { svg, width, height };\n}\n\n// src/panels/browser_scripts/draw_sunburst_count_per_path.ts\nfunction draw(context) {\n  const data = context.data[0];\n  const container = context.element;\n  const { svg, width, height } = newSvgArea(container);\n  const dataHierarchy = { name: \"\", children: [], value: 0 };\n  let depthMax = 0;\n  for (const { count, path: path2 } of data) {\n    const fragments = path2.split(\"/\").filter((v) => !!v && !v.endsWith(\":\"));\n    depthMax = Math.max(depthMax, fragments.length);\n    let parent2 = dataHierarchy;\n    let i = 0;\n    for (;i < fragments.length - 1; i++) {\n      let n = parent2.children?.find((d) => d.name === fragments[i]);\n      if (!n) {\n        n = { name: fragments[i], children: [], value: 0 };\n        parent2.children?.push(n);\n      }\n      parent2 = n;\n    }\n    parent2.children?.push({ name: fragments[i], children: [], value: count });\n  }\n  const hierarchy = d3.hierarchy(dataHierarchy).sum((d) => d.value).sort((a, b) => (b.value || 0) - (a.value || 0));\n  const root = d3.partition().size([2 * Math.PI, hierarchy.height + 1])(hierarchy);\n  root.each((d) => {\n    d.current = d;\n  });\n  const levelDisplayed = Math.min(3, depthMax) + 1;\n  const side = Math.min(width, height);\n  svg.attr(\"font-size\", side / 40).attr(\"viewBox\", [-width / 2, -height / 2, width, height]);\n  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, dataHierarchy.children.length + 1));\n  const radius = side / (levelDisplayed * 2);\n  const arc = d3.arc().startAngle((d) => d.x0).endAngle((d) => d.x1).padAngle((d) => Math.min((d.x1 - d.x0) / 2, 0.005)).padRadius(radius * 1.5).innerRadius((d) => d.y0 * radius).outerRadius((d) => Math.max(d.y0 * radius, d.y1 * radius - 1));\n  const path = svg.append(\"g\").selectAll(\"path\").data(root.descendants().slice(1)).join(\"path\").attr(\"fill\", (d) => {\n    let node = d;\n    while (node.depth > 1 && node.parent)\n      node = node.parent;\n    return color(node.data.name);\n  }).attr(\"fill-opacity\", (d) => arcVisible(d.current) ? d.children ? 0.6 : 0.4 : 0).attr(\"pointer-events\", (d) => arcVisible(d.current) ? \"auto\" : \"none\").attr(\"d\", (d) => arc(d.current));\n  path.filter((d) => !!d.children).style(\"cursor\", \"pointer\").on(\"click\", clicked);\n  const format = d3.format(\",d\");\n  path.append(\"title\").text((d) => `${d.ancestors().map((d2) => d2.data.name).reverse().join(\"/\")}\\n${format(d.value || 0)}`);\n  const label = svg.append(\"g\").attr(\"pointer-events\", \"none\").attr(\"text-anchor\", \"middle\").style(\"user-select\", \"none\").selectAll(\"text\").data(root.descendants().slice(1)).join(\"text\").attr(\"dy\", \"0.35em\").attr(\"fill-opacity\", (d) => +labelVisible(d.current)).attr(\"transform\", (d) => labelTransform(d.current)).text((d) => d.data.name);\n  const parent = svg.append(\"circle\").datum(root).attr(\"r\", radius).attr(\"fill\", \"none\").attr(\"pointer-events\", \"all\").on(\"click\", clicked);\n  function clicked(event, p) {\n    parent.datum(p.parent || root);\n    root.each((d) => {\n      d.target = {\n        x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n        x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n        y0: Math.max(0, d.y0 - p.depth),\n        y1: Math.max(0, d.y1 - p.depth)\n      };\n    });\n    const t = svg.transition().duration(event.altKey ? 7500 : 750);\n    path.transition(t).tween(\"data\", (d) => {\n      if (d.target) {\n        const i = d3.interpolate(d.current, d.target);\n        return (t2) => {\n          d.current = i(t2);\n        };\n      }\n      return (t2) => {\n      };\n    }).filter((d) => {\n      return +this?.getAttribute(\"fill-opacity\") || arcVisible(d.target);\n    }).attr(\"fill-opacity\", (d) => arcVisible(d.target) ? d.children ? 0.6 : 0.4 : 0).attr(\"pointer-events\", (d) => arcVisible(d.target) ? \"auto\" : \"none\").attrTween(\"d\", (d) => () => arc(d.current));\n    label.filter((d) => {\n      return +this.getAttribute(\"fill-opacity\") || labelVisible(d.target);\n    }).transition(t).attr(\"fill-opacity\", (d) => +labelVisible(d.target)).attrTween(\"transform\", (d) => () => labelTransform(d.current));\n  }\n  function arcVisible(d) {\n    return !!d && d.y1 <= levelDisplayed && d.y0 >= 1 && d.x1 > d.x0;\n  }\n  function labelVisible(d) {\n    return !!d && d.y1 <= levelDisplayed && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;\n  }\n  function labelTransform(d) {\n    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;\n    const y = (d.y0 + d.y1) / 2 * radius;\n    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;\n  }\n}\n\ndraw(context);});\n",
+        "content": "",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [
+          "afterRender"
+        ],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "data",
+        "style": "",
+        "wrap": false
+      },
+      "title": "How many events?",
+      "description": "Count by Subject & Predicate over the time window",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COUNT(*) as count,\n  subject || '/' || predicate as path\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Events By Hours",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "barWidthFactor": 0.5,
+            "drawStyle": "bars",
+            "fillOpacity": 49
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  (subject || '/' || predicate) AS kind,\n  COUNT(*)\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "kind"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": true
+            }
+          }
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "type": "marcusolsson-dynamictext-panel",
+      "transparent": false,
+      "repeatDirection": "h",
+      "options": {
+        "afterRender": "import(\"https://esm.sh/d3@7.9.0\").then((d3) => {\n// src/panels/browser_scripts/utils.ts\nfunction newSvgArea(container) {\n  const rect = container.parentNode.getBoundingClientRect();\n  const width = rect.width;\n  const height = rect.height;\n  const svg = d3.create(\"svg\").attr(\"width\", \"93%\").attr(\"font-family\", \"sans-serif\").style(\"display\", \"block\");\n  svg.attr(\"viewBox\", [0, 0, width, height]).attr(\"preserveAspectRatio\", \"none\");\n  container.replaceChildren(svg.node());\n  return { svg, width, height };\n}\n\n// src/panels/browser_scripts/draw_sunburst_count_per_path.ts\nfunction draw(context) {\n  const data = context.data[0];\n  const container = context.element;\n  const { svg, width, height } = newSvgArea(container);\n  const dataHierarchy = { name: \"\", children: [], value: 0 };\n  let depthMax = 0;\n  for (const { count, path: path2 } of data) {\n    const fragments = path2.split(\"/\").filter((v) => !!v && !v.endsWith(\":\"));\n    depthMax = Math.max(depthMax, fragments.length);\n    let parent2 = dataHierarchy;\n    let i = 0;\n    for (;i < fragments.length - 1; i++) {\n      let n = parent2.children?.find((d) => d.name === fragments[i]);\n      if (!n) {\n        n = { name: fragments[i], children: [], value: 0 };\n        parent2.children?.push(n);\n      }\n      parent2 = n;\n    }\n    parent2.children?.push({ name: fragments[i], children: [], value: count });\n  }\n  const hierarchy = d3.hierarchy(dataHierarchy).sum((d) => d.value).sort((a, b) => (b.value || 0) - (a.value || 0));\n  const root = d3.partition().size([2 * Math.PI, hierarchy.height + 1])(hierarchy);\n  root.each((d) => {\n    d.current = d;\n  });\n  const levelDisplayed = Math.min(3, depthMax) + 1;\n  const side = Math.min(width, height);\n  svg.attr(\"font-size\", side / 40).attr(\"viewBox\", [-width / 2, -height / 2, width, height]);\n  const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, dataHierarchy.children.length + 1));\n  const radius = side / (levelDisplayed * 2);\n  const arc = d3.arc().startAngle((d) => d.x0).endAngle((d) => d.x1).padAngle((d) => Math.min((d.x1 - d.x0) / 2, 0.005)).padRadius(radius * 1.5).innerRadius((d) => d.y0 * radius).outerRadius((d) => Math.max(d.y0 * radius, d.y1 * radius - 1));\n  const path = svg.append(\"g\").selectAll(\"path\").data(root.descendants().slice(1)).join(\"path\").attr(\"fill\", (d) => {\n    let node = d;\n    while (node.depth > 1 && node.parent)\n      node = node.parent;\n    return color(node.data.name);\n  }).attr(\"fill-opacity\", (d) => arcVisible(d.current) ? d.children ? 0.6 : 0.4 : 0).attr(\"pointer-events\", (d) => arcVisible(d.current) ? \"auto\" : \"none\").attr(\"d\", (d) => arc(d.current));\n  path.filter((d) => !!d.children).style(\"cursor\", \"pointer\").on(\"click\", clicked);\n  const format = d3.format(\",d\");\n  path.append(\"title\").text((d) => `${d.ancestors().map((d2) => d2.data.name).reverse().join(\"/\")}\\n${format(d.value || 0)}`);\n  const label = svg.append(\"g\").attr(\"pointer-events\", \"none\").attr(\"text-anchor\", \"middle\").style(\"user-select\", \"none\").selectAll(\"text\").data(root.descendants().slice(1)).join(\"text\").attr(\"dy\", \"0.35em\").attr(\"fill-opacity\", (d) => +labelVisible(d.current)).attr(\"transform\", (d) => labelTransform(d.current)).text((d) => d.data.name);\n  const parent = svg.append(\"circle\").datum(root).attr(\"r\", radius).attr(\"fill\", \"none\").attr(\"pointer-events\", \"all\").on(\"click\", clicked);\n  function clicked(event, p) {\n    parent.datum(p.parent || root);\n    root.each((d) => {\n      d.target = {\n        x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n        x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,\n        y0: Math.max(0, d.y0 - p.depth),\n        y1: Math.max(0, d.y1 - p.depth)\n      };\n    });\n    const t = svg.transition().duration(event.altKey ? 7500 : 750);\n    path.transition(t).tween(\"data\", (d) => {\n      if (d.target) {\n        const i = d3.interpolate(d.current, d.target);\n        return (t2) => {\n          d.current = i(t2);\n        };\n      }\n      return (t2) => {\n      };\n    }).filter((d) => {\n      return +this?.getAttribute(\"fill-opacity\") || arcVisible(d.target);\n    }).attr(\"fill-opacity\", (d) => arcVisible(d.target) ? d.children ? 0.6 : 0.4 : 0).attr(\"pointer-events\", (d) => arcVisible(d.target) ? \"auto\" : \"none\").attrTween(\"d\", (d) => () => arc(d.current));\n    label.filter((d) => {\n      return +this.getAttribute(\"fill-opacity\") || labelVisible(d.target);\n    }).transition(t).attr(\"fill-opacity\", (d) => +labelVisible(d.target)).attrTween(\"transform\", (d) => () => labelTransform(d.current));\n  }\n  function arcVisible(d) {\n    return !!d && d.y1 <= levelDisplayed && d.y0 >= 1 && d.x1 > d.x0;\n  }\n  function labelVisible(d) {\n    return !!d && d.y1 <= levelDisplayed && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;\n  }\n  function labelTransform(d) {\n    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;\n    const y = (d.y0 + d.y1) / 2 * radius;\n    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;\n  }\n}\n\ndraw(context);});\n",
+        "content": "",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [
+          "afterRender"
+        ],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "data",
+        "style": "",
+        "wrap": false
+      },
+      "title": "How many sources?",
+      "description": "Count by Context'source over the time window",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COUNT(*) as count,\n  \"payload\" -> 'context' ->> 'source' as \"path\"\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY path\nORDER BY path",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Details",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "h": 1,
+        "w": 24
+      }
+    },
+    {
+      "type": "volkovlabs-table-panel",
+      "transparent": false,
+      "repeatDirection": "h",
+      "options": {
+        "isColumnManagerAvailable": false,
+        "nestedObjects": [],
+        "saveUserPreference": false,
+        "showFiltersInColumnManager": false,
+        "tables": [
+          {
+            "actionsColumnConfig": {
+              "alignment": "start",
+              "fontSize": "md",
+              "label": "",
+              "width": {
+                "auto": false,
+                "value": 100
+              }
+            },
+            "addRow": {
+              "enabled": false,
+              "permission": {
+                "mode": "",
+                "userRole": []
+              },
+              "request": {
+                "datasource": "",
+                "payload": {}
+              }
+            },
+            "deleteRow": {
+              "enabled": false,
+              "permission": {
+                "mode": "",
+                "userRole": []
+              },
+              "request": {
+                "datasource": "",
+                "payload": {}
+              }
+            },
+            "expanded": true,
+            "items": [
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 100,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "timestamp",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "left",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": true,
+                  "enabled": true
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 130,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "subject",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 130,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "predicate",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "min": 300,
+                    "value": 100
+                  },
+                  "wrap": false
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "payload_subject",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "json"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "min": 300,
+                    "value": 100
+                  },
+                  "wrap": false
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "payload_context",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "json"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
+                    "fontSize": "md"
+                  },
+                  "width": {
+                    "auto": true,
+                    "max": 100,
+                    "min": 20,
+                    "value": 100
+                  },
+                  "wrap": true
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "imported_at",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 14
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "auto"
+              }
+            ],
+            "name": "Events",
+            "pagination": {
+              "defaultPageSize": 10,
+              "enabled": true,
+              "mode": "query",
+              "query": {
+                "offsetVariable": "offset",
+                "pageIndexVariable": "pageIndex",
+                "pageSizeVariable": "pageSize",
+                "totalCountField": {
+                  "name": "count",
+                  "source": "B"
+                }
+              }
+            },
+            "rowHighlight": {
+              "backgroundColor": "transparent",
+              "columnId": "",
+              "enabled": false,
+              "scrollTo": "",
+              "smooth": false,
+              "variable": ""
+            },
+            "showHeader": true,
+            "update": {
+              "datasource": "",
+              "payload": {}
+            }
+          }
+        ],
+        "tabsSorting": false,
+        "toolbar": {
+          "alignment": "left",
+          "export": true,
+          "exportFormats": [
+            "xlsx",
+            "csv"
+          ]
+        }
+      },
+      "title": "Events Logs",
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ]
+    }
+  ],
+  "version": 2025051723
+}
