@@ -20,7 +20,7 @@ run = """
   # export MY_UID=$(id -u)
   # export MY_GID=$(id -g)
   docker compose -f docker-compose.yaml pull
-  docker compose -f docker-compose.yaml up
+  docker compose -f docker-compose.yaml up --remove-orphans
   """
 
 [tasks."stack:compose:down"]
