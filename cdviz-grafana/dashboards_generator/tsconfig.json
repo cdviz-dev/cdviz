@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // Enable latest features
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "allowJs": true,
+
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+
+    // allow d3 to be used (in panels,...) without `import`
+    // So when build panel (via Bun.build), no workaround like:
+    // - define `d3` as external
+    // - remove all import of d3
+    // - rename all alias assigned from multiple import of d3
+    "allowUmdGlobalAccess": true
+  },
+  // "files": ["global.d.ts"]
+  "exclude": ["build/**"]
+}

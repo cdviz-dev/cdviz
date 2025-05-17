@@ -1,8 +1,12 @@
 [tools]
-"yq" = "latest"
+"yq" = "latest" # used by build to update / normalize dashboards
+"bun" = "latest"
+"biome" = "latest"
+# "watchexec" = "latest"
 
 [tasks.build]
 description = "build, normalize/reset dashboard (uid, title, version,..."
+depends = ["build:dashboards"]
 run = [
   """
   #!/usr/bin/env bash
@@ -21,7 +25,40 @@ run = [
     export dash_uid
     export dash_version
     yq eval '(.uid = strenv(dash_uid)) | (.version = env(dash_version)) | (.title |= sub(" wip", ""))' -i $file
-    yq eval '(.time.from = "now-7d") | (.time.to = "now") | (.timezone = "browser")' -i $file
+    # yq eval '(.time.from = "now-7d") | (.time.to = "now") | (.timezone = "browser")' -i $file
   done
   """
 ]
+
+[tasks."build:dashboards"]
+description = "build dashboards"
+dir = "dashboards_generator"
+run = "bun run src/index.ts --output ../dashboards"
+outputs = ["dashboards/*.json"]
+sources = ["dashboards_generator/src/**"]
+wait_for = ["install:deps", "check", "test"]
+
+[tasks."install:deps"]
+dir = "dashboards_generator"
+run = "bun install"
+
+[tasks.check]
+# use https://biomejs.dev/guides/getting-started/
+description = "lint & format"
+dir = "dashboards_generator"
+run = [
+  "bun run tsc",
+  "biome check --write",
+]
+wait_for = ["install:deps"]
+
+[tasks.test]
+depends = ["check"]
+dir = "dashboards_generator"
+run = "bun test"
+wait_for = ["install:deps"]
+
+[tasks.ci]
+description = "tasks for CI (build, test, ...)"
+depends = ["install:deps", "check", "build", "test"]
+# TODO check that no uncommitted change in dashboard after build
