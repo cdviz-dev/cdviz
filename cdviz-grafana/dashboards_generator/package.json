@@ -1,0 +1,17 @@
+{
+  "name": "dashboards-generator",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.13",
+    "@types/d3": "^7.4.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@grafana/grafana-foundation-sdk": "^11.1.0-cogv0.0.x.1746458718",
+    "d3": "^7.9.0",
+    "dedent": "^1.6.0"
+  }
+}

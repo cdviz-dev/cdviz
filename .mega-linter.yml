@@ -56,3 +56,5 @@ YAML_FILTER_REGEX_EXCLUDE: (.*/templates)
 #   - sqlx-data.json
 
 REPOSITORY_TRIVY_DISABLE_ERRORS: true # Too many false positive
+JSON_JSONLINT_ARGUMENTS:
+  - --comments
