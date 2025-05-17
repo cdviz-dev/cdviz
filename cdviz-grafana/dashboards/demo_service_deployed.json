@@ -1029,6 +1029,7 @@
   "preload": false,
   "schemaVersion": 41,
   "tags": [
+    "cdviz",
     "sandbox",
     "cd"
   ],
@@ -1113,7 +1114,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "demo service deployed",
-  "uid": "demo-service-deployed",
-  "version": 2025041812
+  "title": "Demo: Service Deployed",
+  "uid": "demo_service_deployed",
+  "version": 2025051916
 }
