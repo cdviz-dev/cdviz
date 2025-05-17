@@ -35,12 +35,12 @@ export class D3PanelBuilder extends dashboard.PanelBuilder {
   constructor() {
     super();
     this.internal.type = "marcusolsson-dynamictext-panel"; // panel plugin ID
-  }
-
-  script(script: string): this {
     if (!this.internal.options) {
       this.internal.options = defaultD3PanelOptions();
     }
+  }
+
+  script(script: string): this {
     this.internal.options.afterRender = script;
     return this;
   }
