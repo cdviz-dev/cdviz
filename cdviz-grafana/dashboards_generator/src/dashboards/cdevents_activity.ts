@@ -14,7 +14,7 @@ import {
 import dedent from "dedent";
 import { D3PanelBuilder, buildjsForD3Panel } from "../panels/d3_panel";
 import { VolkovlabsTablePanelBuilder } from "../panels/volkovlabs_table_panel";
-import { applyDefaults, newVariableOnDatasource } from "./utils";
+import { DEFAULT_TAGS, applyDefaults, newVariableOnDatasource } from "./utils";
 
 export async function buildDashboard(): Promise<Dashboard> {
   const script_sunburst = await buildjsForD3Panel([
@@ -27,6 +27,7 @@ export async function buildDashboard(): Promise<Dashboard> {
   const builder = applyDefaults(
     new DashboardBuilder("CDEvents Activity").uid("cdevents_activity"),
   )
+    .tags(["cdevents"].concat(DEFAULT_TAGS))
     .withVariable(newVariable4Subject())
     .withVariable(newVariable4Predicate())
     .withVariable(

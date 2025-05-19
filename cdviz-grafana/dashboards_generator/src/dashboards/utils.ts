@@ -6,7 +6,7 @@ import {
   VariableSort,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 
-export const DEFAULT_TAGS = ["cdviz"];
+export const DEFAULT_TAGS = []; //["cdviz"];
 export const DEFAULT_TIMEWINDOW = { from: "now-7d", to: "now" };
 export const DEFAULT_TIMEZONE = "browser";
 
