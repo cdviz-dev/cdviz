@@ -100,7 +100,7 @@
   "title": "CDEvents Activity",
   "uid": "cdevents_activity",
   "tags": [
-    "cdviz"
+    "cdevents"
   ],
   "time": {
     "from": "now-7d",
@@ -812,5 +812,5 @@
       ]
     }
   ],
-  "version": 2025051723
+  "version": 2025052016
 }

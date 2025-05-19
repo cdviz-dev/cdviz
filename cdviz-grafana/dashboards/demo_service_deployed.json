@@ -1029,7 +1029,9 @@
   "preload": false,
   "schemaVersion": 41,
   "tags": [
-    "cdviz",
+    "cdevents",
+    "service",
+    "incident",
     "sandbox",
     "cd"
   ],
@@ -1114,7 +1116,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Demo: Service Deployed",
+  "title": "Service: Demo",
   "uid": "demo_service_deployed",
-  "version": 2025051916
+  "version": 2025052016
 }

@@ -19,9 +19,9 @@ export async function buildDashboard(): Promise<Dashboard> {
     uid: "${datasource}",
   };
   const builder = applyDefaults(
-    new DashboardBuilder("Artifact Timeline").uid("artifact_timeline"),
+    new DashboardBuilder("Artifact: Timeline").uid("artifact_timeline"),
   )
-    .tags(["cd"].concat(DEFAULT_TAGS))
+    .tags(["cd", "artifact", "service"].concat(DEFAULT_TAGS))
     .withVariable(newVariable4ArtifactFname())
     .withPanel(
       new D3PanelBuilder()
@@ -44,7 +44,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 payload -> 'subject' ->> 'id' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' ->> 'id' LIKE 'pkg:\${artifact_fnames}@%'
+                AND payload -> 'subject' ->> 'id' LIKE 'pkg:\${artifact_fnames:raw}@%'
                 AND subject = 'artifact'
                 AND predicate = ANY(ARRAY['published', 'signed'])
 
@@ -52,11 +52,11 @@ export async function buildDashboard(): Promise<Dashboard> {
 
               SELECT timestamp,
                 predicate as action,
-                payload -> 'subject' -> 'content' -> 'environment' ->> 'id' || '/' || payload -> 'subject' ->> 'id' as stage,
+                (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '/' || (payload -> 'subject' ->> 'id') as stage,
                 payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:\${artifact_fnames}%'
+                AND payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:\${artifact_fnames:raw}%'
                 AND subject = 'service'
                 AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
             `),
