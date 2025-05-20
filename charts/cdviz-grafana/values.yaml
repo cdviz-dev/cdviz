@@ -1,9 +1,9 @@
 datasources:
-  enabled: true
+  enabled: false
   annotations:
     grafana_datasource: "1"
   definitions:
-    cdviz:
+    cdviz-db:
       # same syntax than on grafana datasources provisionner
       type: postgres
       url: '$POSTGRES_HOST'
