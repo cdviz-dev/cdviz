@@ -30,8 +30,8 @@
 
 1. Setup a `cdviz-collector` with a configution like in [`cdviz-collector.yaml`](./cdviz-collector.toml):
 
-  - push events into a db
-  - watch content of the `cdevents` folder (json files & csv files)
+    - push events into a db
+    - watch content of the `cdevents` folder (json files & csv files)
 
 2. Run the `cdviz-collector`:
 

@@ -23,6 +23,7 @@ DISABLE_LINTERS:
   - REPOSITORY_TRUFFLEHOG # too long to search for secret
   - RUST_CLIPPY # run via an other way, and current version doesn't support `--deny ... --allow ...`
   - SQL_TSQLLINT # "You must install or update .NET to run this application."
+  - TERRAFORM_TERRAGRUNT # hcl file are not for terraform/opentofu
   - TYPESCRIPT_STANDARD
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
