@@ -8,7 +8,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "{{ include "my.fullname" $ }}-dashboards-{{ base $path | trimSuffix ".yaml" | trimSuffix ".json" }}"
+  name: "{{ include "my.fullname" $ }}-dashboards-{{ base $path | trimSuffix ".yaml" | trimSuffix ".json" | kebabcase }}"
   labels:
     {{- toYaml $.Values.dashboards.annotations | nindent 4}}
     {{- include "my.labels" $ | nindent 4 }}
