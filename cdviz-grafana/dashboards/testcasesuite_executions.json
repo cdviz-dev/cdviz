@@ -20,19 +20,19 @@
       },
       {
         "type": "query",
-        "name": "task_names",
+        "name": "selected_value",
         "skipUrlSync": false,
         "multi": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "label": "Task",
+        "label": "Test Suite",
         "datasource": {
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' ->> 'taskName' AS __value\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'taskrun'\nORDER BY __value",
+        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' AS __value\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'testcasesuite'\nORDER BY __value",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -55,10 +55,10 @@
     ]
   },
   "annotations": {},
-  "title": "Task Run",
-  "uid": "taskrun",
+  "title": "Test Suite: Latest Executions",
+  "uid": "testcasesuite_executions",
   "tags": [
-    "cdviz"
+    "testcasesuite"
   ],
   "time": {
     "from": "now-7d",
@@ -70,7 +70,7 @@
       "collapsed": false,
       "id": 0,
       "panels": [],
-      "title": "Latest $limit Task Runs",
+      "title": "Test Suite: Latest $limit Executions",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -100,8 +100,8 @@
         "style": "",
         "wrap": false
       },
-      "title": "$task_names",
-      "repeat": "task_names",
+      "title": "$selected_value",
+      "repeat": "selected_value",
       "maxPerRow": 2,
       "datasource": {
         "type": "grafana-postgresql-datasource",
@@ -110,7 +110,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  -- extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at  - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${task_names:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
+          "rawSql": "SELECT\n  LEAST(started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  \n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM pipelinerun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -128,5 +128,5 @@
       }
     }
   ],
-  "version": 2025051916
+  "version": 2025052018
 }

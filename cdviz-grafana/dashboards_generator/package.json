@@ -4,7 +4,8 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "^1.2.13",
-    "@types/d3": "^7.4.3"
+    "@types/d3": "^7.4.3",
+    "@types/lodash": "^4.17.16"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -12,6 +13,7 @@
   "dependencies": {
     "@grafana/grafana-foundation-sdk": "^11.1.0-cogv0.0.x.1746458718",
     "d3": "^7.9.0",
-    "dedent": "^1.6.0"
+    "dedent": "^1.6.0",
+    "lodash": "^4.17.21"
   }
 }
