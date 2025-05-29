@@ -1,0 +1,128 @@
+[
+  {
+    "timestamp": 1748606400000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.1.0"
+  },
+  {
+    "timestamp": 1748779200000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.0"
+  },
+  {
+    "timestamp": 1748941200000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.0"
+  },
+  {
+    "timestamp": 1749042300000,
+    "action": "signed",
+    "stage": "signed",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.1"
+  },
+  {
+    "timestamp": 1748952000000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.1"
+  },
+  {
+    "timestamp": 1748973600000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.2"
+  },
+  {
+    "timestamp": 1749027600000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.3"
+  },
+  {
+    "timestamp": 1749042000000,
+    "action": "published",
+    "stage": "published",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.1"
+  },
+  {
+    "timestamp": 1748608200000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.1.0"
+  },
+  {
+    "timestamp": 1748610000000,
+    "action": "upgraded",
+    "stage": "group1-uat/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.1.0"
+  },
+  {
+    "timestamp": 1748649600000,
+    "action": "upgraded",
+    "stage": "group1-prod/eu-2/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.1.0"
+  },
+  {
+    "timestamp": 1748650200000,
+    "action": "upgraded",
+    "stage": "group1-prod/us-2/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.1.0"
+  },
+  {
+    "timestamp": 1748781000000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.0"
+  },
+  {
+    "timestamp": 1748782800000,
+    "action": "upgraded",
+    "stage": "group1-uat/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.0"
+  },
+  {
+    "timestamp": 1748953800000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.1"
+  },
+  {
+    "timestamp": 1748974200000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.2"
+  },
+  {
+    "timestamp": 1749029400000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.3.3"
+  },
+  {
+    "timestamp": 1749049800000,
+    "action": "upgraded",
+    "stage": "group1-prod/eu-2/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.1"
+  },
+  {
+    "timestamp": 1748822400000,
+    "action": "upgraded",
+    "stage": "group1-prod/eu-2/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.0"
+  },
+  {
+    "timestamp": 1749045600000,
+    "action": "upgraded",
+    "stage": "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.1"
+  },
+  {
+    "timestamp": 1749049800000,
+    "action": "upgraded",
+    "stage": "group1-prod/us-2/ns-a/deploy-a/container-a",
+    "artifact_id": "pkg:oci/app-a?tag=0.2.1"
+  }
+]

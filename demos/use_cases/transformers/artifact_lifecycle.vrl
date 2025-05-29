@@ -1,0 +1,98 @@
+TYPE_ARTIFACT_PUBLISHED = "dev.cdevents.artifact.published.0.2.0"
+TYPE_ARTIFACT_SIGNED = "dev.cdevents.artifact.signed.0.2.0"
+TYPE_SERVICE_UPGRADED = "dev.cdevents.service.upgraded.0.2.0"
+
+output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("7d", unit: "s") ?? 7*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
+# log(from_unix_timestamp!(t0), level: "info", rate_limit_secs: 60)
+# log(.body)
+for_each(["dts_published", "dts_signed", "dts_group1-dev/eu-1","dts_group1-uat/eu-1","dts_group1-prod/eu-2","dts_group1-prod/us-2"]) -> |_index, step| {
+  type = null
+  delta_duration = -1.0
+  # log(step, level: "info")
+  if step == "dts_published" && !is_nullish(.body."dts_published") {
+    delta_duration = parse_duration(.body."dts_published", unit: "s") ?? -1.0
+    type = TYPE_ARTIFACT_PUBLISHED
+  } else if step == "dts_signed" && !is_nullish(.body."dts_signed") {
+    delta_duration = parse_duration(.body."dts_signed", unit: "s") ?? -1.0
+    type = TYPE_ARTIFACT_SIGNED
+  } else if step == "dts_group1-dev/eu-1" && !is_nullish(.body."dts_group1-dev/eu-1") {
+    delta_duration = parse_duration(.body."dts_group1-dev/eu-1", unit: "s") ?? -1.0
+    type = TYPE_SERVICE_UPGRADED
+  } else if step == "dts_group1-uat/eu-1" && !is_nullish(.body."dts_group1-uat/eu-1") {
+    delta_duration = parse_duration(.body."dts_group1-uat/eu-1", unit: "s") ?? -1.0
+    type = TYPE_SERVICE_UPGRADED
+  } else if step == "dts_group1-prod/eu-2" && !is_nullish(.body."dts_group1-prod/eu-2") {
+    delta_duration = parse_duration(.body."dts_group1-prod/eu-2", unit: "s") ?? -1.0
+    type = TYPE_SERVICE_UPGRADED
+  } else if step == "dts_group1-prod/us-2" && !is_nullish(.body."dts_group1-prod/us-2") {
+    delta_duration = parse_duration(.body."dts_group1-prod/us-2", unit: "s") ?? -1.0
+    type = TYPE_SERVICE_UPGRADED
+  }
+  subject = null
+  if delta_duration >= 0.0 {
+    if type == TYPE_SERVICE_UPGRADED {
+      environment = replace(step, "dts_", "")
+      subject = {
+        "id": .body.deploy_ns,
+        "type": "service",
+        "content": {
+          "environment": {
+            "id": environment,
+          },
+          "artifactId": .body.artifact_id,
+        }
+      }
+    } else if type == TYPE_ARTIFACT_PUBLISHED {
+      subject = {
+        "id": .body.artifact_id,
+        "type": "artifact",
+        "content": {
+          # "sbom": {
+          #  "uri": "https://sbom.repo/myorg/234fd47e07d1004f0aed9c.sbom"
+          #},
+          "user": "mybot-myapp"
+        }
+      }
+    } else if type == TYPE_ARTIFACT_SIGNED {
+      subject = {
+        "id": .body.artifact_id,
+        "type": "artifact",
+        "content": {
+          "signature": "MEYCIQCBT8U5ypDXWCjlNKfzTV4KH516/SK13NZSh8znnSMNkQIhAJ3XiQlc9PM1KyjITcZXHotdMB+J3NGua5T/yshmiPmp"
+        }
+      }
+    }
+  }
+  #log(type, level: "info")
+  #log(delta_duration, level: "info")
+  #log(!is_nullish(subject), level: "info")
+
+  if !is_nullish(subject) {
+    # delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+    ts = from_unix_timestamp!(t0 + to_int(delta_duration))
+    ts = format_timestamp!(ts, format: "%+")
+    # log(ts, level: "info", rate_limit_secs: 60)
+    event = {
+      "metadata": .metadata,
+      "headers": .headers,
+      "body": {
+        "context": {
+          "version": "0.4.1",
+          "id": "0",
+          "source": "/demo/use_cases",
+          "type": type,
+          "timestamp": ts,
+        },
+        "subject": subject
+      }
+    }
+    output = push(output, event)
+  }
+}
+# log("end of row")
+# log(output)
+#log(length(output))
+output

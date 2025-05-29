@@ -189,13 +189,40 @@ const dataset01_sorted = [
   },
 ];
 
-test("transformData", () => {
+test("transformData on dataset01", () => {
   const data = transformData(dataset01);
   const domains = data.domains;
   //console.log(domains);
   expect(domains.timestampMax).toBeGreaterThanOrEqual(domains.timestampMax);
   expect(domains.stages).toEqual([
     "cluster/A-dev/cdviz-dev/cdviz-collector/cdviz-collector",
+    "published",
+  ]);
+});
+
+test("transformData on dataset01_sorted", () => {
+  const data = transformData(dataset01_sorted);
+  const domains = data.domains;
+  //console.log(domains);
+  expect(domains.timestampMax).toBeGreaterThanOrEqual(domains.timestampMax);
+  expect(domains.stages).toEqual([
+    "cluster/A-dev/cdviz-dev/cdviz-collector/cdviz-collector",
+    "published",
+  ]);
+});
+
+test("transformData on dataset02", () => {
+  const dataset = require("./timeline_dataset_02.json");
+  const data = transformData(dataset);
+  const domains = data.domains;
+  //console.log(domains);
+  expect(domains.timestampMax).toBeGreaterThanOrEqual(domains.timestampMax);
+  expect(domains.stages).toEqual([
+    "group1-prod/us-2/ns-a/deploy-a/container-a",
+    "group1-prod/eu-2/ns-a/deploy-a/container-a",
+    "group1-uat/eu-1/ns-a/deploy-a/container-a",
+    "group1-dev/eu-1/ns-a/deploy-a/container-a",
+    "signed",
     "published",
   ]);
 });

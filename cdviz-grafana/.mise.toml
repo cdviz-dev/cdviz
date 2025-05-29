@@ -35,7 +35,7 @@ description = "build dashboards"
 dir = "dashboards_generator"
 run = "bun run src/index.ts --output ../dashboards"
 outputs = ["dashboards/*.json"]
-sources = ["dashboards_generator/src/**"]
+sources = ["*/src/**"]
 wait_for = ["install:deps", "check", "test"]
 
 [tasks."install:deps"]
@@ -44,10 +44,20 @@ run = "bun install"
 
 [tasks.check]
 # use https://biomejs.dev/guides/getting-started/
-description = "lint & format"
+description = "lint"
 dir = "dashboards_generator"
 run = [
   "bun run tsc",
+  "biome check",
+]
+wait_for = ["install:deps"]
+
+[tasks.format]
+alias = "fmt"
+# use https://biomejs.dev/guides/getting-started/
+description = "format"
+dir = "dashboards_generator"
+run = [
   "biome check --write",
 ]
 wait_for = ["install:deps"]
