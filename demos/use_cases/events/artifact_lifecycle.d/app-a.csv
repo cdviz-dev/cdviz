@@ -1,0 +1,11 @@
+artifact_id,deploy_ns,dts_0,dts_published,dts_signed,dts_group1-dev/eu-1,dts_group1-uat/eu-1,dts_group1-prod/eu-2,dts_group1-prod/us-2
+pkg:oci/app-a?tag=0.1.0,ns-a/deploy-a/container-a,1d,12h,,12h 30m,13h,24h,24h 10m
+pkg:oci/app-a?tag=0.2.0,ns-a/deploy-a/container-a,3d,12h,,12h 30m,13h,24h,
+pkg:oci/app-a?tag=0.3.0,ns-a/deploy-a/container-a,5d,9h,,,,,
+pkg:oci/app-a?tag=0.3.1,ns-a/deploy-a/container-a,5d,12h,,12h 30m,,,
+pkg:oci/app-a?tag=0.3.2,ns-a/deploy-a/container-a,5d,18h,,18h 10m,,,
+pkg:oci/app-a?tag=0.3.3,ns-a/deploy-a/container-a,6d,9h,,9h 30m,,,
+pkg:oci/app-a?tag=0.2.1,ns-a/deploy-a/container-a,6d,13h,13h 5m,14h,,15h 10m,15h 11m
+pkg:oci/app-a?tag=0.3.4,ns-a/deploy-a/container-a,6d,9h 30m,,,,,
+pkg:oci/app-a?tag=0.3.5,ns-a/deploy-a/container-a,6d,10h,,,,,
+pkg:oci/app-a?tag=0.3.6,ns-a/deploy-a/container-a,6d,13h 30m,,,,,

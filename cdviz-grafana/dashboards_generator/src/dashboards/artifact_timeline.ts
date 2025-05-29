@@ -28,7 +28,7 @@ export async function buildDashboard(): Promise<Dashboard> {
         .title("$artifact_fnames")
         .repeat("artifact_fnames")
         .repeatDirection("h")
-        .maxPerRow(2)
+        .maxPerRow(1)
         .datasource(datasource)
         .withTarget(
           new DataqueryBuilder()
@@ -44,7 +44,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 payload -> 'subject' ->> 'id' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' ->> 'id' LIKE 'pkg:\${artifact_fnames:raw}@%'
+                AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'artifact'
                 AND predicate = ANY(ARRAY['published', 'signed'])
 
@@ -52,11 +52,11 @@ export async function buildDashboard(): Promise<Dashboard> {
 
               SELECT timestamp,
                 predicate as action,
-                (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '/' || (payload -> 'subject' ->> 'id') as stage,
+                (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,
                 payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:\${artifact_fnames:raw}%'
+                AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'service'
                 AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
             `),
