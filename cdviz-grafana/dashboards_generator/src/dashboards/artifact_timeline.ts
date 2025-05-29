@@ -1,10 +1,10 @@
 import {
-  DataqueryBuilder,
-  EditorMode,
+    DataqueryBuilder,
+    EditorMode,
 } from "@grafana/grafana-foundation-sdk/bigquery";
 import {
-  type Dashboard,
-  DashboardBuilder,
+    type Dashboard,
+    DashboardBuilder,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 import dedent from "dedent";
 import { D3PanelBuilder, buildjsForD3Panel } from "../panels/d3_panel";
@@ -44,7 +44,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 payload -> 'subject' ->> 'id' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' ->> 'id' LIKE 'pkg:\${artifact_fnames:raw}@%'
+                AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'artifact'
                 AND predicate = ANY(ARRAY['published', 'signed'])
 
@@ -56,7 +56,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id
               FROM cdevents_lake
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:\${artifact_fnames:raw}%'
+                AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'service'
                 AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
             `),

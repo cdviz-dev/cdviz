@@ -21,7 +21,7 @@ path_patterns = ["*.json"]
 parser = "json"
 
 [sources.service_deployed_local_csv]
-enabled = true
+enabled = false
 
 [sources.service_deployed_local_csv.extractor]
 type = "opendal"
@@ -64,7 +64,7 @@ template = """
 """
 
 [sources.pipelinerun_x_local_csv]
-enabled = true
+enabled = false
 transformer_refs = ["pipelinerun_x", "log"]
 
 [sources.pipelinerun_x_local_csv.extractor]
@@ -79,51 +79,20 @@ parser = "csv_row"
 [transformers.pipelinerun_x]
 type = "vrl"
 template_file = "./transformers/pipelinerun_x.vrl"
-# template = """
-# output = []
-# for_each(["queued", "started", "finished"]) -> |_index, value| {
-#   delta_duration = -1.0
-#   if value == "queued" {
-#     delta_duration = parse_duration!(.body.queued, unit: "s")
-#   } else if value == "started" {
-#     delta_duration = parse_duration!(.body.started, unit: "s")
-#   } else if value == "finished" {
-#     delta_duration = parse_duration!(.body.finished, unit: "s")
-#   }
-#   if delta_duration >= 0 {
-#     delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
-#     ts = parse_timestamp(.body.timestamp, "%+") ?? now()
-#     ts = from_unix_timestamp(to_unix_timestamp(ts) + to_int(delta_duration)) ?? ts
-#     ts = format_timestamp!(ts, format: "%+")
-#     pipeline_name = .body.name
-#     event = {
-#       "metadata": .metadata,
-#       "header": .header,
-#       "body": {
-#         "context": {
-#           "version": "0.4.1",
-#           "id": "0",
-#           # "chainId": "0",
-#           "source": "/demo/use_cases",
-#           "type": "dev.cdevents.pipelinerun.{{ value }}.0.2.0",
-#           "timestamp": ts,
-#         },
-#         "subject": {
-#           "id": .body.id,
-#           # "source": "/event/source/123",
-#           "type": "pipelineRun",
-#           "content": {
-#             "url": "https://www.example.com/pipeline/{{ pipeline_name }}" ?? null,
-#             "pipelineName": pipeline_name,
-#           }
-#         }
-#       }
-#     }
-#     if .body.outcome != null {
-#       event.body.subject.content.outcome = .body.outcome
-#     }
-#     push(output, event)
-#   }
-# }
-# output
-# """
+
+[sources.artifact_lifecycle_csv]
+enabled = true
+transformer_refs = ["artifact_lifecycle", "log"]
+
+[sources.artifact_lifecycle_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/artifact_lifecycle.d" }
+recursive = false
+path_patterns = ["*.csv"]
+parser = "csv_row"
+
+[transformers.artifact_lifecycle]
+type = "vrl"
+template_file = "./transformers/artifact_lifecycle.vrl"
