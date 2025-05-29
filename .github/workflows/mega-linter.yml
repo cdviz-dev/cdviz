@@ -4,23 +4,23 @@
 name: MegaLinter
 
 on:
-  # Trigger mega-linter at every push. Action will also be visible from Pull Requests to main
-  push: # Comment this line to trigger action only on pull-requests (not recommended if you don't pay for GH Actions)
-  pull_request:
-    branches: [master, main]
+  push:
+    branches-ignore:
+      - "release-plz-*"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 # env: # Comment env block if you don't want to apply fixes
 #   # Apply linter fixes configuration
 #   APPLY_FIXES: all # When active, APPLY_FIXES must also be defined as environment variable (in github/workflows/mega-linter.yml or other CI tool)
 #   APPLY_FIXES_EVENT: pull_request # Decide which event triggers application of fixes in a commit or a PR (pull_request, push, all)
 #   APPLY_FIXES_MODE: commit # If APPLY_FIXES is used, defines if the fixes are directly committed (commit) or posted in a PR (pull_request)
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.ref }}-${{ github.workflow }}
-  cancel-in-progress: true
 
 jobs:
   megalinter:
