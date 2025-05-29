@@ -2,12 +2,9 @@
 name: ci
 
 on:
-  pull_request:
   push:
-    branches:
-      - main
-      - master
-      - "releases/*"
+    branches-ignore:
+      - "release-plz-*"
   workflow_dispatch:
 
 concurrency:
