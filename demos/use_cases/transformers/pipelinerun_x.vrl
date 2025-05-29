@@ -22,7 +22,7 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
     pipeline_name = .body.name
     event = {
       "metadata": .metadata,
-      "header": .header,
+      "headers": .headers,
       "body": {
         "context": {
           "version": "0.4.1",
