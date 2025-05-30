@@ -5,7 +5,7 @@ ARG PG_MAJOR=${PG_VERSION%%.*}
 #---------------------------------------------------------------------------------------------------
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
 # trivy:ignore:AVD-DS-0001
-FROM --platform=$BUILDPLATFORM arigaio/atlas:0.33.0-community-alpine AS cdviz-db-migration
+FROM --platform=$BUILDPLATFORM arigaio/atlas:0.34.0-community-alpine AS cdviz-db-migration
 LABEL org.opencontainers.image.source="https://github.com/cdviz-dev/cdviz"
 LABEL org.opencontainers.image.licenses="MIT OR Apache-2.0"
 
