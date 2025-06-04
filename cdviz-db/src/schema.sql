@@ -1,8 +1,13 @@
-CREATE EXTENSION IF NOT EXISTS timescaledb;
-CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
+-- ALTER EXTENSION timescaledb UPDATE;
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+-- ALTER EXTENSION timescaledb_toolkit UPDATE;
+CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit CASCADE;
+
+CREATE SCHEMA IF NOT EXISTS "cdviz";
+-- SET search_path = "cdviz", "pg_catalog";
 
 -- cdevents_lake
-CREATE TABLE IF NOT EXISTS "cdevents_lake" (
+CREATE TABLE IF NOT EXISTS "cdviz"."cdevents_lake" (
   -- "id" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "imported_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -13,37 +18,38 @@ CREATE TABLE IF NOT EXISTS "cdevents_lake" (
   "context_id" VARCHAR(100) NOT NULL
 );
 
-COMMENT ON TABLE "cdevents_lake" IS 'table of stored cdevents without transformation';
-COMMENT ON COLUMN "cdevents_lake"."imported_at" IS 'the timestamp when the cdevent was stored into the table';
-COMMENT ON COLUMN "cdevents_lake"."timestamp" IS 'timestamp of cdevents extracted from context.timestamp in the json';
-COMMENT ON COLUMN "cdevents_lake"."payload" IS 'the full cdevent in json format';
-COMMENT ON COLUMN "cdevents_lake"."subject" IS 'subject extracted from context.type in the json (in lower case)';
-COMMENT ON COLUMN "cdevents_lake"."predicate" IS 'predicate of the subject, extracted from context.type in the json (in lower case)';
-COMMENT ON COLUMN "cdevents_lake"."version" IS 'the version of the suject s type, extracted from context.type. The version number are split in 0 for major, 1 for minor, 2 for patch';
-COMMENT ON COLUMN "cdevents_lake"."context_id" IS 'the id of the event, extracted from context.id';
+COMMENT ON TABLE "cdviz"."cdevents_lake" IS 'table of stored cdevents without transformation';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."imported_at" IS 'the timestamp when the cdevent was stored into the table';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."timestamp" IS 'timestamp of cdevents extracted from context.timestamp in the json';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."payload" IS 'the full cdevent in json format';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."subject" IS 'subject extracted from context.type in the json (in lower case)';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."predicate" IS 'predicate of the subject, extracted from context.type in the json (in lower case)';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."version" IS 'the version of the suject s type, extracted from context.type. The version number are split in 0 for major, 1 for minor, 2 for patch';
+COMMENT ON COLUMN "cdviz"."cdevents_lake"."context_id" IS 'the id of the event, extracted from context.id';
 
 -- Use TimescaleDB to "boost" the performance of the queries instead of using indexes
 -- CREATE INDEX IF NOT EXISTS "idx_timestamp" ON "cdevents_lake" USING BRIN("timestamp");
-SELECT create_hypertable('cdevents_lake', by_range('timestamp', INTERVAL '7 day'), if_not_exists => TRUE, migrate_data => TRUE);
-SELECT add_dimension('cdevents_lake', by_hash('subject', 2));
-CREATE UNIQUE INDEX IF NOT EXISTS "idx_context_id" ON "cdevents_lake"("context_id", "subject", "timestamp" DESC);
+SELECT create_hypertable('cdviz.cdevents_lake', by_range('timestamp', INTERVAL '7 day'), if_not_exists => TRUE, migrate_data => TRUE);
+SELECT add_dimension('cdviz.cdevents_lake', by_hash('subject', 2), if_not_exists => TRUE);
+CREATE UNIQUE INDEX IF NOT EXISTS "idx_context_id" ON "cdviz"."cdevents_lake"("context_id", "subject", "timestamp" DESC);
 
 -- see [Timescale Documentation | JSONB support for semi-structured data](https://docs.timescale.com/use-timescale/latest/schema-management/json/)
-CREATE INDEX IF NOT EXISTS "idx_cdevents" ON "cdevents_lake" USING GIN("payload");
+CREATE INDEX IF NOT EXISTS "idx_cdevents" ON "cdviz"."cdevents_lake" USING GIN("payload");
 
+-- Deprecated / Old api: since TimescaleDB 2.18 Replaced by hypercore.
 -- compress cdevents (after 15 days)
 -- [Timescale Documentation | Compression](https://docs.timescale.com/use-timescale/latest/compression/)
-ALTER TABLE "cdevents_lake" SET (
-  timescaledb.compress,
-  timescaledb.compress_segmentby = 'subject'
-);
-SELECT add_compression_policy('cdevents_lake', INTERVAL '15 days');
+-- ALTER TABLE "cdviz"."cdevents_lake" SET (
+--   timescaledb.compress,
+--   timescaledb.compress_segmentby = 'subject'
+-- );
+-- SELECT add_compression_policy('cdviz.cdevents_lake', INTERVAL '15 days');
 
 -- remove cdevents older than 13 months
-SELECT add_retention_policy('cdevents_lake', INTERVAL '13 months');
+SELECT add_retention_policy('cdviz.cdevents_lake', INTERVAL '13 months', if_not_exists => TRUE);
 
 -- store_cdevent
-create or replace procedure store_cdevent(
+create or replace procedure "cdviz".store_cdevent(
     cdevent jsonb
 )
 as $$
@@ -67,7 +73,7 @@ begin
     -- else
     --    raise exception 'Input Jsonb doesn not contain a valid timestamp';
     -- end if;
-    insert into "cdevents_lake"("payload", "timestamp", "subject", "predicate", "version", "context_id") values(cdevent, ts, tpe_subject, tpe_predicate, tpe_version, context_id);
+    insert into "cdviz"."cdevents_lake"("payload", "timestamp", "subject", "predicate", "version", "context_id") values(cdevent, ts, tpe_subject, tpe_predicate, tpe_version, context_id);
 end;
 $$ language plpgsql;
 
@@ -86,7 +92,7 @@ $$ language plpgsql;
 -- END$$;
 
 -- pipelineRun An instance of a pipeline queued, started, finished
-CREATE OR REPLACE VIEW pipelinerun AS
+CREATE OR REPLACE VIEW "cdviz".pipelinerun AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -98,7 +104,7 @@ SELECT
     -- pre-extracted colums (often used)
     LAST(payload -> 'subject' -> 'content' ->> 'outcome', timestamp) FILTER(WHERE predicate = 'finished') AS outcome
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'pipelinerun'
 GROUP BY
@@ -106,7 +112,7 @@ GROUP BY
 ;
 
 -- taskRun An instance of a task started, finished
-CREATE OR REPLACE VIEW taskrun AS
+CREATE OR REPLACE VIEW "cdviz".taskrun AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -117,7 +123,7 @@ SELECT
     -- pre-extracted colums (often used)
     LAST(payload -> 'subject' -> 'content' ->> 'outcome', timestamp) FILTER(WHERE predicate = 'finished') AS outcome
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'taskrun'
 GROUP BY
@@ -125,7 +131,7 @@ GROUP BY
 ;
 
 -- build A software build queued, started, finished
-CREATE OR REPLACE VIEW build AS
+CREATE OR REPLACE VIEW "cdviz".build AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -137,7 +143,7 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'build'
 GROUP BY
@@ -145,7 +151,7 @@ GROUP BY
 ;
 
 -- artifact An artifact produced by a build packaged, signed, published, downloaded, deleted
-CREATE OR REPLACE VIEW artifact AS
+CREATE OR REPLACE VIEW "cdviz".artifact AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -159,7 +165,7 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'artifact'
 GROUP BY
@@ -167,7 +173,7 @@ GROUP BY
 ;
 
 -- service A service deployed, upgraded, rolledback, removed, published
-CREATE OR REPLACE VIEW service AS
+CREATE OR REPLACE VIEW "cdviz".service AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -181,7 +187,7 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'service'
 GROUP BY
@@ -189,7 +195,7 @@ GROUP BY
 ;
 
 -- incident A problem in a production environment detected, reported, resolved
-CREATE OR REPLACE VIEW incident AS
+CREATE OR REPLACE VIEW "cdviz".incident AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -201,14 +207,14 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'incident'
 GROUP BY
     subject_id
 ;
 -- testCaseRun The execution of a software testCase queued, started, finished, skipped
-CREATE OR REPLACE VIEW testcaserun AS
+CREATE OR REPLACE VIEW "cdviz".testcaserun AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -221,7 +227,7 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'testcaserun'
 GROUP BY
@@ -229,7 +235,7 @@ GROUP BY
 ;
 
 -- testSuiteRun The execution of a software testSuite queued, started, finished
-CREATE OR REPLACE VIEW testcasesuite AS
+CREATE OR REPLACE VIEW "cdviz".testcasesuite AS
 SELECT
     payload -> 'subject' ->> 'id' AS subject_id,
     -- the last timestamp per predicate (usefull to compute current status/predicate, duration, etc.)
@@ -241,7 +247,7 @@ SELECT
     -- pre-extracted colums (often used)
     -- ...
 FROM
-    cdevents_lake
+    "cdviz".cdevents_lake
 WHERE
     subject = 'testcasesuite'
 GROUP BY
