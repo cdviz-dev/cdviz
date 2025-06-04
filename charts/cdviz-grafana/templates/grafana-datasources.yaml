@@ -10,8 +10,11 @@ stringData:
   {{ include "my.fullname" $ }}-datasources.yaml: |-
     apiVersion: 1
     datasources:
-    {{- range $name, $def := .Values.datasources.definitions }}
+    {{- range $name, $manifest := .Values.datasources.definitions }}
+      {{- if $manifest.enabled }}
+      {{- $def := unset $manifest "enabled" }}
       - name: {{ $name }}
         {{-  tpl (toYaml $def ) $ | nindent 8 }}
+      {{- end }}
     {{- end }}
 {{- end -}}

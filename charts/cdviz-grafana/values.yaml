@@ -4,6 +4,7 @@ datasources:
     grafana_datasource: "1"
   definitions:
     cdviz-db:
+      enabled: false # enable/disable the datasource
       # same syntax than on grafana datasources provisionner
       type: postgres
       url: '$POSTGRES_HOST'
@@ -12,13 +13,13 @@ datasources:
         password: '$POSTGRES_PASSWORD_CDVIZ_READER'
       jsonData:
         database: '$POSTGRES_DB'
-        sslmode: 'disable' # disable/require/verify-ca/verify-full
+        sslmode: 'require' # disable/require/verify-ca/verify-full
         maxOpenConns: 10 # Grafana v5.4+
         maxIdleConns: 10 # Grafana v5.4+
         maxIdleConnsAuto: true # Grafana v9.5.1+
         connMaxLifetime: 14400 # Grafana v5.4+
         postgresVersion: 1000
-        timescaledb: false
+        timescaledb: true
 
 dashboards:
   enabled: true
