@@ -66,7 +66,7 @@ export function groupBySeries(data: Datum[]): DatumExt[][] {
 function extractDomains(data: DatumExt[][]): Domains {
   let timestampMin = Number.MAX_SAFE_INTEGER;
   let timestampMax = Number.MIN_SAFE_INTEGER;
-  let stagesCounter = 0;
+  let hasItem = false;
   for (const serie of data) {
     for (const d of serie) {
       if (timestampMin > d.timestamp) {
@@ -75,11 +75,11 @@ function extractDomains(data: DatumExt[][]): Domains {
       if (timestampMax < d.timestamp) {
         timestampMax = d.timestamp;
       }
-      stagesCounter += 1;
+      hasItem = true;
     }
   }
 
-  if (stagesCounter < 1) {
+  if (!hasItem) {
     return {
       timestampMin: new Date().getTime(),
       timestampMax: new Date().getTime(),
@@ -158,6 +158,13 @@ function buildTransitionGraph(seriesValues: DatumExt[][]): Graph {
       }
       if (!graph.has(nextStage)) {
         graph.set(nextStage, new Set<string>());
+      }
+    }
+    if (sequence.length > 0) {
+      // Ensure the last stage is also included in the graph
+      const lastStage = sequence[sequence.length - 1].stage;
+      if (!graph.has(lastStage)) {
+        graph.set(lastStage, new Set<string>());
       }
     }
   }
