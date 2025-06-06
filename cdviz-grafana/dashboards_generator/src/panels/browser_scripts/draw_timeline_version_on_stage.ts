@@ -89,6 +89,7 @@ export function draw(context: DrawContext<Datum>) {
   // TODO use the width on label on Y axis
   const container = context.element;
   const { svg, width, height } = newSvgArea(container);
+
   const { series, domains } = transformData(data);
 
   // Declare the x (horizontal position) scale.
@@ -165,15 +166,8 @@ export function draw(context: DrawContext<Datum>) {
     .attr("dy", ".6em")
     .attr("transform", "rotate(25)");
 
-  // Add the y-axis.
-  // svg
-  //   .append("g")
-  //   .attr("transform", `translate(${width - marginRight},0)`)
-  //   .call(d3.axisRight(y))
-  //   .call((g) => g.select(".domain").remove());
-
   // Add a table on left side using SVG and D3
-  // Add a table on left side
+  // (used as y axis and table summary)
   // column are :
   // - stages (also used as y-axis label)
   // - frequency (number of datapoint per week) per stage
@@ -181,8 +175,6 @@ export function draw(context: DrawContext<Datum>) {
   // - latest version per stage
   // - average elasped time between stage and the first stage
   //
-
-  // TODO compute the data for the table
   const weeks = domainTimeWindow / (7 * 24 * 60 * 60 * 1000); // weeks
   const tableData = summarizeSortedStages(series, domains.stages).map((d) => {
     const summary = d.getSummary();

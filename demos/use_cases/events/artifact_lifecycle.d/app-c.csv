@@ -1,0 +1,2 @@
+artifact_id,deploy_ns,dts_0,dts_published,dts_signed,dts_group1-dev/eu-1,dts_group1-uat/eu-1,dts_group1-prod/eu-2,dts_group1-prod/us-2
+pkg:oci/app-c@sha256%3Ab77f901a2c84ebb3aa9c4558e6c5f27c3363ac4922696b89a979b58a0ef64de8?tag=latest,ns-a/deploy-a/container-a,7d,9h,,,,,
