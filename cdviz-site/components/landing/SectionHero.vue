@@ -2,8 +2,9 @@
 <script setup>
 import Btn from './Btn.vue';
 
-const randomInt = Math.floor(Math.random() * 8);
-const heroImageSrc = `illustrations/hero-${randomInt}.webp`;
+// const randomInt = Math.floor(Math.random() * 8);
+// const heroImageSrc = `illustrations/hero-${randomInt}.webp`;
+const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
   <section id="hero" class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden">
