@@ -111,7 +111,7 @@ async function buildDashboard(
               --
               last_payload -> 'subject' -> 'content' ->> 'url' AS url,
               outcome AS outcome
-            FROM pipelinerun
+            FROM ${subject}
             WHERE
               ${timeFilter}
               AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
