@@ -32,7 +32,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"subject\"\nFROM \"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"subject\" LIKE '$__searchFilter'",
+        "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"subject\" LIKE '$__searchFilter'",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -54,7 +54,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"predicate\"\nFROM \"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
+        "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -144,7 +144,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COUNT(*) as count,\n  subject || '/' || predicate as path\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
+          "rawSql": "SELECT\n  COUNT(*) as count,\n  subject || '/' || predicate as path\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -182,7 +182,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  (subject || '/' || predicate) AS kind,\n  COUNT(*)\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
+          "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  (subject || '/' || predicate) AS kind,\n  COUNT(*)\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -259,7 +259,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COUNT(*) as count,\n  \"payload\" -> 'context' ->> 'source' as \"path\"\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY path\nORDER BY path",
+          "rawSql": "SELECT\n  COUNT(*) as count,\n  \"payload\" -> 'context' ->> 'source' as \"path\"\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY path\nORDER BY path",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -800,7 +800,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -812,5 +812,5 @@
       ]
     }
   ],
-  "version": 2025052016
+  "version": 2025060716
 }

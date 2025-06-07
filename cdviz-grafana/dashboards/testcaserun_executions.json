@@ -32,7 +32,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' AS __value\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'testcaserun'\nORDER BY __value",
+        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'testcaserun'\nORDER BY __value",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -110,7 +110,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  LEAST(started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  \n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM testcaserun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
+          "rawSql": "SELECT\n  LEAST(started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  \n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM cdviz.testcaserun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -128,5 +128,5 @@
       }
     }
   ],
-  "version": 202506060913
+  "version": 2025060716
 }

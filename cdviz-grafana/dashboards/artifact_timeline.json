@@ -32,7 +32,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\\\?]+)') as __value\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n\nUNION\n\nSELECT DISTINCT SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\\\?]+)') as __value\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])",
+        "query": "SELECT DISTINCT SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\\\?]+)') as __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n\nUNION\n\nSELECT DISTINCT SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\\\?]+)') as __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -88,7 +88,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT timestamp,\n  predicate as action,\n  predicate as stage,\n  payload -> 'subject' ->> 'id' as artifact_id\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:${artifact_fnames:raw}(@|\\\\?)%'\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n\nUNION ALL\n\nSELECT timestamp,\n  predicate as action,\n  (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,\n  payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id\nFROM cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:${artifact_fnames:raw}(@|\\\\?)%'\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])",
+          "rawSql": "SELECT timestamp,\n  predicate as action,\n  predicate as stage,\n  payload -> 'subject' ->> 'id' as artifact_id\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:${artifact_fnames:raw}(@|\\\\?)%'\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n\nUNION ALL\n\nSELECT timestamp,\n  predicate as action,\n  (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,\n  payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:${artifact_fnames:raw}(@|\\\\?)%'\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -106,5 +106,5 @@
       }
     }
   ],
-  "version": 2025060619
+  "version": 2025060716
 }
