@@ -111,7 +111,7 @@ async function buildDashboard(
               --
               last_payload -> 'subject' -> 'content' ->> 'url' AS url,
               outcome AS outcome
-            FROM ${subject}
+            FROM cdviz.${subject}
             WHERE
               ${timeFilter}
               AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
@@ -132,7 +132,7 @@ function newVariable4Selected(
   return newVariableOnDatasource(
     dedent`
       SELECT DISTINCT ${payloadSelector} AS __value
-      FROM cdevents_lake
+      FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
       AND subject = '${subject}'
       ORDER BY __value

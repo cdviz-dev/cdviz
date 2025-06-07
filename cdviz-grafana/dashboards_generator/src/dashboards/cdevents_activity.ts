@@ -72,7 +72,7 @@ export async function buildDashboard(): Promise<Dashboard> {
               SELECT
                 COUNT(*) as count,
                 subject || '/' || predicate as path
-              FROM cdevents_lake
+              FROM cdviz.cdevents_lake
               WHERE $__timeFilter(timestamp)
                 AND subject = ANY(ARRAY[\${subjects:sqlstring}]::text[])
                 AND predicate = ANY(ARRAY[\${predicates:sqlstring}]::text[])
@@ -106,7 +106,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 time_bucket('1 hour', timestamp) AS time,
                 (subject || '/' || predicate) AS kind,
                 COUNT(*)
-              FROM cdevents_lake
+              FROM cdviz.cdevents_lake
               WHERE $__timeFilter(timestamp)
                 AND subject = ANY(ARRAY[\${subjects:sqlstring}]::text[])
                 AND predicate = ANY(ARRAY[\${predicates:sqlstring}]::text[])
@@ -214,7 +214,7 @@ export async function buildDashboard(): Promise<Dashboard> {
               SELECT
                 COUNT(*) as count,
                 "payload" -> 'context' ->> 'source' as "path"
-              FROM cdevents_lake
+              FROM cdviz.cdevents_lake
               WHERE $__timeFilter(timestamp)
                 AND subject = ANY(ARRAY[\${subjects:sqlstring}]::text[])
                 AND predicate = ANY(ARRAY[\${predicates:sqlstring}]::text[])
@@ -251,7 +251,7 @@ export async function buildDashboard(): Promise<Dashboard> {
             "payload" -> 'context' as "payload_context",
             "imported_at"
           FROM
-            cdevents_lake
+            cdviz.cdevents_lake
           WHERE
             $__timeFilter(timestamp)
             AND subject = ANY(ARRAY[\${subjects:sqlstring}]::text[])
@@ -272,7 +272,7 @@ export function newVariable4Subject() {
   return newVariableOnDatasource(
     dedent`
       SELECT DISTINCT "subject"
-      FROM "cdevents_lake"
+      FROM cdviz."cdevents_lake"
       WHERE $__timeFilter(imported_at)
         AND "subject" LIKE '$__searchFilter'
     `,
@@ -285,7 +285,7 @@ export function newVariable4Predicate() {
   return newVariableOnDatasource(
     dedent`
       SELECT DISTINCT "predicate"
-      FROM "cdevents_lake"
+      FROM cdviz."cdevents_lake"
       WHERE $__timeFilter(imported_at)
         AND "predicate" LIKE '$__searchFilter'
         AND "subject" = ANY(ARRAY[\${subjects:sqlstring}]::text[])

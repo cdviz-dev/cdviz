@@ -42,7 +42,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 predicate as action,
                 predicate as stage,
                 payload -> 'subject' ->> 'id' as artifact_id
-              FROM cdevents_lake
+              FROM cdviz.cdevents_lake
               WHERE $__timeFilter(timestamp)
                 AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'artifact'
@@ -54,7 +54,7 @@ export async function buildDashboard(): Promise<Dashboard> {
                 predicate as action,
                 (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,
                 payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id
-              FROM cdevents_lake
+              FROM cdviz.cdevents_lake
               WHERE $__timeFilter(timestamp)
                 AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
                 AND subject = 'service'
@@ -70,7 +70,7 @@ export function newVariable4ArtifactFname() {
   return newVariableOnDatasource(
     dedent`
       SELECT DISTINCT SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\?]+)') as __value
-      FROM cdevents_lake
+      FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
         AND subject = 'artifact'
         AND predicate = ANY(ARRAY['published', 'signed'])
@@ -78,7 +78,7 @@ export function newVariable4ArtifactFname() {
       UNION
 
       SELECT DISTINCT SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\?]+)') as __value
-      FROM cdevents_lake
+      FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
         AND subject = 'service'
         AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
