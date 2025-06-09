@@ -90,6 +90,11 @@ export default defineConfig({
               { text: "Sinks", link: "/docs/cdviz-collector/sinks" },
             ]
           },
+          { text: "Integrations",
+            items: [
+              { text: "GitHub", link: "/docs/cdviz-collector/integrations/github" },
+            ]
+          },
           // { text: "Usage", link: "/docs/cdviz-collector/usage" },
           // { text: "Troubleshooting", link: "/docs/cdviz-collector/troubleshooting" },
           // { text: "Contributing", link: "/docs/cdviz-collector/contributing" },
