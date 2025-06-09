@@ -1,4 +1,5 @@
 ---
+titleTemplate: CDviz
 layout: home
 markdownStyles: false
 
