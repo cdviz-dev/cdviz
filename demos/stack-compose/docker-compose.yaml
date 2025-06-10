@@ -111,3 +111,8 @@ services:
     volumes:
       # - ./tmp/cdviz-collector:/var/cdviz-collector:ro
       - ../use_cases:/var/use_cases:rw
+    depends_on:
+      postgres:
+        condition: service_healthy
+      cdviz-db-migrate:
+        condition: service_completed_successfully
