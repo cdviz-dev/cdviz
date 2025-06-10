@@ -182,3 +182,20 @@ test("On dataset02", () => {
     "published",
   ]);
 });
+
+test("On dataset03", () => {
+  const dataset = require("./timeline_dataset_03.json");
+  const data = transformData(dataset);
+  expect(lengthOf(data.series)).toEqual(dataset.length);
+
+  const domains = data.domains;
+  expect(domains.timestampMax).toBeGreaterThanOrEqual(domains.timestampMax);
+  expect(domains.stages).toEqual([
+    "group1-prod/us-2/ns-a/deploy-a/container-b",
+    "group1-prod/eu-2/ns-a/deploy-a/container-b",
+    "group1-uat/eu-1/ns-a/deploy-a/container-b",
+    "group1-dev/eu-1/ns-a/deploy-a/container-b",
+    "signed",
+    "published",
+  ]);
+});

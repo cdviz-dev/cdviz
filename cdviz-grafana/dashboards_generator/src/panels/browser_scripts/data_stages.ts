@@ -39,25 +39,37 @@ export function groupBySeries(data: Datum[]): DatumExt[][] {
   //return Map.groupBy(data, ({ artifact_id }) => artifact_id);
   const res: Array<[ArtifactInfo, Array<DatumExt>]> = [];
   for (const it of data) {
-    const artifactInfo = new ArtifactInfo(it.artifact_id);
-    let dest = res.find((el) => artifactInfo.isSimilarTo(el[0]));
-    if (!dest) {
-      dest = [artifactInfo, []];
-      res.push(dest);
+    try {
+      const artifactInfo = new ArtifactInfo(it.artifact_id);
+      let dest = res.find((el) => artifactInfo.isSimilarTo(el[0]));
+      if (!dest) {
+        dest = [artifactInfo, []];
+        res.push(dest);
+      }
+      dest[0].mergeVersionAndTags(artifactInfo);
+      const datum: DatumExt = {
+        timestamp: it.timestamp,
+        action: it.action,
+        stage: it.stage,
+        artifactInfo: dest[0],
+      };
+      dest[1].push(datum);
+    } catch (e) {
+      console.error("Error parsing artifact_id:", it, e);
+      throw e; // Re-throw the error to stop processing
     }
-    dest[0].mergeVersionAndTags(artifactInfo);
-    const datum: DatumExt = {
-      timestamp: it.timestamp,
-      action: it.action,
-      stage: it.stage,
-      artifactInfo: dest[0],
-    };
-    dest[1].push(datum);
   }
   //console.log(res);
   return res.map((el) => {
     const sequence = el[1];
-    sequence.sort((a, b) => a.timestamp - b.timestamp);
+    sequence.sort((a, b) => {
+      let r = a.timestamp - b.timestamp;
+      if (r === 0) {
+        // if timestamps are equal, sort by action
+        r = a.stage.localeCompare(b.stage);
+      }
+      return r;
+    });
     return sequence;
   });
 }
@@ -119,6 +131,8 @@ function sortStages(seriesValues: DatumExt[][]): string[] {
   try {
     stagesSorted = topologicalSort(graph);
   } catch (e) {
+    //console.debug("Topological sort failed:", seriesValues);
+    console.debug("Topological sort failed:", graph);
     console.error("Error during topological sort:", e);
     console.warn("fallback to alphabetical sort");
     stagesSorted = graph.keys().toArray().sort();
@@ -143,6 +157,7 @@ function buildTransitionGraph(seriesValues: DatumExt[][]): Graph {
     for (let i = 0; i < sequence.length - 1; i++) {
       const currentStage = sequence[i].stage;
       const nextStage = sequence[i + 1].stage;
+
       // to avoid duplicated stages in the same sequence and to reduce probability of cycles in graph
       if (stagesSeen.has(nextStage)) {
         continue;
@@ -171,6 +186,7 @@ function buildTransitionGraph(seriesValues: DatumExt[][]): Graph {
   return graph;
 }
 
+// TODO try to resolve local cycles, by selecting an arbitrary order
 function topologicalSort(graph: Graph): string[] {
   const inDegree: Map<string, number> = new Map();
   const queue: string[] = [];
