@@ -93,6 +93,7 @@ export default defineConfig({
           { text: "Integrations",
             items: [
               { text: "GitHub", link: "/docs/cdviz-collector/integrations/github" },
+              { text: "Kubernetes (via Kubewatch)", link: "/docs/cdviz-collector/integrations/kubewatch" },
             ]
           },
           // { text: "Usage", link: "/docs/cdviz-collector/usage" },
