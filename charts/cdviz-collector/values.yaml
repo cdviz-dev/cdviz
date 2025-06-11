@@ -254,6 +254,21 @@ kubewatch:
 
   # cloudevent include the webhook's data + manifest of the resource + ... use by the template
   cloudevent:
-    enabled: true
     # update the name to match the name of the service (if not cdviz-collector)
     url: "http://cdviz-collector:8080/webhook/000-kubewatch"
+
+  podSecurityContext:
+    enabled: true
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+    fsGroup: 1000
+  containerSecurityContext:
+    enabled: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
