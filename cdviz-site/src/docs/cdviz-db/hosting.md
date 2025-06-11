@@ -1,11 +1,5 @@
 # Hosting
 
-## Docker / OCI container
-
-Examples with docker-compose, [docker-compose.yml](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-compose/docker-compose.yaml)
-
-<<< ../../../../demos/stack-compose/docker-compose.yaml{3-51 yaml:line-numbers}
-
 ## Kubernetes
 
 - [cloud native postgres aka CNPG](https://cloudnative-pg.io/), it's the solution used in our demo cluster ([see values.yaml](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-k8s/values/cdviz-db.yaml))
@@ -35,3 +29,12 @@ Currently some managed Database doesn't support our requirements (extensions):
 - 🔴 [Google Cloud SQL](https://cloud.google.com/sql/docs/postgres/extensions)
 - 🟢 [Digital Ocean](https://www.digitalocean.com/docs/databases/postgresql/extensions/)
 - 🟢 [Scaleway](https://www.scaleway.com/en/docs/serverless-sql-databases/reference-content/supported-postgresql-extensions/)
+
+## Docker / OCI container
+
+Mainly used for development, testing, and demo purposes.
+Examples with docker-compose, [docker-compose.yml](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-compose/docker-compose.yaml)
+
+::: details Click me to toggle the code
+<<< ../../../../demos/stack-compose/docker-compose.yaml#database{yaml:line-numbers}
+:::

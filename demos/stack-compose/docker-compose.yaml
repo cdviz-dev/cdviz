@@ -1,5 +1,6 @@
 # version: "3.9"
 services:
+  #region database
   postgres:
     image: ghcr.io/cdviz-dev/cdviz-db-pg:latest
     command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
@@ -41,16 +42,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-  # adminer:
-  #   image: docker.io/library/adminer
-  #   # restart: always
-  #   environment:
-  #     - ADMINER_DESIGN=pepa-linha-dark
-  #     - ADMINER_DEFAULT_SERVER=postgres
-  #     - ADMINER_DEFAULT_DB_DRIVER=pgsql
-  #     - ADMINER_DEFAULT_DB_NAME=cdviz
-  #   ports:
-  #     - 5499:8080
+  #endregion database
+  #region grafana
   grafana:
     image: docker.io/grafana/grafana-oss:12.0.0
     # container_name: grafana
@@ -86,6 +79,9 @@ services:
       - ../../cdviz-grafana/dashboards:/var/provisioning/dashboards:rw
       - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       # - ./tmp/grafana.ini:/etc/grafana/grafana.ini
+  # endregion grafana
+
+  # region cdviz-collector
   cdviz-collector:
     image: ghcr.io/cdviz-dev/cdviz-collector:latest
     command:
@@ -116,3 +112,5 @@ services:
         condition: service_healthy
       cdviz-db-migrate:
         condition: service_completed_successfully
+
+  # endregion cdviz-collector
