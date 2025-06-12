@@ -110,7 +110,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  LEAST(started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  \n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM cdviz.pipelinerun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
+          "rawSql": "SELECT\n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -121,12 +121,12 @@
         }
       ],
       "gridPos": {
-        "h": 9,
+        "h": 4,
         "w": 12,
         "x": 0,
         "y": 1
       }
     }
   ],
-  "version": 2025060716
+  "version": 2025061220
 }

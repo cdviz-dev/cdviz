@@ -50,7 +50,9 @@ export async function buildDashboards() {
           "payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name'",
         withQueuedAt: true,
       },
-    ].map((d) => buildDashboard(d.subject, d.label, d.payloadSelector)),
+    ].map((d) =>
+      buildDashboard(d.subject, d.label, d.payloadSelector, d.withQueuedAt),
+    ),
   );
 }
 
@@ -119,7 +121,13 @@ async function buildDashboard(
               LIMIT $limit
           `),
         )
-        .script(script),
+        .script(script)
+        .gridPos({
+          h: 4,
+          w: 12,
+          x: 0,
+          y: 0,
+        }),
     );
   return builder.build();
 }
