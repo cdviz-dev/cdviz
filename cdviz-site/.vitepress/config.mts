@@ -111,12 +111,15 @@ export default defineConfig({
         ],
       },
       {
-        text: "Dashboard (grafana)",
+        text: "Dashboards (grafana)",
         collapsed: true,
         link: "/docs/cdviz-grafana/",
-        // items: [
-        //   { text: "Installation", link: "/cdviz-grafana/install" },
-        // ],
+        items: [
+          { text: "Artifact Timeline", link: "/docs/cdviz-grafana/artifact_timeline" },
+          { text: "Latest Executions", link: "/docs/cdviz-grafana/execution_dashboards" },
+          { text: "CDEvents Activity", link: "/docs/cdviz-grafana/cdevents_activity" },
+          // { text: "Service Demo", link: "/docs/cdviz-grafana/service_demo" },
+        ],
       },
       { text: "Alternatives", link: "/docs/alternatives" },
     ],
