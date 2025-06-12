@@ -341,8 +341,7 @@
                   "width": {
                     "auto": true,
                     "max": 100,
-                    "min": 20,
-                    "value": 100
+                    "min": 20
                   },
                   "wrap": true
                 },
@@ -406,13 +405,12 @@
                   },
                   "colors": {},
                   "header": {
-                    "fontSize": "md"
+                    "fontSize": "lg"
                   },
                   "width": {
                     "auto": true,
                     "max": 130,
-                    "min": 20,
-                    "value": 100
+                    "min": 20
                   },
                   "wrap": true
                 },
@@ -476,13 +474,12 @@
                   },
                   "colors": {},
                   "header": {
-                    "fontSize": "md"
+                    "fontSize": "lg"
                   },
                   "width": {
                     "auto": true,
                     "max": 130,
-                    "min": 20,
-                    "value": 100
+                    "min": 20
                   },
                   "wrap": true
                 },
@@ -546,12 +543,11 @@
                   },
                   "colors": {},
                   "header": {
-                    "fontSize": "md"
+                    "fontSize": "lg"
                   },
                   "width": {
                     "auto": true,
-                    "min": 300,
-                    "value": 100
+                    "min": 100
                   },
                   "wrap": false
                 },
@@ -615,12 +611,11 @@
                   },
                   "colors": {},
                   "header": {
-                    "fontSize": "md"
+                    "fontSize": "lg"
                   },
                   "width": {
                     "auto": true,
-                    "min": 300,
-                    "value": 100
+                    "min": 100
                   },
                   "wrap": false
                 },
@@ -684,13 +679,81 @@
                   },
                   "colors": {},
                   "header": {
+                    "fontSize": "lg"
+                  },
+                  "width": {
+                    "auto": true,
+                    "min": 10,
+                    "max": 100
+                  },
+                  "wrap": false
+                },
+                "columnTooltip": "",
+                "edit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false,
+                  "permission": {
+                    "mode": "",
+                    "userRole": []
+                  }
+                },
+                "enabled": true,
+                "field": {
+                  "name": "payload_custom",
+                  "source": "A"
+                },
+                "fileCell": {
+                  "size": "md",
+                  "text": "",
+                  "variant": "primary"
+                },
+                "filter": {
+                  "enabled": false,
+                  "mode": "client",
+                  "variable": ""
+                },
+                "footer": [],
+                "gauge": {
+                  "mode": "basic",
+                  "valueDisplayMode": "text",
+                  "valueSize": 10
+                },
+                "group": false,
+                "label": "",
+                "newRowEdit": {
+                  "editor": {
+                    "type": "string"
+                  },
+                  "enabled": false
+                },
+                "objectId": "",
+                "pin": "",
+                "preformattedStyle": false,
+                "scale": "auto",
+                "showingRows": 20,
+                "sort": {
+                  "descFirst": false,
+                  "enabled": false
+                },
+                "type": "json"
+              },
+              {
+                "aggregation": "none",
+                "appearance": {
+                  "alignment": "start",
+                  "background": {
+                    "applyToRow": false
+                  },
+                  "colors": {},
+                  "header": {
                     "fontSize": "md"
                   },
                   "width": {
                     "auto": true,
                     "max": 100,
-                    "min": 20,
-                    "value": 100
+                    "min": 20
                   },
                   "wrap": true
                 },
@@ -800,7 +863,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"payload\" -> 'customData' as \"payload_custom\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -812,5 +875,5 @@
       ]
     }
   ],
-  "version": 2025060716
+  "version": 202506122033
 }
