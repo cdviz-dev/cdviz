@@ -249,6 +249,7 @@ export async function buildDashboard(): Promise<Dashboard> {
             "predicate",
             "payload" -> 'subject' as "payload_subject",
             "payload" -> 'context' as "payload_context",
+            "payload" -> 'customData' as "payload_custom",
             "imported_at"
           FROM
             cdviz.cdevents_lake

@@ -73,7 +73,7 @@ export const defaultVolkovlabsTablePanelOptions =
                 auto: true,
                 max: 100,
                 min: 20,
-                value: 100,
+                // value: 100,
               },
               wrap: true,
             },
@@ -137,13 +137,13 @@ export const defaultVolkovlabsTablePanelOptions =
               },
               colors: {},
               header: {
-                fontSize: "md",
+                fontSize: "lg",
               },
               width: {
                 auto: true,
                 max: 130,
                 min: 20,
-                value: 100,
+                // value: 100,
               },
               wrap: true,
             },
@@ -207,13 +207,13 @@ export const defaultVolkovlabsTablePanelOptions =
               },
               colors: {},
               header: {
-                fontSize: "md",
+                fontSize: "lg",
               },
               width: {
                 auto: true,
                 max: 130,
                 min: 20,
-                value: 100,
+                // value: 100,
               },
               wrap: true,
             },
@@ -277,12 +277,12 @@ export const defaultVolkovlabsTablePanelOptions =
               },
               colors: {},
               header: {
-                fontSize: "md",
+                fontSize: "lg",
               },
               width: {
                 auto: true,
-                min: 300,
-                value: 100,
+                min: 100,
+                // value: 100,
               },
               wrap: false,
             },
@@ -346,12 +346,12 @@ export const defaultVolkovlabsTablePanelOptions =
               },
               colors: {},
               header: {
-                fontSize: "md",
+                fontSize: "lg",
               },
               width: {
                 auto: true,
-                min: 300,
-                value: 100,
+                min: 100,
+                //value: 100,
               },
               wrap: false,
             },
@@ -415,13 +415,83 @@ export const defaultVolkovlabsTablePanelOptions =
               },
               colors: {},
               header: {
+                fontSize: "lg",
+              },
+              width: {
+                auto: true,
+                min: 10,
+                //value: 30,
+                max: 100,
+              },
+              wrap: false,
+            },
+            columnTooltip: "",
+            edit: {
+              editor: {
+                type: "string",
+              },
+              enabled: false,
+              permission: {
+                mode: "",
+                userRole: [],
+              },
+            },
+            enabled: true,
+            field: {
+              name: "payload_custom",
+              source: "A",
+            },
+            fileCell: {
+              size: "md",
+              text: "",
+              variant: "primary",
+            },
+            filter: {
+              enabled: false,
+              mode: "client",
+              variable: "",
+            },
+            footer: [],
+            gauge: {
+              mode: "basic",
+              valueDisplayMode: "text",
+              valueSize: 10,
+            },
+            group: false,
+            label: "",
+            newRowEdit: {
+              editor: {
+                type: "string",
+              },
+              enabled: false,
+            },
+            objectId: "",
+            pin: "",
+            preformattedStyle: false,
+            scale: "auto",
+            showingRows: 20,
+            sort: {
+              descFirst: false,
+              enabled: false,
+            },
+            type: "json",
+          },
+          {
+            aggregation: "none",
+            appearance: {
+              alignment: "start",
+              background: {
+                applyToRow: false,
+              },
+              colors: {},
+              header: {
                 fontSize: "md",
               },
               width: {
                 auto: true,
                 max: 100,
                 min: 20,
-                value: 100,
+                //value: 100,
               },
               wrap: true,
             },
