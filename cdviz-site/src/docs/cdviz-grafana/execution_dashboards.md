@@ -1,6 +1,6 @@
 # Latest Execution Dashboards
 
-![panel executions screenshot](/screenshots/grafana_panel_executions_double_barchart-20250606_2105.png)
+![panel executions screenshot](/screenshots/grafana_panel_executions_double_barchart-20250608_2105.png)
 
 Allow users to visualize duration & results (ok / ko) of the latest executions of:
 - pipelines
