@@ -1,8 +1,5 @@
 # CDViz Platform Overview
 
-> [!IMPORTANT]
-> CDViz is currently in **alpha / preview** stage.
-
 ## Value Proposition
 
 Effective improvement of Software Development Life Cycle (SDLC), Continuous Integration/Continuous Deployment (CI/CD), and DevOps practices requires comprehensive visibility into current processes and performance metrics.

@@ -1,8 +1,5 @@
 # cdviz-collector
 
-> [!IMPORTANT]
-> CDviz is in **alpha / preview** stage.
-
 A service & cli to collect SDLC/CI/CD events and to dispatch as [cdevents].
 
 ![inside a collector](/architectures/inside_collector.excalidraw.svg)
