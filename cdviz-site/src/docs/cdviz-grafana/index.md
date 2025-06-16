@@ -1,8 +1,5 @@
 # CDViz Grafana
 
-> [!IMPORTANT]
-> CDViz is currently in **alpha / preview** stage.
-
 > [!NOTE]
 > Dashboards, panels and SQL queries are provided for Grafana, but they can be adapted to your favorite dashboards & analytics system.
 

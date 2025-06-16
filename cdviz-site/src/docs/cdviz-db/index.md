@@ -1,8 +1,5 @@
 # CDViz Database
 
-> [!IMPORTANT]
-> CDViz is currently in **alpha / preview** stage.
-
 ## Overview
 
 The CDViz database provides the foundational data storage layer for the CDViz platform, enabling efficient capture and retrieval of continuous delivery events and metrics.
