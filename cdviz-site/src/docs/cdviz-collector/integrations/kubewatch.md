@@ -115,6 +115,7 @@ The `kubewatch_metadata` transformer is used to add metadata to the events, such
 
     # cloudevent include the webhook's data + manifest of the resource + ... use by the template
     cloudevent:
+      enabled: true
       # update the name to match the name of the service (if not cdviz-collector)
       url: "http://cdviz-collector:8080/webhook/000-kubewatch"
     ```
