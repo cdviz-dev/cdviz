@@ -1,5 +1,6 @@
 ---
 titleTemplate: CDviz
+description: CDviz is a collection of components designed to provide visibility into deployed service versions, associated environments, testing activities, and related information.
 layout: home
 markdownStyles: false
 

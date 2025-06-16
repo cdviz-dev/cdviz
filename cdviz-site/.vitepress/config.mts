@@ -73,7 +73,7 @@ export default defineConfig({
         text: "Overview",
         link: "/docs/",
         items: [
-          { text: "Quickstart", link: "/docs/quickstart" },
+          { text: "Getting started", link: "/docs/quickstart" },
         ],
       },
       {

@@ -1,14 +1,19 @@
-# Latest Execution Dashboards
+# Execution Performance Dashboard
 
-![panel executions screenshot](/screenshots/grafana_panel_executions_double_barchart-20250608_2105.png)
+![Execution visualization panel](/screenshots/grafana_panel_executions_double_barchart-20250608_2105.png)
 
-Allow users to visualize duration & results (ok / ko) of the latest executions of:
-- pipelines
-- tasks
-- builds
-- tests & test suites
+## Overview
 
-Example for pipelines execution:
+The Execution Performance Dashboard provides comprehensive visualization capabilities for monitoring duration and outcome statistics across various execution types in the continuous delivery pipeline. This dashboard enables stakeholders to analyze performance metrics for:
+
+- Pipeline executions
+- Task executions
+- Build processes
+- Test and test suite runs
+
+## Implementation Details
+
+The dashboard implements visualization through parameterized SQL queries that extract execution metrics from the CDViz database. The example below demonstrates the query structure for pipeline execution analysis:
 
 ```sql
 SELECT
@@ -27,15 +32,19 @@ ORDER BY at DESC
 LIMIT $limit
 ```
 
-## Notes
+## Technical Considerations
 
-- Some executions doesn't have queued duration (e.g., tasks).
-- The sql query use view on the table cdevents_lake, if some view are missing, feel free to make a PR (to add the view the database schema), to create your own view on table, or to use the `WITH` statement into your query.
-- The hidden variable `limit` is used to limit the number of results displayed in the table, it can be set in the dashboard settings (default: `20`).
+- Some execution types may not include queued duration metrics (e.g., tasks)
+- The SQL queries utilize views defined on the `cdevents_lake` table
+- For missing views, consider:
+  - Submitting a pull request to add the view to the database schema
+  - Creating custom views in your environment
+  - Using SQL `WITH` statements in your queries as a workaround
+- The dashboard includes a hidden `limit` variable that controls the number of displayed results (default: `20`)
 
-![dashboards executions screenshot](/screenshots/grafana_dashboard_pipeline_executions-20250606_2103.png)
+![Pipeline executions dashboard](/screenshots/grafana_dashboard_pipeline_executions-20250606_2103.png)
 
-## Sources
+## Source Code References
 
 - Database schema: [schema.sql](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/schema.sql)
 - Dashboard generator: [execution_dashboards.ts](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/dashboards/execution_dashboards.ts)

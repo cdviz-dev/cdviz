@@ -2,85 +2,87 @@
 tags:
   - tutorial
 ---
-# Quickstart Guide
+# Getting Started with CDViz
 
-This guide helps you get started with [CDviz] and [CDEvents] using our local playground environment, which includes pre-configured components: forms, collector, database, and dashboard.
+This guide provides instructions for implementing a local CDViz environment to explore its capabilities with CDEvents. The demonstration environment includes a pre-configured stack with all necessary components: event forms, collector service, database, and visualization dashboard.
 
 ![Architecture Overview](/quickstart/flow.excalidraw.svg)
 
-## Setting Up the Local Playground
+If you are new to CDViz, we recommend starting with the [CDViz Platform Overview](/docs/) to understand its value proposition and key capabilities.
 
-### Installation
+## Local Environment Setup
 
-1. Clone the repository and start the environment:
+### Installation Procedure
+
+1. Clone the repository and launch the stack using Docker Compose:
 ```bash
 git clone https://github.com/cdviz-dev/cdviz.git
 cd cdviz/demos/stack-compose
 docker compose up
 ```
 
-2. Navigate to the dashboard at: <http://localhost:3000/d/demo-service-deployed/demo-service-deployed>
-   Initially, you'll see only baseline random data.
+2. Access the demonstration dashboard at: <http://localhost:3000/d/demo-service-deployed/demo-service-deployed>
+   The initial view will display baseline sample data.
 
 ![Initial Dashboard View](/quickstart/metrics_empty.png)
 
-## Working with Events
+## Event Simulation
 
-### Simulating Service Deployments
+### Service Deployment Events
 
-1. Use the deployment form below the metrics dashboard to notify the system of a service deployment.
+1. Utilize the deployment form located below the metrics dashboard to register service deployment events.
 
-> **Note**: Artifacts are specified using [PURL format](https://github.com/package-url/purl-spec):
+> **Note**: Artifact specifications follow the [Package URL (PURL) format](https://github.com/package-url/purl-spec):
 > `scheme:type/namespace/name@version?qualifiers#subpath`
-> See [PURL examples](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst) for more details.
+> Reference the [PURL specification examples](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst) for implementation details.
 
 ![Service Deployment Form Example](/quickstart/form_services_deployed_sample.png)
 
-The metrics dashboard will update automatically to reflect the new deployment:
+The dashboard will automatically update to incorporate the new deployment metrics:
 
 ![Updated Deployment Metrics](/quickstart/metrics_with_deployment.png)
 
-### Reporting Incidents
+### Incident Reporting
 
-1. Use the incident reporting form to log new incidents:
+1. Submit incident information using the designated reporting form:
 
 ![Incident Reporting Form](/quickstart/form_incidents_reported_sample.png)
 
-The dashboard will update to show the incident data:
+The visualization will update to reflect the incident data:
 
 ![Incident Metrics View](/quickstart/metrics_with_incident.png)
 
-## Advanced Usage
+## Extended Functionality
 
-### Additional Features
+### Advanced Features
 
-- **Multiple Events**: Experiment with various deployment versions and environments using the forms
-  (use the filters at the top for different views)
-- **Raw Event Interface**: Access the RAW form to send any CDEvents (eg use sample events from the [CDEvents conformance repository](https://github.com/cdevents/spec/tree/spec-v0.4/conformance))![form with raw json](/quickstart/form_raw_json.png)
-- **Explore other Dashboards**: Explore additional visualizations at <http://localhost:3000/d/cdevents-activity/cdevents-activity>
+- **Multi-environment Simulation**: Test various deployment scenarios across multiple environments and versions using the provided forms
+  (utilize the filters at the dashboard top to customize the view)
+- **JSON Event Submission**: Access the advanced interface for submitting json CDEvents (reference the [CDEvents conformance repository](https://github.com/cdevents/spec/tree/spec-v0.4/conformance) for sample event structures)![Custom Event Interface](/quickstart/form_raw_json.png)
+- **Additional Visualizations**: Explore comprehensive event analytics at <http://localhost:3000/d/cdevents-activity/cdevents-activity>
 
 ![Activity Dashboard](/quickstart/dashboard_activity.png)
 
-## Next Steps
+## Production Implementation
 
-### Production Implementation
+### Enterprise Deployment Considerations
 
-- Deploy components in a persistent environment
-- Integrate with external data sources:
-  - GitHub
-  - Kubernetes
-  - File systems/Object storage
-  - ...
-  - Developer platform
-- Develop custom dashboards and alerts
-- Implement event-driven Software Development Life Cycle (SDLC):
-  - Automated test triggering on deployment
-  - Promotion based on successful tests
-  - Launch long-running processes without blocking CI runners
+- Implement components in a persistent production environment
+- Establish integrations with enterprise systems:
+  - GitHub/Version Control
+  - Kubernetes clusters
+  - Storage solutions (file systems/object storage)
+  - CI/CD platforms
+  - Developer workflows
+- Develop tailored dashboards and alerting mechanisms
+- Implement event-driven Software Development Life Cycle (SDLC) automation:
+  - Automated test execution triggered by deployment events
+  - Environment promotion based on quality gates
+  - Asynchronous process execution decoupled from CI infrastructure
 
-### Support and Resources
+### Documentation and Support
 
-For additional support and information, visit [CDviz] or contact our team.
+For comprehensive documentation and implementation assistance, visit the [CDViz website][CDviz] or contact our technical support team.
 
 [CDviz]: https://cdviz.dev/
 [CDEvents]: https://cdevents.dev/

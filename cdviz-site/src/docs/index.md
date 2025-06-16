@@ -1,43 +1,55 @@
-# Overview
+# CDViz Platform Overview
 
 > [!IMPORTANT]
-> CDviz is in **alpha / preview** stage.
+> CDViz is currently in **alpha / preview** stage.
 
-## Why
+## Value Proposition
 
-How can you improve SDLC, CI/CD, and DevOps?
+Effective improvement of Software Development Life Cycle (SDLC), Continuous Integration/Continuous Deployment (CI/CD), and DevOps practices requires comprehensive visibility into current processes and performance metrics.
 
-The first step is to understand and to observe the current state of your SDLC, CI/CD, and DevOps.
-Every part of the SDLC stack can provide measurement and solution at its own level & scope.
-But it becomes challenging to have a integrated view.
+Organizations face significant challenges when attempting to establish an integrated view across their development ecosystem. While individual components provide localized measurements, a consolidated perspective remains elusive without proper tooling.
 
-CDviz's components try to help you visualize and understand your SDLC, CI/CD, and DevOps.
-And may be also to help the interactivity between some parts of your Software development stack.
+CDViz addresses this need by offering a suite of components designed to visualize, analyze, and enhance understanding of your SDLC, CI/CD, and DevOps infrastructure. The platform facilitates improved interoperability between disparate elements of your software development stack.
 
-Some questions that CDviz will help you answer include:
+## Key Capabilities
 
-- What is the current application's version deployed in environment X?
-- Which version of the application was deployed for displayed runtime metrics?
-- What is the duration of the deployment process (from development to production)?
-- What is the duration of the CI/CD pipeline?
-- Which data are available to build my DORA metrics?
+CDViz enables organizations to answer critical operational questions:
 
-Some of the key features of CDviz include:
+- Current application version deployment status across environments
+- Version correlation between deployed applications and observable runtime metrics
+- End-to-end deployment process duration metrics
+- CI/CD pipeline performance analytics
+- DORA metrics implementation and visualization
 
-- Real-time monitoring and visualization of your SDLC, CI/CD, and DevOps processes
-- Integration with popular tools and platforms such as GitHub and Kubernetes
-- Customizable dashboards and reports to help you track progress and identify areas for improvement
+## Core Features
 
-## How
+The CDViz platform delivers essential capabilities for engineering organizations:
+
+- Real-time monitoring and visualization of SDLC, CI/CD, and DevOps processes
+- Seamless integration with industry-standard tools including GitHub and Kubernetes
+- Configurable dashboards and reports for progress tracking and performance analysis
+
+## Architecture
 
 > [!NOTE]
-> The 3 main components of CDviz are independent and can be used separately or together. You can used 1, 2 or the 3 components.
+> CDViz employs a modular architecture with three independent components that can be deployed individually or as an integrated solution.
 
-1. A [dashboard](/docs/cdviz-grafana/) tool, to be able to visualize (and analyze, alert) and to combine existing runtime, business metrics with SDLC metrics. CDviz provides dashboards & panelsfor [Grafana](https://grafana.com/), but it could be adapted to other tools.
-  ![step01](/architectures/overview_01.excalidraw.svg)
-2. A [database](/docs/cdviz-db/) to store the data for visualization (dashboards). CDviz provides support for a PostgreSQL database.
-  ![step02](/architectures/overview_02.excalidraw.svg)
-3. A [collector](/docs/cdviz-collector/) (mini data pipeline) to collect and process data from various sources and to push the data to the database.
-  ![step03](/architectures/overview_03.excalidraw.svg)
-4. A data pipeline to trigger actions into other systems.
-  ![step03](/architectures/overview_04.excalidraw.svg)
+1. **Visualization Layer** - [CDViz Grafana](/docs/cdviz-grafana/)
+
+   A comprehensive dashboard solution for visualizing, analyzing, and generating alerts by combining existing runtime and business metrics with SDLC metrics. While built on Grafana, the implementation can be adapted to alternative visualization platforms.
+   ![Visualization Layer](/architectures/overview_01.excalidraw.svg)
+
+2. **Data Persistence** - [CDViz Database](/docs/cdviz-db/)
+
+   An optimized data storage solution for metrics and events, built on PostgreSQL with specialized extensions for time-series analytics.
+   ![Data Persistence](/architectures/overview_02.excalidraw.svg)
+
+3. **Data Acquisition** - [CDViz Collector](/docs/cdviz-collector/)
+
+   A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources into the database, event processor,...
+   ![Data Acquisition](/architectures/overview_03.excalidraw.svg)
+
+4. **Event Processing**
+
+   An event-driven architecture for triggering downstream actions in external systems based on collected events.
+   ![Event Processing](/architectures/overview_04.excalidraw.svg)

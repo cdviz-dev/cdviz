@@ -1,62 +1,63 @@
-# cdviz-grafana
+# CDViz Grafana
 
 > [!IMPORTANT]
-> CDviz is in **alpha / preview** stage.
+> CDViz is currently in **alpha / preview** stage.
 
-Some dashboards and panels are provided for Grafana, but can be adapted to your favorite dashboards & analytics system.
+> [!NOTE]
+> Dashboards, panels and SQL queries are provided for Grafana, but they can be adapted to your favorite dashboards & analytics system.
 
 ## Overview
 
-- Provides real-time visualization and monitoring of SDLC data through Grafana dashboards & alerts
-- Serves as the primary visualization layer for events (CDEvents) stored in cdviz-db
-- Allows creation of custom dashboards for specific monitoring needs
-- Allows to enhance your runtime metrics with deployment information (by example version of components)
+CDViz Grafana provides a comprehensive visualization layer for continuous delivery metrics and events:
 
-![list of dashboars](/screenshots/grafana_dashboards-20250606_2100.png)
+- Delivers real-time visualization and monitoring of SDLC data through customized Grafana dashboards and alerts
+- Functions as the primary visualization interface for events (CDEvents) stored in CDViz Database
+- Enables creation of tailored dashboards for specific monitoring requirements
+- Enhances runtime metrics with deployment context (such as component versions)
+
+![Dashboard overview](/screenshots/grafana_dashboards-20250606_2100.png)
 
 ## Installation
 
 ### Requirements
+
 - Grafana version: 11+
-- Grafana Plugins:
-  - **marcusolsson-dynamictext-panel** (require to disable sanitize html in grafana)
+- Required Grafana Plugins:
+  - **marcusolsson-dynamictext-panel** (requires HTML sanitization to be disabled in Grafana)
   - **volkovlabs-form-panel**
   - **volkovlabs-table-panel**
-- Credentials with read access to a cdviz-db
+- Database credentials with read access to a CDViz Database instance
 
 ### Manual Installation
 
-1. Configure grafana to follow the requirements above (plugins,...)
-2. In Grafana, create a datasource to access cdviz-db
-    - type: `grafana-postgresql-datasource`
-    - name: `cdviz-...` (the cdviz prefix is used to filter datasource in dashboards)
-    - timescaledb: `enabled`
-3. In Grafana, import dashboards by copy/paste json from <https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards>
+1. Configure Grafana according to the requirements above (plugins and settings)
+2. Create a PostgreSQL datasource in Grafana to connect to the CDViz Database:
+    - Type: `grafana-postgresql-datasource`
+    - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
+    - TimescaleDB: `enabled`
+3. Import dashboards by copying JSON definitions from the [CDViz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)
 
-### Installation / Provisioning in Kubernetes via Helm
+### Kubernetes Deployment with Helm
 
-1. Configure grafana to follow the requirements above (plugins,...)
-2. Configure grafana to accept provisionning of dashboard & datasources by sidecars
+1. Configure Grafana according to the requirements specified above
+2. Enable dashboard and datasource provisioning via sidecars:
 
-    ::: details toggle to see part of values.yaml for grafana helm chart
+    ::: details Grafana Helm Chart Configuration
     ```yaml
     # https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
     #
 
-    # [Override configuration with environment variables](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables)
-    # To override an option, use a predefined pattern GF_<SectionName>_<KeyName>.
+    # Configuration override with environment variables
+    # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
     env:
-      GF_PANELS_DISABLE_SANITIZE_HTML: "true" # Allow html, svg, ... into dynamic/business text,...
+      GF_PANELS_DISABLE_SANITIZE_HTML: "true" # Required for dynamic/business text rendering
 
     plugins:
         - marcusolsson-dynamictext-panel
         - volkovlabs-form-panel
         - volkovlabs-table-panel
 
-    # configure Grafana to use sidecars
-    # to load the dashboards and datasources, from the cdviz namespace.
-    # you can login with default credentials: admin/admin, but you can enable
-    # anonymous as admin with the following env configuration
+    # Sidecar configuration for dashboard and datasource provisioning
     sidecar:
         dashboards:
             enabled: true
@@ -71,34 +72,33 @@ Some dashboards and panels are provided for Grafana, but can be adapted to your 
     ```
     :::
 
-3. Create the datasource manually OR create a values.yaml with configuration for the chart cdviz-grafana
+3. Configure the datasource either manually or by creating a values.yaml file for the CDViz Grafana chart:
 
     ```yaml
     datasources:
       enabled: true
       definitions:
         cdviz-db:
-          enabled: true # enable/disable the datasource
+          enabled: true
           type: grafana-postgresql-datasource
           access: proxy
-          # Use the syntax "$..." to inject the values from the grafana environment
-          # Secrets could be used to define grafana environment
+          # Environment variable injection syntax
           url: "$CDVIZ_DASHBOARDS_POSTGRES_HOST"
           user: "$CDVIZ_DASHBOARDS_POSTGRES_USER"
           secureJsonData:
             password: "$CDVIZ_DASHBOARDS_POSTGRES_PASSWORD"
           jsonData:
             database: "$CDVIZ_DASHBOARDS_POSTGRES_DB"
-            sslmode: "require" # disable/require/verify-ca/verify-full
-            maxOpenConns: 100 # Grafana v5.4+
-            maxIdleConns: 100 # Grafana v5.4+
-            maxIdleConnsAuto: true # Grafana v9.5.1+
-            connMaxLifetime: 14400 # Grafana v5.4+
+            sslmode: "require" # Options: disable/require/verify-ca/verify-full
+            maxOpenConns: 100
+            maxIdleConns: 100
+            maxIdleConnsAuto: true
+            connMaxLifetime: 14400
             postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
             timescaledb: true
     ```
 
-4. Provision dashboards & datasource (if enabled) by installing the helm chart from <https://github.com/cdviz-dev/cdviz/pkgs/container/charts%2Fcdviz-grafana>
+4. Deploy using the Helm chart:
 
    ```bash
    helm upgrade cdviz-grafana \
@@ -110,16 +110,17 @@ Some dashboards and panels are provided for Grafana, but can be adapted to your 
 
 ## Contributing
 
-We welcome contributions to the CDviz Grafana dashboards. If you have ideas for new dashboards, panels, or improvements, please open an issue or submit a pull request on our [GitHub repository](https://github.com/cdviz-dev/cdviz)
+Contributions to CDViz Grafana dashboards are welcomed. For new dashboard ideas, panel enhancements, or other improvements, please submit an issue or pull request to our [GitHub repository](https://github.com/cdviz-dev/cdviz).
 
-### Rules about dashboards
+### Dashboard Design Guidelines
 
-- Provide a variable to select the datasource (eg `cdviz-db`)
-- Use the `cdviz-` prefix for the datasource name
-- Prefer to predefine the time range as `Last 7 days` or `Last 30 days`.
-- Prefer to generate dashboards from code, using the grafana foundation SDK + Typescript (see <https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards_generator>)
-- Prefer to use grafana panels or the already listed plugins in the requirements section. **marcusolsson-dynamictext-panel** is very flexible and could avoid to create a new plugin (eg, we use it to render D3js chart), see [Business Text | Volkov Labs](https://volkovlabs.io/plugins/business-text/)
+- Include a datasource selection variable (default prefix: `cdviz-`)
+- Maintain consistent naming conventions with the `cdviz-` prefix for datasource references
+- Set appropriate default time ranges (e.g., `Last 7 days` or `Last 30 days`)
+- Utilize the Grafana Foundation SDK with TypeScript for dashboard generation (see [dashboard generator code](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards_generator))
+- Prioritize standard Grafana panels and officially supported plugins listed in the requirements section
+  - Note: The **marcusolsson-dynamictext-panel** plugin offers significant flexibility for custom visualizations (e.g., D3.js charts) without requiring additional plugins. See [Business Text documentation](https://volkovlabs.io/plugins/business-text/)
 
 ## License
 
-Dashboards, panels, sql queries are under [Apache Sofware License 2.0](https://github.com/cdviz-dev/cdviz/blob/main/LICENSE).
+All dashboards, panels, and SQL queries are licensed under the [Apache Software License 2.0](https://github.com/cdviz-dev/cdviz/blob/main/LICENSE).
