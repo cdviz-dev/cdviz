@@ -1,21 +1,29 @@
-# Artifacts Timeline Dashboard
+# Artifact Timeline Dashboard
 
-![panel package timeline screenshot](/screenshots/grafana_panel_timeline_version_on_stage-20250606_2018.png)
+![Artifact timeline visualization](/screenshots/grafana_panel_timeline_version_on_stage-20250606_2018.png)
 
-Allow users to visualize the versions lifecycle (packaged, published, signed, deployment as service,...) of a package.
+## Overview
 
-- 1 timeline per package's version (artifact = package + version)
-- hover each point to see the details of the event
-- color of the points & lines are based on the latest stage reached by the artifact
-- the metrics are based on the time range selected in the dashboard
-- the metrics are per stage:
-  - the name of the stage
-    - the action/predicate of the package
-    - the concatenation of the environment and the service name for the service's deployment
-  - the frequency of the events, it can be used as DORA metrics: **Deployment Frequency**
-  - the average duration of the transition from previous stage, useful to see the time taken to move from one stage to another (aka promotion time)
-  - the latest version of the artifact in the stage, useful to see the latest version of the artifact in each stage   or the current deployed version of the artifact per environment
-  - the timestamp of the latest event in the stage, useful to see the latest activity of the artifact in each stage
+The Artifact Timeline Dashboard provides visualization capabilities for tracking package version lifecycles throughout their development and deployment journey. This dashboard enables users to monitor the progression of artifacts across various stages including packaging, publication, signing, and service deployment.
+
+## Features
+
+- Individual timeline visualization for each package version (artifact = package + version)
+- Interactive tooltips displaying detailed event information on hover
+- Color-coded points and lines based on the latest stage reached by each artifact
+- Metrics based on the selected dashboard time range
+- Comprehensive per-stage metrics including:
+  - Stage identification
+    - Action/predicate of the package
+    - Environment and service name concatenation for service deployments
+  - Event frequency metrics (applicable for DORA metrics: **Deployment Frequency**)
+  - Average transition duration from previous stage, facilitating promotion time analysis
+  - Latest artifact version per stage, providing visibility into current deployed versions across environments
+  - Timestamp of the most recent event per stage, highlighting latest activity
+
+## Implementation
+
+The dashboard utilizes the following SQL query to retrieve artifact timeline data:
 
 ```sql
 SELECT timestamp,
@@ -41,13 +49,15 @@ WHERE $__timeFilter(timestamp)
   AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
 ```
 
-## Notes
+## Technical Notes
 
-- The package is identified by [PURL](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst)
-- For OCI packages, the version is the digest of the package (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db@sha256:1234567890abcdef`), But sometimes the version is not available in the event, so the tag is used instead (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db?tag=0.1.0`).
+- Package identification follows the [Package URL (PURL) specification](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst)
+- For OCI packages, version identification uses:
+  - Package digest when available (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db@sha256:1234567890abcdef`)
+  - Package tag as fallback when digest is unavailable (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db?tag=0.1.0`)
 
-## Sources
+## Source Code References
 
 - Database schema: [schema.sql](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/schema.sql)
 - Dashboard generator: [artifact_timeline.ts](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/dashboards/artifact_timeline.ts)
-- Panel (data transformation + metrics computatuib + render): [draw_timeline_version_on_stage]( https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/panels/browser_scripts/draw_timeline_version_on_stage.ts)
+- Visualization implementation: [draw_timeline_version_on_stage.ts](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/panels/browser_scripts/draw_timeline_version_on_stage.ts)
