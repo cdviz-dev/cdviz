@@ -1,40 +1,41 @@
-# Hosting
+# Database Hosting Options
 
-## Kubernetes
+## Kubernetes Deployments
 
-- [cloud native postgres aka CNPG](https://cloudnative-pg.io/), it's the solution used in our demo cluster ([see values.yaml](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-k8s/values/cdviz-db.yaml))
-- [Postgres Operator from Zalando](https://github.com/zalando/postgres-operator)
-- [StackGres](https://stackgres.io/)
-- ...
+CDViz database can be deployed on Kubernetes using several mature operators:
 
-## Cloud (Managed)
+- **Cloud Native Postgres (CNPG)** - The officially recommended solution, also used in our demonstration cluster. [Documentation](https://cloudnative-pg.io/) | [Reference configuration](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-k8s/values/cdviz-db.yaml)
+- **Postgres Operator by Zalando** - A production-grade Postgres operator with high availability features. [Documentation](https://github.com/zalando/postgres-operator)
+- **StackGres** - Enterprise-grade PostgreSQL operator with monitoring capabilities. [Documentation](https://stackgres.io/)
 
-> [!CAUTION]
-> Below are some managed Database providers that may support our requirements based on their documentation.
->
-> It's a non limited list (feedbacks are welcome).
+## Managed Database Services
 
-### Dedicated
+The following managed database services have been evaluated for compatibility with CDViz requirements, particularly regarding support for the required PostgreSQL extensions.
 
-- [Timescaledb cloud](https://www.timescale.com/cloud)
-- [Supabase](https://supabase.com/docs/guides/database/extensions#full-list-of-extensions)
-- [Neon](https://neon.tech/docs/extensions/pg-extensions)
+### Specialized PostgreSQL Providers
 
-### General Cloud Provider
+- **TimescaleDB Cloud** - Optimized for time-series data with built-in support for the TimescaleDB extension. [Documentation](https://www.timescale.com/cloud)
+- **Supabase** - Open source Firebase alternative with comprehensive PostgreSQL extension support. [Extension list](https://supabase.com/docs/guides/database/extensions#full-list-of-extensions)
+- **Neon** - Serverless PostgreSQL with advanced extension capabilities. [Extension documentation](https://neon.tech/docs/extensions/pg-extensions)
 
-Currently some managed Database doesn't support our requirements (extensions):
+### General Cloud Provider Services
 
-- 🟢 [Azure Database for PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/extensions/concepts-extensions-versions)
-- 🔴 [AWS RDS](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html)
-- 🔴 [Google Cloud SQL](https://cloud.google.com/sql/docs/postgres/extensions)
-- 🟢 [Digital Ocean](https://www.digitalocean.com/docs/databases/postgresql/extensions/)
-- 🟢 [Scaleway](https://www.scaleway.com/en/docs/serverless-sql-databases/reference-content/supported-postgresql-extensions/)
+Compatibility status with major cloud providers:
 
-## Docker / OCI container
+| Provider | Status | Documentation |
+|----------|--------|---------------|
+| Azure Database for PostgreSQL | ✅ Compatible | [Extensions documentation](https://learn.microsoft.com/en-us/azure/postgresql/extensions/concepts-extensions-versions) |
+| AWS RDS | ❌ Missing required extensions | [Extensions list](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html) |
+| Google Cloud SQL | ❌ Missing required extensions | [Extensions documentation](https://cloud.google.com/sql/docs/postgres/extensions) |
+| Digital Ocean | ✅ Compatible | [Extensions documentation](https://www.digitalocean.com/docs/databases/postgresql/extensions/) |
+| Scaleway | ✅ Compatible | [Extensions documentation](https://www.scaleway.com/en/docs/serverless-sql-databases/reference-content/supported-postgresql-extensions/) |
 
-Mainly used for development, testing, and demo purposes.
-Examples with docker-compose, [docker-compose.yml](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-compose/docker-compose.yaml)
+## Container Deployments
 
-::: details Click me to toggle the code
+For development, testing, and demonstration purposes, the CDViz database can be deployed using Docker or other OCI-compatible container runtimes.
+
+A reference docker-compose configuration is available in the repository:
+
+::: details Docker Compose Configuration
 <<< ../../../../demos/stack-compose/docker-compose.yaml#database{yaml:line-numbers}
 :::
