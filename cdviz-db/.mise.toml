@@ -5,7 +5,7 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 
 [tools]
 # docker = "latest"
-atlas = "0.32.0"
+atlas = "0.35.0"
 
 [tasks."plan"]
 description = "update the migrations to reflect target `src/schema.sql`"
