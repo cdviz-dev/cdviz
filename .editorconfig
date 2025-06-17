@@ -16,6 +16,7 @@ indent_size = 2
 [*.md]
 #inside code block, indentation could be anything
 indent_size = unset
+max_line_length = unset
 
 [*.py]
 indent_size = 4
