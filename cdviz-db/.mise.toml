@@ -69,7 +69,10 @@ run = "docker image ls --tree --filter 'reference=*/*/cdviz-db*'"
 
 [tasks."debug:bake"]
 description = "show the 'resovled' bake definition"
-run = ["docker buildx bake --print"]
+run = [
+  "docker info -f '{{ .DriverStatus }}'",
+  "docker buildx bake --print",
+]
 
 [tasks."build:cdviz-db-pg"]
 description = "build the docker image for the postgresql + extension (tag is based on posgresql version)"
