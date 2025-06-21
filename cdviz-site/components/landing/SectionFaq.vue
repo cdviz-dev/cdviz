@@ -19,7 +19,7 @@ import H2 from './H2.vue';
     <a id="faq"></a>
     <H2>Frequently Asked Questions</H2>
     <div class="max-w-3xl mx-auto">
-      <details v-for="aq in $frontmatter.faq" class="cursor-pointer transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-lg bg-white dark:bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+      <details v-for="aq in $frontmatter.faq" class="cursor-pointer transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-lg bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
         <summary class="text-xl font-semibold cursor-pointer">{{ aq.q }}</summary>
         <div class="pt-4 text-text/80 space-y-4" v-html="aq.a"></div>
       </details>
