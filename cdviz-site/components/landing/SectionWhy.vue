@@ -7,21 +7,21 @@ import H3 from './H3.vue';
   <a id="why"></a>
   <H2>Why Choose CDviz?</H2>
   <div class="flex flex-col items-stretch gap-8 md:flex-row max-w-5xl mx-auto">
-    <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+    <div class="bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
       <H3>Enhanced Visibility</H3>
       <p class="leading-relaxed">
         Seamlessly annotate your dashboards with pipeline events and deployment tracking,
         giving you clear insights into your software delivery process.
       </p>
     </div>
-    <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+    <div class="bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
       <H3>Seamless Integration</H3>
       <p class="leading-relaxed">
         Seamlessly integrate CDviz with your existing tools and workflows,
         providing a unified view of your software delivery process.
       </p>
     </div>
-    <div class="bg-white dark:bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
+    <div class="bg-secondary/20 w-full rounded-xl p-6 shadow-sm">
       <H3>Tools Collaboration</H3>
       <p class="leading-relaxed">
         Build an event driven software factory (reduce cost &amp; increase

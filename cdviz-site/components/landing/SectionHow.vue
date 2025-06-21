@@ -6,8 +6,8 @@ import H3 from './H3.vue';
   <section class="my-xl md:my-2xl">
     <div class="
     p-8
-    border border-white/20 bg-white/10 backdrop-blur-md
-    dark:border-white/10 dark:bg-black/10
+    border backdrop-blur-md
+    border-white/10 bg-black/10
     rounded-xl shadow-xl
     ">
       <a id="how"></a>
