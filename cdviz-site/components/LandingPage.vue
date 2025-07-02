@@ -2,6 +2,7 @@
 import Faq from './landing/SectionFaq.vue';
 import Hero from './landing/SectionHero.vue';
 import How from './landing/SectionHow.vue';
+import Plans from './landing/SectionPlans.vue';
 import Pricing from './landing/SectionPricing.vue';
 import Why from './landing/SectionWhy.vue';
 </script>
@@ -15,6 +16,7 @@ import Why from './landing/SectionWhy.vue';
     </section> -->
     <How/>
     <Pricing/>
+    <Plans/>
     <!-- <section class="my-xl md:my-2xl"> -->
       <!-- More social proof -->
       <!-- <a id="testimonials"></a> -->
