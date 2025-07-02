@@ -1,13 +1,14 @@
 {
   "type": "module",
   "devDependencies": {
-    "@iconify-json/simple-icons": "^1.2",
-    "@iconify/tailwind4": "^1.0",
-    "@tailwindcss/vite": "^4.1",
-    "prettier": "^3.5",
-    "prettier-plugin-tailwindcss": "^0.6",
-    "tailwindcss": "^4.1",
-    "vitepress": "^2.0.0-alpha.5"
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.41",
+    "@iconify/tailwind4": "^1.0.6",
+    "@tailwindcss/vite": "^4.1.11",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "tailwindcss": "^4.1.11",
+    "vitepress": "^2.0.0-alpha.7"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
