@@ -18,35 +18,26 @@ CDViz enables organizations to answer critical operational questions:
 - CI/CD pipeline performance analytics
 - DORA metrics implementation and visualization
 
-## Core Features
+## Getting Started
 
-The CDViz platform delivers essential capabilities for engineering organizations:
+If you're new to CDviz, we recommend starting with our **[Getting Started Guide](./getting-started.md)**. This guide will walk you through setting up a local CDviz environment, sending your first events, and seeing the results in Grafana.
 
-- Real-time monitoring and visualization of SDLC, CI/CD, and DevOps processes
-- Seamless integration with industry-standard tools including GitHub and Kubernetes
-- Configurable dashboards and reports for progress tracking and performance analysis
+## CDEvents
+
+CDviz is built on top of the **[CDEvents](https://cdevents.dev/)** specification. To learn more about CDEvents, please refer to our **[CDEvents](./cdevents.md)** documentation.
 
 ## Architecture
 
-> [!NOTE]
-> CDViz employs a modular architecture with three independent components that can be deployed individually or as an integrated solution.
+To get an overview of how CDviz components collaborate, check out our **[Architecture](./architecture.md)** documentation.
 
-1. **Visualization Layer** - [CDViz Grafana](/docs/cdviz-grafana/)
+## Components
 
-   A comprehensive dashboard solution for visualizing, analyzing, and generating alerts by combining existing runtime and business metrics with SDLC metrics. While built on Grafana, the implementation can be adapted to alternative visualization platforms.
-   ![Visualization Layer](/architectures/overview_01.excalidraw.svg)
+CDviz is a modular platform with three main components:
 
-2. **Data Persistence** - [CDViz Database](/docs/cdviz-db/)
+*   **[CDviz Collector](./cdviz-collector/index.md):** A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources.
+*   **[CDviz Database](./cdviz-db/index.md):** An optimized data storage solution for metrics and events.
+*   **[CDviz Grafana](./cdviz-grafana/index.md):** A comprehensive dashboard solution for visualizing, analyzing, and generating alerts.
 
-   An optimized data storage solution for metrics and events, built on PostgreSQL with specialized extensions for time-series analytics.
-   ![Data Persistence](/architectures/overview_02.excalidraw.svg)
+## Other Resources
 
-3. **Data Acquisition** - [CDViz Collector](/docs/cdviz-collector/)
-
-   A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources into the database, event processor,...
-   ![Data Acquisition](/architectures/overview_03.excalidraw.svg)
-
-4. **Event Processing**
-
-   An event-driven architecture for triggering downstream actions in external systems based on collected events.
-   ![Event Processing](/architectures/overview_04.excalidraw.svg)
+*   **[Alternatives](./alternatives.md):** A list of alternative tools to CDviz.

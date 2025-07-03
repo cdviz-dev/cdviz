@@ -1,43 +1,34 @@
 # cdviz-collector
 
-A service & cli to collect SDLC/CI/CD events and to dispatch as [cdevents].
+The CDviz Collector is a service and CLI tool that collects events from your software development lifecycle, transforms them into [CDEvents](https://cdevents.dev/), and dispatches them to various destinations.
 
-![inside a collector](/architectures/inside_collector.excalidraw.svg)
+![Inside a collector](/architectures/inside_collector.excalidraw.svg)
 
-- to create cdevents by polling some sources (folder on fs, AWS S3, AWS ECR, ...) (see [Sources])
-- to receive events from http (GitHub,...), kafka, nats (see [Sources])
-- to send (broadcast) cdevents to various destination database, http, kafka, nats (see [Sinks])
-- to expose some metrics (TBD)
+## Key Features
 
-<!--
-## Usage
+*   **Extensible:** The Collector is built on a modular architecture that allows you to easily add new sources, sinks, and transformers.
+*   **Flexible:** The Collector can be configured to collect events from a wide variety of sources, including Git repositories, CI/CD servers, and container registries.
+*   **Powerful:** The Collector's powerful transformation capabilities allow you to enrich, filter, and transform your events to meet your specific needs.
 
-- service: connect
--
+## Getting Started
 
-## Configuration
+To get started with the CDviz Collector, we recommend reading the following documentation:
 
-- Environement variables
-- Configuration files
-  - bases
-  - custom
-- Sources
-- Extractors
-- Transformers
-- Sink
-- Http
-- Logging, Metrics, Traces
+*   **[Installation](./install.md):** Learn how to install the CDviz Collector.
+*   **[Configuration](./configuration.md):** Learn how to configure the CDviz Collector.
+*   **[Usage](./usage.md):** Learn how to use the CDviz Collector CLI.
+
+## Core Components
+
+The CDviz Collector is made up of three core components:
+
+*   **[Sources](./sources.md):** The components that collect events from your various development tools and systems.
+*   **[Sinks](./sinks.md):** The components that send events to their final destination.
+*   **[Transformers](./transformers.md):** The components that can modify events as they pass through the Collector pipeline.
 
 ## Integrations
 
-- FileSystem
-- S3
-- WebHook
-- GitHub
-- PostgreSQL
--->
+The CDviz Collector comes with a number of pre-built integrations for popular development tools and systems:
 
-[cdevents]: <https://cdevents.dev/>
-[Sources]: sources
-[Sinks]: sinks
-[Transformers]: transformers
+*   **[GitHub](./integrations/github.md):** Collect events from your GitHub repositories.
+*   **[Kubernetes (via Kubewatch)](./integrations/kubewatch.md):** Collect events from your Kubernetes clusters.
