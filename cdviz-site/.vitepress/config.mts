@@ -65,7 +65,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: '/favicon.svg',
     nav: [
-      { text: "Documentation", link: "/docs" },
+      { text: "Documentation", link: "/docs/" },
       { text: "Pricing", link: "/#pricing" },
     ],
     sidebar: [
@@ -73,7 +73,9 @@ export default defineConfig({
         text: "Overview",
         link: "/docs/",
         items: [
-          { text: "Getting started", link: "/docs/quickstart" },
+          { text: "Getting Started", link: "/docs/getting-started" },
+          { text: "Architecture", link: "/docs/architecture" },
+          { text: "CDEvents", link: "/docs/cdevents" },
         ],
       },
       {
@@ -83,42 +85,35 @@ export default defineConfig({
         items: [
           { text: "Installation", link: "/docs/cdviz-collector/install" },
           { text: "Usage", link: "/docs/cdviz-collector/usage" },
-          { text: "Configuration", link: "/docs/cdviz-collector/configuration",
-            items: [
-              { text: "Sources", link: "/docs/cdviz-collector/sources" },
-              { text: "Transformers", link: "/docs/cdviz-collector/transformers" },
-              { text: "Sinks", link: "/docs/cdviz-collector/sinks" },
-            ]
-          },
-          { text: "Integrations",
+          { text: "Configuration", link: "/docs/cdviz-collector/configuration" },
+          { text: "Sources", link: "/docs/cdviz-collector/sources" },
+          { text: "Transformers", link: "/docs/cdviz-collector/transformers" },
+          { text: "Sinks", link: "/docs/cdviz-collector/sinks" },
+          {
+            text: "Integrations",
             items: [
               { text: "GitHub", link: "/docs/cdviz-collector/integrations/github" },
               { text: "Kubernetes (via Kubewatch)", link: "/docs/cdviz-collector/integrations/kubewatch" },
             ]
           },
-          // { text: "Usage", link: "/docs/cdviz-collector/usage" },
-          // { text: "Troubleshooting", link: "/docs/cdviz-collector/troubleshooting" },
-          // { text: "Contributing", link: "/docs/cdviz-collector/contributing" },
         ],
       },
       {
-        text: "Database (postgresql)",
+        text: "Database",
         collapsed: true,
         link: "/docs/cdviz-db/",
         items: [
-          // { text: "Installation", link: "/cdviz-db/#install" },
           { text: "Hosting", link: "/docs/cdviz-db/hosting" },
         ],
       },
       {
-        text: "Dashboards (grafana)",
+        text: "Grafana",
         collapsed: true,
         link: "/docs/cdviz-grafana/",
         items: [
           { text: "Artifact Timeline", link: "/docs/cdviz-grafana/artifact_timeline" },
-          { text: "Latest Executions", link: "/docs/cdviz-grafana/execution_dashboards" },
+          { text: "Execution Performance", link: "/docs/cdviz-grafana/execution_dashboards" },
           { text: "CDEvents Activity", link: "/docs/cdviz-grafana/cdevents_activity" },
-          // { text: "Service Demo", link: "/docs/cdviz-grafana/service_demo" },
         ],
       },
       { text: "Alternatives", link: "/docs/alternatives" },
