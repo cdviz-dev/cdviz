@@ -1,0 +1,68 @@
+  ---
+
+  CDviz Introductory Video Script
+
+  Video Length: ~60-90 seconds
+
+  Style: Clean, fast-paced, and informative motion graphics.
+
+  ---
+
+  (Scene 1)
+
+
+   * Visuals: Start with a complex, abstract animation of disconnected icons (GitHub, Kubernetes, Jenkins, etc.) floating in a chaotic way. Lines connecting them are tangled.
+   * On-screen text: "Is your software delivery pipeline a black box?"
+   * Narration (Upbeat, professional voice): "In today's complex development environments, understanding your software delivery lifecycle can be a real challenge. Gaining visibility across all your tools is often difficult, leaving you in the dark."
+
+  (Scene 2)
+
+
+   * Visuals: The chaotic icons smoothly rearrange and connect to a central CDviz logo that appears in the middle. The tangled lines become clean, organized pathways.
+   * On-screen text: "CDviz: See Your SDLC Clearly."
+   * Narration: "Introducing CDviz, the open-source platform that gives you a unified, real-time view of your entire software development process."
+
+  (Scene 3)
+
+
+   * Visuals: Transition to the first architecture diagram (overview_01.excalidraw.svg). Animate a highlight around the Grafana dashboard.
+   * On-screen text: "Visualize & Analyze"
+   * Narration: "It starts with powerful, pre-configured dashboards that let you visualize key metrics like deployment frequency and pipeline performance."
+
+  (Scene 4)
+
+
+   * Visuals: The diagram expands to show the database (overview_02.excalidraw.svg). Data flows from the dashboard to the database icon.
+   * On-screen text: "Store & Correlate"
+   * Narration: "This is powered by a time-series database, designed to store and correlate every event from your development lifecycle."
+
+  (Scene 5)
+
+
+   * Visuals: The diagram expands again to show the collector (overview_03.excalidraw.svg). Icons for GitHub and Kubernetes appear and send data streams into the
+     collector.
+   * On-screen text: "Collect & Transform"
+   * Narration: "And it's all fed by a flexible collector that gathers data from sources like GitHub and Kubernetes, transforming them into standardized CDEvents."
+
+
+  (Scene 6)
+
+
+   * Visuals: Quick-cut sequence.
+       1. Show the "Service Deployment" form from the quickstart guide being filled.
+       2. Show the Grafana dashboard updating (metrics_with_deployment.png).
+       3. Show the Artifact Timeline dashboard (grafana_panel_timeline_version_on_stage-20250606_2018.png).
+   * Narration: "Track deployments, monitor pipeline health, and trace every artifact's journey from commit to production."
+
+
+  (Scene 7)
+
+
+   * Visuals: The CDviz logo appears again, this time with the website URL and GitHub link below it.
+   * On-screen text:
+       * cdviz.dev
+       * github.com/cdviz-dev/cdviz
+       * "Get Started Today!"
+   * Narration: "Stop guessing. Start seeing. Get started with CDviz and bring clarity to your software delivery lifecycle. Visit us at cdviz.dev."
+
+  ---
