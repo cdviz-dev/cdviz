@@ -1,68 +1,39 @@
 <script setup>
-import Btn from './Btn.vue';
-import H2 from './H2.vue';
+import Btn from "./Btn.vue";
+import H2 from "./H2.vue";
 
 const comparisonFeatures = {
-  'Core Features': {
-    'Collect and process Events from your Dev & Ops tools': {
-      url: '/docs/cdviz-collector/',
+  "Core Features": {
+    "Collect and process Events from your Dev & Ops tools": {
+      url: "/docs/cdviz-collector/",
       community: {
         value: true,
       },
       enterprise: {
         value: true,
-        tooltip: 'Optional Commercial license for enterprise usage'
+        tooltip: "Optional Commercial license for enterprise usage",
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Collector Self-hosted Deployment': {
+    "Collector Self-hosted Deployment": {
       community: {
         value: true,
-        tooltip: 'Full self-hosting capabilities'
+        tooltip: "Full self-hosting capabilities",
       },
       enterprise: {
         value: true,
-        tooltip: 'Enterprise deployment with support'
-      },
-      saas: {
-        value: false,
-        tooltip: 'SaaS is cloud-hosted only'
-      }
-    },
-    'Database Schemas (ASL v2)': {
-      url: '/docs/cdviz-db/',
-      tooltip: 'Open source database schemas for storing CDEvents data',
-      community: {
-        value: true,
-      },
-      enterprise: {
-        value: true,
+        tooltip: "Enterprise deployment with support",
       },
       saas: {
         value: false,
-        tooltip: 'Database hosting not included'
-      }
-    },
-    'Data Self-Hosted & Self-Owned': {
-      url: '/docs/cdviz-db/',
-      tooltip: 'Database ownership and management on your infrastructure / provider',
-      community: {
-        value: true,
+        tooltip: "SaaS is cloud-hosted only",
       },
-      enterprise: {
-        value: true,
-        tooltip: 'Enterprise deployment with support'
-      },
-      saas: {
-        value: true,
-        tooltip: 'Enterprise deployment with support'
-      }
     },
-    'Grafana Components (ASL v2)': {
-      url: '/docs/cdviz-grafana/',
-      tooltip: 'Pre-built Grafana dashboards and panels',
+    "Database Schemas (ASL v2)": {
+      url: "/docs/cdviz-db/",
+      tooltip: "Open source database schemas for storing CDEvents data",
       community: {
         value: true,
       },
@@ -71,28 +42,58 @@ const comparisonFeatures = {
       },
       saas: {
         value: false,
-      }
+        tooltip: "Database hosting not included",
+      },
     },
-    'Grafana Self-Hosted & Self-Owned': {
-      url: '/docs/cdviz-db/',
-      tooltip: 'Grafana management on your infrastructure / provider',
+    "Data Self-Hosted & Self-Owned": {
+      url: "/docs/cdviz-db/",
+      tooltip:
+        "Database ownership and management on your infrastructure / provider",
       community: {
         value: true,
       },
       enterprise: {
         value: true,
-        tooltip: 'Enterprise deployment with support'
+        tooltip: "Enterprise deployment with support",
       },
       saas: {
         value: true,
-        tooltip: 'Enterprise deployment with support'
-      }
+        tooltip: "Enterprise deployment with support",
+      },
+    },
+    "Grafana Components (ASL v2)": {
+      url: "/docs/cdviz-grafana/",
+      tooltip: "Pre-built Grafana dashboards and panels",
+      community: {
+        value: true,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: false,
+      },
+    },
+    "Grafana Self-Hosted & Self-Owned": {
+      url: "/docs/cdviz-db/",
+      tooltip: "Grafana management on your infrastructure / provider",
+      community: {
+        value: true,
+      },
+      enterprise: {
+        value: true,
+        tooltip: "Enterprise deployment with support",
+      },
+      saas: {
+        value: true,
+        tooltip: "Enterprise deployment with support",
+      },
     },
   },
-  'Sources Connectors': {
-    'WebHook': {
-      url: '/docs/cdviz-collector/integrations/webhook',
-      tooltip: 'Collect CDEvents from any tool that supports webhooks',
+  "Sources Connectors": {
+    WebHook: {
+      url: "/docs/cdviz-collector/integrations/webhook",
+      tooltip: "Collect CDEvents from any tool that supports webhooks",
       community: {
         value: true,
       },
@@ -101,9 +102,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'S3 compatible & File System': {
+    "S3 compatible & File System": {
       community: {
         value: true,
       },
@@ -112,9 +113,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Server-Sent Event (SSE)': {
+    "Server-Sent Event (SSE)": {
       comingSoon: true,
       community: {
         value: true,
@@ -124,9 +125,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Kafka Topic': {
+    "Kafka Topic": {
       comingSoon: true,
       community: {
         value: true,
@@ -136,9 +137,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'NATS': {
+    NATS: {
       comingSoon: true,
       community: {
         value: true,
@@ -148,13 +149,13 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
   },
-  'Transformers': {
-    'Filtering, Logging, Splitting, Chaining': {
-      url: '/docs/cdviz-collector/transformers',
-      tooltip: 'Process and transform Events before sending to sinks',
+  Transformers: {
+    "Filtering, Logging, Splitting, Chaining": {
+      url: "/docs/cdviz-collector/transformers",
+      tooltip: "Process and transform Events before sending to sinks",
       community: {
         value: true,
       },
@@ -163,10 +164,10 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Scripting with VRL (Vector Remap Language)': {
-      tooltip: 'Advanced scripting capabilities for custom transformations',
+    "Scripting with VRL (Vector Remap Language)": {
+      tooltip: "Advanced scripting capabilities for custom transformations",
       community: {
         value: true,
       },
@@ -175,9 +176,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Custom Transformers': {
+    "Custom Transformers": {
       community: {
         value: true,
       },
@@ -185,27 +186,27 @@ const comparisonFeatures = {
         value: true,
       },
       saas: {
-        value: 'Limited',
-        tooltip: 'Custom transformers are reviewed and approved by the team'
-      }
+        value: "Limited",
+        tooltip: "Custom transformers are reviewed and approved by the team",
+      },
     },
-    'Custom Transformers Development': {
-      tooltip: 'Build custom transformers for your specific needs',
+    "Custom Transformers Development": {
+      tooltip: "Build custom transformers for your specific needs",
       community: {
-        value: 'DIY',
-        tooltip: 'DIY development only with community support'
+        value: "DIY",
+        tooltip: "DIY development only with community support",
       },
       enterprise: {
-        value: 'Consulting',
-        tooltip: 'Professional services available, contact us'
+        value: "Consulting",
+        tooltip: "Professional services available, contact us",
       },
       saas: {
-        value: 'Consulting',
-        tooltip: 'Professional services available, contact us'
-      }
+        value: "Consulting",
+        tooltip: "Professional services available, contact us",
+      },
     },
-    'Transformer on source side': {
-      tooltip: 'Transformers on the source pipeline to generate CDEvents',
+    "Transformer on source side": {
+      tooltip: "Transformers on the source pipeline to generate CDEvents",
       community: {
         value: true,
       },
@@ -214,10 +215,11 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Transformer on sink side': {
-      tooltip: 'Transformers on the sink pipeline to generate event from CDEvents',
+    "Transformer on sink side": {
+      tooltip:
+        "Transformers on the sink pipeline to generate event from CDEvents",
       comingSoon: true,
       community: {
         value: true,
@@ -227,12 +229,12 @@ const comparisonFeatures = {
       },
       saas: {
         value: "Maybe",
-      }
+      },
     },
   },
-  'Sources Pre-configured integration': {
-    'CDEvents old version': {
-      tooltip: 'Convert old CDEvents to new format',
+  "Sources Pre-configured integration": {
+    "CDEvents old version": {
+      tooltip: "Convert old CDEvents to new format",
       comingSoon: true,
       community: {
         value: true,
@@ -242,11 +244,11 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'GitHub': {
-      url: '/docs/cdviz-collector/integrations/github',
-      tooltip: 'Collect Events from GitHub repositories via webhooks',
+    GitHub: {
+      url: "/docs/cdviz-collector/integrations/github",
+      tooltip: "Collect Events from GitHub repositories via webhooks",
       community: {
         value: true,
       },
@@ -255,10 +257,10 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'GitLab': {
-      tooltip: 'Collect Events from GitLab repositories via webhooks',
+    GitLab: {
+      tooltip: "Collect Events from GitLab repositories via webhooks",
       comingSoon: true,
       community: {
         value: true,
@@ -268,10 +270,10 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Jenkins': {
-      url: 'https://plugins.jenkins.io/cdevents/',
+    Jenkins: {
+      url: "https://plugins.jenkins.io/cdevents/",
       comingSoon: true,
       community: {
         value: true,
@@ -281,45 +283,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Jira': {
-      comingSoon: true,
-      community: {
-        value: false,
-      },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
-    },
-    'Kubernetes (Deployment, Daemonset, StatefulSet,...)': {
-      url: '/docs/cdviz-collector/integrations/kubewatch',
-      community: {
-        value: true,
-      },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
-    },
-    'ArgoCD': {
-      comingSoon: true,
-      community: {
-        value: true,
-      },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
-    },
-    'AWS': {
+    Jira: {
       comingSoon: true,
       community: {
         value: false,
@@ -329,9 +295,33 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'AzureDevOps': {
+    "Kubernetes (Deployment, Daemonset, StatefulSet,...)": {
+      url: "/docs/cdviz-collector/integrations/kubewatch",
+      community: {
+        value: true,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: true,
+      },
+    },
+    ArgoCD: {
+      comingSoon: true,
+      community: {
+        value: true,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: true,
+      },
+    },
+    AWS: {
       comingSoon: true,
       community: {
         value: false,
@@ -341,13 +331,25 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
+    },
+    AzureDevOps: {
+      comingSoon: true,
+      community: {
+        value: false,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: true,
+      },
     },
   },
-  'Sink / Destination Connectors': {
-    'Database': {
-      url: '/docs/cdviz-collector/sinks',
-      tooltip: 'Store CDEvents in a database for querying and analysis',
+  "Sink / Destination Connectors": {
+    Database: {
+      url: "/docs/cdviz-collector/sinks",
+      tooltip: "Store CDEvents in a database for querying and analysis",
       community: {
         value: true,
       },
@@ -356,10 +358,10 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'WebHook': {
-      url: '/docs/cdviz-collector/sinks',
+    WebHook: {
+      url: "/docs/cdviz-collector/sinks",
       // tooltip: 'Send CDEvents to any tool that supports webhooks',
       community: {
         value: true,
@@ -369,10 +371,10 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'S3 compatible & File System': {
-      url: '/docs/cdviz-collector/sinks',
+    "S3 compatible & File System": {
+      url: "/docs/cdviz-collector/sinks",
       community: {
         value: true,
       },
@@ -381,9 +383,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Server-Sent Event (SSE)': {
+    "Server-Sent Event (SSE)": {
       comingSoon: true,
       community: {
         value: true,
@@ -393,9 +395,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Kafka Topic': {
+    "Kafka Topic": {
       comingSoon: true,
       community: {
         value: true,
@@ -405,9 +407,9 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'NATS': {
+    NATS: {
       comingSoon: true,
       community: {
         value: true,
@@ -417,12 +419,12 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
-    }
+      },
+    },
   },
-  'Management & Operations': {
-    'Documentation': {
-      url: '/docs',
+  "Management & Operations": {
+    Documentation: {
+      url: "/docs",
       community: {
         value: true,
       },
@@ -431,11 +433,11 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Community': {
-      url: 'https://github.com/davidB/cdviz/discussions',
-      tooltip: 'Community-driven support and discussions',
+    Community: {
+      url: "https://github.com/davidB/cdviz/discussions",
+      tooltip: "Community-driven support and discussions",
       community: {
         value: true,
       },
@@ -444,7 +446,7 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
     // 'Monitoring': {
     //   community: {
@@ -457,8 +459,8 @@ const comparisonFeatures = {
     //     value: true,
     //   }
     // },
-    'Managed Upgrade': {
-      tooltip: 'Upgrade of the collector and database schemas',
+    "Managed Upgrade": {
+      tooltip: "Upgrade of the collector and database schemas",
       community: {
         value: false,
       },
@@ -467,92 +469,92 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-      }
+      },
     },
-    'Support': {
+    Support: {
       community: {
-        value: 'community',
+        value: "community",
       },
       enterprise: {
-        value: 'standard',
-        tooltip: 'Email and Discord support included'
+        value: "standard",
+        tooltip: "Email and Discord support included",
       },
       saas: {
-        value: 'standard',
-        tooltip: 'Email and Discord support included'
-      }
+        value: "standard",
+        tooltip: "Email and Discord support included",
+      },
     },
-    'Response Time': {
+    "Response Time": {
       community: {
-        value: 'N/A',
-        tooltip: 'Community support has no guaranteed response time'
+        value: "N/A",
+        tooltip: "Community support has no guaranteed response time",
       },
       enterprise: {
-        value: '3 business days',
+        value: "3 business days",
       },
       saas: {
-        value: '3 business days',
-      }
-    }
-  },
-  'Online Tools': {
-    'Online VRL playground': {
-      tooltip: 'Test and experiment with VRL scripts online',
-      comingSoon: true,
-      community: {
-        value: true,
+        value: "3 business days",
       },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
-    },
-    'Configuration Validator': {
-      comingSoon: true,
-      community: {
-        value: true,
-      },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
-    },
-    'Simple Configuration Editor': {
-      comingSoon: true,
-      community: {
-        value: false,
-      },
-      enterprise: {
-        value: true,
-      },
-      saas: {
-        value: true,
-      }
     },
   },
-  'Advanced Features': {
-    'Custom Dashboards': {
-      tooltip: 'Tailored visualization and reporting',
+  "Online Tools": {
+    "Online VRL playground": {
+      tooltip: "Test and experiment with VRL scripts online",
+      comingSoon: true,
       community: {
-        value: 'DIY',
-        tooltip: 'Build your own with provided components'
+        value: true,
       },
       enterprise: {
-        value: 'Consulting',
-        tooltip: 'Professional services available, contact us'
+        value: true,
       },
       saas: {
-        value: 'Consulting',
-        tooltip: 'Professional services available, contact us'
-      }
+        value: true,
+      },
     },
-    'Multi-tenant Support': {
-      url: '/docs/multi-tenant',
-      tooltip: 'Support multiple teams or organizations',
+    "Configuration Validator": {
+      comingSoon: true,
+      community: {
+        value: true,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: true,
+      },
+    },
+    "Simple Configuration Editor": {
+      comingSoon: true,
+      community: {
+        value: false,
+      },
+      enterprise: {
+        value: true,
+      },
+      saas: {
+        value: true,
+      },
+    },
+  },
+  "Advanced Features": {
+    "Custom Dashboards": {
+      tooltip: "Tailored visualization and reporting",
+      community: {
+        value: "DIY",
+        tooltip: "Build your own with provided components",
+      },
+      enterprise: {
+        value: "Consulting",
+        tooltip: "Professional services available, contact us",
+      },
+      saas: {
+        value: "Consulting",
+        tooltip: "Professional services available, contact us",
+      },
+    },
+    "Multi-tenant Support": {
+      url: "/docs/multi-tenant",
+      tooltip: "Support multiple teams or organizations",
       comingSoon: true,
       community: {
         value: false,
@@ -562,23 +564,23 @@ const comparisonFeatures = {
       },
       saas: {
         value: true,
-        tooltip: 'Native multi-tenant architecture'
-      }
+        tooltip: "Native multi-tenant architecture",
+      },
     },
-  }
+  },
 };
 
 const renderFeatureValue = (feature, tier) => {
   const value = feature[tier]?.value ?? feature[tier];
-  if (value === true) return '✓';
-  if (value === false) return '✗';
+  if (value === true) return "✓";
+  if (value === false) return "✗";
   return value;
 };
 
 const getFeatureClass = (feature, tier) => {
   const value = feature[tier]?.value ?? feature[tier];
-  if (value === true) return 'text-green-600';
-  return 'text-gray-400';
+  if (value === true) return "text-green-600";
+  return "text-gray-400";
 };
 
 const getFeatureTooltip = (feature, tier) => {

@@ -1,5 +1,9 @@
 <script setup>
-const props = defineProps({ href : String, primary: Boolean, ariaLabel: String })
+const props = defineProps({
+  href: String,
+  primary: Boolean,
+  ariaLabel: String,
+});
 // const colorVariant = primary
 //   ? "hover:shadow-primary/20 bg-primary text-background focus:ring-primary"
 //   : "hover:shadow-lg bg-secondary text-text focus:ring-secondary"

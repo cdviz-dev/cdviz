@@ -1,8 +1,8 @@
 <!-- see https://aiktb.dev/blog/giscus-with-vitepress -- for more details -->
 <script setup lang="ts">
-import { useData } from 'vitepress';
+import { useData } from "vitepress";
 
-const { frontmatter, title } = useData()
+const { frontmatter, title } = useData();
 </script>
 
 <!-- setup made with https://giscus.app/ -->

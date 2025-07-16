@@ -1,5 +1,5 @@
 <script setup>
-import H2 from './H2.vue';
+import H2 from "./H2.vue";
 
 // //const { page } = useData()
 // const faq = ref([

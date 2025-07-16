@@ -1,6 +1,6 @@
 
 <script setup>
-import Btn from './Btn.vue';
+import Btn from "./Btn.vue";
 
 // const randomInt = Math.floor(Math.random() * 8);
 // const heroImageSrc = `illustrations/hero-${randomInt}.webp`;
