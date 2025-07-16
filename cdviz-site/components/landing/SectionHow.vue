@@ -1,6 +1,6 @@
 <script setup>
-import H2 from './H2.vue';
-import H3 from './H3.vue';
+import H2 from "./H2.vue";
+import H3 from "./H3.vue";
 </script>
 <template>
   <section class="my-xl md:my-2xl">

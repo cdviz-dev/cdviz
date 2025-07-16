@@ -1,0 +1,27 @@
+{
+  "formatter": {
+    //"useEditorconfig": true, // failed to parse .editorconfig
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf"
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    }
+  },
+  "files": {
+    "ignore": [
+      "src/style.css", // not able to parse css (font variables)
+      "**/dist/**"
+    ]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}
