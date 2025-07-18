@@ -1,5 +1,5 @@
 ---
-titleTemplate: CDviz
+titleTemplate: Monitor Your Software Delivery Pipeline With Confidence - CDviz
 description: CDviz is a collection of components designed to provide visibility into deployed service versions, associated environments, testing activities, and related information.
 layout: home
 markdownStyles: false
@@ -105,8 +105,8 @@ faq_off:
   - q: Is support included with the subscription?
     a: |
       A commercial license includes direct-to-engineering support delivered through ???TBD???.
-
 ---
+
 <script setup>
 import LandingPage from '../components/LandingPage.vue'
 </script>

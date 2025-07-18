@@ -21,9 +21,19 @@ const pricing = {
   },
 };
 
+const getSubscriptionUrl = (tier) => {
+  if (tier === "enterprise") {
+    if (isYearly.value) {
+      return "https://www.creem.io/payment/prod_1OwS2VDgI2cwcPSB7xiJpA";
+    }
+    return "https://www.creem.io/payment/prod_1PYPUFjff96gSIKvovlkKk";
+  }
+  return "";
+};
+
 const getPrice = (tier) => {
   if (isYearly.value) {
-    return Math.round(pricing[tier].yearly / 12);
+    return Math.ceil(pricing[tier].yearly / 12);
   }
   return pricing[tier].monthly;
 };
@@ -100,12 +110,7 @@ const getDiscountMax = () => {
             <li class="check-circle mb-4 pl-8">Community Support</li>
           </ul>
         </div>
-        <Btn
-          href="https://github.com/sponsors/davidB"
-          aria-label="go to sponsor page"
-          primary
-          >Be a sponsor</Btn
-        >
+        <Btn href="/docs" primary>Get Started</Btn>
       </div>
       <div
         class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-secondary border-2"
@@ -138,7 +143,11 @@ const getDiscountMax = () => {
             <li class="check-circle mb-4 pl-8">Adapt to your needs</li> -->
           </ul>
         </div>
-        <Btn href="/contact" aria-label="Join the waitlist">Join Waitlist</Btn>
+        <Btn
+          :href="getSubscriptionUrl('enterprise')"
+          aria-label="Subscribe to Enterprise"
+          >Subscribe</Btn
+        >
       </div>
       <div
         class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-secondary border-2"

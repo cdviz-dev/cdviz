@@ -598,60 +598,111 @@ const isComingSoon = (feature) => {
     <H2 class="text-center mb-12">Compare Plans</H2>
 
     <div class="overflow-x-auto">
-      <table class="w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden">
+      <table
+        class="w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden"
+      >
         <thead>
           <tr class="bg-gray-50">
-            <th class="text-left p-6 font-semibold text-gray-900 border-b border-gray-200">Features</th>
-            <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">
+            <th
+              class="text-left p-6 font-semibold text-gray-900 border-b border-gray-200"
+            >
+              Features
+            </th>
+            <th
+              class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l"
+            >
               <div class="flex flex-col items-center">
                 <span class="text-lg">Community</span>
               </div>
             </th>
-            <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">
+            <th
+              class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l"
+            >
               <div class="flex flex-col items-center">
                 <span class="text-lg">Enterprise</span>
               </div>
             </th>
-            <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">
+            <th
+              class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l"
+            >
               <div class="flex flex-col items-center">
                 <span class="text-lg">SaaS</span>
-                <span class="text-xs bg-accent/20 text-accent px-2 py-1 rounded mt-1">Preview</span>
+                <span
+                  class="text-xs bg-accent/20 text-accent px-2 py-1 rounded mt-1"
+                  >Preview</span
+                >
               </div>
             </th>
           </tr>
         </thead>
         <tbody>
-          <template v-for="(section, sectionName) in comparisonFeatures" :key="sectionName">
+          <template
+            v-for="(section, sectionName) in comparisonFeatures"
+            :key="sectionName"
+          >
             <tr class="bg-gray-100">
-              <td colspan="4" class="p-4 font-semibold text-gray-800 border-b border-gray-200">
+              <td
+                colspan="4"
+                class="p-4 font-semibold text-gray-800 border-b border-gray-200"
+              >
                 {{ sectionName }}
               </td>
             </tr>
-            <tr v-for="(feature, featureName) in section" :key="featureName" class="border-b border-gray-100 hover:bg-gray-50">
+            <tr
+              v-for="(feature, featureName) in section"
+              :key="featureName"
+              class="border-b border-gray-100 hover:bg-gray-50"
+            >
               <td class="p-4 text-gray-700">
                 <div class="flex items-center relative group">
-                  <a v-if="feature.url" :href="feature.url" class="text-primary hover:underline hover:text-primary/80 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <a
+                    v-if="feature.url"
+                    :href="feature.url"
+                    class="text-primary hover:underline hover:text-primary/80 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {{ featureName }}
                   </a>
                   <span v-else>{{ featureName }}</span>
                   <div v-if="isComingSoon(feature)" class="ml-2">
-                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium shadow-sm">Coming Soon</span>
+                    <span
+                      class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium shadow-sm"
+                      >Coming Soon</span
+                    >
                   </div>
                   <div v-if="feature.tooltip" class="ml-2 relative">
-                    <span class="icon-[mdi--information]" style="color: #807e7c;"></span>
-                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-pre-wrap break-words w-[30ch] z-50">
+                    <span
+                      class="icon-[mdi--information]"
+                      style="color: #807e7c"
+                    ></span>
+                    <div
+                      class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-pre-wrap break-words w-[30ch] z-50"
+                    >
                       {{ feature.tooltip }}
-                      <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                      <div
+                        class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"
+                      ></div>
                     </div>
                   </div>
                 </div>
               </td>
-              <td v-for="(tier) in ['community', 'enterprise', 'saas']" :key="featureName" class="p-4 text-center border-l border-gray-200" :class="getFeatureClass(feature, tier)">
+              <td
+                v-for="tier in ['community', 'enterprise', 'saas']"
+                :key="featureName"
+                class="p-4 text-center border-l border-gray-200"
+                :class="getFeatureClass(feature, tier)"
+              >
                 <div class="flex items-center justify-center relative group">
                   <span>{{ renderFeatureValue(feature, tier) }}</span>
-                  <div v-if="getFeatureTooltip(feature, tier)" class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-pre-wrap break-words w-[30ch] z-50">
+                  <div
+                    v-if="getFeatureTooltip(feature, tier)"
+                    class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-pre-wrap break-words w-[30ch] z-50"
+                  >
                     {{ getFeatureTooltip(feature, tier) }}
-                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                    <div
+                      class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"
+                    ></div>
                   </div>
                 </div>
               </td>
@@ -673,7 +724,10 @@ const isComingSoon = (feature) => {
           <span>Not Available</span>
         </div>
         <div class="flex items-center">
-          <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium mr-2">Coming Soon</span>
+          <span
+            class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium mr-2"
+            >Coming Soon</span
+          >
           <span>On our roadmap</span>
         </div>
       </div>
@@ -681,18 +735,23 @@ const isComingSoon = (feature) => {
 
     <div class="text-center mt-8 space-y-4">
       <p class="text-sm text-gray-600">
-        You can contribute to the Community edition and to the Roadmap of the Enterprise and SaaS editions via GitHub Discussions and support's channels. We are always looking for feedback and contributions to improve our offerings.
+        You can contribute to the Community edition and to the Roadmap of the
+        Enterprise and SaaS editions via GitHub Discussions and support's
+        channels. We are always looking for feedback and contributions to
+        improve our offerings.
       </p>
     </div>
 
     <div class="text-center mt-8 space-y-4">
-      <div class="flex justify-center space-x-8">
-        <Btn href="https://github.com/sponsors/davidB" primary>Sponsor Community</Btn>
+      <!-- <div class="flex justify-center space-x-8">
+        <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="/contact">Contact for Enterprise</Btn>
         <Btn href="/contact">Join SaaS Waitlist</Btn>
-      </div>
+      </div> -->
       <p class="text-sm text-current/90">
-        Need something custom? <a href="/contact" class="text-primary hover:underline">Contact us</a> for tailored solutions.
+        Need something custom?
+        <a href="/contact" class="text-primary hover:underline">Contact us</a>
+        for tailored solutions.
       </p>
     </div>
   </section>
