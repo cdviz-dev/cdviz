@@ -45,7 +45,7 @@ services:
   #endregion database
   #region grafana
   grafana:
-    image: docker.io/grafana/grafana-oss:12.0.0
+    image: docker.io/grafana/grafana-oss:12.1.0
     # container_name: grafana
     # restart: unless-stopped
     environment:
