@@ -1,36 +1,60 @@
 # cdviz
 
-keywords: `cdevents`, `sdlc`
-status: wip
+keywords: `cdevents`, `sdlc`, `ci/cd`
 
-A set of components to provide a view of which version of services are deployed and which environment, what test ran,...
+CDviz is a comprehensive software delivery lifecycle (SDLC) observability platform built around CDEvents (Cloud native Delivery Events). The system provides visibility into which versions of services are deployed, what tests ran, and the complete flow of events across your development pipeline.
 
-- [cdviz-collector](https://github.com/cdviz-dev/cdviz-collector): collects events (ci, cd, test, artifacts, ...) from multiple sources and forwards them to other components (including PostgreSQL, third-party services, ...)
-- Database (PostgreSQL) to store events
-- Dashboard to query and visualize events and states over time
+Documentation: <https://cdviz.dev/>
+
+## Core Components
+
+- **[cdviz-collector](https://github.com/cdviz-dev/cdviz-collector)**: Event collection service that gathers events (CI, CD, test, artifacts, etc.) from multiple sources and forwards them to other components (PostgreSQL, third-party services, etc.)
+- **cdviz-db**: PostgreSQL database with TimescaleDB extension and Atlas migrations for schema management
+- **cdviz-grafana**: Dashboard components with custom Grafana panels and dashboards for visualization
+- **cdviz-site**: Documentation website built with VitePress and Bun
+- **charts/**: Helm charts for Kubernetes deployment
+- **demos/**: Docker Compose and Kubernetes deployment examples
+
+## Key Technologies
+
+- **PostgreSQL + TimescaleDB**: Database with Atlas for schema migrations
+- **TypeScript/Bun**: Grafana dashboards generator and site tooling
+- **VitePress**: Documentation site framework
+- **Helm**: Kubernetes deployment charts
+- **Docker**: Containerization and local development
+- **mise**: Task runner and environment management
 
 ## Architecture Overview
 
-![cdviz architecture](cdviz-site/assets/architectures/Drawing%202024-11-22-cdviz-architecture.excalidraw.svg)
+![cdviz architecture](cdviz-site/assets/architectures/overview_04.excalidraw.svg)
 
-### Q&A
+### Event Flow Architecture
 
-<details>
-<summary>Why do dashboard tools, like Grafana, have access (read-only) to the DB (PostgreSQL), and NOT go through an API (micro)service?</summary>
+1. **Sources** → cdviz-collector → **Database** → **Dashboards**
+2. Events follow CDEvents specification for Cloud Native Delivery Events
+3. Database serves as central event store with direct read access for analytics tools
+4. Grafana connects directly to PostgreSQL (not through API layer) for full SQL query power
 
-- access to the data is the value, not the service
-- allow dashboards to use the full query power of SQL to query data, and to plug any analytics tools
-- allow Data Ops to split the DB with read-only replicas if needed,...
-- no need to create and provide a new custom (and always incomplete, frustrated) query language
-  - no need to maintain a custom query language on the service side
-  - no need to maintain a connector (`datasource`) for callers (analytics tools,...)
-  - no need to re-invent (or to "encapsulate") what DB managers do better
-- enforce the read-only view of the DB to be like a public API
-  - require to configure access control
-  - require to document and expose table structure (like an API) and to provide samples of queries, maybe function,...
-- service can provide helper endpoints for some complex queries or additional "views"
+### Database Design
 
-</details>
+- Uses PostgreSQL with TimescaleDB extension as primary event store
+- Atlas handles schema migrations in `cdviz-db/migrations/`
+- Direct database access pattern for dashboards rather than API abstraction
+- Schema defined in `cdviz-db/src/schema.sql`
+- Docker image built with necessary extensions pre-installed
+
+### Dashboard System
+
+- Custom D3.js panels for complex visualizations in `cdviz-grafana/dashboards_generator/src/panels/browser_scripts/`
+- TypeScript code generation for Grafana dashboards using Grafana Foundation SDK
+- Generated dashboards output to `cdviz-grafana/dashboards/*.json`
+- Timeline, execution tracking, and event activity dashboards
+
+### Deployment Options
+
+- **Docker Compose**: Local development stack in `demos/stack-compose/`
+- **Kubernetes**: Helm charts with Helmwave configuration in `demos/stack-k8s/`
+- **OCI Registry**: Charts published to `ghcr.io/cdviz-dev/charts/`
 
 ### Related projects
 
@@ -39,7 +63,3 @@ Maybe with some overlap:
 - [sassoftware/event-provenance-registry: The Event Provenance Registry (EPR) is a service that manages and stores events and tracks event-receivers and event-receiver-groups.](https://github.com/sassoftware/event-provenance-registry)
 - [RFC : CDEvents-translator design review by rjalander · Pull Request #42 · cdevents/community](https://github.com/cdevents/community/pull/42)
 
-### Roadmap
-
-- See [ROADMAP.md](ROADMAP.md)
-- See [Issues · cdviz-dev/cdviz](https://github.com/cdviz-dev/cdviz/issues) and use it to discuss features, ideas, bugs,...
