@@ -8,7 +8,10 @@ import H3 from "./H3.vue";
       <H2>How CDviz Works</H2>
       <div class="grid gap-8 md:grid-cols-2 md:grid-rows-2">
         <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
-          <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">1</div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">1</div>
+            <span class="icon-[lucide--download] h-5 w-5 text-accent/70"></span>
+          </div>
           <div class="flex-1">
             <H3>Event Collection</H3>
             <p class="text-base leading-relaxed mb-4">
@@ -27,7 +30,10 @@ import H3 from "./H3.vue";
           </div>
         </div>
         <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
-          <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">2</div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">2</div>
+            <span class="icon-[lucide--database] h-5 w-5 text-accent/70"></span>
+          </div>
           <div class="flex-1">
             <H3>Store Events</H3>
             <p class="text-base leading-relaxed mb-4">
@@ -38,7 +44,10 @@ import H3 from "./H3.vue";
           </div>
         </div>
         <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
-          <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">3</div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">3</div>
+            <span class="icon-[lucide--bar-chart-3] h-5 w-5 text-accent/70"></span>
+          </div>
           <div class="flex-1">
             <H3>Event Monitoring</H3>
             <p class="text-base leading-relaxed mb-4">
@@ -50,7 +59,10 @@ import H3 from "./H3.vue";
           </div>
         </div>
         <div class="flex flex-row items-start gap-4 bg-secondary/10 p-6 rounded-xl">
-          <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">4</div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">4</div>
+            <span class="icon-[lucide--zap] h-5 w-5 text-accent/70"></span>
+          </div>
           <div class="flex-1">
             <H3>Event Reaction</H3>
             <p class="text-base leading-relaxed mb-4">
