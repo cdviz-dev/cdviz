@@ -9,7 +9,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "tailwindcss": "^4.1.11",
-    "vitepress": "^2.0.0-alpha.7"
+    "vitepress": "^2.0.0-alpha.9"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
