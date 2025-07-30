@@ -41,6 +41,7 @@ export function newVariableOnDatasource(
       .label(label || name)
       .datasource({
         type: "grafana-postgresql-datasource",
+        // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
         uid: "${datasource}",
       })
       .query(querySql.trim())

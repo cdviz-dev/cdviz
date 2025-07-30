@@ -30,10 +30,10 @@ export class Tooltip<T> {
     this.el.style("opacity", 1).html(content);
     this.move(event, d);
   }
-  hideOnMouseleave(event: Event, d: T) {
+  hideOnMouseleave(_event: Event, _d: T) {
     this.el.style("opacity", 0);
   }
-  move(event: Event, d: T) {
+  move(event: Event, _d: T) {
     const element = this.el.node();
     if (!element) return;
     const container = element.parentNode as Element;

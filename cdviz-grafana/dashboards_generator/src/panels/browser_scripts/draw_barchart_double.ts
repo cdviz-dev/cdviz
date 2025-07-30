@@ -125,11 +125,11 @@ export function draw(context: DrawContext<Datum>) {
     .selectAll()
     .data(ticks)
     .join("line")
-    .attr("stroke", (d, i) => d3.hsl(0, 0, d === 0 ? 0.9 : 0.6).toString())
+    .attr("stroke", (d) => d3.hsl(0, 0, d === 0 ? 0.9 : 0.6).toString())
     .attr("x1", marginLeft)
-    .attr("y1", (d, i) => y(d))
+    .attr("y1", (d) => y(d))
     .attr("x2", width - marginRight)
-    .attr("y2", (d, i) => y(d));
+    .attr("y2", (d) => y(d));
 
   // Add a rect for each bar.
   svg
@@ -137,13 +137,13 @@ export function draw(context: DrawContext<Datum>) {
     .selectAll()
     .data(data)
     .join("rect")
-    .attr("fill", (d, i) => colors(d.outcome).copy({ opacity: 0.6 }).toString())
-    .attr("stroke", (d, i) => colors(d.outcome).toString())
-    .attr("x", (d, i) => x(i) || 0)
-    .attr("y", (d, i) => y(d.run_duration || defaultRunDisplayed))
-    .attr("height", (d, i) => y(0) - y(d.run_duration || defaultRunDisplayed))
+    .attr("fill", (d) => colors(d.outcome).copy({ opacity: 0.6 }).toString())
+    .attr("stroke", (d) => colors(d.outcome).toString())
+    .attr("x", (_d, i) => x(i) || 0)
+    .attr("y", (d) => y(d.run_duration || defaultRunDisplayed))
+    .attr("height", (d) => y(0) - y(d.run_duration || defaultRunDisplayed))
     .attr("width", x.bandwidth())
-    .on("click", (event, d) => {
+    .on("click", (_event, d) => {
       if (d.url) {
         window.open(d.url, "_blank");
       }
@@ -158,12 +158,12 @@ export function draw(context: DrawContext<Datum>) {
       .data(data)
       .join("rect")
       .attr("fill", (d) => colors(d.outcome).toString())
-      .attr("stroke", (d, i) => colors(d.outcome).toString())
-      .attr("x", (d, i) => x(i) || 0)
-      .attr("y", (d, i) => y(0))
+      .attr("stroke", (d) => colors(d.outcome).toString())
+      .attr("x", (_d, i) => x(i) || 0)
+      .attr("y", (_d, _i) => y(0))
       .attr(
         "height",
-        (d, i) => y(0) - y(d.queued_duration || defaultQueuedDisplayed),
+        (d) => y(0) - y(d.queued_duration || defaultQueuedDisplayed),
       )
       .attr("width", x.bandwidth())
       //.on("mousemove", mousemove)

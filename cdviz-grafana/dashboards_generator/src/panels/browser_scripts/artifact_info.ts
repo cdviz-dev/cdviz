@@ -11,7 +11,7 @@ export class ArtifactInfo {
     this.tags = new Set(url.searchParams.getAll("tag"));
   }
 
-  isSimilarTo(other: ArtifactInfo, debug?: boolean): boolean {
+  isSimilarTo(other: ArtifactInfo, _debug?: boolean): boolean {
     let res = this.base === other.base;
     // if (debug) {
     //   console.debug(this.base, other.base, this.base === other.base, res);
