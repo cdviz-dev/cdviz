@@ -3,13 +3,7 @@ import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 </script>
 <template>
-  <section class="my-xl md:my-2xl">
-    <div class="
-    p-8
-    border backdrop-blur-md
-    border-white/10 bg-black/10
-    rounded-xl shadow-xl
-    ">
+  <section class="my-xl md:my-2xl py-16 px-8 bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10">
       <a id="how"></a>
       <H2>How CDviz Works</H2>
       <div class="grid gap-8 md:grid-cols-2 md:grid-rows-2">
@@ -68,15 +62,14 @@ import H3 from "./H3.vue";
           </div>
         </div>
       </div>
-      <div class="my-md">
+      <div class="mt-12">
         <img
           src="/architectures/overview_04.excalidraw.svg"
-          class="rounded-xl object-cover"
+          class="rounded-xl object-cover shadow-md"
           alt="cdviz architecture"
           width="100%"
           height="100%"
         />
       </div>
-    </div>
   </section>
 </template>

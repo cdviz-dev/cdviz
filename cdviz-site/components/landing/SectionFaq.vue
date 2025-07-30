@@ -15,13 +15,13 @@ import H2 from "./H2.vue";
 // ])
 </script>
 <template>
-  <section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl">
+  <section class="my-xl md:my-2xl bg-gradient-to-br from-background to-secondary/4 py-16 px-8 rounded-2xl shadow-sm border border-secondary/10">
     <a id="faq"></a>
     <H2>Frequently Asked Questions</H2>
     <div class="max-w-3xl mx-auto">
-      <details v-for="aq in $frontmatter.faq" class="cursor-pointer transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-lg bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+      <details v-for="aq in $frontmatter.faq" class="cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
         <summary class="text-xl font-semibold cursor-pointer">{{ aq.q }}</summary>
-        <div class="pt-4 text-text/80 space-y-4" v-html="aq.a"></div>
+        <div class="pt-4 text-text/90 space-y-4" v-html="aq.a"></div>
       </details>
     </div>
   </section>

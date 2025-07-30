@@ -55,7 +55,7 @@ const getDiscountMax = () => {
 
 <template>
   <section
-    class="my-xl md:my-2xl bg-gradient-to-b from-background to-secondary/5 py-16"
+    class="my-xl md:my-2xl bg-gradient-to-br from-secondary/2 to-secondary/6 py-16 px-8 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
@@ -68,7 +68,7 @@ const getDiscountMax = () => {
     <div class="flex items-center justify-center mb-12">
       <span
         class="text-lg mr-4 font-medium"
-        :class="{ 'text-current': isYearly, 'text-current/70': !isYearly }"
+        :class="{ 'text-current': isYearly, 'text-current/80': !isYearly }"
         >Monthly</span
       >
       <button
@@ -83,7 +83,7 @@ const getDiscountMax = () => {
       </button>
       <span
         class="text-lg ml-4 flex items-center font-medium"
-        :class="{ 'text-current': !isYearly, 'text-current/70': isYearly }"
+        :class="{ 'text-current': !isYearly, 'text-current/80': isYearly }"
       >
         Annual
         <span
@@ -103,7 +103,7 @@ const getDiscountMax = () => {
             €{{ getPrice("community") }}
           </div>
           <div class="text-sm text-gray-600 mb-4">Forever free</div>
-          <ul class="my-md ml-2 text-left">
+          <ul class="my-6 ml-2 text-left">
             <li class="check-circle mb-4 pl-8">Collector (AGPL v3)</li>
             <li class="check-circle mb-4 pl-8">Database schemas (ASL v2)</li>
             <li class="check-circle mb-4 pl-8">Grafana components (ASL v2)</li>
@@ -125,7 +125,7 @@ const getDiscountMax = () => {
             Save {{ getDiscount("enterprise") }}%
           </div>
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-md ml-2 text-left">
+          <ul class="my-6 ml-2 text-left">
             <li class="check-circle mb-4 pl-8">On-premise</li>
             <li class="check-circle mb-4 pl-8">
               Collector (Commercial License)
@@ -167,7 +167,7 @@ const getDiscountMax = () => {
             Save {{ getDiscount("saas") }}%
           </div>
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-md ml-2 text-left">
+          <ul class="my-6 ml-2 text-left">
             <li class="check-circle mb-4 pl-8">
               Collector with same features than Enterprise
             </li>

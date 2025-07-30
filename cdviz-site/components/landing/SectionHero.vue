@@ -7,7 +7,7 @@ import Btn from "./Btn.vue";
 const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
-  <section id="hero" class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden">
+  <section id="hero" class="my-xl md:my-2xl py-16 md:grid md:grid-cols-2 md:gap-12 relative overflow-hidden">
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
@@ -31,7 +31,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         Monitor Your Software Delivery Pipeline
         <span class="font-outline italic text-accent">With Confidence</span>
       </div>
-      <div id="hero-subtitle" class="my-lg text-xl leading-relaxed text-text/80">
+      <div id="hero-subtitle" class="my-8 text-xl leading-relaxed text-text/90">
         <!-- Explain how we'll create the value -->
         <!-- TODO? maybe add a rotation between different subtitles -->
         <!-- A collection of components to collect, store and view information
@@ -41,7 +41,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         deployment tracking, and real-time monitoring - all in one place.
       </div>
 
-      <div id="hero-actions" class="my-lg flex flex-row gap-md">
+      <div id="hero-actions" class="my-8 flex flex-row gap-6">
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how" >See How It Works</Btn>
