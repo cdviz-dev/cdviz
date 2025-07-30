@@ -176,7 +176,7 @@ export function draw(context: DrawContext<Datum>) {
             d.current = i(t);
           };
         }
-        return (t) => {};
+        return (_t) => {};
       })
       //@ts-ignore
       .filter((d) => {

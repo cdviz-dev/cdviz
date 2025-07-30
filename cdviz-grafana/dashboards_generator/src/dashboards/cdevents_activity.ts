@@ -12,9 +12,9 @@ import {
   VariableHide,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 import dedent from "dedent";
-import { D3PanelBuilder, buildjsForD3Panel } from "../panels/d3_panel";
+import { buildjsForD3Panel, D3PanelBuilder } from "../panels/d3_panel";
 import { VolkovlabsTablePanelBuilder } from "../panels/volkovlabs_table_panel";
-import { DEFAULT_TAGS, applyDefaults, newVariableOnDatasource } from "./utils";
+import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 export async function buildDashboard(): Promise<Dashboard> {
   const script_sunburst = await buildjsForD3Panel([
@@ -22,6 +22,7 @@ export async function buildDashboard(): Promise<Dashboard> {
   ]);
   const datasource = {
     type: "grafana-postgresql-datasource",
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
     uid: "${datasource}",
   };
   const builder = applyDefaults(

@@ -47,10 +47,10 @@ test("isSimilarTo", () => {
 });
 
 test("mergeVersionAndTags", () => {
-  const app_a = new ArtifactInfo("pkg:oci/app-a");
+  // const app_a = new ArtifactInfo("pkg:oci/app-a");
   const app_a_v001 = new ArtifactInfo("pkg:oci/app-a@0.0.1");
-  const app_a_v001_latest = new ArtifactInfo("pkg:oci/app-a@0.0.1?tag=latest");
-  const app_a_v001_foo = new ArtifactInfo("pkg:oci/app-a@0.0.1?tag=foo");
+  // const app_a_v001_latest = new ArtifactInfo("pkg:oci/app-a@0.0.1?tag=latest");
+  // const app_a_v001_foo = new ArtifactInfo("pkg:oci/app-a@0.0.1?tag=foo");
   const app_a_foo = new ArtifactInfo("pkg:oci/app-a?tag=foo");
 
   const m1 = Object.create(app_a_v001);

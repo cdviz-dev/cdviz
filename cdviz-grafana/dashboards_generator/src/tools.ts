@@ -74,10 +74,7 @@ function deepCompare(value1: unknown, value2: unknown): boolean {
         return false;
       }
       for (const key of keys1) {
-        if (
-          !Object.prototype.hasOwnProperty.call(value2, key) ||
-          !deepCompare(o1[key], o2[key])
-        ) {
+        if (!Object.hasOwn(o2, key) || !deepCompare(o1[key], o2[key])) {
           return false;
         }
       }

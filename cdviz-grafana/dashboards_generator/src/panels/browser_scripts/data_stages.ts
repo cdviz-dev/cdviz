@@ -93,8 +93,8 @@ function extractDomains(data: DatumExt[][]): Domains {
 
   if (!hasItem) {
     return {
-      timestampMin: new Date().getTime(),
-      timestampMax: new Date().getTime(),
+      timestampMin: Date.now(),
+      timestampMax: Date.now(),
       stages: [],
     };
   }
@@ -107,9 +107,9 @@ function extractDomains(data: DatumExt[][]): Domains {
   };
 }
 
-interface TransitionCounts {
-  [key: string]: { [key: string]: number };
-}
+// interface TransitionCounts {
+//   [key: string]: { [key: string]: number };
+// }
 
 // sort stages based on what stage happends before / after in the lifecycle of artifact's version
 // custom algorithm

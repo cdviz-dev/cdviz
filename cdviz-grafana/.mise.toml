@@ -58,6 +58,7 @@ alias = "fmt"
 description = "format"
 dir = "dashboards_generator"
 run = [
+  "biome format --write",
   "biome check --write",
 ]
 wait_for = ["install:deps"]

@@ -7,15 +7,17 @@ import {
   DashboardBuilder,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 import dedent from "dedent";
-import { D3PanelBuilder, buildjsForD3Panel } from "../panels/d3_panel";
-import { DEFAULT_TAGS, applyDefaults, newVariableOnDatasource } from "./utils";
+import { buildjsForD3Panel, D3PanelBuilder } from "../panels/d3_panel";
+import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 export async function buildDashboard(): Promise<Dashboard> {
   const script = await buildjsForD3Panel([
     "./src/panels/browser_scripts/draw_timeline_version_on_stage.ts",
   ]);
+
   const datasource = {
     type: "grafana-postgresql-datasource",
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
     uid: "${datasource}",
   };
   const builder = applyDefaults(

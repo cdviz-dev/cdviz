@@ -208,7 +208,7 @@ export function draw(context: DrawContext<Datum>) {
     .selectAll("text")
     .data(headers)
     .join("text")
-    .attr("x", (d, i) => columnsX[i])
+    .attr("x", (_d, i) => columnsX[i])
     .attr("y", marginTop)
     .attr("fill", "gray")
     .attr("font-size", "16px")
@@ -221,7 +221,7 @@ export function draw(context: DrawContext<Datum>) {
     .selectAll("g")
     .data(tableData) // assuming you have a dataset named 'tableData' containing the required data
     .join("g")
-    .attr("transform", (d, i) => {
+    .attr("transform", (d) => {
       const dy = (y(d[0] || "") ?? 0) + y.bandwidth() / 2;
       return `translate(0, ${dy})`;
     })
@@ -231,17 +231,17 @@ export function draw(context: DrawContext<Datum>) {
     //.each((d, i) => { rowX.set(this, columnsX[i]); })
     //.attr("x", (d, i) => columnsX[i])
     //.attr("y", (d, i) => (y(d[0]) ?? 0) + y.bandwidth() / 2)
-    .attr("transform", (d, i) => `translate(${columnsX[i]}, 0)`)
+    .attr("transform", (_d, i) => `translate(${columnsX[i]}, 0)`)
     .attr("fill", "white")
     .attr("font-size", "12px")
     .attr("text-anchor", "start")
     .selectAll("tspan")
-    .data((d, i) => {
+    .data((d) => {
       return d?.split("\n") || []; // Split the text into lines if needed
     })
     .join("tspan")
     .attr("x", 0)
-    .attr("dy", (_, i) => `${i * 1.2}em`)
+    .attr("dy", (_d, i) => `${i * 1.2}em`)
     .text((d) => d);
 
   // svg
@@ -300,7 +300,7 @@ export function draw(context: DrawContext<Datum>) {
   // TODO add line per y unit
   // Add a axis every 1 minute
   // Define the interval for the horizontal axes
-  const interval = 60;
+  // const interval = 60;
   const axis = svg.append("g");
   const ticks = domains.stages;
   axis
@@ -308,11 +308,11 @@ export function draw(context: DrawContext<Datum>) {
     .selectAll()
     .data(ticks)
     .join("line")
-    .attr("stroke", (d, i) => d3.hsl(0, 0, 0.2).toString())
+    .attr("stroke", (_d, _i) => d3.hsl(0, 0, 0.2).toString())
     .attr("x1", marginLeft)
-    .attr("y1", (d, i) => (y(d) ?? 0) + y.bandwidth() / 2)
+    .attr("y1", (d) => (y(d) ?? 0) + y.bandwidth() / 2)
     .attr("x2", width - marginRight)
-    .attr("y2", (d, i) => (y(d) ?? 0) + y.bandwidth() / 2);
+    .attr("y2", (d) => (y(d) ?? 0) + y.bandwidth() / 2);
 
   // Add tooltip on over
   const tooltip = new Tooltip<DatumExt>(container, (d) => {
@@ -328,7 +328,7 @@ export function draw(context: DrawContext<Datum>) {
   // TODO Add label ?
   // Add datapoint into a group
   for (const value of series) {
-    const latest = value.reduce((total, currentValue, currentIndex, arr) =>
+    const latest = value.reduce((total, currentValue, _currentIndex, _arr) =>
       currentValue.timestamp > total.timestamp ? currentValue : total,
     );
     const latestColor = color(latest.stage);
