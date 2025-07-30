@@ -3,7 +3,7 @@ import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 </script>
 <template>
-<section class="my-xl md:my-2xl bg-secondary/5 py-16 rounded-2xl"> <!-- Added background -->
+<section class="my-xl md:my-2xl bg-gradient-to-br from-secondary/3 to-secondary/8 py-16 px-8 rounded-2xl shadow-sm">
   <a id="why"></a>
   <H2>Why Choose CDviz?</H2>
   <div class="flex flex-col items-stretch gap-8 md:flex-row max-w-5xl mx-auto">
