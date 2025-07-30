@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
+import SkeletonLoader from "./SkeletonLoader.vue";
 
 // Interactive diagram state
 const activeComponent = ref(null);
+const isLoadingComponent = ref(false);
 
 // CDviz process steps data structure
 const processSteps = [
@@ -63,6 +65,32 @@ const processSteps = [
     ],
   },
 ];
+
+// Enhanced component interaction with loading state
+const selectComponent = async (componentName) => {
+  if (activeComponent.value === componentName) {
+    activeComponent.value = null;
+    return;
+  }
+  
+  isLoadingComponent.value = true;
+  
+  // Simulate brief loading for smooth transition
+  await new Promise(resolve => setTimeout(resolve, 200));
+  
+  activeComponent.value = componentName;
+  isLoadingComponent.value = false;
+  
+  // Smooth scroll to details panel
+  await nextTick();
+  const detailsPanel = document.querySelector('.component-details');
+  if (detailsPanel) {
+    detailsPanel.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'nearest' 
+    });
+  }
+};
 </script>
 <template>
   <section
@@ -148,16 +176,14 @@ const processSteps = [
         <!-- Component Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <button
-            class="p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-200 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            :class="
+            class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
+            :class="[
               activeComponent === 'collector'
-                ? 'bg-primary/10 border-primary/30 shadow-md'
-                : 'hover:bg-primary/5'
-            "
-            @click="
-              activeComponent =
-                activeComponent === 'collector' ? null : 'collector'
-            "
+                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
+                : 'hover:bg-primary/5 hover:shadow-sm',
+              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+            ]"
+            @click="selectComponent('collector')"
           >
             <span
               class="icon-[lucide--workflow] h-6 w-6 text-primary mx-auto mb-2 block"
@@ -166,16 +192,14 @@ const processSteps = [
             <div class="text-xs text-text/70">Event Processing</div>
           </button>
           <button
-            class="p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-200 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            :class="
+            class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
+            :class="[
               activeComponent === 'database'
-                ? 'bg-primary/10 border-primary/30 shadow-md'
-                : 'hover:bg-primary/5'
-            "
-            @click="
-              activeComponent =
-                activeComponent === 'database' ? null : 'database'
-            "
+                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
+                : 'hover:bg-primary/5 hover:shadow-sm',
+              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+            ]"
+            @click="selectComponent('database')"
           >
             <span
               class="icon-[lucide--database] h-6 w-6 text-primary mx-auto mb-2 block"
@@ -184,15 +208,14 @@ const processSteps = [
             <div class="text-xs text-text/70">Event Storage</div>
           </button>
           <button
-            class="p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-200 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            :class="
+            class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
+            :class="[
               activeComponent === 'grafana'
-                ? 'bg-primary/10 border-primary/30 shadow-md'
-                : 'hover:bg-primary/5'
-            "
-            @click="
-              activeComponent = activeComponent === 'grafana' ? null : 'grafana'
-            "
+                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
+                : 'hover:bg-primary/5 hover:shadow-sm',
+              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+            ]"
+            @click="selectComponent('grafana')"
           >
             <span
               class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary mx-auto mb-2 block"
@@ -201,16 +224,14 @@ const processSteps = [
             <div class="text-xs text-text/70">Visualization</div>
           </button>
           <button
-            class="p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-200 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            :class="
+            class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
+            :class="[
               activeComponent === 'automation'
-                ? 'bg-primary/10 border-primary/30 shadow-md'
-                : 'hover:bg-primary/5'
-            "
-            @click="
-              activeComponent =
-                activeComponent === 'automation' ? null : 'automation'
-            "
+                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
+                : 'hover:bg-primary/5 hover:shadow-sm',
+              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+            ]"
+            @click="selectComponent('automation')"
           >
             <span
               class="icon-[lucide--zap] h-6 w-6 text-primary mx-auto mb-2 block"
@@ -222,9 +243,23 @@ const processSteps = [
 
         <!-- Component Details Panel -->
         <div
-          v-if="activeComponent"
-          class="bg-background/80 border border-primary/20 rounded-xl p-6 shadow-lg animate-in slide-in-from-top duration-300"
+          v-if="activeComponent || isLoadingComponent"
+          class="component-details bg-background/80 border border-primary/20 rounded-xl p-6 shadow-lg animate-in slide-in-from-top duration-300 transform-gpu"
         >
+          <!-- Loading State -->
+          <div v-if="isLoadingComponent" class="space-y-4">
+            <div class="flex items-center gap-3 mb-4">
+              <SkeletonLoader type="avatar" />
+              <SkeletonLoader width="150px" />
+            </div>
+            <SkeletonLoader count="3" />
+            <div class="grid sm:grid-cols-3 gap-4 mt-6">
+              <div v-for="i in 3" :key="i" class="space-y-2">
+                <SkeletonLoader width="80px" />
+                <SkeletonLoader count="4" />
+              </div>
+            </div>
+          </div>
           <!-- Collector Details -->
           <div v-if="activeComponent === 'collector'">
             <div class="flex items-center gap-3 mb-4">

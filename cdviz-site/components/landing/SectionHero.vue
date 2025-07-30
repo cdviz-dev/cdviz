@@ -28,18 +28,20 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
     <div class="overflow-hidden rounded-xl p-4 sm:p-6 lg:p-8">
       <div id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
         <!-- Explain the value we provide -->
-        <span class="text-text">Monitor Your Software Delivery Pipeline</span>
-        <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2">
+        <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+          Monitor Your Software Delivery Pipeline
+        </span>
+        <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300 bg-size-200 animate-gradient">
           With Confidence
         </span>
       </div>
-      <div id="hero-subtitle" class="my-6 sm:my-8 text-base sm:text-lg lg:text-xl leading-relaxed text-text/90">
+      <div id="hero-subtitle" class="my-6 sm:my-8 text-base sm:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500">
         <!-- Explain how we'll create the value -->
         Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
         deployment tracking, and real-time monitoring - all in one place.
       </div>
 
-      <div id="hero-actions" class="my-6 sm:my-8 flex flex-col sm:flex-row gap-4 sm:gap-6">
+      <div id="hero-actions" class="my-6 sm:my-8 flex flex-col sm:flex-row gap-4 sm:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700">
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how" >See How It Works</Btn>
