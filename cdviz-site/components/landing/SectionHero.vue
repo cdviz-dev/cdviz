@@ -28,8 +28,8 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
     <div class="overflow-hidden rounded-xl p-4 sm:p-6 lg:p-8">
       <div id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
         <!-- Explain the value we provide -->
-        <span class="text-gray-900 dark:text-gray-100">Monitor Your Software Delivery Pipeline</span>
-        <span class="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text font-extrabold mt-1 sm:mt-2">
+        <span class="text-text">Monitor Your Software Delivery Pipeline</span>
+        <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2">
           With Confidence
         </span>
       </div>
