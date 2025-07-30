@@ -103,11 +103,23 @@ const getDiscountMax = () => {
             €{{ getPrice("community") }}
           </div>
           <div class="text-sm text-gray-600 mb-4">Forever free</div>
-          <ul class="my-6 ml-2 text-left">
-            <li class="check-circle mb-4 pl-8">Collector (AGPL v3)</li>
-            <li class="check-circle mb-4 pl-8">Database schemas (ASL v2)</li>
-            <li class="check-circle mb-4 pl-8">Grafana components (ASL v2)</li>
-            <li class="check-circle mb-4 pl-8">Community Support</li>
+          <ul class="my-6 text-left">
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--workflow] h-5 w-5 text-green-600 flex-shrink-0"></span>
+              <span>Collector (AGPL v3)</span>
+            </li>
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--database] h-5 w-5 text-green-600 flex-shrink-0"></span>
+              <span>Database schemas (ASL v2)</span>
+            </li>
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--bar-chart-3] h-5 w-5 text-green-600 flex-shrink-0"></span>
+              <span>Grafana components (ASL v2)</span>
+            </li>
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--users] h-5 w-5 text-green-600 flex-shrink-0"></span>
+              <span>Community Support</span>
+            </li>
           </ul>
         </div>
         <Btn href="/docs" primary>Get Started</Btn>
@@ -125,15 +137,23 @@ const getDiscountMax = () => {
             Save {{ getDiscount("enterprise") }}%
           </div>
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-6 ml-2 text-left">
-            <li class="check-circle mb-4 pl-8">On-premise</li>
-            <li class="check-circle mb-4 pl-8">
-              Collector (Commercial License)
+          <ul class="my-6 text-left">
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--building] h-5 w-5 text-blue-600 flex-shrink-0"></span>
+              <span>On-premise</span>
             </li>
-            <li class="check-circle mb-4 pl-8">
-              More sources &amp; sinks for collector
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--workflow] h-5 w-5 text-blue-600 flex-shrink-0"></span>
+              <span>Collector (Commercial License)</span>
             </li>
-            <li class="check-circle mb-4 pl-8">Professional support</li>
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--plug] h-5 w-5 text-blue-600 flex-shrink-0"></span>
+              <span>More sources &amp; sinks for collector</span>
+            </li>
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--headphones] h-5 w-5 text-blue-600 flex-shrink-0"></span>
+              <span>Professional support</span>
+            </li>
             <!-- <li class="check-circle mb-4 pl-8">
               Create a custom source or sink
             </li>
@@ -167,18 +187,22 @@ const getDiscountMax = () => {
             Save {{ getDiscount("saas") }}%
           </div>
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-6 ml-2 text-left">
-            <li class="check-circle mb-4 pl-8">
-              Collector with same features than Enterprise
+          <ul class="my-6 text-left">
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--workflow] h-5 w-5 text-purple-600 flex-shrink-0"></span>
+              <span>Collector with same features than Enterprise</span>
             </li>
-            <li class="check-circle mb-4 pl-8">
-              Collector operated by us (on our infrastucture)
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--cloud] h-5 w-5 text-purple-600 flex-shrink-0"></span>
+              <span>Collector operated by us (on our infrastructure)</span>
             </li>
-            <li class="check-circle mb-4 pl-8">
-              Database operated by you or your provider
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--database] h-5 w-5 text-purple-600 flex-shrink-0"></span>
+              <span>Database operated by you or your provider</span>
             </li>
-            <li class="check-circle mb-4 pl-8">
-              Dashboard operated by you or your provider
+            <li class="flex items-center gap-3 mb-4">
+              <span class="icon-[lucide--monitor] h-5 w-5 text-purple-600 flex-shrink-0"></span>
+              <span>Dashboard operated by you or your provider</span>
             </li>
           </ul>
         </div>
@@ -204,12 +228,5 @@ const getDiscountMax = () => {
   opacity: 0.5;
   text-decoration: none;
   pointer-events: none;
-}
-
-.check-circle {
-  background-image: url("/icons/check-circle.svg");
-  background-position: 0em 0.2em;
-  background-repeat: no-repeat;
-  background-size: 1.2em;
 }
 </style>
