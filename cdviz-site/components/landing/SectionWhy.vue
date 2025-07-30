@@ -1,15 +1,30 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
+import { useStaggeredCards } from '../../composables/useScrollAnimation.js';
+
+const sectionRef = ref(null);
+const { observeCards } = useStaggeredCards({
+  stagger: 150,
+  animationType: 'scale-in',
+  threshold: 0.2
+});
+
+onMounted(() => {
+  if (sectionRef.value) {
+    observeCards(sectionRef.value);
+  }
+});
 </script>
 <template>
-<section class="my-8 sm:my-12 lg:my-16 bg-gradient-to-br from-secondary/3 to-secondary/8 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 rounded-2xl shadow-sm">
+<section ref="sectionRef" class="my-8 sm:my-12 lg:my-16 bg-gradient-to-br from-secondary/3 to-secondary/8 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 rounded-2xl shadow-sm">
   <a id="why"></a>
   <H2>Transform Your Software Delivery</H2>
   <div class="flex flex-col items-stretch gap-6 sm:gap-8 md:flex-row max-w-5xl mx-auto">
-    <div class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20">
+    <div data-animate-card class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20 card-hover transform-gpu">
       <div class="flex items-center gap-3 mb-4">
-        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center">
+        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float">
           <span class="icon-[lucide--eye] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
         </div>
         <H3>Complete Pipeline Visibility</H3>
@@ -19,9 +34,9 @@ import H3 from "./H3.vue";
         your entire CI/CD pipeline with real-time dashboards and analytics.
       </p>
     </div>
-    <div class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20">
+    <div data-animate-card class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20 card-hover transform-gpu">
       <div class="flex items-center gap-3 mb-4">
-        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center">
+        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float" style="animation-delay: 0.5s">
           <span class="icon-[lucide--plug-zap] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
         </div>
         <H3>Zero-Friction Integration</H3>
@@ -31,9 +46,9 @@ import H3 from "./H3.vue";
         without changing workflows or disrupting development teams.
       </p>
     </div>
-    <div class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20">
+    <div data-animate-card class="bg-background/80 w-full rounded-xl p-5 sm:p-6 shadow-sm border border-secondary/20 card-hover transform-gpu">
       <div class="flex items-center gap-3 mb-4">
-        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center">
+        <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float" style="animation-delay: 1s">
           <span class="icon-[lucide--users-round] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
         </div>
         <H3>Unified Tool Collaboration</H3>

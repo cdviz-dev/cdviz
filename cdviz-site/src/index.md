@@ -32,7 +32,7 @@ markdownStyles: false
 #     title: Another cool feature
 #     details: Lorem ipsum...
 faq:
-  - q: "📋 Getting Started & Product Overview"
+  - q: "Getting Started & Product Overview"
     a: ""
   - q: What is CDviz and how does it work?
     a: |
@@ -56,7 +56,7 @@ faq:
       <br/>
       Some enterprise components may require a commercial license.
 
-  - q: "⚙️ Technical Architecture"
+  - q: "Technical Architecture"
     a: ""
   - q: Why do dashboard tools like Grafana access the database directly instead of through an API?
     a: |
@@ -72,7 +72,7 @@ faq:
         </li>
       </ul>
 
-  - q: "📄 Licensing & Business Model"
+  - q: "Licensing & Business Model"
     a: ""
   - q: What is CDviz's commitment to Open Source?
     a: |
@@ -87,7 +87,7 @@ faq:
       and professional support. The commercial license provides development
       rights without open source obligations plus access to our support services.
 
-  - q: "💰 Pricing & Plans"
+  - q: "Pricing & Plans"
     a: ""
   - q: What is the roadmap for SaaS?
     a: |

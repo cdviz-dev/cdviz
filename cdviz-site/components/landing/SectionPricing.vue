@@ -1,8 +1,10 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
+import AnimatedCounter from "./AnimatedCounter.vue";
+import { useScrollAnimation } from '../../composables/useScrollAnimation.js';
 
 const isYearly = ref(true);
 const isToggling = ref(false);
@@ -62,10 +64,25 @@ const togglePricing = () => {
     }, 150);
   }, 100);
 };
+
+const sectionRef = ref(null);
+const { observeMultiple } = useScrollAnimation({
+  threshold: 0.1,
+  stagger: 150,
+  animationType: 'scale-in'
+});
+
+onMounted(() => {
+  if (sectionRef.value) {
+    const pricingCards = sectionRef.value.querySelectorAll('[data-animate-pricing]');
+    observeMultiple(Array.from(pricingCards), 'scale-in');
+  }
+});
 </script>
 
 <template>
   <section
+    ref="sectionRef"
     class="my-8 sm:my-12 lg:my-16 bg-gradient-to-br from-secondary/2 to-secondary/6 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
@@ -110,7 +127,8 @@ const togglePricing = () => {
     <div class="grid gap-6 sm:gap-8 md:grid-cols-3 max-w-6xl mx-auto">
       <!-- Community Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-secondary/20 bg-secondary/5 relative"
+        data-animate-pricing
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-secondary/20 bg-secondary/5 relative transform-gpu card-hover"
       >
         <div>
           <H3 class="text-secondary">Open Source / Community</H3>
@@ -120,7 +138,11 @@ const togglePricing = () => {
               class="transition-all duration-300 transform"
               :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
             >
-              €{{ getPrice("community") }}
+              <AnimatedCounter 
+                :end="getPrice('community')" 
+                prefix="€" 
+                class="text-4xl font-bold text-secondary"
+              />
             </div>
           </div>
           <div class="text-sm font-semibold text-secondary/80 mb-4">Forever free</div>
@@ -147,7 +169,8 @@ const togglePricing = () => {
       </div>
       <!-- Enterprise Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-primary/30 bg-primary/5 relative transform md:scale-105 md:shadow-xl md:z-10"
+        data-animate-pricing
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-primary/30 bg-primary/5 relative transform md:scale-105 md:shadow-xl md:z-10 transform-gpu card-hover"
       >
         <div>
           <H3 class="text-primary">Enterprise</H3>
@@ -157,8 +180,12 @@ const togglePricing = () => {
               class="transition-all duration-300 transform"
               :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
             >
-              €{{ getPrice("enterprise") }}
-              <span class="text-lg sm:text-xl font-normal text-text/70">/month</span>
+              <AnimatedCounter 
+                :end="getPrice('enterprise')" 
+                prefix="€" 
+                suffix="/month"
+                class="text-4xl sm:text-5xl font-bold text-primary"
+              />
             </div>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
@@ -200,7 +227,8 @@ const togglePricing = () => {
       </div>
       <!-- SaaS Plan - Preview -->
       <div
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center relative border-2 border-secondary/20 bg-secondary/5"
+        data-animate-pricing
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center relative border-2 border-secondary/20 bg-secondary/5 transform-gpu card-hover"
       >
         <div
           class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-secondary bg-secondary/10 border border-secondary/30 shadow-sm"
@@ -215,8 +243,12 @@ const togglePricing = () => {
               class="transition-all duration-300 transform"
               :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
             >
-              €{{ getPrice("saas") }}
-              <span class="text-lg font-normal text-text/70">/month</span>
+              <AnimatedCounter 
+                :end="getPrice('saas')" 
+                prefix="€" 
+                suffix="/month"
+                class="text-4xl font-bold text-secondary"
+              />
             </div>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
