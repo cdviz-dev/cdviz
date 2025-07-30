@@ -19,10 +19,18 @@ import H2 from "./H2.vue";
     <a id="faq"></a>
     <H2>Frequently Asked Questions</H2>
     <div class="max-w-3xl mx-auto">
-      <details v-for="aq in $frontmatter.faq" class="cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
-        <summary class="text-xl font-semibold cursor-pointer">{{ aq.q }}</summary>
-        <div class="pt-4 text-text/90 space-y-4" v-html="aq.a"></div>
-      </details>
+      <template v-for="aq in $frontmatter.faq" :key="aq.q">
+        <!-- Category Header -->
+        <div v-if="aq.a === ''" class="mt-8 mb-4 first:mt-0">
+          <h3 class="text-2xl font-bold text-center text-primary">{{ aq.q }}</h3>
+          <div class="w-16 h-1 bg-primary mx-auto mt-2 rounded-full"></div>
+        </div>
+        <!-- FAQ Item -->
+        <details v-else class="cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-secondary/20 my-4 rounded-xl p-6 shadow-sm">
+          <summary class="text-xl font-semibold cursor-pointer">{{ aq.q }}</summary>
+          <div class="pt-4 text-text/90 space-y-4" v-html="aq.a"></div>
+        </details>
+      </template>
     </div>
   </section>
 </template>
