@@ -59,9 +59,9 @@ const getDiscountMax = () => {
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
-    <div class="text-xl text-center mb-8 max-w-3xl mx-auto">
-      Choose the plan that works best for your team. Our commitment to Open
-      Source means core components are always free.
+    <div class="text-xl text-center mb-8 max-w-3xl mx-auto text-text/90">
+      Start free with open source, scale with enterprise features. 
+      Built for teams that value transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
