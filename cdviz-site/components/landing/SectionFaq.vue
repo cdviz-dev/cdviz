@@ -26,8 +26,8 @@ import H2 from "./H2.vue";
           <div class="w-12 sm:w-16 h-1 bg-primary mx-auto mt-2 rounded-full"></div>
         </div>
         <!-- FAQ Item -->
-        <details v-else class="cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-secondary/20 my-3 sm:my-4 rounded-xl p-4 sm:p-6 shadow-sm touch-manipulation">
-          <summary class="text-lg sm:text-xl font-semibold cursor-pointer list-none outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg p-2 -m-2">
+        <details v-else class="cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:shadow-md bg-background/80 border border-secondary/20 my-3 sm:my-4 rounded-xl p-4 sm:p-6 shadow-sm touch-manipulation">
+          <summary class="text-lg sm:text-xl font-semibold cursor-pointer list-none outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg p-2 -m-2 text-text">
             <span class="flex items-center justify-between">
               <span>{{ aq.q }}</span>
               <span class="text-primary text-xl ml-2 transition-transform duration-200 group-open:rotate-180">▼</span>

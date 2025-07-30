@@ -7,14 +7,14 @@ import H3 from "./H3.vue";
       <a id="how"></a>
       <H2>How CDviz Works</H2>
       <div class="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-rows-2">
-        <div class="flex flex-col sm:flex-row items-start gap-4 bg-secondary/10 p-5 sm:p-6 rounded-xl">
+        <div class="flex flex-col sm:flex-row items-start gap-4 bg-background/70 p-5 sm:p-6 rounded-xl border border-secondary/20">
           <div class="flex flex-row sm:flex-col items-center gap-2 sm:gap-2">
-            <div class="bg-accent text-white rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">1</div>
+            <div class="bg-accent text-background rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">1</div>
             <span class="icon-[lucide--download] h-4 sm:h-5 w-4 sm:w-5 text-accent/70"></span>
           </div>
           <div class="flex-1">
             <H3>Event Collection</H3>
-            <p class="text-sm sm:text-base leading-relaxed mb-4">
+            <p class="text-sm sm:text-base leading-relaxed mb-4 text-text/90">
               Pull or receive events from multiple sources and convert them to standardized cdevents.
             </p>
             &nbsp<span class="icon-[simple-icons--github] h-5 w-5"></span>
@@ -29,28 +29,28 @@ import H3 from "./H3.vue";
             &nbsp...
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-start gap-4 bg-secondary/10 p-5 sm:p-6 rounded-xl">
+        <div class="flex flex-col sm:flex-row items-start gap-4 bg-background/70 p-5 sm:p-6 rounded-xl border border-secondary/20">
           <div class="flex flex-row sm:flex-col items-center gap-2 sm:gap-2">
-            <div class="bg-accent text-white rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">2</div>
+            <div class="bg-accent text-background rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">2</div>
             <span class="icon-[lucide--database] h-4 sm:h-5 w-4 sm:w-5 text-accent/70"></span>
           </div>
           <div class="flex-1">
             <H3>Store Events</H3>
-            <p class="text-sm sm:text-base leading-relaxed mb-4">
+            <p class="text-sm sm:text-base leading-relaxed mb-4 text-text/90">
               <!-- Pull or receive events from multiple sources and convert them to standardized cdevents. -->
               Keep events in a database for later analysis. And pre-process them for further analysis.
             </p>
             &nbsp<span class="icon-[simple-icons--postgresql] h-5 w-5"></span>
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-start gap-4 bg-secondary/10 p-5 sm:p-6 rounded-xl">
+        <div class="flex flex-col sm:flex-row items-start gap-4 bg-background/70 p-5 sm:p-6 rounded-xl border border-secondary/20">
           <div class="flex flex-row sm:flex-col items-center gap-2 sm:gap-2">
-            <div class="bg-accent text-white rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">3</div>
+            <div class="bg-accent text-background rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">3</div>
             <span class="icon-[lucide--bar-chart-3] h-4 sm:h-5 w-4 sm:w-5 text-accent/70"></span>
           </div>
           <div class="flex-1">
             <H3>Event Monitoring</H3>
-            <p class="text-sm sm:text-base leading-relaxed mb-4">
+            <p class="text-sm sm:text-base leading-relaxed mb-4 text-text/90">
               Observe the activity of your software factory with dashboard,
               alerts,... And build your own analytics.
             </p>
@@ -58,14 +58,14 @@ import H3 from "./H3.vue";
             &nbsp...
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-start gap-4 bg-secondary/10 p-5 sm:p-6 rounded-xl">
+        <div class="flex flex-col sm:flex-row items-start gap-4 bg-background/70 p-5 sm:p-6 rounded-xl border border-secondary/20">
           <div class="flex flex-row sm:flex-col items-center gap-2 sm:gap-2">
-            <div class="bg-accent text-white rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">4</div>
+            <div class="bg-accent text-background rounded-full w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center font-bold text-sm sm:text-base">4</div>
             <span class="icon-[lucide--zap] h-4 sm:h-5 w-4 sm:w-5 text-accent/70"></span>
           </div>
           <div class="flex-1">
             <H3>Event Reaction</H3>
-            <p class="text-sm sm:text-base leading-relaxed mb-4">
+            <p class="text-sm sm:text-base leading-relaxed mb-4 text-text/90">
               Trigger reaction on cdevents.
             </p>
             &nbsp<span class="icon-[simple-icons--n8n] h-5 w-5"></span>
