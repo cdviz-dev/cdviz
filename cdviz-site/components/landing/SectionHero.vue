@@ -7,11 +7,11 @@ import Btn from "./Btn.vue";
 const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
-  <section id="hero" class="my-8 sm:my-12 lg:my-16 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-2 md:gap-8 lg:gap-12 relative overflow-hidden particle-container">
+  <section id="hero" class="space-section md:grid md:grid-cols-2 space-content relative overflow-hidden particle-container">
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
-      class="order-last items-center overflow-hidden rounded-xl md:relative mb-8 md:mb-0"
+      class="order-last items-center overflow-hidden rounded-xl md:relative my-lg md:my-0"
     >
       <!-- class="order-last items-center overflow-hidden rounded-xl md:absolute md:relative" -->
       <!-- Help people visualize what we're offering: snapshot/screenshot of the product -->
@@ -25,8 +25,8 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         alt="illustrations"
       />
     </div>
-    <div class="overflow-hidden rounded-xl p-4 sm:p-6 lg:p-8">
-      <div id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+    <div class="overflow-hidden rounded-xl p-lg">
+      <div id="hero-title" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-md leading-tight">
         <!-- Explain the value we provide -->
         <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           Monitor Your Software Delivery Pipeline
@@ -35,13 +35,13 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
           With Confidence
         </span>
       </div>
-      <div id="hero-subtitle" class="my-6 sm:my-8 text-base sm:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500">
+      <div id="hero-subtitle" class="my-lg text-base sm:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500">
         <!-- Explain how we'll create the value -->
         Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
         deployment tracking, and real-time monitoring - all in one place.
       </div>
 
-      <div id="hero-actions" class="my-6 sm:my-8 flex flex-col sm:flex-row gap-4 sm:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700">
+      <div id="hero-actions" class="my-lg flex flex-col sm:flex-row space-component animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700">
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how">See How It Works</Btn>

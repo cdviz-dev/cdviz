@@ -94,20 +94,20 @@ const selectComponent = async (componentName) => {
 </script>
 <template>
   <section
-    class="my-8 sm:my-12 lg:my-16 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10"
+    class="space-section bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10"
   >
     <a id="how"></a>
     <H2>How CDviz Works</H2>
 
     <!-- Process Flow Steps -->
-    <div class="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:grid-rows-2">
+    <div class="grid space-content lg:grid-cols-2 lg:grid-rows-2">
       <!-- Process Steps Loop -->
       <div
         v-for="step in processSteps"
         :key="step.id"
-        class="group flex flex-col sm:flex-row items-start gap-4 bg-background/80 p-6 sm:p-8 rounded-xl border border-secondary/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
+        class="group flex flex-col sm:flex-row items-start space-component bg-background/80 p-lg rounded-xl border border-secondary/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
       >
-        <div class="flex flex-row sm:flex-col items-center gap-3 sm:gap-2">
+        <div class="flex flex-row sm:flex-col items-center space-element">
           <div
             class="bg-primary rounded-full w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center font-bold text-lg sm:text-xl shadow-md text-background"
           >

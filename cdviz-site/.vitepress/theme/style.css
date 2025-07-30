@@ -8,15 +8,25 @@
 /* This eliminates external network requests and improves performance */
 
 @theme {
-  /* see [Perfect Ratios & How to Find Them - YouTube](https://www.youtube.com/watch?v=r1DANFZYJDw) */
-  --spacing-2xs: 0.3rem;
-  --spacing-xs: 0.486rem;
-  --spacing-sm: 0.7862rem;
-  --spacing-md: 1.272rem; /* "1rem", the base */
-  --spacing-lg: 2.058rem;
-  --spacing-xl: 3.33rem;
-  --spacing-2xl: 5.388rem;
-  --spacing-4xl: 8.778rem;
+  /* Perfect Ratio Spacing System - Optimized for Visual Harmony */
+  /* Based on golden ratio progression for optimal visual rhythm */
+  --spacing-2xs: 0.3rem;    /* 4.8px - micro spacing */
+  --spacing-xs: 0.486rem;   /* 7.8px - tight spacing */
+  --spacing-sm: 0.7862rem;  /* 12.6px - small spacing */
+  --spacing-md: 1.272rem;   /* 20.4px - base spacing (our 1rem equivalent) */
+  --spacing-lg: 2.058rem;   /* 32.9px - medium spacing */
+  --spacing-xl: 3.33rem;    /* 53.3px - large spacing */
+  --spacing-2xl: 5.388rem;  /* 86.2px - extra large spacing */
+  --spacing-3xl: 8.718rem;  /* 139.5px - section spacing */
+  --spacing-4xl: 14.106rem; /* 225.7px - page spacing */
+
+  /* Semantic spacing tokens for consistent usage */
+  --space-component-gap: var(--spacing-md);     /* 20.4px - between components */
+  --space-element-gap: var(--spacing-sm);       /* 12.6px - between elements */
+  --space-section-y: var(--spacing-2xl);        /* 86.2px - section vertical */
+  --space-section-x: var(--spacing-lg);         /* 32.9px - section horizontal */
+  --space-content-gap: var(--spacing-lg);       /* 32.9px - content blocks */
+  --space-text-gap: var(--spacing-xs);          /* 7.8px - text elements */
   /*
   // theme build with:
   // - https://www.realtimecolors.com/?colors=0e151b-c9d2de-f29107-a294c2-725190&fonts=DroidSans-DroidSans
@@ -99,6 +109,222 @@ h1, h2, h3, h4, h5, h6 {
 code, pre, .code {
   font-family: var(--font-family-mono);
   font-feature-settings: "kern" 0, "liga" 0, "calt" 1, "zero" 1;
+}
+
+/* Typography vertical rhythm optimization */
+/* Perfect ratio-based line heights and spacing for consistent vertical rhythm */
+
+/* Base font size and line height ratios */
+html {
+  /* Golden ratio-based typography scale: 1.618 */
+  --type-ratio: 1.618;
+  --base-font-size: 1rem;
+  --base-line-height: var(--spacing-md); /* 20.4px base leading */
+}
+
+/* Modular type scale with perfect ratio spacing */
+.text-xs { font-size: 0.618rem; line-height: var(--spacing-sm); }
+.text-sm { font-size: 0.764rem; line-height: var(--spacing-md); }
+.text-base { font-size: 1rem; line-height: var(--spacing-md); }
+.text-lg { font-size: 1.236rem; line-height: var(--spacing-lg); }
+.text-xl { font-size: 1.618rem; line-height: var(--spacing-lg); }
+.text-2xl { font-size: 2.618rem; line-height: var(--spacing-xl); }
+.text-3xl { font-size: 4.236rem; line-height: var(--spacing-xl); }
+
+/* Enhanced heading vertical spacing with baseline grid */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h1 { 
+  margin-top: var(--spacing-xl); 
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.1;
+  font-size: clamp(2rem, 5vw, 4.236rem);
+  letter-spacing: -0.035em;
+}
+
+h2 { 
+  margin-top: var(--spacing-xl); 
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.15;
+  font-size: clamp(1.5rem, 4vw, 2.618rem);
+  letter-spacing: -0.03em;
+}
+
+h3 { 
+  margin-top: var(--spacing-lg); 
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 3vw, 1.618rem);
+  letter-spacing: -0.025em;
+}
+
+h4 {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.25;
+  font-size: clamp(1.125rem, 2.5vw, 1.236rem);
+}
+
+/* Enhanced paragraph spacing and flow */
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+  hanging-punctuation: first last;
+}
+
+p + p {
+  margin-top: var(--spacing-sm);
+}
+
+/* Enhanced list spacing with baseline alignment */
+ul, ol {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+  line-height: 1.5;
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.5;
+}
+
+li + li {
+  margin-top: var(--spacing-2xs);
+}
+
+/* Nested list spacing */
+li ul, li ol {
+  margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Enhanced content flow spacing with rhythm */
+* + h1 { 
+  margin-top: calc(var(--spacing-2xl) + var(--spacing-xs)); 
+  padding-top: var(--spacing-xs);
+}
+* + h2 { 
+  margin-top: calc(var(--spacing-xl) + var(--spacing-xs)); 
+  padding-top: var(--spacing-xs);
+}
+* + h3 { 
+  margin-top: calc(var(--spacing-lg) + var(--spacing-xs)); 
+}
+
+/* First element spacing reset - be more selective */
+section > h1:first-child,
+section > h2:first-child,
+article > h1:first-child,
+article > h2:first-child {
+  margin-top: var(--spacing-lg);
+}
+
+/* Last element spacing optimization */
+section > *:last-child,
+article > *:last-child,
+div > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Enhanced button and form element spacing */
+button, .btn, input, textarea, select {
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--spacing-md);
+}
+
+/* Form group spacing */
+.form-group, .field-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group:last-child, .field-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Enhanced media spacing with aspect ratio considerations */
+img, video, figure {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+figcaption {
+  margin-top: var(--spacing-xs);
+  line-height: 1.4;
+  font-size: 0.875rem;
+  color: var(--color-text/70);
+}
+
+/* Enhanced blockquote with rhythm */
+blockquote {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md) 0 var(--spacing-md) var(--spacing-lg);
+  border-left: 4px solid var(--color-primary);
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 2rem;
+  color: var(--color-primary/30);
+  position: absolute;
+  left: var(--spacing-xs);
+  top: 0;
+}
+
+/* Code block spacing and rhythm */
+pre, code {
+  font-family: var(--font-family-mono);
+  line-height: 1.4;
+}
+
+pre {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md);
+  overflow-x: auto;
+  border-radius: 8px;
+  background: var(--color-secondary/5);
+  border: 1px solid var(--color-secondary/20);
+}
+
+/* Table spacing */
+table {
+  margin: var(--spacing-lg) 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  line-height: 1.4;
+  border-bottom: 1px solid var(--color-secondary/20);
+}
+
+th {
+  font-weight: 600;
+  background: var(--color-secondary/5);
+}
+
+/* HR spacing */
+hr {
+  margin: var(--spacing-xl) 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-secondary/30), transparent);
 }
 
 /* Micro-interactions and Performance Optimizations */
@@ -701,6 +927,103 @@ code, pre, .code {
   border-radius: 4px;
   padding: 2px 4px;
 }
+
+/* Spacing System Utilities */
+
+/* Semantic spacing classes for consistent application */
+.space-section {
+  margin-top: var(--space-section-y);
+  margin-bottom: var(--space-section-y);
+  padding: var(--space-section-x);
+}
+
+.space-section-y {
+  margin-top: var(--space-section-y);
+  margin-bottom: var(--space-section-y);
+}
+
+.space-section-x {
+  padding-left: var(--space-section-x);
+  padding-right: var(--space-section-x);
+}
+
+.space-content {
+  gap: var(--space-content-gap);
+}
+
+.space-component {
+  gap: var(--space-component-gap);
+}
+
+.space-element {
+  gap: var(--space-element-gap);
+}
+
+.space-text {
+  gap: var(--space-text-gap);
+}
+
+/* Responsive spacing variations - minimal scaling to preserve layout */
+@media (max-width: 640px) {
+  .space-section {
+    padding: calc(var(--space-section-x) * 0.8);
+  }
+}
+
+/* Perfect ratio spacing utilities */
+.space-2xs { gap: var(--spacing-2xs); }
+.space-xs { gap: var(--spacing-xs); }
+.space-sm { gap: var(--spacing-sm); }
+.space-md { gap: var(--spacing-md); }
+.space-lg { gap: var(--spacing-lg); }
+.space-xl { gap: var(--spacing-xl); }
+.space-2xl { gap: var(--spacing-2xl); }
+.space-3xl { gap: var(--spacing-3xl); }
+.space-4xl { gap: var(--spacing-4xl); }
+
+/* Margin utilities using perfect ratios */
+.m-2xs { margin: var(--spacing-2xs); }
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+.m-2xl { margin: var(--spacing-2xl); }
+.m-3xl { margin: var(--spacing-3xl); }
+
+.my-2xs { margin-block: var(--spacing-2xs); }
+.my-xs { margin-block: var(--spacing-xs); }
+.my-sm { margin-block: var(--spacing-sm); }
+.my-md { margin-block: var(--spacing-md); }
+.my-lg { margin-block: var(--spacing-lg); }
+.my-xl { margin-block: var(--spacing-xl); }
+.my-2xl { margin-block: var(--spacing-2xl); }
+.my-3xl { margin-block: var(--spacing-3xl); }
+
+/* Padding utilities using perfect ratios */
+.p-2xs { padding: var(--spacing-2xs); }
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+.p-2xl { padding: var(--spacing-2xl); }
+
+.py-2xs { padding-block: var(--spacing-2xs); }
+.py-xs { padding-block: var(--spacing-xs); }
+.py-sm { padding-block: var(--spacing-sm); }
+.py-md { padding-block: var(--spacing-md); }
+.py-lg { padding-block: var(--spacing-lg); }
+.py-xl { padding-block: var(--spacing-xl); }
+.py-2xl { padding-block: var(--spacing-2xl); }
+
+.px-2xs { padding-inline: var(--spacing-2xs); }
+.px-xs { padding-inline: var(--spacing-xs); }
+.px-sm { padding-inline: var(--spacing-sm); }
+.px-md { padding-inline: var(--spacing-md); }
+.px-lg { padding-inline: var(--spacing-lg); }
+.px-xl { padding-inline: var(--spacing-xl); }
+.px-2xl { padding-inline: var(--spacing-2xl); }
 
 /* FAQ Details Element Fix */
 details {
