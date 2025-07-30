@@ -14,9 +14,11 @@
     }
   },
   "files": {
-    "ignore": [
-      "src/style.css", // not able to parse css (font variables)
-      "**/dist/**"
+    "includes": [
+      "**/*.{ts,tsx,js,jsx,json,md,mdx,html,css,scss,vue,yml,yaml,jsonc}",
+      "!src/style.css", // not able to parse css (font variables)
+      "!**/dist/**",
+      "!**/*.off"
     ]
   },
   "vcs": {

@@ -10,9 +10,9 @@ build = "bun run docs:build"
 preview = "bun run docs:preview"
 
 [tasks."build:favicon"]
-description="rebuild favicon.{ico,png,webp} from favicon.svg"
+description = "rebuild favicon.{ico,png,webp} from favicon.svg"
 dir = "assets"
-run=[
+run = [
   # limit to browser resolution see https://favicon.im/blog/favicon-formats-sizes-best-practices
   # use imagemagick
   # -background none to keep transparency, should be before the input file
@@ -27,6 +27,4 @@ outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 [tasks.format]
 alias = "fmt"
 description = "format"
-run = [
-  "biome check --write",
-]
+run = ["biome check --write"]
