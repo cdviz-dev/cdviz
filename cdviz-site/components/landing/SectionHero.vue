@@ -26,17 +26,15 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
       />
     </div>
     <div class="overflow-hidden rounded-xl p-8">
-      <div id="hero-title" class="text-5xl font-bold mb-6 leading-[3.2rem] md:text-6xl md:leading-[4.2rem] bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+      <div id="hero-title" class="text-5xl font-bold mb-6 leading-tight md:text-6xl md:leading-tight">
         <!-- Explain the value we provide -->
-        Monitor Your Software Delivery Pipeline
-        <span class="font-outline italic text-accent">With Confidence</span>
+        <span class="text-gray-900 dark:text-gray-100">Monitor Your Software Delivery Pipeline</span>
+        <span class="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text font-extrabold">
+          With Confidence
+        </span>
       </div>
       <div id="hero-subtitle" class="my-8 text-xl leading-relaxed text-text/90">
         <!-- Explain how we'll create the value -->
-        <!-- TODO? maybe add a rotation between different subtitles -->
-        <!-- A collection of components to collect, store and view information
-        about which version of services are deployed in each environment,
-        what test ran,... -->
         Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
         deployment tracking, and real-time monitoring - all in one place.
       </div>
@@ -46,25 +44,20 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how" >See How It Works</Btn>
       </div>
-      <div id="hero-social-proof" class="mt-auto py-2 opacity-50">
-        <!--
-        TODO Make it believable quick social proof (optional): logos of companies using CDviz, a metrics like number of deployments,...
-        Ideas: cdevents logo
-        -->
-        <span class="svg-mask svg-cdevents w-32 h-16"></span><br/>
-        <span class="text-sm">Compatible</span>
+      <div id="hero-social-proof" class="mt-12 py-4 border-t border-secondary/20">
+        <div class="flex items-center gap-4">
+          <span class="svg-mask svg-cdevents w-24 h-12 opacity-70"></span>
+          <div class="text-sm text-text/80">
+            <div class="font-medium">CDEvents Compatible</div>
+            <div class="opacity-75">Cloud Native standard for delivery events</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <style lang="css">
-.font-outline {
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: var(--text);
-  color: var(--background);
-}
-
 /* technics from https://iconify.design/docs/usage/css/ */
 .svg-mask {
   /* Add dimensions to span */
