@@ -32,67 +32,77 @@ markdownStyles: false
 #     title: Another cool feature
 #     details: Lorem ipsum...
 faq:
-  - q: What is the relationship between CDviz and cdevents?
+  - q: "📋 Getting Started & Product Overview"
+    a: ""
+  - q: What is CDviz and how does it work?
     a: |
       CDviz is a collection of components designed to provide visibility into deployed
       service versions, associated environments, testing activities, and related information.
-      The CDviz components are built upon cdevents, and the CDviz team is an active
-      member of the cdevents community.
-  - q: Why do dashboard tools, like Grafana, have access (read-only) to the DB (PostgreSQL), and NOT go through an API (micro)service?
+      It collects events from your CI/CD pipeline, stores them in a database, and provides
+      dashboards and analytics to help you understand your software delivery process.
+  - q: What is the relationship between CDviz and CDEvents?
     a: |
-      <ul class="list-disc pl-4">
-        <li>The data is your value, not the service.</li>
-        <li>
-          Allow dashboards to use the full query power of SQL to query
-          data, and to plug any analytics tools, no incomplete, frustrated
-          custom query language.
-        </li>
-        <li>
-          Allow DataOps to split the DB with read-only replicas if
-          needed,...
-        </li>
-      </ul>
-  - q: What is the roadmap for Saas?
-    a: |
-      We are currently working on a SaaS plan. We don't know yet what
-      will provide in term of features and pricing (plan). We are open
-      to discussions and to partnerships.
-      <br/>
-      If you are interested in a SaaS plan, please
-      <a href="/contact">contact us</a>.
-  - q: What is CDviz's commitment to Open Source?
-    a: |
-      At CDviz, we firmly believe in the philosophy of Open Source and collaborative development. The cdviz-collector core is licensed under Affero General Public License Version 3 (AGPLv3). The cdviz components for database and Frafana are under the Apache Software License V2. For additional information, please refer to our <a href="/compliance">Compliance Page</a>.
+      CDviz is built upon CDEvents, the Cloud Native standard for delivery events.
+      The CDviz team is an active member of the CDEvents community, ensuring
+      compatibility with the industry standard for continuous delivery event data.
   - q: Is it free to use?
     a: |
-      Yes, the open-source components can be used at no cost, excepts your time.
-      Please note that self-hosting involves expenses related to configuration,
-      maintenance, and ongoing support of your infrastructure.
+      Yes, the open-source components can be used at no cost, except your time.
+      Self-hosting involves expenses for configuration, maintenance, and infrastructure support.
       <br/>
-      Additionally, some components may not be available free of charge.
-  - q: Why should I consider obtaining a Commercial license when an Open Source license is available?
-    a: |
-      Using Open Source software entails certain rights and responsibilities.
-      While these are essential for maintaining a collaborative community,
-      some developers or organizations may prefer not to operate under Open Source licensing terms.
-      In such cases, a commercial license provides an alternative.
+      However, open source projects need community support and sustainable funding to thrive.
+      Without contributions—whether through paid plans, community involvement, or enterprise
+      licenses—continuous improvement and long-term maintenance wouldn't be possible.
       <br/>
-      Open Source licensing is suitable for scenarios where all obligations under "copyleft" licenses can be fulfilled. When meeting these requirements is not feasible, we recommend opting for a commercial license.
+      Some enterprise components may require a commercial license.
+
+  - q: "⚙️ Technical Architecture"
+    a: ""
+  - q: Why do dashboard tools like Grafana access the database directly instead of through an API?
+    a: |
+      <ul class="list-disc pl-4">
+        <li>Your data is the value, not the service layer.</li>
+        <li>
+          Dashboards can use the full power of SQL to query data and integrate
+          with any analytics tools without limitations of a custom API.
+        </li>
+        <li>
+          DataOps teams can easily scale with read-only replicas and
+          standard database optimization techniques.
+        </li>
+      </ul>
+
+  - q: "📄 Licensing & Business Model"
+    a: ""
+  - q: What is CDviz's commitment to Open Source?
+    a: |
+      At CDviz, we firmly believe in Open Source and collaborative development.
+      The cdviz-collector core is licensed under AGPL v3. The database and
+      Grafana components are under Apache License v2. For details, see our
+      <a href="/compliance">Compliance Page</a>.
+  - q: When should I consider a Commercial license?
+    a: |
+      Consider a commercial license if you cannot fulfill the obligations of
+      "copyleft" licenses like AGPL v3, or if you need enterprise features
+      and professional support. The commercial license provides development
+      rights without open source obligations plus access to our support services.
+
+  - q: "💰 Pricing & Plans"
+    a: ""
+  - q: What is the roadmap for SaaS?
+    a: |
+      We are developing a SaaS plan but don't have final details on features
+      and pricing yet. We're open to discussions and partnerships.
       <br/>
-      The commercial CDviz license grants you the rights to develop software on commercial terms without the obligations associated with Open Source licenses. Additionally, purchasing a commercial license provides access to CDviz’s professional support services (see <a href="/#pricing">Pricing</a>).
-  - q: Why should I pay for Open Source?
+      If you're interested in SaaS, please <a href="/contact">contact us</a>.
+  - q: Can I continue using my commercial license after it expires?
     a: |
-      While open source offers numerous advantages, it also involves certain limitations.
-      Additionally, utilizing open source resources requires an investment of time.
-  - q: Can I continue to use my commercial license after it has expired?
+      No. Commercial license rights expire when the subscription ends or is canceled.
+      You must maintain an active subscription to continue using the commercial license.
+  - q: Are prices inclusive of taxes?
     a: |
-      No. You are not permitted to use the commercial license if the subscription is not active.
-      The rights to continue using CDviz software under the commercial license expire when the
-      license term expires or the subscription is canceled.
-  - q: Are your prices inclusive of local sales tax, VAT, and withholding obligations?
-    a: |
-      The prices displayed on this page do not include applicable state and local sales tax or
-      any required withholdings. These obligations are the responsibility of the buyer.
+      Prices exclude applicable sales tax, VAT, and withholdings.
+      These obligations are the buyer's responsibility.
 
 faq_off:
   - q: What are the licensing options available for the cdviz-collector ?
