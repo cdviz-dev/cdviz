@@ -55,17 +55,17 @@ const getDiscountMax = () => {
 
 <template>
   <section
-    class="my-xl md:my-2xl bg-gradient-to-br from-secondary/2 to-secondary/6 py-16 px-8 rounded-2xl shadow-sm"
+    class="my-8 sm:my-12 lg:my-16 bg-gradient-to-br from-secondary/2 to-secondary/6 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
-    <div class="text-xl text-center mb-8 max-w-3xl mx-auto text-text/90">
+    <div class="text-base sm:text-lg lg:text-xl text-center mb-8 max-w-3xl mx-auto text-text/90">
       Start free with open source, scale with enterprise features. 
       Built for teams that value transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
-    <div class="flex items-center justify-center mb-12">
+    <div class="flex items-center justify-center mb-8 sm:mb-12">
       <span
         class="text-lg mr-4 font-medium"
         :class="{ 'text-current': isYearly, 'text-current/80': !isYearly }"
@@ -93,10 +93,10 @@ const getDiscountMax = () => {
         </span>
       </span>
     </div>
-    <div class="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+    <div class="grid gap-6 sm:gap-8 md:grid-cols-3 max-w-6xl mx-auto">
       <!-- Community Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-2 border-green-200 bg-green-50/50 dark:bg-green-950/20 dark:border-green-800 relative"
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-green-200 bg-green-50/50 dark:bg-green-950/20 dark:border-green-800 relative"
       >
         <div>
           <H3 class="text-green-700 dark:text-green-300">Open Source / Community</H3>
@@ -127,13 +127,13 @@ const getDiscountMax = () => {
       </div>
       <!-- Enterprise Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-2 border-blue-300 bg-blue-50/50 dark:bg-blue-950/20 dark:border-blue-700 relative transform md:scale-105 md:shadow-xl md:z-10"
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-blue-300 bg-blue-50/50 dark:bg-blue-950/20 dark:border-blue-700 relative transform md:scale-105 md:shadow-xl md:z-10"
       >
         <div>
           <H3 class="text-blue-700 dark:text-blue-300">Enterprise</H3>
-          <div class="text-5xl font-bold mx-auto my-4 text-blue-700 dark:text-blue-300">
+          <div class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-blue-700 dark:text-blue-300">
             €{{ getPrice("enterprise") }}
-            <span class="text-xl font-normal text-gray-600 dark:text-gray-400">/month</span>
+            <span class="text-lg sm:text-xl font-normal text-gray-600 dark:text-gray-400">/month</span>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
             Save {{ getDiscount("enterprise") }}%
@@ -174,7 +174,7 @@ const getDiscountMax = () => {
       </div>
       <!-- SaaS Plan - Preview -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-2 border-purple-200 bg-purple-50/30 dark:bg-purple-950/10 dark:border-purple-800"
+        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center relative border-2 border-purple-200 bg-purple-50/30 dark:bg-purple-950/10 dark:border-purple-800"
       >
         <div
           class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-purple-700 bg-gradient-to-r from-purple-100 to-purple-200 border border-purple-300 shadow-sm dark:from-purple-800 dark:to-purple-900 dark:text-purple-200 dark:border-purple-600"

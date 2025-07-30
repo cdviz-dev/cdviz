@@ -7,11 +7,11 @@ import Btn from "./Btn.vue";
 const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
-  <section id="hero" class="my-xl md:my-2xl py-16 md:grid md:grid-cols-2 md:gap-12 relative overflow-hidden">
+  <section id="hero" class="my-8 sm:my-12 lg:my-16 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-2 md:gap-8 lg:gap-12 relative overflow-hidden">
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
-      class="order-last items-center overflow-hidden rounded-xl md:relative"
+      class="order-last items-center overflow-hidden rounded-xl md:relative mb-8 md:mb-0"
     >
       <!-- class="order-last items-center overflow-hidden rounded-xl md:absolute md:relative" -->
       <!-- Help people visualize what we're offering: snapshot/screenshot of the product -->
@@ -20,26 +20,26 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         id="hero-image-img"
         height="8"
         width="8"
-        class="left-0 top-0 h-64 w-full rounded-xl object-cover md:absolute md:h-full"
+        class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute"
         v-bind:src="heroImageSrc"
         alt="illustrations"
       />
     </div>
-    <div class="overflow-hidden rounded-xl p-8">
-      <div id="hero-title" class="text-5xl font-bold mb-6 leading-tight md:text-6xl md:leading-tight">
+    <div class="overflow-hidden rounded-xl p-4 sm:p-6 lg:p-8">
+      <div id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
         <!-- Explain the value we provide -->
         <span class="text-gray-900 dark:text-gray-100">Monitor Your Software Delivery Pipeline</span>
-        <span class="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text font-extrabold">
+        <span class="block text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text font-extrabold mt-1 sm:mt-2">
           With Confidence
         </span>
       </div>
-      <div id="hero-subtitle" class="my-8 text-xl leading-relaxed text-text/90">
+      <div id="hero-subtitle" class="my-6 sm:my-8 text-base sm:text-lg lg:text-xl leading-relaxed text-text/90">
         <!-- Explain how we'll create the value -->
         Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
         deployment tracking, and real-time monitoring - all in one place.
       </div>
 
-      <div id="hero-actions" class="my-8 flex flex-row gap-6">
+      <div id="hero-actions" class="my-6 sm:my-8 flex flex-col sm:flex-row gap-4 sm:gap-6">
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how" >See How It Works</Btn>
