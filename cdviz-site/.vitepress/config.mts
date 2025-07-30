@@ -17,6 +17,8 @@ export default defineConfig({
       },
     ],
     ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    // Font preloading will be handled by VitePress build process
+    // The hashed font files are automatically optimized during build
     //   [
     //     // alternative using vitepress-plugin-diagrams (and generate diagrams at build time, but duplicate configuration in every diagrams)
     //     // FIXME the mermaid renderer is not run on page change (only on first load or refresh)
