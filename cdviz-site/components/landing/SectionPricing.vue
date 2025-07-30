@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 
 const isYearly = ref(true);
+const isToggling = ref(false);
 
 const pricing = {
   community: {
@@ -51,6 +52,16 @@ const getDiscountMax = () => {
     return discount > max ? discount : max;
   }, 0);
 };
+
+const togglePricing = () => {
+  isToggling.value = true;
+  setTimeout(() => {
+    isYearly.value = !isYearly.value;
+    setTimeout(() => {
+      isToggling.value = false;
+    }, 150);
+  }, 100);
+};
 </script>
 
 <template>
@@ -72,13 +83,16 @@ const getDiscountMax = () => {
         >Monthly</span
       >
       <button
-        @click="isYearly = !isYearly"
-        class="relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none ring-2 ring-primary shadow-md"
+        @click="togglePricing"
+        class="relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
         :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
       >
         <span
-          class="inline-block h-6 w-6 transform rounded-full bg-primary transition-transform shadow-sm"
-          :class="isYearly ? 'translate-x-7' : 'translate-x-1'"
+          class="inline-block h-6 w-6 transform rounded-full transition-all duration-300 shadow-sm"
+          :class="[
+            isYearly ? 'translate-x-7 bg-white' : 'translate-x-1 bg-primary',
+            isToggling ? 'scale-110' : 'scale-100'
+          ]"
         />
       </button>
       <span
@@ -100,8 +114,14 @@ const getDiscountMax = () => {
       >
         <div>
           <H3 class="text-secondary">Open Source / Community</H3>
-          <div class="text-4xl font-bold mx-auto my-4 text-secondary">
-            €{{ getPrice("community") }}
+          <div class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden">
+            <div 
+              :key="getPrice('community')"
+              class="transition-all duration-300 transform"
+              :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
+            >
+              €{{ getPrice("community") }}
+            </div>
           </div>
           <div class="text-sm font-semibold text-secondary/80 mb-4">Forever free</div>
           <ul class="my-6 text-left">
@@ -131,9 +151,15 @@ const getDiscountMax = () => {
       >
         <div>
           <H3 class="text-primary">Enterprise</H3>
-          <div class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-primary">
-            €{{ getPrice("enterprise") }}
-            <span class="text-lg sm:text-xl font-normal text-text/70">/month</span>
+          <div class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-primary relative overflow-hidden">
+            <div 
+              :key="getPrice('enterprise')"
+              class="transition-all duration-300 transform"
+              :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
+            >
+              €{{ getPrice("enterprise") }}
+              <span class="text-lg sm:text-xl font-normal text-text/70">/month</span>
+            </div>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
             Save {{ getDiscount("enterprise") }}%
@@ -183,9 +209,15 @@ const getDiscountMax = () => {
         </div>
         <div class="isDisabled">
           <H3 class="text-secondary">SaaS</H3>
-          <div class="text-4xl font-bold mx-auto my-4 text-secondary">
-            €{{ getPrice("saas") }}
-            <span class="text-lg font-normal text-text/70">/month</span>
+          <div class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden">
+            <div 
+              :key="getPrice('saas')"
+              class="transition-all duration-300 transform"
+              :class="isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'"
+            >
+              €{{ getPrice("saas") }}
+              <span class="text-lg font-normal text-text/70">/month</span>
+            </div>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
             Save {{ getDiscount("saas") }}%
