@@ -94,15 +94,16 @@ const getDiscountMax = () => {
       </span>
     </div>
     <div class="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+      <!-- Community Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-primary border-2"
+        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-2 border-green-200 bg-green-50/50 dark:bg-green-950/20 dark:border-green-800 relative"
       >
         <div>
-          <H3>Open Source / Community</H3>
-          <div class="text-4xl font-bold mx-auto my-4 text-primary">
+          <H3 class="text-green-700 dark:text-green-300">Open Source / Community</H3>
+          <div class="text-4xl font-bold mx-auto my-4 text-green-700 dark:text-green-300">
             €{{ getPrice("community") }}
           </div>
-          <div class="text-sm text-gray-600 mb-4">Forever free</div>
+          <div class="text-sm font-semibold text-green-600 dark:text-green-400 mb-4">Forever free</div>
           <ul class="my-6 text-left">
             <li class="flex items-center gap-3 mb-4">
               <span class="icon-[lucide--workflow] h-5 w-5 text-green-600 flex-shrink-0"></span>
@@ -122,16 +123,17 @@ const getDiscountMax = () => {
             </li>
           </ul>
         </div>
-        <Btn href="/docs" primary>Get Started</Btn>
+        <Btn href="/docs">Get Started</Btn>
       </div>
+      <!-- Enterprise Plan -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-secondary border-2"
+        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center border-2 border-blue-300 bg-blue-50/50 dark:bg-blue-950/20 dark:border-blue-700 relative transform md:scale-105 md:shadow-xl md:z-10"
       >
         <div>
-          <H3>Enterprise</H3>
-          <div class="text-4xl font-bold mx-auto my-4">
+          <H3 class="text-blue-700 dark:text-blue-300">Enterprise</H3>
+          <div class="text-5xl font-bold mx-auto my-4 text-blue-700 dark:text-blue-300">
             €{{ getPrice("enterprise") }}
-            <span class="text-lg font-normal text-gray-600">/month</span>
+            <span class="text-xl font-normal text-gray-600 dark:text-gray-400">/month</span>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
             Save {{ getDiscount("enterprise") }}%
@@ -166,22 +168,24 @@ const getDiscountMax = () => {
         <Btn
           :href="getSubscriptionUrl('enterprise')"
           aria-label="Subscribe to Enterprise"
-          >Subscribe</Btn
+          primary
+          >Subscribe Now</Btn
         >
       </div>
+      <!-- SaaS Plan - Preview -->
       <div
-        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-secondary border-2"
+        class="flex flex-col justify-between rounded-xl p-8 pt-4 text-center relative border-2 border-purple-200 bg-purple-50/30 dark:bg-purple-950/10 dark:border-purple-800"
       >
         <div
-          class="absolute z-10 right-2 top-1 rotate-6 rounded-md px-2 py-0.5 text-center align-middle text-accent ring-accent ring-1 bg-accent/10 ring-offset-accent/20 ring-offset-1"
+          class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-purple-700 bg-gradient-to-r from-purple-100 to-purple-200 border border-purple-300 shadow-sm dark:from-purple-800 dark:to-purple-900 dark:text-purple-200 dark:border-purple-600"
         >
-          preview
+          Coming Soon
         </div>
         <div class="isDisabled">
-          <H3>SaaS</H3>
-          <div class="text-4xl font-bold mx-auto my-4">
+          <H3 class="text-purple-700 dark:text-purple-300">SaaS</H3>
+          <div class="text-4xl font-bold mx-auto my-4 text-purple-700 dark:text-purple-300">
             €{{ getPrice("saas") }}
-            <span class="text-lg font-normal text-gray-600">/month</span>
+            <span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span>
           </div>
           <div v-if="isYearly" class="text-sm text-green-600 mb-4">
             Save {{ getDiscount("saas") }}%
