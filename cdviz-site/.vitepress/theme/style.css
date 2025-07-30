@@ -4,6 +4,9 @@
 
 @plugin "@iconify/tailwind4";
 
+/* Override VitePress Google Fonts import to use local fonts only */
+/* This eliminates external network requests and improves performance */
+
 @theme {
   /* see [Perfect Ratios & How to Find Them - YouTube](https://www.youtube.com/watch?v=r1DANFZYJDw) */
   --spacing-2xs: 0.3rem;
@@ -38,6 +41,14 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+
+  /* Enhanced font stacks with optimized fallbacks */
+  --font-family-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", 
+                      Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", 
+                      "Droid Sans", "Helvetica Neue", sans-serif;
+  --font-family-mono: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, 
+                      "Cascadia Code", "Roboto Mono", Menlo, 
+                      "DejaVu Sans Mono", Consolas, monospace;
 }
 
 :root {
@@ -48,6 +59,46 @@
   --primary: oklch(74.22% 0.166 64.29);
   --secondary: oklch(69.49% 0.068 298.56);
   --accent: oklch(49.68% 0.104 307.15);
+}
+
+/* Typography Performance Optimizations */
+
+/* Font loading with swap display for better perceived performance */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap; /* Ensures text is visible during font swap period */  
+  src: local('Inter'), local('Inter-Regular');
+}
+
+/* Typography rendering optimizations */
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* Enhanced typography for better readability */
+body {
+  font-family: var(--font-family-sans);
+  font-variant-ligatures: common-ligatures;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Optimize rendering for landing page headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Code blocks optimization */
+code, pre, .code {
+  font-family: var(--font-family-mono);
+  font-feature-settings: "kern" 0, "liga" 0, "calt" 1, "zero" 1;
 }
 
 /* Enhanced scrollbar */
