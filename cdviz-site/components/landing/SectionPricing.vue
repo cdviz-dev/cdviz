@@ -83,17 +83,17 @@ onMounted(() => {
 <template>
   <section
     ref="sectionRef"
-    class="my-8 sm:my-12 lg:my-16 bg-gradient-to-br from-secondary/2 to-secondary/6 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 rounded-2xl shadow-sm"
+    class="space-section bg-gradient-to-br from-secondary/2 to-secondary/6 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
-    <div class="text-base sm:text-lg lg:text-xl text-center mb-8 max-w-3xl mx-auto text-text/90">
+    <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
       Start free with open source, scale with enterprise features.
       Built for teams that value transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
-    <div class="flex items-center justify-center mb-8 sm:mb-12">
+    <div class="flex items-center justify-center my-xl">
       <span
         class="text-lg mr-4 font-medium"
         :class="{ 'text-current': isYearly, 'text-current/80': !isYearly }"
@@ -124,11 +124,11 @@ onMounted(() => {
         </span>
       </span>
     </div>
-    <div class="grid gap-6 sm:gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+    <div class="grid space-content md:grid-cols-3 max-w-5xl mx-auto">
       <!-- Community Plan -->
       <div
         data-animate-pricing
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-secondary/20 bg-secondary/5 relative transform-gpu card-hover"
+        class="flex flex-col justify-between rounded-xl p-lg text-center border-2 border-secondary/20 bg-secondary/5 relative transform-gpu card-hover"
       >
         <div>
           <H3 class="text-secondary">Open Source / Community</H3>
