@@ -203,6 +203,244 @@ code, pre, .code {
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
 
+/* Professional Micro-Animations */
+
+/* Scroll-triggered animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate-in {
+  from {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes flip-in {
+  from {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: slide-left 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-right {
+  animation: slide-right 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-rotate-in {
+  animation: rotate-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-flip-in {
+  animation: flip-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-style: preserve-3d;
+}
+
+/* Card hover animations - User-friendly version */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  /* Subtle shadow enhancement only - no movement that breaks interaction */
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(0, 0, 0, 0.08);
+  /* Subtle border glow */
+  border-color: var(--color-primary/40);
+}
+
+/* Floating animation for icons */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse with color change */
+@keyframes pulse-primary {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+}
+
+.animate-pulse-primary {
+  animation: pulse-primary 2s ease-in-out infinite;
+}
+
+/* Typewriter effect */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-cursor {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--color-primary);
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--color-primary);
+  white-space: nowrap;
+  animation: 
+    typewriter 3s steps(40, end),
+    blink-cursor 0.75s step-end infinite;
+}
+
+/* Particle animation */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px) rotate(120deg);
+    opacity: 0.7;
+  }
+  66% {
+    transform: translateY(-10px) translateX(-5px) rotate(240deg);
+    opacity: 0.5;
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  animation: particle-float 8s ease-in-out infinite;
+}
+
+/* Subtle morphing button effect - user-friendly */
+.morph-button:hover {
+  /* Gentle border radius and shadow change only */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Text reveal animation */
+@keyframes text-reveal {
+  0% {
+    color: transparent;
+    text-shadow: 0 0 0 var(--color-text);
+  }
+  50% {
+    color: transparent;
+    text-shadow: 2px 0 0 var(--color-primary);
+  }
+  100% {
+    color: var(--color-text);
+    text-shadow: 0 0 0 transparent;
+  }
+}
+
+.text-reveal {
+  animation: text-reveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Number counter animation */
+.counter-number {
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -214,9 +452,272 @@ code, pre, .code {
     scroll-behavior: auto !important;
   }
   
-  .animate-gradient {
-    animation: none;
+  .animate-gradient,
+  .animate-float,
+  .animate-pulse-primary,
+  .particle {
+    animation: none !important;
   }
+  
+  .card-hover:hover {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Advanced Page Transitions */
+
+/* Page enter/leave animations */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes page-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(1.02);
+    filter: blur(4px);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.page-leave {
+  animation: page-leave 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Advanced morphing effects - DISABLED to prevent interaction issues */
+/*
+@keyframes morph-scale {
+  0% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 8px;
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+    border-radius: 16px;
+  }
+  50% {
+    transform: scale(1.05) rotate(-1deg);
+    border-radius: 24px;
+  }
+  75% {
+    transform: scale(1.02) rotate(0.5deg);
+    border-radius: 16px;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 8px;
+  }
+}
+
+.morph-scale:hover {
+  animation: morph-scale 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+*/
+
+/* User-friendly alternative */
+.morph-scale:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Parallax scrolling effects */
+@keyframes parallax-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-20px) translateX(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) translateX(-5px) rotate(-1deg);
+  }
+}
+
+.parallax-element {
+  animation: parallax-float 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Advanced glow effects */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--color-primary/30),
+                0 0 10px var(--color-primary/20),
+                0 0 15px var(--color-primary/10);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--color-primary/50),
+                0 0 20px var(--color-primary/30),
+                0 0 30px var(--color-primary/20);
+  }
+}
+
+.glow-effect {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Interactive particle system */
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.particle-container::before,
+.particle-container::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.particle-container::before {
+  top: 20%;
+  left: 10%;
+  animation: particle-float 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.particle-container::after {
+  top: 70%;
+  right: 15%;
+  animation: particle-float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Sophisticated button morphing - DISABLED to prevent click issues */
+/*
+@keyframes button-morph {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  25% {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.1) rotateY(5deg);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+  }
+  75% {
+    transform: scale(1.05) rotateY(-2deg);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.advanced-morph:hover {
+  animation: button-morph 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+*/
+
+/* User-friendly button hover */
+.advanced-morph:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced text effects */
+@keyframes text-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px var(--color-primary/50),
+                 0 0 10px var(--color-primary/30),
+                 0 0 15px var(--color-primary/20);
+  }
+  50% {
+    text-shadow: 0 0 10px var(--color-primary/70),
+                 0 0 20px var(--color-primary/50),
+                 0 0 30px var(--color-primary/30);
+  }
+}
+
+.text-glow {
+  animation: text-glow 2s ease-in-out infinite;
+}
+
+/* Data visualization animations */
+@keyframes data-slide-in {
+  from {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes counter-highlight {
+  0% {
+    background: transparent;
+    transform: scale(1);
+  }
+  50% {
+    background: var(--color-primary/10);
+    transform: scale(1.05);
+  }
+  100% {
+    background: transparent;
+    transform: scale(1);
+  }
+}
+
+.data-element {
+  animation: data-slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.counter-highlight {
+  animation: counter-highlight 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+/* FAQ Details Element Fix */
+details {
+  /* Ensure details work properly */
+}
+
+details[open] > *:not(summary) {
+  /* Ensure FAQ content is visible when opened */
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+details > *:not(summary) {
+  /* Ensure FAQ content is hidden when closed */
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Enhanced scrollbar */

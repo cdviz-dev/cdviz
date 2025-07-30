@@ -7,7 +7,7 @@ import Btn from "./Btn.vue";
 const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
-  <section id="hero" class="my-8 sm:my-12 lg:my-16 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-2 md:gap-8 lg:gap-12 relative overflow-hidden">
+  <section id="hero" class="my-8 sm:my-12 lg:my-16 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-2 md:gap-8 lg:gap-12 relative overflow-hidden particle-container">
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
@@ -20,7 +20,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         id="hero-image-img"
         height="8"
         width="8"
-        class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute"
+        class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute parallax-element"
         v-bind:src="heroImageSrc"
         alt="illustrations"
       />
@@ -31,7 +31,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           Monitor Your Software Delivery Pipeline
         </span>
-        <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300 bg-size-200 animate-gradient">
+        <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300 bg-size-200 animate-gradient text-glow">
           With Confidence
         </span>
       </div>
@@ -44,7 +44,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
       <div id="hero-actions" class="my-6 sm:my-8 flex flex-col sm:flex-row gap-4 sm:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700">
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
-        <Btn href="#how" >See How It Works</Btn>
+        <Btn href="#how">See How It Works</Btn>
       </div>
       <div id="hero-social-proof" class="mt-12 py-4 border-t border-secondary/20">
         <div class="flex items-center gap-4">
