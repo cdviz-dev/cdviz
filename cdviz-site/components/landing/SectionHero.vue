@@ -18,11 +18,13 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
       <!-- TODO: replace with a screenshot of the product -->
       <img
         id="hero-image-img"
-        height="8"
-        width="8"
+        width="800"
+        height="600"
         class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute parallax-element"
         v-bind:src="heroImageSrc"
         alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
+        fetchpriority="high"
+        loading="eager"
       />
     </div>
     <div class="overflow-hidden rounded-xl p-lg">
