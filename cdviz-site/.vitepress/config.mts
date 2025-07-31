@@ -179,6 +179,25 @@ export default defineConfig({
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
   vite: {
+    build: {
+      // Optimize bundle splitting for better caching
+      rollupOptions: {
+        output: {
+          // Split landing page components into separate chunk
+          manualChunks: {
+            'landing': [
+              './components/landing/SectionHero.vue',
+              './components/landing/SectionHow.vue',
+              './components/landing/SectionWhy.vue',
+              './components/landing/SectionFaq.vue',
+              './components/landing/SectionPricing.vue'
+            ]
+          }
+        }
+      },
+      // Enable compression for smaller bundles
+      minify: true
+    },
     plugins: [
       tailwindcss() as any,
       {

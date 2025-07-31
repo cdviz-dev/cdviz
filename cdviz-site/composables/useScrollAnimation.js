@@ -18,42 +18,13 @@ export function useScrollAnimation(options = {}) {
   const observer = ref(null);
   const isVisible = ref(false);
 
-  // Animation configurations
+  // Animation configurations - only keep used animations
   const animationTypes = {
     'fade-in': {
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
       class: 'animate-fade-in'
     },
     'slide-up': {
-      initial: { opacity: 0, transform: 'translateY(30px)' },
-      animate: { opacity: 1, transform: 'translateY(0)' },
       class: 'animate-slide-up'
-    },
-    'slide-left': {
-      initial: { opacity: 0, transform: 'translateX(30px)' },
-      animate: { opacity: 1, transform: 'translateX(0)' },
-      class: 'animate-slide-left'
-    },
-    'slide-right': {
-      initial: { opacity: 0, transform: 'translateX(-30px)' },
-      animate: { opacity: 1, transform: 'translateX(0)' },
-      class: 'animate-slide-right'
-    },
-    'scale-in': {
-      initial: { opacity: 0, transform: 'scale(0.8)' },
-      animate: { opacity: 1, transform: 'scale(1)' },
-      class: 'animate-scale-in'
-    },
-    'rotate-in': {
-      initial: { opacity: 0, transform: 'rotate(-10deg) scale(0.8)' },
-      animate: { opacity: 1, transform: 'rotate(0deg) scale(1)' },
-      class: 'animate-rotate-in'
-    },
-    'flip-in': {
-      initial: { opacity: 0, transform: 'rotateY(-90deg)' },
-      animate: { opacity: 1, transform: 'rotateY(0deg)' },
-      class: 'animate-flip-in'
     }
   };
 
@@ -178,36 +149,6 @@ export function useScrollAnimation(options = {}) {
     getProgress,
     isVisible,
     animationTypes
-  };
-}
-
-/**
- * Specialized composable for staggered card animations
- */
-export function useStaggeredCards(options = {}) {
-  const {
-    stagger = 100,
-    animationType = 'slide-up',
-    threshold = 0.1,
-    ...restOptions
-  } = options;
-
-  const scrollAnimation = useScrollAnimation({
-    stagger,
-    threshold,
-    ...restOptions
-  });
-
-  const observeCards = (cardsContainer) => {
-    if (!cardsContainer) return;
-
-    const cards = cardsContainer.querySelectorAll('[data-animate-card]');
-    scrollAnimation.observeMultiple(Array.from(cards), animationType);
-  };
-
-  return {
-    ...scrollAnimation,
-    observeCards
   };
 }
 
