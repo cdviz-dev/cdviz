@@ -1,36 +1,36 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useCountAnimation } from '../../composables/useScrollAnimation.js';
+import { computed, onMounted, ref } from "vue";
+import { useCountAnimation } from "../../composables/useScrollAnimation.js";
 
 const props = defineProps({
   end: {
     type: Number,
-    required: true
+    required: true,
   },
   start: {
     type: Number,
-    default: 0
+    default: 0,
   },
   duration: {
     type: Number,
-    default: 2000
+    default: 2000,
   },
   suffix: {
     type: String,
-    default: ''
+    default: "",
   },
   prefix: {
     type: String,
-    default: ''
+    default: "",
   },
   formatter: {
     type: Function,
-    default: (n) => n.toLocaleString()
+    default: (n) => n.toLocaleString(),
   },
   trigger: {
     type: String,
-    default: 'intersection' // 'intersection' or 'immediate'
-  }
+    default: "intersection", // 'intersection' or 'immediate'
+  },
 });
 
 const counterRef = ref(null);
@@ -43,18 +43,18 @@ const formattedNumber = computed(() => {
 
 const startAnimation = () => {
   if (hasAnimated.value || !counterRef.value) return;
-  
+
   hasAnimated.value = true;
   animate(counterRef.value, {
     start: props.start,
     end: props.end,
     duration: props.duration,
-    formatter: (n) => props.prefix + props.formatter(n) + props.suffix
+    formatter: (n) => props.prefix + props.formatter(n) + props.suffix,
   });
 };
 
 onMounted(() => {
-  if (props.trigger === 'immediate') {
+  if (props.trigger === "immediate") {
     startAnimation();
   } else {
     // Use intersection observer for scroll-triggered animation
@@ -69,8 +69,8 @@ onMounted(() => {
       },
       {
         threshold: 0.5,
-        rootMargin: '0px 0px -20% 0px'
-      }
+        rootMargin: "0px 0px -20% 0px",
+      },
     );
 
     if (counterRef.value) {
@@ -81,8 +81,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <span 
-    ref="counterRef" 
+  <span
+    ref="counterRef"
     class="counter-number font-bold text-primary tabular-nums"
     :class="$attrs.class"
   >
