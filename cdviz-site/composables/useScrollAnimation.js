@@ -108,11 +108,12 @@ export function useScrollAnimation(options = {}) {
     // Set animation type as data attribute
     element.dataset.animation = animationType;
     
-    // Apply initial styles
+    // Apply initial styles using CSS classes instead of direct style manipulation
     const config = animationTypes[animationType];
     if (config) {
-      Object.assign(element.style, config.initial);
-      element.style.transition = `all ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+      // Add initial state class instead of direct style manipulation
+      element.classList.add('animate-initial', `animate-${animationType}-initial`);
+      element.setAttribute('data-animation-duration', duration);
     }
 
     // Store element reference
@@ -145,8 +146,8 @@ export function useScrollAnimation(options = {}) {
   const observeMultiple = (elementsArray, animationType = 'fade-in') => {
     elementsArray.forEach((element, index) => {
       if (element) {
-        // Add stagger delay to each element
-        element.style.animationDelay = `${stagger * index}ms`;
+        // Add stagger delay using CSS custom property instead of direct style manipulation
+        element.style.setProperty('--animation-delay', `${stagger * index}ms`);
         observe(element, animationType);
       }
     });
