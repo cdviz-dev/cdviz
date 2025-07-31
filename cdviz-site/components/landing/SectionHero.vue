@@ -7,7 +7,7 @@ import Btn from "./Btn.vue";
 const heroImageSrc = "illustrations/hero-dashboard-01.webp";
 </script>
 <template>
-  <section id="hero" class="space-section md:grid md:grid-cols-2 space-content relative overflow-hidden particle-container">
+  <section id="hero" class="space-section md:grid md:grid-cols-2 space-content relative overflow-hidden particle-container" aria-labelledby="hero-title" role="banner">
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
@@ -22,11 +22,11 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         width="8"
         class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute parallax-element"
         v-bind:src="heroImageSrc"
-        alt="illustrations"
+        alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
       />
     </div>
     <div class="overflow-hidden rounded-xl p-lg">
-      <div id="hero-title" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-md leading-tight">
+      <h1 id="hero-title" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-md leading-tight">
         <!-- Explain the value we provide -->
         <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           Monitor Your Software Delivery Pipeline
@@ -34,7 +34,7 @@ const heroImageSrc = "illustrations/hero-dashboard-01.webp";
         <span class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-1 sm:mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300 bg-size-200 animate-gradient text-glow">
           With Confidence
         </span>
-      </div>
+      </h1>
       <div id="hero-subtitle" class="my-lg text-base sm:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500">
         <!-- Explain how we'll create the value -->
         Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,

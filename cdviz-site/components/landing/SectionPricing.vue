@@ -103,6 +103,9 @@ onMounted(() => {
         @click="togglePricing"
         class="relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
         :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
+        :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
+        role="switch"
+        :aria-checked="isYearly.toString()"
       >
         <span
           class="inline-block h-6 w-6 transform rounded-full transition-all duration-300 shadow-sm"

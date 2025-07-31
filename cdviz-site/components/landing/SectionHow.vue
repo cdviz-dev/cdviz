@@ -167,7 +167,8 @@ const selectComponent = async (componentName) => {
         <img
           src="/architectures/overview_04.excalidraw.svg"
           class="w-full h-auto object-cover"
-          alt="CDviz architecture overview"
+          alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
+          role="img"
         />
       </div>
 
