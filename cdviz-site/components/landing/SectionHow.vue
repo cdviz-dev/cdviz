@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick } from "vue";
+import { nextTick, ref } from "vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 import SkeletonLoader from "./SkeletonLoader.vue";
@@ -72,22 +72,22 @@ const selectComponent = async (componentName) => {
     activeComponent.value = null;
     return;
   }
-  
+
   isLoadingComponent.value = true;
-  
+
   // Simulate brief loading for smooth transition
-  await new Promise(resolve => setTimeout(resolve, 200));
-  
+  await new Promise((resolve) => setTimeout(resolve, 200));
+
   activeComponent.value = componentName;
   isLoadingComponent.value = false;
-  
+
   // Smooth scroll to details panel
   await nextTick();
-  const detailsPanel = document.querySelector('.component-details');
+  const detailsPanel = document.querySelector(".component-details");
   if (detailsPanel) {
-    detailsPanel.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'nearest' 
+    detailsPanel.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
     });
   }
 };
@@ -185,7 +185,7 @@ const selectComponent = async (componentName) => {
               activeComponent === 'collector'
                 ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
                 : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
             ]"
             @click="selectComponent('collector')"
           >
@@ -201,7 +201,7 @@ const selectComponent = async (componentName) => {
               activeComponent === 'database'
                 ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
                 : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
             ]"
             @click="selectComponent('database')"
           >
@@ -217,7 +217,7 @@ const selectComponent = async (componentName) => {
               activeComponent === 'grafana'
                 ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
                 : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
             ]"
             @click="selectComponent('grafana')"
           >
@@ -233,7 +233,7 @@ const selectComponent = async (componentName) => {
               activeComponent === 'automation'
                 ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
                 : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : ''
+              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
             ]"
             @click="selectComponent('automation')"
           >

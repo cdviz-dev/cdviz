@@ -10,23 +10,23 @@
 @theme {
   /* Perfect Ratio Spacing System - Optimized for Visual Harmony */
   /* Based on golden ratio progression for optimal visual rhythm */
-  --spacing-2xs: 0.3rem;    /* 4.8px - micro spacing */
-  --spacing-xs: 0.486rem;   /* 7.8px - tight spacing */
-  --spacing-sm: 0.7862rem;  /* 12.6px - small spacing */
-  --spacing-md: 1.272rem;   /* 20.4px - base spacing (our 1rem equivalent) */
-  --spacing-lg: 2.058rem;   /* 32.9px - medium spacing */
-  --spacing-xl: 3.33rem;    /* 53.3px - large spacing */
-  --spacing-2xl: 5.388rem;  /* 86.2px - extra large spacing */
-  --spacing-3xl: 8.718rem;  /* 139.5px - section spacing */
+  --spacing-2xs: 0.3rem; /* 4.8px - micro spacing */
+  --spacing-xs: 0.486rem; /* 7.8px - tight spacing */
+  --spacing-sm: 0.7862rem; /* 12.6px - small spacing */
+  --spacing-md: 1.272rem; /* 20.4px - base spacing (our 1rem equivalent) */
+  --spacing-lg: 2.058rem; /* 32.9px - medium spacing */
+  --spacing-xl: 3.33rem; /* 53.3px - large spacing */
+  --spacing-2xl: 5.388rem; /* 86.2px - extra large spacing */
+  --spacing-3xl: 8.718rem; /* 139.5px - section spacing */
   --spacing-4xl: 14.106rem; /* 225.7px - page spacing */
 
   /* Semantic spacing tokens for consistent usage */
-  --space-component-gap: var(--spacing-md);     /* 20.4px - between components */
-  --space-element-gap: var(--spacing-sm);       /* 12.6px - between elements */
-  --space-section-y: var(--spacing-2xl);        /* 86.2px - section vertical */
-  --space-section-x: var(--spacing-lg);         /* 32.9px - section horizontal */
-  --space-content-gap: var(--spacing-lg);       /* 32.9px - content blocks */
-  --space-text-gap: var(--spacing-xs);          /* 7.8px - text elements */
+  --space-component-gap: var(--spacing-md); /* 20.4px - between components */
+  --space-element-gap: var(--spacing-sm); /* 12.6px - between elements */
+  --space-section-y: var(--spacing-2xl); /* 86.2px - section vertical */
+  --space-section-x: var(--spacing-lg); /* 32.9px - section horizontal */
+  --space-content-gap: var(--spacing-lg); /* 32.9px - content blocks */
+  --space-text-gap: var(--spacing-xs); /* 7.8px - text elements */
   /*
   // theme build with:
   // - https://www.realtimecolors.com/?colors=0e151b-c9d2de-f29107-a294c2-725190&fonts=DroidSans-DroidSans
@@ -53,12 +53,12 @@
   --color-accent: var(--accent);
 
   /* Enhanced font stacks with optimized fallbacks */
-  --font-family-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", 
-                      Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", 
-                      "Droid Sans", "Helvetica Neue", sans-serif;
-  --font-family-mono: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, 
-                      "Cascadia Code", "Roboto Mono", Menlo, 
-                      "DejaVu Sans Mono", Consolas, monospace;
+  --font-family-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --font-family-mono:
+    "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code",
+    "Roboto Mono", Menlo, "DejaVu Sans Mono", Consolas, monospace;
 }
 
 :root {
@@ -75,11 +75,11 @@
 
 /* Font loading with swap display for better perceived performance */
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400 700;
-  font-display: swap; /* Ensures text is visible during font swap period */  
-  src: local('Inter'), local('Inter-Regular');
+  font-display: swap; /* Ensures text is visible during font swap period */
+  src: local("Inter"), local("Inter-Regular");
 }
 
 /* Typography rendering optimizations */
@@ -87,7 +87,10 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1,
+    "calt" 1;
 }
 
 /* Enhanced typography for better readability */
@@ -99,16 +102,31 @@ body {
 }
 
 /* Optimize rendering for landing page headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-family-sans);
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1,
+    "calt" 1,
+    "ss01" 1;
   text-rendering: optimizeLegibility;
 }
 
 /* Code blocks optimization */
-code, pre, .code {
+code,
+pre,
+.code {
   font-family: var(--font-family-mono);
-  font-feature-settings: "kern" 0, "liga" 0, "calt" 1, "zero" 1;
+  font-feature-settings:
+    "kern" 0,
+    "liga" 0,
+    "calt" 1,
+    "zero" 1;
 }
 
 /* Typography vertical rhythm optimization */
@@ -123,13 +141,34 @@ html {
 }
 
 /* Modular type scale with perfect ratio spacing */
-.text-xs { font-size: 0.618rem; line-height: var(--spacing-sm); }
-.text-sm { font-size: 0.764rem; line-height: var(--spacing-md); }
-.text-base { font-size: 1rem; line-height: var(--spacing-md); }
-.text-lg { font-size: 1.236rem; line-height: var(--spacing-lg); }
-.text-xl { font-size: 1.618rem; line-height: var(--spacing-lg); }
-.text-2xl { font-size: 2.618rem; line-height: var(--spacing-xl); }
-.text-3xl { font-size: 4.236rem; line-height: var(--spacing-xl); }
+.text-xs {
+  font-size: 0.618rem;
+  line-height: var(--spacing-sm);
+}
+.text-sm {
+  font-size: 0.764rem;
+  line-height: var(--spacing-md);
+}
+.text-base {
+  font-size: 1rem;
+  line-height: var(--spacing-md);
+}
+.text-lg {
+  font-size: 1.236rem;
+  line-height: var(--spacing-lg);
+}
+.text-xl {
+  font-size: 1.618rem;
+  line-height: var(--spacing-lg);
+}
+.text-2xl {
+  font-size: 2.618rem;
+  line-height: var(--spacing-xl);
+}
+.text-3xl {
+  font-size: 4.236rem;
+  line-height: var(--spacing-xl);
+}
 
 /* Landing page component-specific resets to override default browser margins */
 /* Apply only to landing page components, not documentation */
@@ -158,8 +197,18 @@ main[role="main"] .my-md {
 
 /* Preserve documentation styles - enhanced heading vertical spacing with baseline grid */
 /* These styles will only apply to documentation sections */
-.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6,
-.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
   line-height: 1.2;
@@ -167,31 +216,35 @@ main[role="main"] .my-md {
   letter-spacing: -0.025em;
 }
 
-.vp-doc h1, .content h1 { 
-  margin-top: var(--spacing-md); 
+.vp-doc h1,
+.content h1 {
+  margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   line-height: 1.1;
   font-size: clamp(2rem, 5vw, 4.236rem);
   letter-spacing: -0.035em;
 }
 
-.vp-doc h2, .content h2 { 
-  margin-top: var(--spacing-lg); 
+.vp-doc h2,
+.content h2 {
+  margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
   line-height: 1.15;
   font-size: clamp(1.5rem, 4vw, 2.618rem);
   letter-spacing: -0.03em;
 }
 
-.vp-doc h3, .content h3 { 
-  margin-top: var(--spacing-lg); 
+.vp-doc h3,
+.content h3 {
+  margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
   line-height: 1.2;
   font-size: clamp(1.25rem, 3vw, 1.618rem);
   letter-spacing: -0.025em;
 }
 
-.vp-doc h4, .content h4 {
+.vp-doc h4,
+.content h4 {
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
   line-height: 1.25;
@@ -205,7 +258,7 @@ main[role="main"] p {
   line-height: 1.6;
 }
 
-main[role="main"] ul, 
+main[role="main"] ul,
 main[role="main"] ol {
   margin: 0;
   padding: 0;
@@ -218,34 +271,44 @@ main[role="main"] li {
 }
 
 /* Enhanced paragraph spacing and flow - documentation only */
-.vp-doc p, .content p {
+.vp-doc p,
+.content p {
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
   hanging-punctuation: first last;
 }
 
-.vp-doc p + p, .content p + p {
+.vp-doc p + p,
+.content p + p {
   margin-top: var(--spacing-sm);
 }
 
 /* Enhanced list spacing with baseline alignment - documentation only */
-.vp-doc ul, .vp-doc ol, .content ul, .content ol {
+.vp-doc ul,
+.vp-doc ol,
+.content ul,
+.content ol {
   margin-bottom: var(--spacing-md);
   padding-left: var(--spacing-lg);
   line-height: 1.5;
 }
 
-.vp-doc li, .content li {
+.vp-doc li,
+.content li {
   margin-bottom: var(--spacing-xs);
   line-height: 1.5;
 }
 
-.vp-doc li + li, .content li + li {
+.vp-doc li + li,
+.content li + li {
   margin-top: var(--spacing-2xs);
 }
 
 /* Nested list spacing - documentation only */
-.vp-doc li ul, .vp-doc li ol, .content li ul, .content li ol {
+.vp-doc li ul,
+.vp-doc li ol,
+.content li ul,
+.content li ol {
   margin-top: var(--spacing-xs);
   margin-bottom: var(--spacing-xs);
 }
@@ -281,14 +344,17 @@ main[role="main"] li {
 }
 
 /* Enhanced content flow spacing with rhythm - only for documentation */
-.vp-doc * + h1, .content * + h1 { 
-  margin-top: var(--spacing-lg); 
+.vp-doc * + h1,
+.content * + h1 {
+  margin-top: var(--spacing-lg);
 }
-.vp-doc * + h2, .content * + h2 { 
-  margin-top: var(--spacing-lg); 
+.vp-doc * + h2,
+.content * + h2 {
+  margin-top: var(--spacing-lg);
 }
-.vp-doc * + h3, .content * + h3 { 
-  margin-top: var(--spacing-md); 
+.vp-doc * + h3,
+.content * + h3 {
+  margin-top: var(--spacing-md);
 }
 
 /* First element spacing reset - only for documentation, not landing page */
@@ -311,22 +377,30 @@ div > *:last-child {
 }
 
 /* Enhanced button and form element spacing */
-button, .btn, input, textarea, select {
+button,
+.btn,
+input,
+textarea,
+select {
   margin-bottom: var(--spacing-sm);
   line-height: var(--spacing-md);
 }
 
 /* Form group spacing */
-.form-group, .field-group {
+.form-group,
+.field-group {
   margin-bottom: var(--spacing-lg);
 }
 
-.form-group:last-child, .field-group:last-child {
+.form-group:last-child,
+.field-group:last-child {
   margin-bottom: 0;
 }
 
 /* Enhanced media spacing with aspect ratio considerations */
-img, video, figure {
+img,
+video,
+figure {
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-md);
   max-width: 100%;
@@ -342,7 +416,7 @@ figcaption {
   margin-top: var(--spacing-xs);
   line-height: 1.4;
   font-size: 0.875rem;
-  color: var(--color-text/70);
+  color: var(--color-text / 70);
 }
 
 /* Enhanced blockquote with rhythm */
@@ -358,14 +432,15 @@ blockquote {
 blockquote::before {
   content: '"';
   font-size: 2rem;
-  color: var(--color-primary/30);
+  color: var(--color-primary / 30);
   position: absolute;
   left: var(--spacing-xs);
   top: 0;
 }
 
 /* Code block spacing and rhythm */
-pre, code {
+pre,
+code {
   font-family: var(--font-family-mono);
   line-height: 1.4;
 }
@@ -375,8 +450,8 @@ pre {
   padding: var(--spacing-md);
   overflow-x: auto;
   border-radius: 8px;
-  background: var(--color-secondary/5);
-  border: 1px solid var(--color-secondary/20);
+  background: var(--color-secondary / 5);
+  border: 1px solid var(--color-secondary / 20);
 }
 
 /* Table spacing */
@@ -386,15 +461,16 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: var(--spacing-sm) var(--spacing-md);
   line-height: 1.4;
-  border-bottom: 1px solid var(--color-secondary/20);
+  border-bottom: 1px solid var(--color-secondary / 20);
 }
 
 th {
   font-weight: 600;
-  background: var(--color-secondary/5);
+  background: var(--color-secondary / 5);
 }
 
 /* HR spacing */
@@ -402,7 +478,12 @@ hr {
   margin: var(--spacing-xl) 0;
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-secondary/30), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-secondary / 30),
+    transparent
+  );
 }
 
 /* Micro-interactions and Performance Optimizations */
@@ -539,19 +620,24 @@ img[loading="lazy"] {
 
 /* Progressive image loading states */
 img[loading="lazy"]:not([src]) {
-  background: linear-gradient(90deg, 
-    var(--color-secondary/10) 25%, 
-    var(--color-secondary/20) 50%, 
-    var(--color-secondary/10) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--color-secondary / 10) 25%,
+    var(--color-secondary / 20) 50%,
+    var(--color-secondary / 10) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
-
 
 /* Optimize SVG rendering for architecture diagrams */
 img[src$=".svg"] {
@@ -570,18 +656,22 @@ img[src$=".svg"] {
 
 /* Avoid reflows during animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(30px); 
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -597,7 +687,8 @@ img[src$=".svg"] {
 
 /* Enhanced gradient animation */
 @keyframes gradient {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -612,7 +703,8 @@ img[src$=".svg"] {
 
 /* Smooth loading states */
 @keyframes pulse-soft {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -635,10 +727,12 @@ img[src$=".svg"] {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, 
-    var(--color-secondary/10) 25%, 
-    var(--color-secondary/20) 50%, 
-    var(--color-secondary/10) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--color-secondary / 10) 25%,
+    var(--color-secondary / 20) 50%,
+    var(--color-secondary / 10) 75%
+  );
   background-size: 200px 100%;
   animation: skeleton-loading 1.5s infinite;
 }
@@ -664,7 +758,9 @@ img[src$=".svg"] {
 
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px var(--color-primary/20);
+  box-shadow:
+    0 0 0 2px var(--color-primary),
+    0 0 0 4px var(--color-primary / 20);
 }
 
 /* Loading spinner optimization */
@@ -683,11 +779,21 @@ img[src$=".svg"] {
 }
 
 /* Stagger animation delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+}
 
 /* Professional Micro-Animations */
 
@@ -734,7 +840,6 @@ img[src$=".svg"] {
   }
 }
 
-
 /* Animation classes */
 .animate-fade-in {
   animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -772,14 +877,17 @@ img[src$=".svg"] {
 
 .card-hover:hover {
   /* Subtle shadow enhancement only - no movement that breaks interaction */
-  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 8px 25px -5px rgba(0, 0, 0, 0.15),
+    0 4px 10px -5px rgba(0, 0, 0, 0.08);
   /* Subtle border glow */
-  border-color: var(--color-primary/40);
+  border-color: var(--color-primary / 40);
 }
 
 /* Floating animation for icons */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -793,7 +901,8 @@ img[src$=".svg"] {
 
 /* Pulse with color change */
 @keyframes pulse-primary {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -819,7 +928,8 @@ img[src$=".svg"] {
 }
 
 @keyframes blink-cursor {
-  from, to {
+  from,
+  to {
     border-color: transparent;
   }
   50% {
@@ -831,14 +941,15 @@ img[src$=".svg"] {
   overflow: hidden;
   border-right: 2px solid var(--color-primary);
   white-space: nowrap;
-  animation: 
+  animation:
     typewriter 3s steps(40, end),
     blink-cursor 0.75s step-end infinite;
 }
 
 /* Particle animation */
 @keyframes particle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px) rotate(0deg);
     opacity: 0.3;
   }
@@ -931,7 +1042,7 @@ img[src$=".svg"] {
     --color-secondary: #666666;
     --color-accent: #cc0066;
   }
-  
+
   .card-hover:hover {
     border-color: var(--color-primary) !important;
     box-shadow: 0 0 0 2px var(--color-primary) !important;
@@ -958,14 +1069,14 @@ summary:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-gradient,
   .animate-float,
   .animate-pulse-primary,
   .particle {
     animation: none !important;
   }
-  
+
   .card-hover:hover {
     animation: none !important;
     transform: none !important;
@@ -1047,7 +1158,8 @@ summary:focus-visible {
 
 /* Parallax scrolling effects */
 @keyframes parallax-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px) rotate(0deg);
   }
   25% {
@@ -1068,15 +1180,18 @@ summary:focus-visible {
 
 /* Advanced glow effects */
 @keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 5px var(--color-primary/30),
-                0 0 10px var(--color-primary/20),
-                0 0 15px var(--color-primary/10);
+  0%,
+  100% {
+    box-shadow:
+      0 0 5px var(--color-primary / 30),
+      0 0 10px var(--color-primary / 20),
+      0 0 15px var(--color-primary / 10);
   }
   50% {
-    box-shadow: 0 0 10px var(--color-primary/50),
-                0 0 20px var(--color-primary/30),
-                0 0 30px var(--color-primary/20);
+    box-shadow:
+      0 0 10px var(--color-primary / 50),
+      0 0 20px var(--color-primary / 30),
+      0 0 30px var(--color-primary / 20);
   }
 }
 
@@ -1092,7 +1207,7 @@ summary:focus-visible {
 
 .particle-container::before,
 .particle-container::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 4px;
   height: 4px;
@@ -1156,15 +1271,18 @@ summary:focus-visible {
 
 /* Enhanced text effects */
 @keyframes text-glow {
-  0%, 100% {
-    text-shadow: 0 0 5px var(--color-primary/50),
-                 0 0 10px var(--color-primary/30),
-                 0 0 15px var(--color-primary/20);
+  0%,
+  100% {
+    text-shadow:
+      0 0 5px var(--color-primary / 50),
+      0 0 10px var(--color-primary / 30),
+      0 0 15px var(--color-primary / 20);
   }
   50% {
-    text-shadow: 0 0 10px var(--color-primary/70),
-                 0 0 20px var(--color-primary/50),
-                 0 0 30px var(--color-primary/30);
+    text-shadow:
+      0 0 10px var(--color-primary / 70),
+      0 0 20px var(--color-primary / 50),
+      0 0 30px var(--color-primary / 30);
   }
 }
 
@@ -1190,7 +1308,7 @@ summary:focus-visible {
     transform: scale(1);
   }
   50% {
-    background: var(--color-primary/10);
+    background: var(--color-primary / 10);
     transform: scale(1.05);
   }
   100% {
@@ -1252,59 +1370,151 @@ summary:focus-visible {
 }
 
 /* Perfect ratio spacing utilities */
-.space-2xs { gap: var(--spacing-2xs); }
-.space-xs { gap: var(--spacing-xs); }
-.space-sm { gap: var(--spacing-sm); }
-.space-md { gap: var(--spacing-md); }
-.space-lg { gap: var(--spacing-lg); }
-.space-xl { gap: var(--spacing-xl); }
-.space-2xl { gap: var(--spacing-2xl); }
-.space-3xl { gap: var(--spacing-3xl); }
-.space-4xl { gap: var(--spacing-4xl); }
+.space-2xs {
+  gap: var(--spacing-2xs);
+}
+.space-xs {
+  gap: var(--spacing-xs);
+}
+.space-sm {
+  gap: var(--spacing-sm);
+}
+.space-md {
+  gap: var(--spacing-md);
+}
+.space-lg {
+  gap: var(--spacing-lg);
+}
+.space-xl {
+  gap: var(--spacing-xl);
+}
+.space-2xl {
+  gap: var(--spacing-2xl);
+}
+.space-3xl {
+  gap: var(--spacing-3xl);
+}
+.space-4xl {
+  gap: var(--spacing-4xl);
+}
 
 /* Margin utilities using perfect ratios */
-.m-2xs { margin: var(--spacing-2xs); }
-.m-xs { margin: var(--spacing-xs); }
-.m-sm { margin: var(--spacing-sm); }
-.m-md { margin: var(--spacing-md); }
-.m-lg { margin: var(--spacing-lg); }
-.m-xl { margin: var(--spacing-xl); }
-.m-2xl { margin: var(--spacing-2xl); }
-.m-3xl { margin: var(--spacing-3xl); }
+.m-2xs {
+  margin: var(--spacing-2xs);
+}
+.m-xs {
+  margin: var(--spacing-xs);
+}
+.m-sm {
+  margin: var(--spacing-sm);
+}
+.m-md {
+  margin: var(--spacing-md);
+}
+.m-lg {
+  margin: var(--spacing-lg);
+}
+.m-xl {
+  margin: var(--spacing-xl);
+}
+.m-2xl {
+  margin: var(--spacing-2xl);
+}
+.m-3xl {
+  margin: var(--spacing-3xl);
+}
 
-.my-2xs { margin-block: var(--spacing-2xs); }
-.my-xs { margin-block: var(--spacing-xs); }
-.my-sm { margin-block: var(--spacing-sm); }
-.my-md { margin-block: var(--spacing-md); }
-.my-lg { margin-block: var(--spacing-lg); }
-.my-xl { margin-block: var(--spacing-xl); }
-.my-2xl { margin-block: var(--spacing-2xl); }
-.my-3xl { margin-block: var(--spacing-3xl); }
+.my-2xs {
+  margin-block: var(--spacing-2xs);
+}
+.my-xs {
+  margin-block: var(--spacing-xs);
+}
+.my-sm {
+  margin-block: var(--spacing-sm);
+}
+.my-md {
+  margin-block: var(--spacing-md);
+}
+.my-lg {
+  margin-block: var(--spacing-lg);
+}
+.my-xl {
+  margin-block: var(--spacing-xl);
+}
+.my-2xl {
+  margin-block: var(--spacing-2xl);
+}
+.my-3xl {
+  margin-block: var(--spacing-3xl);
+}
 
 /* Padding utilities using perfect ratios */
-.p-2xs { padding: var(--spacing-2xs); }
-.p-xs { padding: var(--spacing-xs); }
-.p-sm { padding: var(--spacing-sm); }
-.p-md { padding: var(--spacing-md); }
-.p-lg { padding: var(--spacing-lg); }
-.p-xl { padding: var(--spacing-xl); }
-.p-2xl { padding: var(--spacing-2xl); }
+.p-2xs {
+  padding: var(--spacing-2xs);
+}
+.p-xs {
+  padding: var(--spacing-xs);
+}
+.p-sm {
+  padding: var(--spacing-sm);
+}
+.p-md {
+  padding: var(--spacing-md);
+}
+.p-lg {
+  padding: var(--spacing-lg);
+}
+.p-xl {
+  padding: var(--spacing-xl);
+}
+.p-2xl {
+  padding: var(--spacing-2xl);
+}
 
-.py-2xs { padding-block: var(--spacing-2xs); }
-.py-xs { padding-block: var(--spacing-xs); }
-.py-sm { padding-block: var(--spacing-sm); }
-.py-md { padding-block: var(--spacing-md); }
-.py-lg { padding-block: var(--spacing-lg); }
-.py-xl { padding-block: var(--spacing-xl); }
-.py-2xl { padding-block: var(--spacing-2xl); }
+.py-2xs {
+  padding-block: var(--spacing-2xs);
+}
+.py-xs {
+  padding-block: var(--spacing-xs);
+}
+.py-sm {
+  padding-block: var(--spacing-sm);
+}
+.py-md {
+  padding-block: var(--spacing-md);
+}
+.py-lg {
+  padding-block: var(--spacing-lg);
+}
+.py-xl {
+  padding-block: var(--spacing-xl);
+}
+.py-2xl {
+  padding-block: var(--spacing-2xl);
+}
 
-.px-2xs { padding-inline: var(--spacing-2xs); }
-.px-xs { padding-inline: var(--spacing-xs); }
-.px-sm { padding-inline: var(--spacing-sm); }
-.px-md { padding-inline: var(--spacing-md); }
-.px-lg { padding-inline: var(--spacing-lg); }
-.px-xl { padding-inline: var(--spacing-xl); }
-.px-2xl { padding-inline: var(--spacing-2xl); }
+.px-2xs {
+  padding-inline: var(--spacing-2xs);
+}
+.px-xs {
+  padding-inline: var(--spacing-xs);
+}
+.px-sm {
+  padding-inline: var(--spacing-sm);
+}
+.px-md {
+  padding-inline: var(--spacing-md);
+}
+.px-lg {
+  padding-inline: var(--spacing-lg);
+}
+.px-xl {
+  padding-inline: var(--spacing-xl);
+}
+.px-2xl {
+  padding-inline: var(--spacing-2xl);
+}
 
 /* FAQ Details Element Fix */
 details {

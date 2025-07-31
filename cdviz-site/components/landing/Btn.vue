@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed, ref } from "vue";
 
 const props = defineProps({
   href: String,
@@ -21,33 +21,39 @@ const buttonClasses = computed(() => {
     transform-gpu transition-all duration-300 ease-out
     relative overflow-hidden
   `;
-  
+
   if (props.disabled || props.loading) {
     return base + ` opacity-50 cursor-not-allowed pointer-events-none`;
   }
-  
+
   if (props.primary) {
-    return base + `
+    return (
+      base +
+      `
       bg-primary text-background
       hover:scale-105 hover:shadow-lg hover:shadow-primary/30
       focus:ring-primary focus:scale-105
       active:scale-95 active:shadow-sm
-      before:absolute before:inset-0 before:bg-gradient-to-r 
+      before:absolute before:inset-0 before:bg-gradient-to-r
       before:from-transparent before:via-white/20 before:to-transparent
       before:translate-x-[-100%] hover:before:translate-x-[100%]
       before:transition-transform before:duration-700 before:ease-out
-    `;
+    `
+    );
   } else {
-    return base + `
+    return (
+      base +
+      `
       bg-secondary text-text
       hover:scale-105 hover:shadow-lg hover:bg-secondary/90
-      focus:ring-secondary focus:scale-105  
+      focus:ring-secondary focus:scale-105
       active:scale-95 active:shadow-sm
       before:absolute before:inset-0 before:bg-gradient-to-r
       before:from-transparent before:via-white/10 before:to-transparent
       before:translate-x-[-100%] hover:before:translate-x-[100%]
       before:transition-transform before:duration-700 before:ease-out
-    `;
+    `
+    );
   }
 });
 
@@ -56,9 +62,12 @@ const handleClick = (event) => {
     event.preventDefault();
     return;
   }
-  
+
   // Add loading state for external links
-  if (props.href && (props.href.startsWith('http') || props.href.includes('creem.io'))) {
+  if (
+    props.href &&
+    (props.href.startsWith("http") || props.href.includes("creem.io"))
+  ) {
     isLoading.value = true;
     // Reset loading state after a reasonable time
     setTimeout(() => {
@@ -68,8 +77,8 @@ const handleClick = (event) => {
 };
 </script>
 <template>
-  <a 
-    :href="href" 
+  <a
+    :href="href"
     :aria-label="ariaLabel"
     :class="buttonClasses"
     @click="handleClick"
@@ -77,23 +86,25 @@ const handleClick = (event) => {
     @mouseleave="isHovered = false"
   >
     <!-- Loading Spinner -->
-    <div 
+    <div
       v-if="loading || isLoading"
       class="absolute inset-0 flex items-center justify-center"
     >
-      <div class="animate-spin rounded-full h-5 w-5 border-2 border-current border-t-transparent"></div>
+      <div
+        class="animate-spin rounded-full h-5 w-5 border-2 border-current border-t-transparent"
+      ></div>
     </div>
-    
+
     <!-- Button Content -->
-    <span 
+    <span
       :class="{ 'opacity-0': loading || isLoading }"
       class="relative z-10 transition-opacity duration-200"
     >
       <slot></slot>
     </span>
-    
+
     <!-- Ripple Effect -->
-    <span 
+    <span
       v-if="isHovered && !loading && !isLoading"
       class="absolute inset-0 rounded-lg animate-pulse"
       :class="primary ? 'bg-white/10' : 'bg-primary/10'"
