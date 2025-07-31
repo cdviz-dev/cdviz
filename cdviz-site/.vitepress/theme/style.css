@@ -407,10 +407,148 @@ hr {
 
 /* Micro-interactions and Performance Optimizations */
 
+/* Animation Initial States - Prevents Forced Reflows */
+.animate-initial {
+  transition: all var(--animation-duration, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: var(--animation-delay, 0ms);
+}
+
+/* Dynamic animation duration based on data attribute */
+[data-animation-duration] {
+  transition-duration: attr(data-animation-duration, 600ms);
+}
+
+.animate-fade-in-initial {
+  opacity: 0;
+}
+
+.animate-slide-up-initial {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.animate-slide-left-initial {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.animate-slide-right-initial {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.animate-scale-in-initial {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.animate-rotate-in-initial {
+  opacity: 0;
+  transform: rotate(-10deg) scale(0.8);
+}
+
+.animate-flip-in-initial {
+  opacity: 0;
+  transform: rotateY(-90deg);
+}
+
+/* Animation Active States */
+.animate-in.animate-fade-in {
+  opacity: 1;
+}
+
+.animate-in.animate-slide-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-in.animate-slide-left {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-in.animate-slide-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-in.animate-scale-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.animate-in.animate-rotate-in {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.animate-in.animate-flip-in {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+
 /* GPU-accelerated animations */
 .transform-gpu {
   transform: translateZ(0);
   will-change: transform;
+}
+
+/* Reflow Mitigation Strategies */
+
+/* Contain layout changes within elements */
+.interactive-element {
+  contain: layout style paint;
+}
+
+/* Optimize will-change for animated elements */
+.animate-initial {
+  will-change: opacity, transform;
+}
+
+.animate-in {
+  will-change: auto; /* Reset after animation */
+}
+
+/* Prevent layout thrashing from dynamic content */
+.card-hover {
+  contain: layout;
+}
+
+/* Optimize complex layouts */
+.space-section {
+  contain: layout;
+}
+
+/* Critical rendering optimizations */
+.hero-image-container {
+  contain: layout size;
+}
+
+/* Avoid reflows during animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Use transform-based animations instead of layout-affecting properties */
+.smooth-transform {
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.smooth-transform:hover {
+  transform: translateY(-2px);
 }
 
 /* Enhanced gradient animation */
