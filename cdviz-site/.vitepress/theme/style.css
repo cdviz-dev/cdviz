@@ -524,6 +524,88 @@ hr {
   contain: layout size;
 }
 
+/* Resource Loading Prioritization */
+
+/* Critical above-the-fold images */
+img[fetchpriority="high"] {
+  content-visibility: auto;
+}
+
+/* Non-critical below-the-fold images */
+img[loading="lazy"] {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px 600px; /* Prevent layout shift during lazy load */
+}
+
+/* Progressive image loading states */
+img[loading="lazy"]:not([src]) {
+  background: linear-gradient(90deg, 
+    var(--color-secondary/10) 25%, 
+    var(--color-secondary/20) 50%, 
+    var(--color-secondary/10) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Enhanced lazy loading states */
+.loading {
+  background: linear-gradient(90deg, 
+    var(--color-secondary/5) 25%, 
+    var(--color-secondary/15) 50%, 
+    var(--color-secondary/5) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.loaded {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.error {
+  background: var(--color-secondary/10);
+  position: relative;
+}
+
+.error::after {
+  content: '⚠️ Image failed to load';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.875rem;
+  color: var(--color-text/60);
+}
+
+/* Blur-up placeholder effect */
+.blur-placeholder {
+  filter: blur(10px);
+  transition: filter 0.3s ease-out;
+}
+
+.blur-placeholder.loaded {
+  filter: blur(0);
+}
+
+/* Optimize SVG rendering for architecture diagrams */
+img[src$=".svg"] {
+  image-rendering: crisp-edges;
+  shape-rendering: geometricPrecision;
+}
+
+/* Critical resource hints for faster loading */
+.critical-resource {
+  importance: high;
+}
+
+.deferred-resource {
+  importance: low;
+}
+
 /* Avoid reflows during animations */
 @keyframes fadeIn {
   from { opacity: 0; }

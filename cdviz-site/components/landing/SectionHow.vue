@@ -169,6 +169,9 @@ const selectComponent = async (componentName) => {
           class="w-full h-auto object-cover"
           alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
           role="img"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
         />
       </div>
 
