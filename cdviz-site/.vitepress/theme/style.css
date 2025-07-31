@@ -552,44 +552,6 @@ img[loading="lazy"]:not([src]) {
   100% { background-position: 200% 0; }
 }
 
-/* Enhanced lazy loading states */
-.loading {
-  background: linear-gradient(90deg, 
-    var(--color-secondary/5) 25%, 
-    var(--color-secondary/15) 50%, 
-    var(--color-secondary/5) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-.loaded {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.error {
-  background: var(--color-secondary/10);
-  position: relative;
-}
-
-.error::after {
-  content: '⚠️ Image failed to load';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.875rem;
-  color: var(--color-text/60);
-}
-
-/* Blur-up placeholder effect */
-.blur-placeholder {
-  filter: blur(10px);
-  transition: filter 0.3s ease-out;
-}
-
-.blur-placeholder.loaded {
-  filter: blur(0);
-}
 
 /* Optimize SVG rendering for architecture diagrams */
 img[src$=".svg"] {
@@ -772,38 +734,6 @@ img[src$=".svg"] {
   }
 }
 
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes rotate-in {
-  from {
-    opacity: 0;
-    transform: rotate(-10deg) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-  }
-}
-
-@keyframes flip-in {
-  from {
-    opacity: 0;
-    transform: rotateY(-90deg);
-  }
-  to {
-    opacity: 1;
-    transform: rotateY(0deg);
-  }
-}
 
 /* Animation classes */
 .animate-fade-in {

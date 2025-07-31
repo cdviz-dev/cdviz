@@ -2,18 +2,19 @@
 import { ref, onMounted } from 'vue';
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
-import { useStaggeredCards } from '../../composables/useScrollAnimation.js';
+import { useScrollAnimation } from '../../composables/useScrollAnimation.js';
 
 const sectionRef = ref(null);
-const { observeCards } = useStaggeredCards({
+const { observeMultiple } = useScrollAnimation({
   stagger: 150,
-  animationType: 'scale-in',
+  animationType: 'fade-in',
   threshold: 0.2
 });
 
 onMounted(() => {
   if (sectionRef.value) {
-    observeCards(sectionRef.value);
+    const cards = sectionRef.value.querySelectorAll('[data-animate-card]');
+    observeMultiple(Array.from(cards), 'fade-in');
   }
 });
 </script>
