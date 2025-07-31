@@ -24,6 +24,38 @@ run = [
 sources = ["favicon.svg"]
 outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 
+[tasks."build:hero-images"]
+description = "rebuild optimized hero images from hero-dashboard-01.webp"
+dir = "assets/illustrations"
+run = [
+  # Create optimized WebP versions with different quality levels
+  "magick hero-dashboard-01.webp -quality 75 -define webp:method=6 hero-dashboard-01-q75.webp",
+  "magick hero-dashboard-01.webp -quality 60 -define webp:method=6 hero-dashboard-01-q60.webp",
+
+  # Create responsive sizes with WebP format
+  "magick hero-dashboard-01.webp -resize 600x537 -quality 80 -define webp:method=6 hero-dashboard-01-600w.webp",
+  "magick hero-dashboard-01.webp -resize 400x358 -quality 85 -define webp:method=6 hero-dashboard-01-400w.webp",
+
+  # Create AVIF versions for modern browsers (better compression)
+  "magick hero-dashboard-01.webp -quality 75 hero-dashboard-01.avif",
+  "magick hero-dashboard-01-600w.webp -quality 75 hero-dashboard-01-600w.avif",
+  "magick hero-dashboard-01-400w.webp -quality 75 hero-dashboard-01-400w.avif",
+]
+sources = ["hero-dashboard-01.webp"]
+outputs = [
+  "hero-dashboard-01-q75.webp",
+  "hero-dashboard-01-q60.webp",
+  "hero-dashboard-01-600w.webp",
+  "hero-dashboard-01-400w.webp",
+  "hero-dashboard-01.avif",
+  "hero-dashboard-01-600w.avif",
+  "hero-dashboard-01-400w.avif"
+]
+
+[tasks."build:images"]
+description = "rebuild all optimized images (favicon + hero images)"
+depends = ["build:favicon", "build:hero-images"]
+
 [tasks.format]
 alias = "fmt"
 description = "format"
