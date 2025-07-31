@@ -18,9 +18,9 @@ onMounted(() => {
 });
 </script>
 <template>
-<section ref="sectionRef" class="space-section bg-gradient-to-br from-secondary/3 to-secondary/8 rounded-2xl shadow-sm">
+<section ref="sectionRef" class="space-section bg-gradient-to-br from-secondary/3 to-secondary/8 rounded-2xl shadow-sm" aria-labelledby="why-heading">
   <a id="why"></a>
-  <H2>Transform Your Software Delivery</H2>
+  <H2 id="why-heading">Transform Your Software Delivery</H2>
   <div class="flex flex-col items-stretch space-content md:flex-row max-w-6xl mx-auto">
     <div data-animate-card class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 card-hover transform-gpu">
       <div class="flex items-center space-element my-sm">

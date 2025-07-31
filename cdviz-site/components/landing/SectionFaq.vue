@@ -42,7 +42,7 @@ onMounted(() => {
           <div class="w-12 sm:w-16 h-1 bg-primary mx-auto mt-xs rounded-full"></div>
         </div>
         <!-- FAQ Item -->
-        <details v-else data-animate-faq class="interactive-element cursor-pointer transition-all duration-300 ease-out hover:shadow-lg bg-background/80 border border-secondary/20 my-sm rounded-xl p-lg shadow-sm touch-manipulation transform-gpu group">
+        <details v-else data-animate-faq class="interactive-element cursor-pointer transition-all duration-300 ease-out hover:shadow-lg bg-background/80 border border-secondary/20 my-sm rounded-xl p-lg shadow-sm touch-manipulation transform-gpu group" :aria-label="`FAQ: ${aq.q}`">
           <summary class="text-lg sm:text-xl font-semibold cursor-pointer list-none outline-none focus-ring rounded-lg p-xs -m-xs text-text">
             <span class="flex items-center justify-between">
               <span>{{ aq.q }}</span>
