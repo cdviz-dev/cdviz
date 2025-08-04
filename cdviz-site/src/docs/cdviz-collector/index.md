@@ -16,6 +16,7 @@ To get started with the CDviz Collector, we recommend reading the following docu
 
 *   **[Installation](./install.md):** Learn how to install the CDviz Collector.
 *   **[Configuration](./configuration.md):** Learn how to configure the CDviz Collector.
+*   **[TOML Configuration Guide](./toml-guide.md):** Learn TOML syntax for configuration files.
 *   **[Usage](./usage.md):** Learn how to use the CDviz Collector CLI.
 
 ## Core Components

@@ -91,13 +91,48 @@ export default defineConfig({
             {
               text: "Configuration",
               link: "/docs/cdviz-collector/configuration",
+              items: [
+                {
+                  text: "TOML Guide",
+                  link: "/docs/cdviz-collector/toml-guide",
+                },
+                {
+                  text: "Header Validation",
+                  link: "/docs/cdviz-collector/header-validation",
+                },
+                {
+                  text: "Header Authentication",
+                  link: "/docs/cdviz-collector/header-authentication",
+                },
+              ],
             },
-            { text: "Sources", link: "/docs/cdviz-collector/sources" },
+            {
+              text: "Sources",
+              link: "/docs/cdviz-collector/sources/",
+              items: [
+                {
+                  text: "Noop",
+                  link: "/docs/cdviz-collector/sources/noop",
+                },
+                {
+                  text: "WebHook",
+                  link: "/docs/cdviz-collector/sources/webhook",
+                },
+                {
+                  text: "SSE",
+                  link: "/docs/cdviz-collector/sources/sse",
+                },
+                {
+                  text: "OpenDAL / Files",
+                  link: "/docs/cdviz-collector/sources/opendal",
+                },
+              ],
+            },
             {
               text: "Transformers",
               link: "/docs/cdviz-collector/transformers",
             },
-            { text: "Sinks", link: "/docs/cdviz-collector/sinks" },
+            { text: "Sinks", link: "/docs/cdviz-collector/sinks/" },
             {
               text: "Integrations",
               items: [
@@ -185,18 +220,18 @@ export default defineConfig({
         output: {
           // Split landing page components into separate chunk
           manualChunks: {
-            'landing': [
-              './components/landing/SectionHero.vue',
-              './components/landing/SectionHow.vue',
-              './components/landing/SectionWhy.vue',
-              './components/landing/SectionFaq.vue',
-              './components/landing/SectionPricing.vue'
-            ]
-          }
-        }
+            landing: [
+              "./components/landing/SectionHero.vue",
+              "./components/landing/SectionHow.vue",
+              "./components/landing/SectionWhy.vue",
+              "./components/landing/SectionFaq.vue",
+              "./components/landing/SectionPricing.vue",
+            ],
+          },
+        },
       },
       // Enable compression for smaller bundles
-      minify: true
+      minify: true,
     },
     plugins: [
       tailwindcss() as any,

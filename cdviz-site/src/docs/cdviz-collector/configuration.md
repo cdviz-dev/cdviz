@@ -5,6 +5,9 @@
 ## Configuration File
 
 The configuration file is a [TOML](https://toml.io/en/v1.0.0) file, named `cdviz-collector.toml` (by convention).
+
+📚 **New to TOML?** See our [TOML Configuration Guide](./toml-guide.md) for syntax help with arrays, tables, and complex structures.
+
 It is composed of multiple sections, each representing a different aspect of the collector's configuration:
 
 - `http` : Configuration of the HTTP server used by the collector.
