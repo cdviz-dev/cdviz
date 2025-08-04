@@ -63,10 +63,8 @@ enabled = true
 type = "sse"
 id = "secure"
 
-# Require Authorization header to exist
-[[sinks.secure_events.headers]]
-header = "Authorization"
-rule = { type = "exists" }
+[sinks.secure_events.headers]
+"Authorization" = { type = "exists" }
 ```
 
 #### Token-Based Authentication
@@ -77,10 +75,8 @@ enabled = true
 type = "sse"
 id = "api"
 
-# Require specific bearer token
-[[sinks.api_events.headers]]
-header = "Authorization"
-rule = { type = "equals", value = "Bearer secret-token-123", case_sensitive = true }
+[sinks.api_events.headers]
+"Authorization" = { type = "equals", value = "Bearer secret-token-123", case_sensitive = true }
 ```
 
 #### Pattern Matching
@@ -91,15 +87,9 @@ enabled = true
 type = "sse"
 id = "validated"
 
-# Validate API key format
-[[sinks.validated_events.headers]]
-header = "X-API-Key"
-rule = { type = "matches", pattern = "^[a-zA-Z0-9]{32}$" }
-
-# Require Bearer token format
-[[sinks.validated_events.headers]]
-header = "Authorization"
-rule = { type = "matches", pattern = "^Bearer [\\w-]+$" }
+[sinks.validated_events.headers]
+"X-API-Key" = { type = "matches", pattern = "^[a-zA-Z0-9]{32}$" }
+"Authorization" = { type = "matches", pattern = "^Bearer [\\w-]+$" }
 ```
 
 #### HMAC Signature Validation
@@ -110,10 +100,8 @@ enabled = true
 type = "sse"
 id = "webhooks"
 
-# Validate webhook signature
-[[sinks.webhook_events.headers]]
-header = "X-Hub-Signature-256"
-rule = { type = "signature", token = "webhook-secret", signature_prefix = "sha256=" }
+[sinks.webhook_events.headers]
+"X-Hub-Signature-256" = { type = "signature", token = "webhook-secret", signature_prefix = "sha256=" }
 ```
 
 #### Multiple Validation Rules
@@ -124,20 +112,10 @@ enabled = true
 type = "sse"
 id = "enterprise"
 
-# Require API key
-[[sinks.enterprise_events.headers]]
-header = "X-API-Key"
-rule = { type = "exists" }
-
-# Validate client ID format
-[[sinks.enterprise_events.headers]]
-header = "X-Client-ID"
-rule = { type = "matches", pattern = "^client-[0-9]+$" }
-
-# Require specific user agent
-[[sinks.enterprise_events.headers]]
-header = "User-Agent"
-rule = { type = "matches", pattern = "^MyApp/" }
+[sinks.enterprise_events.headers]
+"X-API-Key" = { type = "exists" }
+"X-Client-ID" = { type = "matches", pattern = "^client-[0-9]+$" }
+"User-Agent" = { type = "matches", pattern = "^MyApp/" }
 ```
 
 ## Event Stream Format
