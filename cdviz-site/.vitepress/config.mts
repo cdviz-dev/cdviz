@@ -132,7 +132,32 @@ export default defineConfig({
               text: "Transformers",
               link: "/docs/cdviz-collector/transformers",
             },
-            { text: "Sinks", link: "/docs/cdviz-collector/sinks/" },
+            {
+              text: "Sinks",
+              link: "/docs/cdviz-collector/sinks/",
+              items: [
+                {
+                  text: "Debug",
+                  link: "/docs/cdviz-collector/sinks/debug",
+                },
+                {
+                  text: "Database",
+                  link: "/docs/cdviz-collector/sinks/db",
+                },
+                {
+                  text: "HTTP",
+                  link: "/docs/cdviz-collector/sinks/http",
+                },
+                {
+                  text: "Folder",
+                  link: "/docs/cdviz-collector/sinks/folder",
+                },
+                {
+                  text: "SSE",
+                  link: "/docs/cdviz-collector/sinks/sse",
+                },
+              ],
+            },
             {
               text: "Integrations",
               items: [
