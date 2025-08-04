@@ -1,35 +1,66 @@
-# cdviz-collector
+# CDviz Collector
 
-The CDviz Collector is a service and CLI tool that collects events from your software development lifecycle, transforms them into [CDEvents](https://cdevents.dev/), and dispatches them to various destinations.
+Collect events from your SDLC, transform them into [CDEvents](https://cdevents.dev/), and dispatch to various destinations.
 
 ![Inside a collector](/architectures/inside_collector.excalidraw.svg)
 
-## Key Features
+## Quick Start
 
-*   **Extensible:** The Collector is built on a modular architecture that allows you to easily add new sources, sinks, and transformers.
-*   **Flexible:** The Collector can be configured to collect events from a wide variety of sources, including Git repositories, CI/CD servers, and container registries.
-*   **Powerful:** The Collector's powerful transformation capabilities allow you to enrich, filter, and transform your events to meet your specific needs.
+**New to CDviz Collector?** Get a working setup in 5 minutes:
 
-## Getting Started
+**[🚀 Quick Start Guide](./quick-start.md)** - Webhook → Transform → Save to files
 
-To get started with the CDviz Collector, we recommend reading the following documentation:
+## Learning Paths
 
-*   **[Installation](./install.md):** Learn how to install the CDviz Collector.
-*   **[Configuration](./configuration.md):** Learn how to configure the CDviz Collector.
-*   **[TOML Configuration Guide](./toml-guide.md):** Learn TOML syntax for configuration files.
-*   **[Usage](./usage.md):** Learn how to use the CDviz Collector CLI.
+### 📖 Tutorials (Learning-Oriented)
+Step-by-step lessons to build understanding:
 
-## Core Components
+- **[Quick Start](./quick-start.md)** - 5 min setup with webhook and file output
 
-The CDviz Collector is made up of three core components:
+### 🔧 How-to Guides (Problem-Oriented)
+Practical solutions for specific tasks:
 
-*   **[Sources](./sources.md):** The components that collect events from your various development tools and systems.
-*   **[Sinks](./sinks.md):** The components that send events to their final destination.
-*   **[Transformers](./transformers.md):** The components that can modify events as they pass through the Collector pipeline.
+**Integrations:**
+- **[GitHub](./integrations/github.md)** - Repository events with signatures
+- **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
 
-## Integrations
+**Common Tasks:**
+- **[Troubleshooting](./troubleshooting.md)** - Debug configuration and connectivity issues
+- **[Authentication](./header-authentication.md)** - Secure outgoing requests
+- **[Validation](./header-validation.md)** - Validate incoming webhooks
 
-The CDviz Collector comes with a number of pre-built integrations for popular development tools and systems:
+### 📚 Reference (Information-Oriented)
+Complete technical specifications:
 
-*   **[GitHub](./integrations/github.md):** Collect events from your GitHub repositories.
-*   **[Kubernetes (via Kubewatch)](./integrations/kubewatch.md):** Collect events from your Kubernetes clusters.
+**Configuration:**
+- **[Configuration Guide](./configuration.md)** - Main config structure and environment variables
+- **[TOML Syntax](./toml-guide.md)** - Configuration file format help
+- **[CLI Usage](./usage.md)** - Command-line interface
+
+**Components:**
+- **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Noop](./sources/noop.md)
+- **[Transformers](./transformers.md)** - Event processing with VRL
+- **[Sinks](./sinks/)** - Event delivery: [Database](./sinks/db.md), [HTTP](./sinks/http.md), [Files](./sinks/folder.md), [SSE](./sinks/sse.md), [Debug](./sinks/debug.md)
+
+### 🧠 Explanation (Understanding-Oriented)
+Concepts and design decisions:
+
+- **[CDEvents Standard](https://cdevents.dev/)** - Why we use CDEvents for standardization
+
+**Architecture Concepts:**
+- **Pipeline Flow**: External Systems → Sources → Transformers → Sinks → Destinations
+- **Message Structure**: All events have `metadata`, `headers`, and `body` components
+- **Parallel Processing**: Sources, transformers, and sinks run independently
+- **Deployment Patterns**: Single instance (simple) → Multiple instances (scalable) → Hub-and-spoke (enterprise)
+
+## Installation
+
+```bash
+# Quick install
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/v0.6.4/cdviz-collector-installer.sh | sh
+
+# Verify
+cdviz-collector --version
+```
+
+**[Full Installation Guide](./install.md)** - Docker, Kubernetes, Homebrew, and more options

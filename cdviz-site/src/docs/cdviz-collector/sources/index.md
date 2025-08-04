@@ -1,21 +1,25 @@
 # Sources
 
-A Source is a pipeline (like a ETL pipeline) where a Message travels from extractor through a series of [Transformers].
+Sources collect events from external systems and feed them into the CDviz pipeline.
 
 ![inside a source](/architectures/inside_source.excalidraw.svg)
 
-- 1 Extractor, read (by pull or push) Messages from an origin
-- 0-n [Transformers], a chain of transformers that process the Message, at the end of the chain the payload is should be "CDEvent structure".
-- 1 Loader, always the same that convert the Message into a CDEvent pushed into a queue (no need to configure it).
+## Quick Reference
 
-Every source has a name (value of the section under `sources`) and it is configured with the following parameters:
+```toml
+[sources.my_source]
+enabled = true
+transformer_refs = ["my_transformer"]  # Optional processing
 
-- `enabled`: A boolean value indicating whether the source is enabled or not (so you can configure it in configuration file and enable/disable by environment variable).
-- `extractor`: The configuration of the extractor
-- `transformer_refs`: the chain of transformers, defined by a list of transformer names (defined in the [transformers] section)
-- `transformers`: the chain of transformers, defined by a list of configurations for transformers (it is recommended to prefer `transformer_refs`, if boths are provided the `transformer_refs` are appended at the end of the chain)
+[sources.my_source.extractor]
+type = "webhook"  # or "opendal", "sse", "noop"
+# ... extractor-specific parameters
+```
 
-📚 **TOML Syntax Help:** See our [TOML Configuration Guide](../toml-guide.md) for help with arrays, tables, and nested configurations.
+**Common Parameters:**
+- `enabled` - Enable/disable the source
+- `extractor` - How to collect events (required)
+- `transformer_refs` - Optional event processing chain
 
 ```toml
 [sources.aaaa]
@@ -213,6 +217,6 @@ template = """
 """
 ```
 
-[Sinks]: sinks
+[Sinks]: ../sinks/
 [Transformers]: transformers
 [service]: <https://docs.rs/opendal/latest/opendal/services/index.html>

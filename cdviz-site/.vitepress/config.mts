@@ -86,15 +86,30 @@ export default defineConfig({
           collapsed: true,
           link: "/docs/cdviz-collector/",
           items: [
-            { text: "Installation", link: "/docs/cdviz-collector/install" },
-            { text: "Usage", link: "/docs/cdviz-collector/usage" },
+            {
+              text: "🚀 Quick Start",
+              link: "/docs/cdviz-collector/quick-start",
+            },
+            {
+              text: "Installation",
+              link: "/docs/cdviz-collector/install",
+            },
+            {
+              text: "Usage",
+              link: "/docs/cdviz-collector/usage",
+            },
             {
               text: "Configuration",
               link: "/docs/cdviz-collector/configuration",
+              collapsed: true,
               items: [
                 {
                   text: "TOML Guide",
                   link: "/docs/cdviz-collector/toml-guide",
+                },
+                {
+                  text: "Use Cases",
+                  link: "/docs/cdviz-collector/use-cases",
                 },
                 {
                   text: "Header Validation",
@@ -109,6 +124,7 @@ export default defineConfig({
             {
               text: "Sources",
               link: "/docs/cdviz-collector/sources/",
+              collapsed: true,
               items: [
                 {
                   text: "Noop",
@@ -135,6 +151,7 @@ export default defineConfig({
             {
               text: "Sinks",
               link: "/docs/cdviz-collector/sinks/",
+              collapsed: true,
               items: [
                 {
                   text: "Debug",
@@ -159,7 +176,12 @@ export default defineConfig({
               ],
             },
             {
+              text: "Troubleshooting",
+              link: "/docs/cdviz-collector/troubleshooting",
+            },
+            {
               text: "Integrations",
+              collapsed: true,
               items: [
                 {
                   text: "GitHub",
