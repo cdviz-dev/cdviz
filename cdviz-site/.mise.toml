@@ -59,6 +59,7 @@ depends = ["build:favicon", "build:hero-images"]
 [tasks.format]
 alias = "fmt"
 description = "format"
+depends = ["trim:trailing_space"]
 run = ["biome check --write"]
 
 [tasks."perf:report"]
@@ -67,4 +68,16 @@ dir = "perf"
 run = [
   "lighthouse --quiet --view --chrome-flags='--headless' http://localhost:4173/",
   "lighthouse --quiet --view --chrome-flags='--headless' https://cdviz.dev/",
+]
+
+[tasks."trim:trailing_space"]
+description = "trim trailing whitespace"
+run = [
+  "find . -type f -name '*.md' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.vue' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.js' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.ts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.json' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.toml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.mts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
 ]

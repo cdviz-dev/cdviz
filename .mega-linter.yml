@@ -16,6 +16,7 @@ DISABLE_LINTERS:
   - REPOSITORY_CHECKOV # unstable randomly failed (false negative) on generated k8s manifest
   - REPOSITORY_DEVSKIM # issue with "git config --global --add safe.directory ..."
   - REPOSITORY_GIT_DIFF
+  - REPOSITORY_GITLEAKS # false positive in documentation
   - REPOSITORY_GRYPE
   - REPOSITORY_KICS
   - REPOSITORY_SECRETLINT
@@ -28,7 +29,7 @@ DISABLE_LINTERS:
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
-FILTER_REGEX_EXCLUDE: "(megalinter-reports)|(.vscode)|(cdevents-spec.*)|(.gitmodules)|(.sqlx)|(\\.lock)|(\\.ndjson)|(\\.pdf)|(\\.csv)|(\\.zip)|(\\.tar)|(\\.ipynb)|(.*license.*)|(.*LICENSE.*)|(cdviz-grafana/dashboards/.*json)"
+FILTER_REGEX_EXCLUDE: "(megalinter-reports)|(cdviz-site/src)|(.vscode)|(cdevents-spec.*)|(.gitmodules)|(.sqlx)|(\\.lock)|(\\.ndjson)|(\\.pdf)|(\\.csv)|(\\.zip)|(\\.tar)|(\\.ipynb)|(.*license.*)|(.*LICENSE.*)|(cdviz-grafana/dashboards/.*json)"
 SPELL_FILTER_REGEX_INCLUDE: '\\.md$'
 PRINT_ALPACA: false
 REPOSITORY_SECRETLINT_ARGUMENTS:
