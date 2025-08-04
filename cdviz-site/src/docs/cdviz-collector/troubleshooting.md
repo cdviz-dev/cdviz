@@ -154,6 +154,49 @@ enabled = true
 type = "debug"
 ```
 
+### Add Logging to Transformers
+
+**Log transformer** - Add logging between transformation steps:
+
+```toml
+[sources.my_source]
+enabled = true
+transformer_refs = ["log", "my_transform", "log"]  # Log before and after
+
+[transformers.log]
+type = "log"
+target = "transformers::debug"  # Custom log target for filtering
+```
+
+**VRL log function** - Add logging inside VRL templates:
+
+```toml
+[transformers.debug_transform]
+type = "vrl"
+template = '''
+log("Input event: " + string!(.body), level: "info")
+
+# Your transformation logic here
+.body.processed = true
+
+log("Output event: " + string!(.body), level: "info")
+
+[.]
+'''
+```
+
+> **⚠️ CDEvents Transformation Note:**
+> VRL examples are for debugging purposes and may not produce valid CDEvents. For production CDEvents transformations, use provided templates at `/etc/cdviz-collector/transformers/` and validate against the [CDEvents specification](https://cdevents.dev/).
+
+**Filter logs:**
+```bash
+# Show only transformation logs
+RUST_LOG=transformers::debug cdviz-collector connect --config config.toml
+
+# Show VRL logs
+RUST_LOG=cdviz_collector::transformers::vrl=debug cdviz-collector connect --config config.toml
+```
+
 ### Test with Curl
 Send test events to webhook sources:
 
@@ -335,6 +378,20 @@ rate_limit = "100/minute"
 
 ## Performance Troubleshooting
 
+### Performance Factors
+
+**Throughput limitations:**
+- **File processing**: Limited by disk I/O and polling interval
+- **Database writes**: Limited by database performance and connection pool
+- **HTTP forwarding**: Limited by destination API response times
+- **Complex transformers**: VRL template complexity affects processing speed
+
+**Resource usage:**
+- **CPU**: Low when idle, scales with event volume and transformation complexity
+- **Memory**: Base usage plus buffers that scale with throughput
+- **Network**: Minimal overhead, primarily event data transfer
+- **Disk**: Minimal, mainly for configuration and logs
+
 ### Slow Event Processing
 
 **Check event throughput:**
@@ -445,5 +502,5 @@ If these steps don't resolve your issue:
 
 1. **Double-check** the [configuration guide](./configuration.md)
 2. **Review** component-specific documentation ([sources](./sources/), [sinks](./sinks/), [transformers](./transformers.md))
-3. **Browse** [integration examples](./integrations/) for similar setups
+3. **Browse** [integration examples](./integrations/github.md) for similar setups
 4. **Search** existing issues in the [GitHub repository](https://github.com/cdviz-dev/cdviz-collector/issues)

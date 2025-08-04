@@ -1,6 +1,35 @@
 # Transformers
 
-Transformers are in charge of transforming a Message into 0-N Messages.
+Transform, filter, or enrich messages as they flow through the pipeline.
+
+## Quick Reference
+
+```toml
+[transformers.my_transform]
+type = "vrl"  # or "log", "passthrough", "discard_all"
+template = '''
+[{
+    "metadata": .metadata,
+    "headers": .headers,
+    "body": {
+        "context": {
+            "type": "dev.cdevents.service.deployed.0.1.1",
+            # ... transform logic
+        }
+    }
+}]
+'''
+```
+
+> **⚠️ CDEvents Transformation Disclaimer:**
+> VRL templates shown in examples may be incomplete, outdated, or incorrect.
+> For production use: consult the [CDEvents specification](https://cdevents.dev/) and use provided transformers at `/etc/cdviz-collector/transformers/` (GitHub, etc.).
+
+**Common Uses:**
+- Convert external events to CDEvents format
+- Filter events based on conditions
+- Enrich events with additional data
+- Split one event into multiple events
 
 ## `type = "log"`
 

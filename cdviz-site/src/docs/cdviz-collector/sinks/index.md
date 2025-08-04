@@ -1,18 +1,19 @@
 # Sinks
 
-A Sink pushes CDEvents to a destination.
+Sinks deliver CDEvents to their final destinations.
 
-> [!NOTE] TODO / Roadmap?
-> Allowing sinks to used [Transformers] to modify [cdevents] before sending them to the destination.
+## Quick Reference
 
-Every sink has a name (value of the section under `sinks`) and it is configured with at least 2 parameters:
+```toml
+[sinks.my_sink]
+enabled = true
+type = "folder"  # or "db", "http", "sse", "debug"
+# ... type-specific parameters
+```
 
-- `enabled`: A boolean value indicating whether the sink is enabled or not (so you can configure it in configuration file and enable/disable by environment variable).
-- `type`: A string indicating the type of the sink
-
-The other parameters are specific to the sink type.
-
-📚 **TOML Syntax Help:** See our [TOML Configuration Guide](../toml-guide.md) for help with arrays, tables, and nested configurations.
+**Common Parameters:**
+- `enabled` - Enable/disable the sink
+- `type` - Destination type (required)
 
 ## Available Sinks
 
