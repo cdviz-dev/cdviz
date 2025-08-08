@@ -1,14 +1,14 @@
 env:
   CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED:
     value: "true"
-  CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__ENABLED:
+  CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED:
     value: "true"
-  CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__URL:
+  CDVIZ_COLLECTOR__SINKS__DATABASE__URL:
     valueFrom:
       secretKeyRef:
         name: "cdviz-collector" # secret defined below
         key: DATABASE_URL
-  CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__SIGNATURE__TOKEN:
+  CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN:
     valueFrom:
       secretKeyRef:
         name: "cdviz-collector"
