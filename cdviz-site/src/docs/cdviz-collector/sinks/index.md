@@ -12,6 +12,7 @@ type = "folder"  # or "db", "http", "sse", "debug"
 ```
 
 **Common Parameters:**
+
 - `enabled` - Enable/disable the sink
 - `type` - Destination type (required)
 
@@ -19,13 +20,13 @@ type = "folder"  # or "db", "http", "sse", "debug"
 
 CDviz Collector supports several types of sinks for different destinations. Each sink type has its own configuration options and use cases.
 
-| Type | Description | Use Cases |
-|------|-------------|-----------|
-| [`debug`](./debug.md) | Log events for development and testing | Development, troubleshooting, pipeline validation |
-| [`db`](./db.md) | Store events in PostgreSQL database | Primary storage, dashboards, analytics |
-| [`http`](./http.md) | Forward events to HTTP endpoints | Webhooks, external APIs, integrations |
-| [`folder`](./folder.md) | Write events as files to storage | Archival, backup, batch processing |
-| [`sse`](./sse.md) | Stream events via Server-Sent Events | Real-time dashboards, monitoring |
+| Type                    | Description                            | Use Cases                                         |
+| ----------------------- | -------------------------------------- | ------------------------------------------------- |
+| [`debug`](./debug.md)   | Log events for development and testing | Development, troubleshooting, pipeline validation |
+| [`db`](./db.md)         | Store events in PostgreSQL database    | Primary storage, dashboards, analytics            |
+| [`http`](./http.md)     | Forward events to HTTP endpoints       | Webhooks, external APIs, integrations             |
+| [`folder`](./folder.md) | Write events as files to storage       | Archival, backup, batch processing                |
+| [`sse`](./sse.md)       | Stream events via Server-Sent Events   | Real-time dashboards, monitoring                  |
 
 ## Quick Reference
 
@@ -46,7 +47,7 @@ type = "debug"
 For persistent storage and dashboards:
 
 ```toml
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://postgres:passwd@localhost:5432/cdviz"
@@ -132,7 +133,7 @@ Several sinks are included in the default configuration:
 enabled = false
 type = "debug"
 
-[sinks.cdviz_db]
+[sinks.database]
 enabled = false
 type = "db"
 url = "postgresql://postgres:passwd@localhost:5432/cdviz"
@@ -141,6 +142,7 @@ pool_connections_max = 10
 ```
 
 To enable them, either:
+
 1. **Edit configuration**: Set `enabled = true` in config file
 2. **Environment variable**: Set `CDVIZ_COLLECTOR__SINKS__{SINK_NAME}__ENABLED="true"`
 3. **Override configuration**: Create a custom configuration file
@@ -181,7 +183,7 @@ enabled = false  # Enable in development
 type = "debug"
 ```
 
-[cdevents]: <https://cdevents.dev/>
+[cdevents]: https://cdevents.dev/
 [Sources]: ../sources
 [Sinks]: ./
 [Transformers]: ../transformers

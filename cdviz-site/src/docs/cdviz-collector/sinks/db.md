@@ -5,7 +5,7 @@ The database sink stores CDEvents in a PostgreSQL database, providing persistent
 ## Configuration
 
 ```toml
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://postgres:passwd@localhost:5432/cdviz"
@@ -104,7 +104,7 @@ Events are stored as JSON documents in the database:
 ### Pool Configuration
 
 ```toml
-[sinks.cdviz_db]
+[sinks.database]
 type = "db"
 url = "postgresql://user:pass@host:5432/cdviz"
 
@@ -139,7 +139,7 @@ pool_connections_max = 20   # Allow up to 20 concurrent connections
 ### Basic Configuration
 
 ```toml
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://cdviz:password@localhost:5432/cdviz"
@@ -180,7 +180,7 @@ pool_connections_max = 5
 
 ```toml
 # Configuration file
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://localhost:5432/cdviz"  # Default for development
@@ -190,9 +190,9 @@ pool_connections_max = 5
 
 ```bash
 # Override for production
-export CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__URL="postgresql://user:pass@prod-db:5432/cdviz"
-export CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__POOL_CONNECTIONS_MIN="5"
-export CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__POOL_CONNECTIONS_MAX="25"
+export CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://user:pass@prod-db:5432/cdviz"
+export CDVIZ_COLLECTOR__SINKS__DATABASE__POOL_CONNECTIONS_MIN="5"
+export CDVIZ_COLLECTOR__SINKS__DATABASE__POOL_CONNECTIONS_MAX="25"
 ```
 
 ## Security Considerations
@@ -285,7 +285,7 @@ Use alongside other sinks for redundancy:
 
 ```toml
 # Primary storage
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://user:pass@primary-db:5432/cdviz"
@@ -377,7 +377,7 @@ pg_restore -d cdviz_new cdviz_backup.dump
 The database sink is included in the default configuration:
 
 ```toml
-[sinks.cdviz_db]
+[sinks.database]
 enabled = false
 type = "db"
 url = "postgresql://postgres:passwd@localhost:5432/cdviz"

@@ -7,6 +7,7 @@ CDviz Collector uses TOML configuration files with environment variable override
 ## Basic Configuration
 
 ### Minimal Setup
+
 ```toml
 [http]
 port = 8080
@@ -25,6 +26,7 @@ parameters = { root = "./events" }
 ```
 
 ### Main Sections
+
 - **`[http]`** - Server host and port (default: `0.0.0.0:8080`)
 - **`[sources.*]`** - Event collection (see [Sources](./sources/))
 - **`[transformers.*]`** - Event processing (see [Transformers](./transformers.md))
@@ -52,6 +54,7 @@ Environment variables take precedence over values in the TOML file.
 [sinks.database]
 enabled = false
 ```
+
 ```bash
 # Environment variable
 CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true"
@@ -65,6 +68,7 @@ header = "X-Hub-Signature-256"
 type = "signature"
 token = "secret"
 ```
+
 ```bash
 # Environment variable (array index 0 for first header)
 CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__0__RULE__TOKEN="github-secret"
@@ -75,6 +79,7 @@ CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__0__RULE__TOKEN="github-sec
 [http]
 port = 8080
 ```
+
 ```bash
 # Environment variable
 CDVIZ_COLLECTOR__HTTP__PORT="9090"
@@ -104,6 +109,7 @@ cdviz-collector connect --config config.toml
 ## File Loading
 
 ### External Files
+
 Load large content from files instead of inline:
 
 ```toml
@@ -113,6 +119,7 @@ template_file = "./transforms/github.vrl"  # Instead of inline template
 ```
 
 ### File Paths
+
 - **Absolute:** `/etc/cdviz-collector/config.toml`
 - **Relative:** `./config.toml` (to current directory or `--directory`)
 - **Container:** `/etc/cdviz-collector/` (for packaged templates)
@@ -120,6 +127,7 @@ template_file = "./transforms/github.vrl"  # Instead of inline template
 ## Production Patterns
 
 ### Development
+
 ```toml
 [sinks.debug]
 enabled = true
@@ -133,6 +141,7 @@ parameters = { root = "./dev-events" }
 ```
 
 ### Production with Secrets
+
 ```toml
 [sinks.database]
 enabled = true
@@ -155,6 +164,7 @@ token = "github-webhook-secret"  # Set actual value or use env overrides
 ```
 
 ### Kubernetes ConfigMap + Secrets
+
 ```yaml
 # ConfigMap for config file
 configFiles:
@@ -177,9 +187,10 @@ env:
 CDviz Collector includes [built-in defaults](https://github.com/cdviz-dev/cdviz-collector/blob/main/src/assets/cdviz-collector.base.toml) with common sources and sinks pre-configured but disabled.
 
 **Enable defaults:**
+
 ```bash
 # Enable built-in database sink
-CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__ENABLED="true"
+CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true"
 
 # Enable built-in debug sink
 CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED="true"

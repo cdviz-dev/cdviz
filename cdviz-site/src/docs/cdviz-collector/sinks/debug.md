@@ -23,6 +23,7 @@ type = "debug"
 ## Behavior
 
 When the debug sink receives a CDEvent, it:
+
 1. **Serializes** the event to JSON format
 2. **Logs** the JSON at `INFO` level with prefix `[DEBUG SINK]`
 3. **Continues** processing (non-blocking operation)
@@ -38,6 +39,7 @@ When the debug sink receives a CDEvent, it:
 ### Development and Testing
 
 Debug sink is perfect for:
+
 - **Pipeline validation**: Verify events flow through the system correctly
 - **Transformer testing**: See the output of transformation rules
 - **Configuration debugging**: Check event structure and content
@@ -46,6 +48,7 @@ Debug sink is perfect for:
 ### Troubleshooting
 
 Use debug sink to:
+
 - **Diagnose pipeline issues**: See exactly what events are being processed
 - **Validate event structure**: Ensure events conform to CDEvents specification
 - **Monitor event volume**: Track the number and frequency of events
@@ -70,7 +73,7 @@ enabled = true
 type = "debug"
 
 # Production database sink
-[sinks.cdviz_db]
+[sinks.database]
 enabled = false  # Disabled in development
 type = "db"
 url = "postgresql://postgres:passwd@localhost:5432/cdviz"
@@ -247,6 +250,7 @@ type = "debug"
 ```
 
 To enable it, either:
+
 1. **Edit configuration**: Set `enabled = true` in config file
 2. **Environment variable**: Set `CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED="true"`
 3. **Override configuration**: Create a custom configuration file
