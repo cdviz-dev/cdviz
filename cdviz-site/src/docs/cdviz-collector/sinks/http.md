@@ -397,6 +397,7 @@ url = "https://requestbin.com/your-bin"
 ### Retry Logic
 
 Current behavior:
+
 - **No automatic retries**: Failed requests are logged but not retried
 - **Non-blocking**: Processing continues even if HTTP delivery fails
 - **Error logging**: Failed requests are logged with details
@@ -433,7 +434,7 @@ type = "http"
 url = "https://backup-webhook.company.com/events"
 
 # Always store to database
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://user:pass@host:5432/cdviz"
