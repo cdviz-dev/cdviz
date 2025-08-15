@@ -3,21 +3,37 @@
 name: renovate
 on:
   # Allows manual/automated ad-hoc trigger
+  # Note: workflow_dispatch inputs are used only for logging and scheduling control,
+  # they do not affect build output or dependency resolution logic
   workflow_dispatch:
     inputs:
       logLevel:
-        description: "Override default log level"
+        description: "Override default log level (debug, info, warn, error)"
         required: false
         default: "info"
-        type: string
+        type: choice
+        options:
+          - "debug"
+          - "info"
+          - "warn"
+          - "error"
       overrideSchedule:
-        description: "Override all schedules"
+        description: "Override all schedules to run immediately"
         required: false
-        default: "false"
-        type: string
+        default: false
+        type: boolean
   # Run twice in the early morning for initial and follow up steps (create pull request and merge)
   schedule:
     - cron: "30 4,6 * * *"
+
+# Explicit minimal permissions for security
+permissions:
+  contents: write # Required for Renovate to create commits and branches
+  pull-requests: write # Required for Renovate to create and update PRs
+  issues: write # Required for Renovate to create issues for errors
+  checks: read # Required to read check status
+  actions: read # Required to read workflow status
+
 concurrency: renovate
 jobs:
   renovate:
@@ -49,7 +65,7 @@ jobs:
           # Use GitHub API to create commits (this allows for signed commits from GitHub App)
           RENOVATE_PLATFORM_COMMIT: "true"
           # Override schedule if set
-          RENOVATE_FORCE: ${{ github.event.inputs.overrideSchedule == 'true' && '{''schedule'':null}' || '' }}
+          RENOVATE_FORCE: ${{ inputs.overrideSchedule && '{''schedule'':null}' || '' }}
           LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
         with:
           configurationFile: .github/renovate.json5
