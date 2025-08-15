@@ -74,9 +74,7 @@ const { observeMultiple } = useScrollAnimation({
 
 onMounted(() => {
   if (sectionRef.value) {
-    const pricingCards = sectionRef.value.querySelectorAll(
-      "[data-animate-pricing]",
-    );
+    const pricingCards = sectionRef.value.querySelectorAll("[data-animate-pricing]");
     observeMultiple(Array.from(pricingCards), "scale-in");
   }
 });
@@ -89,44 +87,39 @@ onMounted(() => {
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
-    <div
-      class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90"
-    >
-      Start free with open source, scale with enterprise features. Built for
-      teams that value transparency and control.
+    <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
+      Start free with open source, scale with enterprise features. Built for teams that value
+      transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
     <div class="flex items-center justify-center my-xl">
       <span
         class="text-lg mr-4 font-medium"
-        :class="{ 'text-current': isYearly, 'text-current/80': !isYearly }"
-        >Monthly</span
-      >
+        :class='{ "text-current": isYearly, "text-current/80": !isYearly }'
+      >Monthly</span>
       <button
         @click="togglePricing"
         class="relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
-        :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
-        :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
+        :class='isYearly ? "bg-primary" : "bg-gray-300"'
+        :aria-label='`Switch to ${isYearly ? "monthly" : "yearly"} billing`'
         role="switch"
         :aria-checked="isYearly.toString()"
       >
         <span
           class="inline-block h-6 w-6 transform rounded-full transition-all duration-300 shadow-sm"
-          :class="[
-            isYearly ? 'translate-x-7 bg-white' : 'translate-x-1 bg-primary',
-            isToggling ? 'scale-110' : 'scale-100',
-          ]"
+          :class='[
+            isYearly ? "translate-x-7 bg-white" : "translate-x-1 bg-primary",
+            isToggling ? "scale-110" : "scale-100",
+          ]'
         />
       </button>
       <span
         class="text-lg ml-4 flex items-center font-medium"
-        :class="{ 'text-current': !isYearly, 'text-current/80': isYearly }"
+        :class='{ "text-current": !isYearly, "text-current/80": isYearly }'
       >
         Annual
-        <span
-          class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full font-normal"
-        >
+        <span class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full font-normal">
           Save up to {{ getDiscountMax() }}%
         </span>
       </span>
@@ -139,18 +132,14 @@ onMounted(() => {
       >
         <div>
           <H3 class="text-secondary">Open Source / Community</H3>
-          <div
-            class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden"
-          >
+          <div class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden">
             <div
-              :key="getPrice('community')"
+              :key='getPrice("community")'
               class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
+              :class='isToggling ? "scale-110 opacity-0" : "scale-100 opacity-100"'
             >
               <AnimatedCounter
-                :end="getPrice('community')"
+                :end='getPrice("community")'
                 prefix="€"
                 class="text-4xl font-bold text-secondary"
               />
@@ -161,27 +150,19 @@ onMounted(() => {
           </div>
           <ul class="my-6 text-left">
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Collector (AGPL v3)</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Database schemas (ASL v2)</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--bar-chart-3] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--bar-chart-3] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Grafana components (ASL v2)</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--users] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--users] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Community Support</span>
             </li>
           </ul>
@@ -195,18 +176,14 @@ onMounted(() => {
       >
         <div>
           <H3 class="text-primary">Enterprise</H3>
-          <div
-            class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-primary relative overflow-hidden"
-          >
+          <div class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-primary relative overflow-hidden">
             <div
-              :key="getPrice('enterprise')"
+              :key='getPrice("enterprise")'
               class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
+              :class='isToggling ? "scale-110 opacity-0" : "scale-100 opacity-100"'
             >
               <AnimatedCounter
-                :end="getPrice('enterprise')"
+                :end='getPrice("enterprise")'
                 prefix="€"
                 suffix="/month"
                 class="text-4xl sm:text-5xl font-bold text-primary"
@@ -219,27 +196,19 @@ onMounted(() => {
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
           <ul class="my-6 text-left">
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--building] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--building] h-5 w-5 text-primary flex-shrink-0"></span>
               <span>On-premise</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--workflow] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--workflow] h-5 w-5 text-primary flex-shrink-0"></span>
               <span>Collector (Commercial License)</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--plug] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--plug] h-5 w-5 text-primary flex-shrink-0"></span>
               <span>More sources &amp; sinks for collector</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--headphones] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--headphones] h-5 w-5 text-primary flex-shrink-0"></span>
               <span>Professional support</span>
             </li>
             <!-- <li class="check-circle mb-4 pl-8">
@@ -252,36 +221,29 @@ onMounted(() => {
           </ul>
         </div>
         <Btn
-          :href="getSubscriptionUrl('enterprise')"
+          :href='getSubscriptionUrl("enterprise")'
           aria-label="Subscribe to Enterprise"
           primary
-          >Subscribe Now</Btn
-        >
+        >Subscribe Now</Btn>
       </div>
       <!-- SaaS Plan - Preview -->
       <div
         data-animate-pricing
         class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center relative border-2 border-secondary/20 bg-secondary/5 transform-gpu card-hover"
       >
-        <div
-          class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-secondary bg-secondary/10 border border-secondary/30 shadow-sm"
-        >
+        <div class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-secondary bg-secondary/10 border border-secondary/30 shadow-sm">
           Coming Soon
         </div>
         <div class="isDisabled">
           <H3 class="text-secondary">SaaS</H3>
-          <div
-            class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden"
-          >
+          <div class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden">
             <div
-              :key="getPrice('saas')"
+              :key='getPrice("saas")'
               class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
+              :class='isToggling ? "scale-110 opacity-0" : "scale-100 opacity-100"'
             >
               <AnimatedCounter
-                :end="getPrice('saas')"
+                :end='getPrice("saas")'
                 prefix="€"
                 suffix="/month"
                 class="text-4xl font-bold text-secondary"
@@ -294,27 +256,19 @@ onMounted(() => {
           <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
           <ul class="my-6 text-left">
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Collector with same features than Enterprise</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--cloud] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--cloud] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Collector operated by us (on our infrastructure)</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Database operated by you or your provider</span>
             </li>
             <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--monitor] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
+              <span class="icon-[lucide--monitor] h-5 w-5 text-secondary flex-shrink-0"></span>
               <span>Dashboard operated by you or your provider</span>
             </li>
           </ul>
@@ -325,9 +279,9 @@ onMounted(() => {
     </div>
     <div class="text-center mt-12 text-current/90">
       <p>
-        All prices are in Euro (€) and exclude VAT. The Community edition is
-        free forever, while the Enterprise and SaaS editions offer additional
-        features and support. For more information or custom request, please
+        All prices are in Euro (€) and exclude VAT. The Community edition is free forever, while the
+        Enterprise and SaaS editions offer additional features and support. For more information or
+        custom request, please
         <a href="/contact" class="text-primary hover:underline">contact us</a>.
       </p>
     </div>

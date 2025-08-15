@@ -29,11 +29,13 @@ headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 ## URL Structure
 
 Webhooks are accessible at:
+
 ```
 POST /webhook/{id}
 ```
 
 For example, with `id = "github-events"`, the endpoint is:
+
 ```
 POST /webhook/github-events
 ```
@@ -55,6 +57,7 @@ Only headers listed in `headers_to_keep` are preserved. Sensitive headers (marke
 ### 4. Event Creation
 
 A pipeline event is created with:
+
 - **Body**: Parsed JSON from request body
 - **Headers**: Filtered headers as key-value pairs
 - **Metadata**: Empty (populated by transformers)
@@ -190,14 +193,14 @@ signature_encoding = "hex"
 
 ## Response Codes
 
-| Code | Condition |
-|------|-----------|
-| 201 Created | Event successfully received and processed |
-| 400 Bad Request | Invalid JSON in request body |
-| 401 Unauthorized | Missing required authentication header |
-| 403 Forbidden | Header validation failed |
-| 404 Not Found | Invalid webhook path |
-| 405 Method Not Allowed | Non-POST request |
+| Code                   | Condition                                 |
+| ---------------------- | ----------------------------------------- |
+| 201 Created            | Event successfully received and processed |
+| 400 Bad Request        | Invalid JSON in request body              |
+| 401 Unauthorized       | Missing required authentication header    |
+| 403 Forbidden          | Header validation failed                  |
+| 404 Not Found          | Invalid webhook path                      |
+| 405 Method Not Allowed | Non-POST request                          |
 
 ## Testing
 
@@ -253,15 +256,15 @@ notify_cdviz:
   stage: notify
   script:
     - |
-      curl -X POST $CDVIZ_WEBHOOK_URL \
-        -H "Content-Type: application/json" \
-        -H "X-Gitlab-Token: $CDVIZ_GITLAB_TOKEN" \
-        -d "{
-          \"event\": \"gitlab_pipeline\",
-          \"project_id\": $CI_PROJECT_ID,
-          \"pipeline_id\": $CI_PIPELINE_ID,
-          \"status\": \"$CI_JOB_STATUS\"
-        }"
+        curl -X POST $CDVIZ_WEBHOOK_URL \
+          -H "Content-Type: application/json" \
+          -H "X-Gitlab-Token: $CDVIZ_GITLAB_TOKEN" \
+          -d "{
+            \"event\": \"gitlab_pipeline\",
+            \"project_id\": $CI_PROJECT_ID,
+            \"pipeline_id\": $CI_PIPELINE_ID,
+            \"status\": \"$CI_JOB_STATUS\"
+          }"
 ```
 
 ## Related

@@ -128,7 +128,6 @@ Each CDEvent is streamed as a Server-Sent Events message with the following form
 event: cdevent
 id: {cdevent-id}
 data: {cdevent-json}
-
 ```
 
 #### Example SSE Stream
@@ -149,7 +148,6 @@ The SSE sink automatically sends keep-alive messages every 30 seconds to maintai
 
 ```
 : keep-alive
-
 ```
 
 ### Error Messages

@@ -22,7 +22,11 @@
   <div v-if="$frontmatter.references">
     <h2 id="references">
       References
-      <a class="header-anchor" href="#references" aria-label="Permalink to “References”"></a>
+      <a
+        class="header-anchor"
+        href="#references"
+        aria-label="Permalink to “References”"
+      ></a>
     </h2>
     <ul>
       <li v-for="(ref, index) in $frontmatter.references" :key="index">

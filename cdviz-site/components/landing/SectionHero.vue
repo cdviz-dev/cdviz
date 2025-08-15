@@ -72,9 +72,7 @@ import Btn from "./Btn.vue";
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold my-md leading-tight"
       >
         <!-- Explain the value we provide -->
-        <span
-          class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out"
-        >
+        <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           Monitor Your Software Delivery Pipeline
         </span>
         <span
@@ -88,9 +86,8 @@ import Btn from "./Btn.vue";
         class="my-lg text-base sm:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500"
       >
         <!-- Explain how we'll create the value -->
-        Get complete visibility into your CI/CD pipelines and SDLC with powerful
-        analytics, deployment tracking, and real-time monitoring - all in one
-        place.
+        Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
+        deployment tracking, and real-time monitoring - all in one place.
       </div>
 
       <div
@@ -123,13 +120,9 @@ import Btn from "./Btn.vue";
 /* technics from https://iconify.design/docs/usage/css/ */
 .svg-mask {
   /* Add dimensions to span */
-  display: inline-block;
-  /* width: 32px;
-  height: 32px; */
-  /* Add background color */
-  background-color: currentColor;
-  /* Add mask image, use variable to reduce duplication */
-  /* --svg: url("https://api.iconify.design/bi/bell-fill.svg"); */
+  display: inline-block; /* width: 32px; height: 32px; */ /* Add background color */
+  background-color: currentColor; /* Add mask image, use variable to reduce duplication */ /* --svg:
+  url("https://api.iconify.design/bi/bell-fill.svg"); */
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
   -webkit-mask-repeat: no-repeat;
@@ -137,10 +130,8 @@ import Btn from "./Btn.vue";
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
 }
-
 .svg-cdevents {
-  /* width: 444px;
-  height: 184px; */
+  /* width: 444px; height: 184px; */
   --svg: url("/logos/cdevents_monochrome.svg");
 }
 </style>

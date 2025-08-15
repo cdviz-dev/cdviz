@@ -53,12 +53,15 @@ value = "API_KEY_ENV_VAR"
 SSE messages are automatically processed and converted to pipeline events:
 
 ### Message Structure
+
 - **`data`**: Message payload (JSON or text)
 - **`id`**: Optional message identifier (UUID generated if missing)
 - **`event`**: Optional event type (defaults to "message")
 
 ### Metadata
+
 Each SSE message includes metadata:
+
 ```json
 {
   "metadata": {
@@ -72,6 +75,7 @@ Each SSE message includes metadata:
 ```
 
 ### Data Handling
+
 - Valid JSON data is parsed and used as event body
 - Invalid JSON is wrapped as string value
 - All metadata is preserved for transformation
@@ -79,18 +83,20 @@ Each SSE message includes metadata:
 ## Connection Management
 
 ### Retry Logic
+
 - **Exponential backoff**: 2^retry_count seconds (max 64s)
 - **Maximum retries**: Configurable limit (default: 10)
 - **Connection logging**: Detailed connection state tracking
 
 ### Error Handling
-| Error Type | Behavior |
-|------------|----------|
-| Network timeout | Auto-reconnect with backoff |
-| HTTP 4xx/5xx | Retry with exponential backoff |
-| Invalid SSE | Log error, continue processing |
-| JSON parse failure | Use raw data, continue |
-| Max retries exceeded | Stop source, log failure |
+
+| Error Type           | Behavior                       |
+| -------------------- | ------------------------------ |
+| Network timeout      | Auto-reconnect with backoff    |
+| HTTP 4xx/5xx         | Retry with exponential backoff |
+| Invalid SSE          | Log error, continue processing |
+| JSON parse failure   | Use raw data, continue         |
+| Max retries exceeded | Stop source, log failure       |
 
 ## Examples
 
@@ -412,18 +418,22 @@ RUST_LOG=debug cdviz-collector connect --config config.toml
 ## Troubleshooting
 
 ### Connection Issues
+
 - **Symptoms**: Repeated connection errors, no events received
 - **Solutions**: Verify URL accessibility, check network/firewall rules, validate authentication
 
 ### Authentication Failures
+
 - **Symptoms**: HTTP 401/403 responses
 - **Solutions**: Verify tokens are valid and not expired, check environment variables
 
 ### Missing Events
+
 - **Symptoms**: Some events not processed
 - **Solutions**: Check endpoint filtering, verify transformers, monitor connection stability
 
 ### Performance Tuning
+
 - Each SSE source maintains one persistent connection
 - Large JSON payloads impact memory usage
 - Adjust `max_retries` based on reliability requirements

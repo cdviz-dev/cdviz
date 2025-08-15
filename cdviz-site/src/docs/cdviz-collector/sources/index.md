@@ -17,6 +17,7 @@ type = "webhook"  # or "opendal", "sse", "noop"
 ```
 
 **Common Parameters:**
+
 - `enabled` - Enable/disable the source
 - `extractor` - How to collect events (required)
 - `transformer_refs` - Optional event processing chain
@@ -50,12 +51,12 @@ CDviz Collector supports several types of extractors for different event sources
 
 ### Available Extractors
 
-| Type | Description | Use Cases |
-|------|-------------|-----------|
-| [`noop`](./noop.md) | No-operation extractor for testing | Configuration testing, pipeline validation |
-| [`webhook`](./webhook.md) | HTTP webhook endpoints | CI/CD systems, GitHub/GitLab webhooks, API integrations |
-| [`opendal`](./opendal.md) | File system and cloud storage | Log files, artifact monitoring, batch processing |
-| [`sse`](./sse.md) | Server-Sent Events client | Real-time event streams, SSE endpoints |
+| Type                      | Description                        | Use Cases                                               |
+| ------------------------- | ---------------------------------- | ------------------------------------------------------- |
+| [`noop`](./noop.md)       | No-operation extractor for testing | Configuration testing, pipeline validation              |
+| [`webhook`](./webhook.md) | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations |
+| [`opendal`](./opendal.md) | File system and cloud storage      | Log files, artifact monitoring, batch processing        |
+| [`sse`](./sse.md)         | Server-Sent Events client          | Real-time event streams, SSE endpoints                  |
 
 ### Quick Reference
 

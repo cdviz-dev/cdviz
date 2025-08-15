@@ -28,8 +28,8 @@ references:
     url: https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/kubewatch_cloudevents.vrl
   - title: Examples of cdevents converted from kubewatch's events
     url: https://github.com/cdviz-dev/cdviz-collector/tree/main/examples/assets/outputs/transform-kubewtach_cloudevents
-
 ---
+
 <script setup>
 import IntegrationCard from '../../../../components/IntegrationCard.vue'
 </script>
@@ -73,7 +73,7 @@ type = "vrl"
 template_file = "/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl"
 ```
 
-The `template_file` points to the VRL (Vector Remap Language) file that contains the transformation logic for converting GitHub webhook events into cdevents. The file `/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl` is included in the container image. The source code for this file can be found in the [cdviz-collector repository]( https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/kubewatch_cloudevents.vrl).
+The `template_file` points to the VRL (Vector Remap Language) file that contains the transformation logic for converting GitHub webhook events into cdevents. The file `/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl` is included in the container image. The source code for this file can be found in the [cdviz-collector repository](https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/kubewatch_cloudevents.vrl).
 
 The `kubewatch_metadata` transformer is used to add metadata to the events, such as the environment ID. You can customize the `environment_id` field to match your environment.
 
@@ -86,36 +86,36 @@ The `kubewatch_metadata` transformer is used to add metadata to the events, such
     helm install cdviz-collector oci://ghcr.io/cdviz-dev/charts/cdviz-collector --set kubewatch.enabled=true
     ```
 - Configure Kubewatch to send **cloudevents** to the `cdviz-collector` service (webhook events doesn't contains enough information)
-    ```yaml
-    resourcesToWatch:
-      deployment: true
-      daemonset: true
-      statefulset: true
-      replicationcontroller: false
-      replicaset: false
-      services: false
-      pod: false
-      job: false
-      node: false
-      clusterrole: false
-      clusterrolebinding: false
-      serviceaccount: false
-      persistentvolume: false
-      namespace: false
-      secret: false
-      configmap: false
-      ingress: false
-      coreevent: false
-      event: false
+  ```yaml
+  resourcesToWatch:
+    deployment: true
+    daemonset: true
+    statefulset: true
+    replicationcontroller: false
+    replicaset: false
+    services: false
+    pod: false
+    job: false
+    node: false
+    clusterrole: false
+    clusterrolebinding: false
+    serviceaccount: false
+    persistentvolume: false
+    namespace: false
+    secret: false
+    configmap: false
+    ingress: false
+    coreevent: false
+    event: false
 
-    ## Seems like only one handler could be enabled at a time
+  ## Seems like only one handler could be enabled at a time
 
-    slack:
-      enabled: false # true by default
+  slack:
+    enabled: false # true by default
 
-    # cloudevent include the webhook's data + manifest of the resource + ... use by the template
-    cloudevent:
-      enabled: true
-      # update the name to match the name of the service (if not cdviz-collector)
-      url: "http://cdviz-collector:8080/webhook/000-kubewatch"
-    ```
+  # cloudevent include the webhook's data + manifest of the resource + ... use by the template
+  cloudevent:
+    enabled: true
+    # update the name to match the name of the service (if not cdviz-collector)
+    url: "http://cdviz-collector:8080/webhook/000-kubewatch"
+  ```

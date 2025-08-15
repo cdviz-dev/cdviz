@@ -1,0 +1,48 @@
+{
+  "lineWidth": 100,
+  "indentWidth": 2,
+  "useTabs": false,
+  "newLineKind": "lf",
+  "biome": {
+    "associations": "**/*.{ts,tsx,js,jsx,mts}",
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineEnding": "lf"
+  },
+  "json": {
+    "associations": "**/*.{json,jsonc}"
+  },
+  "markdown": {
+    "associations": "**/*.{md,mdx}",
+    "lineWidth": 120,
+    "textWrap": "maintain"
+  },
+  "yaml": {
+    "associations": "**/*.{yml,yaml}"
+  },
+  "markup": {
+    "associations": "**/*.{html,vue}"
+  },
+  "malva": {
+    "associations": "**/*.{css,scss}",
+    "indentWidth": 2,
+    "lineBreak": "lf",
+    "printWidth": 100,
+    "useTabs": false
+  },
+  "excludes": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.off",
+    "videos-src/**"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/biome-0.9.3.wasm",
+    "https://plugins.dprint.dev/json-0.20.0.wasm",
+    "https://plugins.dprint.dev/markdown-0.19.0.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm",
+    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.23.1.wasm",
+    "https://plugins.dprint.dev/g-plane/malva-v0.14.1.wasm"
+  ]
+}

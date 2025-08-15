@@ -22,13 +22,13 @@ The following managed database services have been evaluated for compatibility wi
 
 Compatibility status with major cloud providers:
 
-| Provider | Status | Documentation |
-|----------|--------|---------------|
-| Azure Database for PostgreSQL | ✅ Compatible | [Extensions documentation](https://learn.microsoft.com/en-us/azure/postgresql/extensions/concepts-extensions-versions) |
-| AWS RDS | ❌ Missing required extensions | [Extensions list](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html) |
-| Google Cloud SQL | ❌ Missing required extensions | [Extensions documentation](https://cloud.google.com/sql/docs/postgres/extensions) |
-| Digital Ocean | ✅ Compatible | [Extensions documentation](https://www.digitalocean.com/docs/databases/postgresql/extensions/) |
-| Scaleway | ✅ Compatible | [Extensions documentation](https://www.scaleway.com/en/docs/serverless-sql-databases/reference-content/supported-postgresql-extensions/) |
+| Provider                      | Status                         | Documentation                                                                                                                            |
+| ----------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Azure Database for PostgreSQL | ✅ Compatible                  | [Extensions documentation](https://learn.microsoft.com/en-us/azure/postgresql/extensions/concepts-extensions-versions)                   |
+| AWS RDS                       | ❌ Missing required extensions | [Extensions list](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html)                        |
+| Google Cloud SQL              | ❌ Missing required extensions | [Extensions documentation](https://cloud.google.com/sql/docs/postgres/extensions)                                                        |
+| Digital Ocean                 | ✅ Compatible                  | [Extensions documentation](https://www.digitalocean.com/docs/databases/postgresql/extensions/)                                           |
+| Scaleway                      | ✅ Compatible                  | [Extensions documentation](https://www.scaleway.com/en/docs/serverless-sql-databases/reference-content/supported-postgresql-extensions/) |
 
 ## Container Deployments
 

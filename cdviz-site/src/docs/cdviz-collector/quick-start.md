@@ -90,6 +90,7 @@ cat events/*.json
 ```
 
 You should see:
+
 - ✅ HTTP 200 response
 - ✅ Debug logs in terminal
 - ✅ JSON file created in `./events/`
@@ -104,16 +105,19 @@ You should see:
 ## Ready for More?
 
 ### Real Integrations
+
 - **[GitHub](./integrations/github.md)** - Repository events with proper signatures
 - **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
 - **GitLab** and **Jenkins** - CI/CD events (coming soon)
 
 ### Other Sources & Sinks
+
 - **[File processing](./sources/opendal.md)** - Monitor log files and artifacts
 - **[Database storage](./sinks/db.md)** - PostgreSQL for dashboards
 - **[HTTP forwarding](./sinks/http.md)** - Send to external APIs
 
 ### Production Ready
+
 - **[Installation](./install.md)** - Docker, Kubernetes deployment
 - **[Configuration](./configuration.md)** - Environment variables, authentication
 - **[Troubleshooting](./troubleshooting.md)** - Debug common issues

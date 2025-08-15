@@ -34,10 +34,10 @@ To get an overview of how CDviz components collaborate, check out our **[Archite
 
 CDviz is a modular platform with three main components:
 
-*   **[CDviz Collector](./cdviz-collector/index.md):** A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources.
-*   **[CDviz Database](./cdviz-db/index.md):** An optimized data storage solution for metrics and events.
-*   **[CDviz Grafana](./cdviz-grafana/index.md):** A comprehensive dashboard solution for visualizing, analyzing, and generating alerts.
+- **[CDviz Collector](./cdviz-collector/index.md):** A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources.
+- **[CDviz Database](./cdviz-db/index.md):** An optimized data storage solution for metrics and events.
+- **[CDviz Grafana](./cdviz-grafana/index.md):** A comprehensive dashboard solution for visualizing, analyzing, and generating alerts.
 
 ## Other Resources
 
-*   **[Alternatives](./alternatives.md):** A list of alternative tools to CDviz.
+- **[Alternatives](./alternatives.md):** A list of alternative tools to CDviz.

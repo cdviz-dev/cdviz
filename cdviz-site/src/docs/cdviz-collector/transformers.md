@@ -26,6 +26,7 @@ template = '''
 > For production use: consult the [CDEvents specification](https://cdevents.dev/) and use provided transformers at `/etc/cdviz-collector/transformers/` (GitHub, etc.).
 
 **Common Uses:**
+
 - Convert external events to CDEvents format
 - Filter events based on conditions
 - Enrich events with additional data
@@ -72,6 +73,7 @@ functions tailored specifically to observability use cases. It is built for tran
 a lightweight, ultra-fast tool for building observability pipelines.
 
 The VRL transformer processes messages by:
+
 - If the template evaluates to `null`, pass through the original message unchanged (clearer meaning of skip)
 - If the template evaluates to `[]`, discard the message (nothing sent downstream)
 - If the template evaluates to an array of messages (with metadata, headers, body), send each one downstream
