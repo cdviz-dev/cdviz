@@ -43,9 +43,7 @@ export function useScrollAnimation(options = {}) {
             // Add animation class with stagger delay
             setTimeout(() => {
               element.classList.add("animate-in");
-              element.classList.add(
-                animationTypes[animationType]?.class || "animate-fade-in",
-              );
+              element.classList.add(animationTypes[animationType]?.class || "animate-fade-in");
 
               // Mark as visible
               if (elements.value.has(element)) {
@@ -94,10 +92,7 @@ export function useScrollAnimation(options = {}) {
     const config = animationTypes[animationType];
     if (config) {
       // Add initial state class instead of direct style manipulation
-      element.classList.add(
-        "animate-initial",
-        `animate-${animationType}-initial`,
-      );
+      element.classList.add("animate-initial", `animate-${animationType}-initial`);
       element.setAttribute("data-animation-duration", duration);
     }
 
@@ -170,10 +165,7 @@ export function useScrollAnimation(options = {}) {
  * Specialized composable for number counting animations
  */
 export function useCountAnimation() {
-  const animate = (
-    element,
-    { start = 0, end, duration = 2000, formatter = (n) => n },
-  ) => {
+  const animate = (element, { start = 0, end, duration = 2000, formatter = (n) => n }) => {
     if (!element) return;
 
     const startTime = performance.now();

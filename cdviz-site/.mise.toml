@@ -1,6 +1,6 @@
 [tools]
 "bun" = "latest"
-"biome" = "latest"
+"dprint" = "latest"
 # "magick" = "latest" # imagemagick
 
 [tasks]
@@ -58,9 +58,9 @@ depends = ["build:favicon", "build:hero-images"]
 
 [tasks.format]
 alias = "fmt"
-description = "format"
+description = "format with dprint (includes biome plugin)"
 depends = ["trim:trailing_space"]
-run = ["biome check --write"]
+run = ["dprint fmt"]
 
 [tasks."perf:report"]
 description = "analyze performance of a running local preview server & published landing page"
@@ -78,6 +78,11 @@ run = [
   "find . -type f -name '*.js' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
   "find . -type f -name '*.ts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
   "find . -type f -name '*.json' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.css' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.scss' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.html' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.yml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
+  "find . -type f -name '*.yaml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
   "find . -type f -name '*.toml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
   "find . -type f -name '*.mts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
 ]

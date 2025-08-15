@@ -46,10 +46,7 @@ const processSteps = [
     icon: "icon-[lucide--bar-chart-3]",
     description:
       "Observe the activity of your software factory with dashboards, alerts, and build your own analytics.",
-    tools: [
-      { icon: "icon-[simple-icons--grafana]", title: "Grafana" },
-      { text: "+more" },
-    ],
+    tools: [{ icon: "icon-[simple-icons--grafana]", title: "Grafana" }, { text: "+more" }],
   },
   {
     id: 4,
@@ -93,9 +90,7 @@ const selectComponent = async (componentName) => {
 };
 </script>
 <template>
-  <section
-    class="space-section bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10"
-  >
+  <section class="space-section bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10">
     <a id="how"></a>
     <H2>How CDviz Works</H2>
 
@@ -108,9 +103,7 @@ const selectComponent = async (componentName) => {
         class="group flex flex-col sm:flex-row items-start space-component bg-background/80 p-lg rounded-xl border border-secondary/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
       >
         <div class="flex flex-row sm:flex-col items-center space-element">
-          <div
-            class="bg-primary rounded-full w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center font-bold text-lg sm:text-xl shadow-md text-background"
-          >
+          <div class="bg-primary rounded-full w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center font-bold text-lg sm:text-xl shadow-md text-background">
             {{ step.id }}
           </div>
           <span
@@ -161,9 +154,7 @@ const selectComponent = async (componentName) => {
       </div>
 
       <!-- Diagram Container -->
-      <div
-        class="bg-background/50 rounded-xl border border-secondary/20 overflow-hidden shadow-lg"
-      >
+      <div class="bg-background/50 rounded-xl border border-secondary/20 overflow-hidden shadow-lg">
         <img
           src="/architectures/overview_04.excalidraw.svg"
           class="w-full h-auto object-cover"
@@ -181,65 +172,57 @@ const selectComponent = async (componentName) => {
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <button
             class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
-            :class="[
-              activeComponent === 'collector'
-                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
-                : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
-            ]"
-            @click="selectComponent('collector')"
+            :class='[
+              activeComponent === "collector"
+                ? "bg-primary/10 border-primary/30 shadow-md scale-105"
+                : "hover:bg-primary/5 hover:shadow-sm",
+              isLoadingComponent ? "pointer-events-none opacity-70" : "",
+            ]'
+            @click='selectComponent("collector")'
           >
-            <span
-              class="icon-[lucide--workflow] h-6 w-6 text-primary mx-auto mb-2 block"
-            ></span>
+            <span class="icon-[lucide--workflow] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Collector</div>
             <div class="text-xs text-text/70">Event Processing</div>
           </button>
           <button
             class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
-            :class="[
-              activeComponent === 'database'
-                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
-                : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
-            ]"
-            @click="selectComponent('database')"
+            :class='[
+              activeComponent === "database"
+                ? "bg-primary/10 border-primary/30 shadow-md scale-105"
+                : "hover:bg-primary/5 hover:shadow-sm",
+              isLoadingComponent ? "pointer-events-none opacity-70" : "",
+            ]'
+            @click='selectComponent("database")'
           >
-            <span
-              class="icon-[lucide--database] h-6 w-6 text-primary mx-auto mb-2 block"
-            ></span>
+            <span class="icon-[lucide--database] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Database</div>
             <div class="text-xs text-text/70">Event Storage</div>
           </button>
           <button
             class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
-            :class="[
-              activeComponent === 'grafana'
-                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
-                : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
-            ]"
-            @click="selectComponent('grafana')"
+            :class='[
+              activeComponent === "grafana"
+                ? "bg-primary/10 border-primary/30 shadow-md scale-105"
+                : "hover:bg-primary/5 hover:shadow-sm",
+              isLoadingComponent ? "pointer-events-none opacity-70" : "",
+            ]'
+            @click='selectComponent("grafana")'
           >
-            <span
-              class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary mx-auto mb-2 block"
-            ></span>
+            <span class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Dashboards</div>
             <div class="text-xs text-text/70">Visualization</div>
           </button>
           <button
             class="interactive-element p-4 rounded-lg border border-secondary/20 cursor-pointer transition-all duration-300 hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transform-gpu"
-            :class="[
-              activeComponent === 'automation'
-                ? 'bg-primary/10 border-primary/30 shadow-md scale-105'
-                : 'hover:bg-primary/5 hover:shadow-sm',
-              isLoadingComponent ? 'pointer-events-none opacity-70' : '',
-            ]"
-            @click="selectComponent('automation')"
+            :class='[
+              activeComponent === "automation"
+                ? "bg-primary/10 border-primary/30 shadow-md scale-105"
+                : "hover:bg-primary/5 hover:shadow-sm",
+              isLoadingComponent ? "pointer-events-none opacity-70" : "",
+            ]'
+            @click='selectComponent("automation")'
           >
-            <span
-              class="icon-[lucide--zap] h-6 w-6 text-primary mx-auto mb-2 block"
-            ></span>
+            <span class="icon-[lucide--zap] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Automation</div>
             <div class="text-xs text-text/70">Event Reactions</div>
           </button>
@@ -265,7 +248,7 @@ const selectComponent = async (componentName) => {
             </div>
           </div>
           <!-- Collector Details -->
-          <div v-if="activeComponent === 'collector'">
+          <div v-if='activeComponent === "collector"'>
             <div class="flex items-center gap-3 mb-4">
               <span class="icon-[lucide--workflow] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
@@ -273,9 +256,9 @@ const selectComponent = async (componentName) => {
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              The core component that connects to multiple sources, normalizes
-              events to CDEvents standard, and forwards them to storage. It acts
-              as the central hub for processing all delivery pipeline events.
+              The core component that connects to multiple sources, normalizes events to CDEvents
+              standard, and forwards them to storage. It acts as the central hub for processing all
+              delivery pipeline events.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>
@@ -309,7 +292,7 @@ const selectComponent = async (componentName) => {
           </div>
 
           <!-- Database Details -->
-          <div v-if="activeComponent === 'database'">
+          <div v-if='activeComponent === "database"'>
             <div class="flex items-center gap-3 mb-4">
               <span class="icon-[lucide--database] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
@@ -317,9 +300,9 @@ const selectComponent = async (componentName) => {
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              High-performance time-series database optimized for storing and
-              querying CDEvents with efficient time-based operations. Provides
-              reliable storage and fast analytics for delivery pipeline data.
+              High-performance time-series database optimized for storing and querying CDEvents with
+              efficient time-based operations. Provides reliable storage and fast analytics for
+              delivery pipeline data.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>
@@ -353,20 +336,17 @@ const selectComponent = async (componentName) => {
           </div>
 
           <!-- Grafana Details -->
-          <div v-if="activeComponent === 'grafana'">
+          <div v-if='activeComponent === "grafana"'>
             <div class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary"
-              ></span>
+              <span class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
                 Grafana Dashboards
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              Pre-built dashboards and custom D3.js panels for visualizing SDLC
-              metrics, deployment trends, and delivery performance.
-              TypeScript-generated dashboards ensure consistency and
-              maintainability.
+              Pre-built dashboards and custom D3.js panels for visualizing SDLC metrics, deployment
+              trends, and delivery performance. TypeScript-generated dashboards ensure consistency
+              and maintainability.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>
@@ -400,7 +380,7 @@ const selectComponent = async (componentName) => {
           </div>
 
           <!-- Automation Details -->
-          <div v-if="activeComponent === 'automation'">
+          <div v-if='activeComponent === "automation"'>
             <div class="flex items-center gap-3 mb-4">
               <span class="icon-[lucide--zap] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
@@ -408,9 +388,8 @@ const selectComponent = async (componentName) => {
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              Automated workflows triggered by CDEvents for continuous delivery,
-              notifications, and process automation. Enables real-time responses
-              to delivery pipeline events.
+              Automated workflows triggered by CDEvents for continuous delivery, notifications, and
+              process automation. Enables real-time responses to delivery pipeline events.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>

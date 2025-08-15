@@ -39,6 +39,7 @@ parameters = { root = "/path/to/events" }
 ```
 
 **Parameters:**
+
 - **`root`** (string): Base directory path for storing files
 
 ### Amazon S3 (`kind = "s3"`)
@@ -56,6 +57,7 @@ parameters = {
 ```
 
 **Parameters:**
+
 - **`bucket`** (string): S3 bucket name
 - **`region`** (string): AWS region
 - **`root`** (string, optional): Prefix/folder within bucket
@@ -77,6 +79,7 @@ parameters = {
 ```
 
 **Parameters:**
+
 - **`bucket`** (string): GCS bucket name
 - **`root`** (string, optional): Prefix/folder within bucket
 - **`credential_path`** (string, optional): Path to service account JSON file
@@ -96,6 +99,7 @@ parameters = {
 ```
 
 **Parameters:**
+
 - **`container`** (string): Azure Blob container name
 - **`account_name`** (string): Azure storage account name
 - **`root`** (string, optional): Prefix/folder within container
@@ -106,11 +110,13 @@ parameters = {
 ### File Naming Pattern
 
 Each CDEvent is written as a separate JSON file:
+
 ```
 {event-id}.json
 ```
 
 Example:
+
 ```
 dev.cdevents.build.started.0.1.0-12345678-abcd-1234-5678-123456789abc.json
 ```
@@ -118,6 +124,7 @@ dev.cdevents.build.started.0.1.0-12345678-abcd-1234-5678-123456789abc.json
 ### Directory Structure
 
 Files are written to the configured root directory:
+
 ```
 {root}/
 ├── dev.cdevents.build.started.0.1.0-12345678-abcd-1234-5678-123456789abc.json
@@ -274,6 +281,7 @@ parameters = {
 ### AWS S3 Authentication
 
 #### IAM Roles (Recommended)
+
 ```toml
 [sinks.s3_with_iam]
 enabled = true
@@ -288,6 +296,7 @@ parameters = {
 ```
 
 #### Access Keys
+
 ```toml
 [sinks.s3_with_keys]
 enabled = true
@@ -303,6 +312,7 @@ parameters = {
 ```
 
 #### Environment Variables
+
 ```bash
 # AWS credentials via environment
 export AWS_ACCESS_KEY_ID="your-access-key"
@@ -313,6 +323,7 @@ export AWS_REGION="us-east-1"
 ### Google Cloud Storage Authentication
 
 #### Service Account File
+
 ```toml
 [sinks.gcs_with_service_account]
 enabled = true
@@ -326,6 +337,7 @@ parameters = {
 ```
 
 #### Application Default Credentials
+
 ```toml
 [sinks.gcs_with_adc]
 enabled = true
@@ -341,6 +353,7 @@ parameters = {
 ### Azure Blob Storage Authentication
 
 #### Account Key
+
 ```toml
 [sinks.azure_with_key]
 enabled = true
@@ -355,6 +368,7 @@ parameters = {
 ```
 
 #### Connection String
+
 ```bash
 # Azure via environment variable
 export AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=..."
@@ -441,6 +455,7 @@ parameters = { root = "./test-events" }
 ### Access Control
 
 #### S3 Bucket Policies
+
 ```json
 {
   "Version": "2012-10-17",
@@ -461,6 +476,7 @@ parameters = { root = "./test-events" }
 ```
 
 #### IAM Policies
+
 ```json
 {
   "Version": "2012-10-17",
@@ -480,6 +496,7 @@ parameters = { root = "./test-events" }
 ### Encryption
 
 #### S3 Server-Side Encryption
+
 ```toml
 [sinks.encrypted_s3]
 enabled = true
@@ -494,6 +511,7 @@ parameters = {
 ```
 
 #### GCS Encryption
+
 ```toml
 [sinks.encrypted_gcs]
 enabled = true
@@ -517,13 +535,14 @@ parameters = {
 ### Storage Optimization
 
 #### S3 Lifecycle Policies
+
 ```json
 {
   "Rules": [
     {
       "Id": "CDEventLifecycle",
       "Status": "Enabled",
-      "Filter": {"Prefix": "events/"},
+      "Filter": { "Prefix": "events/" },
       "Transitions": [
         {
           "Days": 30,
@@ -544,20 +563,21 @@ parameters = {
 ```
 
 #### GCS Lifecycle Management
+
 ```json
 {
   "rule": [
     {
-      "action": {"type": "SetStorageClass", "storageClass": "NEARLINE"},
-      "condition": {"age": 30}
+      "action": { "type": "SetStorageClass", "storageClass": "NEARLINE" },
+      "condition": { "age": 30 }
     },
     {
-      "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
-      "condition": {"age": 90}
+      "action": { "type": "SetStorageClass", "storageClass": "COLDLINE" },
+      "condition": { "age": 90 }
     },
     {
-      "action": {"type": "SetStorageClass", "storageClass": "ARCHIVE"},
-      "condition": {"age": 365}
+      "action": { "type": "SetStorageClass", "storageClass": "ARCHIVE" },
+      "condition": { "age": 365 }
     }
   ]
 }

@@ -13,41 +13,50 @@ Collect events from your SDLC, transform them into [CDEvents](https://cdevents.d
 ## Learning Paths
 
 ### 📖 Tutorials (Learning-Oriented)
+
 Step-by-step lessons to build understanding:
 
 - **[Quick Start](./quick-start.md)** - 5 min setup with webhook and file output
 
 ### 🔧 How-to Guides (Problem-Oriented)
+
 Practical solutions for specific tasks:
 
 **Integrations:**
+
 - **[GitHub](./integrations/github.md)** - Repository events with signatures
 - **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
 
 **Common Tasks:**
+
 - **[Troubleshooting](./troubleshooting.md)** - Debug configuration and connectivity issues
 - **[Authentication](./header-authentication.md)** - Secure outgoing requests
 - **[Validation](./header-validation.md)** - Validate incoming webhooks
 
 ### 📚 Reference (Information-Oriented)
+
 Complete technical specifications:
 
 **Configuration:**
+
 - **[Configuration Guide](./configuration.md)** - Main config structure and environment variables
 - **[TOML Syntax](./toml-guide.md)** - Configuration file format help
 - **[CLI Usage](./usage.md)** - Command-line interface
 
 **Components:**
+
 - **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Noop](./sources/noop.md)
 - **[Transformers](./transformers.md)** - Event processing with VRL
 - **[Sinks](./sinks/)** - Event delivery: [Database](./sinks/db.md), [HTTP](./sinks/http.md), [Files](./sinks/folder.md), [SSE](./sinks/sse.md), [Debug](./sinks/debug.md)
 
 ### 🧠 Explanation (Understanding-Oriented)
+
 Concepts and design decisions:
 
 - **[CDEvents Standard](https://cdevents.dev/)** - Why we use CDEvents for standardization
 
 **Architecture Concepts:**
+
 - **Pipeline Flow**: External Systems → Sources → Transformers → Sinks → Destinations
 - **Message Structure**: All events have `metadata`, `headers`, and `body` components
 - **Parallel Processing**: Sources, transformers, and sinks run independently

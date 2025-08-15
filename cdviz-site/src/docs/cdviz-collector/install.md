@@ -43,7 +43,7 @@ cargo install cdviz-collector
 
 see [GitHub's package page](https://github.com/cdviz-dev/cdviz-collector/pkgs/container/cdviz-collector)
 
-``` bash
+```bash
 docker pull ghcr.io/cdviz-dev/cdviz-collector:latest
 ```
 

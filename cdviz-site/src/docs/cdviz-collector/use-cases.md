@@ -8,6 +8,7 @@ Common scenarios and complete configurations for real-world deployments.
 ## Development & Testing
 
 ### Local Development
+
 ```toml
 [sources.test_webhook]
 enabled = true
@@ -29,6 +30,7 @@ parameters = { root = "./dev-events" }
 **Use:** Test configurations, debug event flow, local development.
 
 ### CI/CD Pipeline Testing
+
 ```toml
 [sources.build_events]
 enabled = true
@@ -57,6 +59,7 @@ parameters = { root = "./validated-events" }
 ## Production Deployments
 
 ### Single Instance (Simple)
+
 One collector handles all event types - good for small to medium scale setups:
 
 ```
@@ -66,6 +69,7 @@ Jenkins ───┘                      └─→ Archive
 ```
 
 ### Single Collector Configuration
+
 ```toml
 [sources.api_webhooks]
 enabled = true
@@ -98,6 +102,7 @@ kind = "s3"
 **Use:** Centralized collection for small to medium deployments.
 
 ### Multiple Instances (Scalable)
+
 Different collectors for different purposes - good for high scale, separation of concerns:
 
 ```
@@ -110,6 +115,7 @@ Files ──→ Collector C ─→ Archive
 ```
 
 ### Multi-Collector Configuration
+
 ```toml
 # Edge Collector - Regional event collection
 [sources.regional_webhooks]
@@ -147,6 +153,7 @@ url = "https://analytics.company.com/events"
 ## Specific Integrations
 
 ### GitHub Repository Events
+
 ```toml
 [sources.github]
 enabled = true
@@ -170,6 +177,7 @@ template_file = "/etc/cdviz-collector/transformers/github_events.vrl"
 **Use:** Standard GitHub webhook integration. See [GitHub Integration](./integrations/github.md).
 
 ### Kubernetes Cluster Events
+
 ```toml
 [sources.k8s_events]
 enabled = true
@@ -199,6 +207,7 @@ template = '''
 **Use:** Kubernetes cluster monitoring. See [Kubernetes Integration](./integrations/kubewatch.md).
 
 ### Build Artifact Processing
+
 ```toml
 [sources.build_artifacts]
 enabled = true
@@ -247,6 +256,7 @@ url = "https://notifications.company.com/webhooks/artifacts"
 ## Advanced Patterns
 
 ### Multi-Environment with Filtering
+
 ```toml
 # Production events only
 [sources.prod_api]
@@ -274,6 +284,7 @@ template_file = "./transforms/api-events.vrl"
 **Use:** Environment-specific event processing with filtering.
 
 ### Event Splitting and Enrichment
+
 ```toml
 [sources.batch_events]
 enabled = true

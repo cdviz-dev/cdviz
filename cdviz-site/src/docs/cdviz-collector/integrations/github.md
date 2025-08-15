@@ -51,6 +51,7 @@ references:
   - title: Examples of cdevents converted from github's events
     url: https://github.com/cdviz-dev/cdviz-collector/tree/main/examples/assets/outputs/transform-github_events
 ---
+
 <script setup>
 import IntegrationCard from '../../../../components/IntegrationCard.vue'
 </script>
@@ -94,15 +95,15 @@ To configure the GitHub integration, you need to set up a webhook in your GitHub
 5. Set the "Content type" to `application/json`.
 6. In the "Secret" field, enter the secret token that you specified in your `cdviz-collector.toml` configuration.
 7. Select the events you want to trigger the webhook. You can choose "Let me select individual events" and select the events you are interested in, or you can select "Send me everything" to receive all events.
-    - Branch or tag creation
-    - Branch or tag deletion
-    - Issues
-    - Packages
-    - Pull requests
-    - Pull request reviews
-    - Releases
-    - Repository
-    - Workflow jobs
-    - Workflow runs
+   - Branch or tag creation
+   - Branch or tag deletion
+   - Issues
+   - Packages
+   - Pull requests
+   - Pull request reviews
+   - Releases
+   - Repository
+   - Workflow jobs
+   - Workflow runs
 8. Make sure the "Active" checkbox is checked.
 9. Click on "Add webhook" to save the configuration.

@@ -29,9 +29,9 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
 
 1. Configure Grafana according to the requirements above (plugins and settings)
 2. Create a PostgreSQL datasource in Grafana to connect to the CDViz Database:
-    - Type: `grafana-postgresql-datasource`
-    - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
-    - TimescaleDB: `enabled`
+   - Type: `grafana-postgresql-datasource`
+   - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
+   - TimescaleDB: `enabled`
 3. Import dashboards by copying JSON definitions from the [CDViz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)
 
 ### Kubernetes Deployment with Helm
@@ -39,61 +39,61 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
 1. Configure Grafana according to the requirements specified above
 2. Enable dashboard and datasource provisioning via sidecars:
 
-    ::: details Grafana Helm Chart Configuration
-    ```yaml
-    # https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
-    #
+   ::: details Grafana Helm Chart Configuration
+   ```yaml
+   # https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
+   #
 
-    # Configuration override with environment variables
-    # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
-    env:
-      GF_PANELS_DISABLE_SANITIZE_HTML: "true" # Required for dynamic/business text rendering
+   # Configuration override with environment variables
+   # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
+   env:
+     GF_PANELS_DISABLE_SANITIZE_HTML: "true" # Required for dynamic/business text rendering
 
-    plugins:
-        - marcusolsson-dynamictext-panel
-        - volkovlabs-form-panel
-        - volkovlabs-table-panel
+   plugins:
+     - marcusolsson-dynamictext-panel
+     - volkovlabs-form-panel
+     - volkovlabs-table-panel
 
-    # Sidecar configuration for dashboard and datasource provisioning
-    sidecar:
-        dashboards:
-            enabled: true
-            searchNamespace: ALL
-            label: grafana_dashboard
-            labelValue: "1"
-        datasources:
-            enabled: true
-            searchNamespace: ALL
-            label: grafana_datasource
-            labelValue: "1"
-    ```
-    :::
+   # Sidecar configuration for dashboard and datasource provisioning
+   sidecar:
+     dashboards:
+       enabled: true
+       searchNamespace: ALL
+       label: grafana_dashboard
+       labelValue: "1"
+     datasources:
+       enabled: true
+       searchNamespace: ALL
+       label: grafana_datasource
+       labelValue: "1"
+   ```
+   :::
 
 3. Configure the datasource either manually or by creating a values.yaml file for the CDViz Grafana chart:
 
-    ```yaml
-    datasources:
-      enabled: true
-      definitions:
-        cdviz-db:
-          enabled: true
-          type: grafana-postgresql-datasource
-          access: proxy
-          # Environment variable injection syntax
-          url: "$CDVIZ_DASHBOARDS_POSTGRES_HOST"
-          user: "$CDVIZ_DASHBOARDS_POSTGRES_USER"
-          secureJsonData:
-            password: "$CDVIZ_DASHBOARDS_POSTGRES_PASSWORD"
-          jsonData:
-            database: "$CDVIZ_DASHBOARDS_POSTGRES_DB"
-            sslmode: "require" # Options: disable/require/verify-ca/verify-full
-            maxOpenConns: 100
-            maxIdleConns: 100
-            maxIdleConnsAuto: true
-            connMaxLifetime: 14400
-            postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
-            timescaledb: true
-    ```
+   ```yaml
+   datasources:
+     enabled: true
+     definitions:
+       cdviz-db:
+         enabled: true
+         type: grafana-postgresql-datasource
+         access: proxy
+         # Environment variable injection syntax
+         url: "$CDVIZ_DASHBOARDS_POSTGRES_HOST"
+         user: "$CDVIZ_DASHBOARDS_POSTGRES_USER"
+         secureJsonData:
+           password: "$CDVIZ_DASHBOARDS_POSTGRES_PASSWORD"
+         jsonData:
+           database: "$CDVIZ_DASHBOARDS_POSTGRES_DB"
+           sslmode: "require" # Options: disable/require/verify-ca/verify-full
+           maxOpenConns: 100
+           maxIdleConns: 100
+           maxIdleConnsAuto: true
+           connMaxLifetime: 14400
+           postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+           timescaledb: true
+   ```
 
 4. Deploy using the Helm chart:
 

@@ -114,6 +114,7 @@ parser = "json"
 ```
 
 **Input file** (`event.json`):
+
 ```json
 {
   "event": "deployment",
@@ -133,6 +134,7 @@ parser = "jsonl"
 ```
 
 **Input file** (`events.jsonl`):
+
 ```json
 {"event": "build", "status": "started"}
 {"event": "build", "status": "completed"}
@@ -150,6 +152,7 @@ parser = "csv_row"
 ```
 
 **Input file** (`deployments.csv`):
+
 ```csv
 timestamp,service,version,environment
 2024-01-01T10:00:00Z,api,1.2.3,production
@@ -196,6 +199,7 @@ try_read_headers_json = true
 ```
 
 **Example**: For `event.json`, create `event.headers.json`:
+
 ```json
 {
   "X-Source-System": "jenkins",
@@ -312,6 +316,7 @@ root = "./test-events"
 ## Service Capabilities
 
 OpenDAL services must support these capabilities:
+
 - **`read`**: Read file contents
 - **`list`**: List directory contents
 - **`stat`**: Get file metadata
@@ -319,16 +324,19 @@ OpenDAL services must support these capabilities:
 ## Authentication
 
 ### AWS S3
+
 - Access keys (access_key_id, secret_access_key)
 - IAM roles (when running on EC2)
 - Environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 
 ### Google Cloud Storage
+
 - Service account key file (credential_path)
 - Environment variables (GOOGLE_APPLICATION_CREDENTIALS)
 - Metadata service (when running on GCP)
 
 ### Azure Blob Storage
+
 - Account name and key
 - Connection string
 - Managed identity (when running on Azure)
@@ -336,16 +344,19 @@ OpenDAL services must support these capabilities:
 ## Performance Considerations
 
 ### Polling Interval
+
 - Shorter intervals provide lower latency but higher resource usage
 - Consider file creation frequency when setting polling_interval
 - Use longer intervals for large buckets with infrequent changes
 
 ### Pattern Efficiency
+
 - More specific patterns reduce scanning overhead
 - Avoid overly broad patterns like `**/*` on large directories
 - Use directory-specific patterns when possible
 
 ### File Size
+
 - Large files may cause memory pressure during parsing
 - Consider breaking large files into smaller chunks
 - Use appropriate parser for file format
@@ -353,6 +364,7 @@ OpenDAL services must support these capabilities:
 ## Troubleshooting
 
 ### Permission Issues
+
 ```bash
 # Check AWS credentials
 aws s3 ls s3://your-bucket/
@@ -365,13 +377,16 @@ az storage blob list --container-name your-container
 ```
 
 ### Pattern Debugging
+
 Enable debug logging to see which files match patterns:
+
 ```toml
 [logging]
 level = "debug"
 ```
 
 ### File Not Found
+
 - Verify bucket/container exists
 - Check path patterns for typos
 - Ensure recursive setting matches directory structure

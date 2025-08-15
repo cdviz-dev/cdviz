@@ -7,9 +7,9 @@ const { frontmatter, title } = useData();
 
 <!-- setup made with https://giscus.app/ -->
 <template>
-  <div :key="title" class="giscus" v-if="frontmatter.comments !== false" >
+  <div :key="title" class="giscus" v-if="frontmatter.comments !== false">
     <component
-      :is="'script'"
+      :is='"script"'
       src="https://giscus.app/client.js"
       data-repo="cdviz-dev/cdviz"
       data-repo-id="R_kgDOK_GPig"

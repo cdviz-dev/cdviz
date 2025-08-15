@@ -54,11 +54,11 @@
 
   /* Enhanced font stacks with optimized fallbacks */
   --font-family-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --font-family-mono:
-    "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code",
-    "Roboto Mono", Menlo, "DejaVu Sans Mono", Consolas, monospace;
+    "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Menlo,
+    "DejaVu Sans Mono", Consolas, monospace;
 }
 
 :root {
@@ -79,7 +79,9 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap; /* Ensures text is visible during font swap period */
-  src: local("Inter"), local("Inter-Regular");
+  src:
+    local("Inter"),
+    local("Inter-Regular");
 }
 
 /* Typography rendering optimizations */
@@ -87,10 +89,7 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings:
-    "kern" 1,
-    "liga" 1,
-    "calt" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
 /* Enhanced typography for better readability */
@@ -109,11 +108,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-family-sans);
-  font-feature-settings:
-    "kern" 1,
-    "liga" 1,
-    "calt" 1,
-    "ss01" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
   text-rendering: optimizeLegibility;
 }
 
@@ -122,11 +117,7 @@ code,
 pre,
 .code {
   font-family: var(--font-family-mono);
-  font-feature-settings:
-    "kern" 0,
-    "liga" 0,
-    "calt" 1,
-    "zero" 1;
+  font-feature-settings: "kern" 0, "liga" 0, "calt" 1, "zero" 1;
 }
 
 /* Typography vertical rhythm optimization */
@@ -430,7 +421,7 @@ blockquote {
 }
 
 blockquote::before {
-  content: '"';
+  content: "\"";
   font-size: 2rem;
   color: var(--color-primary / 30);
   position: absolute;
@@ -758,9 +749,7 @@ img[src$=".svg"] {
 
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow:
-    0 0 0 2px var(--color-primary),
-    0 0 0 4px var(--color-primary / 20);
+  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px var(--color-primary / 20);
 }
 
 /* Loading spinner optimization */
@@ -877,9 +866,7 @@ img[src$=".svg"] {
 
 .card-hover:hover {
   /* Subtle shadow enhancement only - no movement that breaks interaction */
-  box-shadow:
-    0 8px 25px -5px rgba(0, 0, 0, 0.15),
-    0 4px 10px -5px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(0, 0, 0, 0.08);
   /* Subtle border glow */
   border-color: var(--color-primary / 40);
 }
@@ -941,9 +928,7 @@ img[src$=".svg"] {
   overflow: hidden;
   border-right: 2px solid var(--color-primary);
   white-space: nowrap;
-  animation:
-    typewriter 3s steps(40, end),
-    blink-cursor 0.75s step-end infinite;
+  animation: typewriter 3s steps(40, end), blink-cursor 0.75s step-end infinite;
 }
 
 /* Particle animation */
