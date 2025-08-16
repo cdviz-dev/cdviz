@@ -52,9 +52,58 @@ outputs = [
   "hero-dashboard-01-400w.avif"
 ]
 
+# Blog asset transformation tasks
+[tasks."blog:install-deps"]
+description = "install dependencies for blog asset transformation"
+run = [
+  "bun add -D @excalidraw/mermaid-to-excalidraw",
+  "bun add -D mermaid",
+  "bun add -D puppeteer"
+]
+
+[tasks."blog:extract-mermaid"]
+description = "extract mermaid diagrams from blog frontmatter to assets-src/"
+dir = "blog-src"
+run = [
+  "bun run ../scripts/extract-mermaid.js"
+]
+sources = ["series-*.md"]
+outputs = ["../assets-src/blog/*.mmd"]
+
+[tasks."blog:mermaid-to-excalidraw"]
+description = "convert mermaid diagrams to excalidraw format"
+dir = "assets-src/blog"
+run = [
+  "for file in *.mmd; do [ -f \"$file\" ] && bunx @excalidraw/mermaid-to-excalidraw \"$file\" \"${file%.mmd}.excalidraw\" || echo 'No .mmd files found'; done"
+]
+sources = ["*.mmd"]
+outputs = ["*.excalidraw"]
+
+[tasks."blog:style-excalidraw"]
+description = "apply CDviz styling to excalidraw diagrams"
+dir = "assets-src/blog"
+run = [
+  "bun run ../../scripts/style-excalidraw.js"
+]
+sources = ["*.excalidraw"]
+outputs = ["*.styled.excalidraw"]
+
+[tasks."blog:export-png"]
+description = "export excalidraw diagrams to PNG for blog compatibility"
+dir = "assets-src/blog"
+run = [
+  "bun run ../../scripts/excalidraw-to-png.js"
+]
+sources = ["*.styled.excalidraw"]
+outputs = ["../../assets/blog/*.png"]
+
+[tasks."blog:build"]
+description = "full blog asset pipeline: mermaid → excalidraw → styled → PNG"
+depends = ["blog:extract-mermaid", "blog:mermaid-to-excalidraw", "blog:style-excalidraw", "blog:export-png"]
+
 [tasks."build:images"]
-description = "rebuild all optimized images (favicon + hero images)"
-depends = ["build:favicon", "build:hero-images"]
+description = "rebuild all optimized images (favicon + hero images + blog assets)"
+depends = ["build:favicon", "build:hero-images", "blog:build"]
 
 [tasks.format]
 alias = "fmt"

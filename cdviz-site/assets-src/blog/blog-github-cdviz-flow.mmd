@@ -1,0 +1,10 @@
+graph LR
+  GH[GitHub Actions] -->|"1. POST /events"| Col[CDviz Collector]
+  Col -->|"2. INSERT event"| DB[(PostgreSQL)]
+  DB -->|"3. SELECT events"| Graf[Grafana Dashboard]
+  Graf -->|"4. Display metrics"| User[Developer]
+  
+  style GH fill:#f08c00,stroke:#f08c00,color:#000
+  style Col fill:#f08c00,stroke:#f08c00,color:#000  
+  style DB fill:#f08c00,stroke:#f08c00,color:#000
+  style Graf fill:#f08c00,stroke:#f08c00,color:#000
