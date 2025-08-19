@@ -52,9 +52,15 @@ outputs = [
   "hero-dashboard-01-400w.avif"
 ]
 
+# Blog build task (runs in blog/ subdirectory)
+[tasks."blog:build"]
+description = "build blog assets using blog/.mise.toml"
+dir = "blog"
+run = ["mise run build"]
+
 [tasks."build:images"]
-description = "rebuild all optimized images (favicon + hero images)"
-depends = ["build:favicon", "build:hero-images"]
+description = "rebuild all optimized images (favicon + hero images + blog assets)"
+depends = ["build:favicon", "build:hero-images", "blog:build"]
 
 [tasks.format]
 alias = "fmt"

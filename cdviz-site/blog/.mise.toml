@@ -1,0 +1,37 @@
+[tools]
+"bun" = "latest"
+
+[tasks.install]
+description = "install mmd-to-img dependencies"
+run = ["bun install"]
+dir = "../mmd-to-img"
+
+[tasks."extract-mermaid"]
+description = "extract mermaid diagrams from blog frontmatter to assets-src/"
+dir = "src"
+run = ["bun run ../scripts/extract-mermaid.js"]
+sources = ["series-*.md"]
+outputs = ["../assets-src/*.mmd"]
+
+[tasks."convert-diagrams"]
+description = "convert mermaid diagrams to PNG using mmd-to-img CLI"
+# description = "convert mermaid diagrams to SVG, PNG, and excalidraw using mmd-to-img CLI"
+dir = "assets-src"
+run = [
+  "bun run ../../mmd-to-img/bin/mmd-to-img.js --input . --output ../assets --format png --verbose",
+]
+sources = ["*.mmd"]
+outputs = ["../assets/*.svg", "../assets/*.png", "../assets/*.excalidraw"]
+
+[tasks.build]
+description = "full blog asset pipeline: extract mermaid → convert to all formats"
+depends = ["extract-mermaid", "convert-diagrams"]
+
+[tasks.test]
+description = "test mmd-to-img CLI functionality"
+run = ["mise run test"]
+dir = "../mmd-to-img"
+
+[tasks.clean]
+description = "clean generated assets"
+run = ["rm -rf assets/*.svg assets/*.png assets/*.excalidraw"]
