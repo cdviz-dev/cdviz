@@ -49,7 +49,7 @@ outputs = [
   "hero-dashboard-01-400w.webp",
   "hero-dashboard-01.avif",
   "hero-dashboard-01-600w.avif",
-  "hero-dashboard-01-400w.avif"
+  "hero-dashboard-01-400w.avif",
 ]
 
 [tasks."build:images"]

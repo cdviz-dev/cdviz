@@ -4,7 +4,7 @@ Get CDviz Collector running in 5 minutes with a working example.
 
 ## What You'll Build
 
-```
+```txt
 Webhook Endpoint → Transform to CDEvent → Save to Files
 ```
 
@@ -40,10 +40,10 @@ template = '''
     "headers": .headers,
     "body": {
         "context": {
-            "version": "0.4.0-draft",
+            "version": "0.4.1",
             "id": "0",
             "source": "/cdviz/api",
-            "type": "dev.cdevents.service.deployed.0.1.1",
+            "type": "dev.cdevents.service.deployed.0.2.0",
             "timestamp": now()
         },
         "subject": {
