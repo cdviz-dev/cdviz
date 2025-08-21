@@ -6,13 +6,6 @@ description = "install mmd-to-img dependencies"
 run = ["bun install"]
 dir = "../mmd-to-img"
 
-[tasks."extract-mermaid"]
-description = "extract mermaid diagrams from blog frontmatter to assets-src/"
-dir = "src"
-run = ["bun run ../scripts/extract-mermaid.js"]
-sources = ["series-*.md"]
-outputs = ["../assets-src/*.mmd"]
-
 [tasks."convert-diagrams"]
 description = "convert mermaid diagrams to PNG using mmd-to-img CLI"
 # description = "convert mermaid diagrams to SVG, PNG, and excalidraw using mmd-to-img CLI"
