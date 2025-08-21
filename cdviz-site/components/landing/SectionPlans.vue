@@ -1,5 +1,4 @@
 <script setup>
-import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
 
 const comparisonFeatures = {
@@ -115,7 +114,6 @@ const comparisonFeatures = {
       },
     },
     "Server-Sent Event (SSE)": {
-      comingSoon: true,
       community: {
         value: true,
       },
@@ -384,7 +382,6 @@ const comparisonFeatures = {
       },
     },
     "Server-Sent Event (SSE)": {
-      comingSoon: true,
       community: {
         value: true,
       },
