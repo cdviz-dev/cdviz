@@ -2,6 +2,8 @@
 
 Every contribution is welcome!
 
+By contributing to this project, you agree to the [Contributor License Agreement (CLA)](https://gist.github.com/davidB/a9aa6c67ab86229f3988b86376ebb905).
+
 ## How to contribute
 
 ### Reporting bugs
@@ -19,6 +21,13 @@ If you want to contribute documentation, please open a pull request, and start a
 ### Contributing code
 
 If you want to contribute code, please open an [issue] first to discuss what you want to do. Do not open a new [issue] to work on an existing [issue]. Then fork the repository, create a branch, and open a pull request.
+
+1. Fork the repository.
+2. Create a branch for your changes.
+3. Commit with `git commit -s` to sign off your work.
+4. Submit a pull request.
+
+All contributions must include a `Signed-off-by` line.
 
 ## Development Setup
 
@@ -53,6 +62,7 @@ mise run ci
 ## Component-Specific Development
 
 ### Site Documentation (cdviz-site/)
+
 ```bash
 cd cdviz-site
 mise install          # Install dependencies (bun, biome)
@@ -63,6 +73,7 @@ mise run format        # Format code with biome
 ```
 
 ### Grafana Dashboards (cdviz-grafana/)
+
 ```bash
 cd cdviz-grafana
 mise install                    # Install dependencies (yq, bun, biome)
@@ -75,6 +86,7 @@ mise run ci                     # Run all CI tasks
 ```
 
 ### Database Management (cdviz-db/)
+
 ```bash
 cd cdviz-db
 mise install                    # Install Atlas
@@ -89,6 +101,7 @@ mise run ci                     # Run CI tasks
 ```
 
 ### Charts Management (charts/)
+
 ```bash
 cd charts
 mise install                    # Install helm, kubectl
@@ -100,6 +113,7 @@ mise run ci                     # Run all CI tasks
 ```
 
 ### Demo Environment (demos/)
+
 ```bash
 cd demos
 mise install                    # Install dependencies (kubectl, ctlptl, kind, helmwave)
