@@ -14,15 +14,16 @@ ENV USER=nonroot
 ENV UID=10001
 
 RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "${USER}"
+  --disabled-password \
+  --gecos "" \
+  --home "/nonexistent" \
+  --shell "/sbin/nologin" \
+  --no-create-home \
+  --uid "${UID}" \
+  "${USER}"
 
 USER nonroot
+HEALTHCHECK NONE
 
 COPY --chown=$USER migrations /migrations
 
@@ -49,16 +50,16 @@ FROM --platform=$BUILDPLATFORM ghcr.io/cloudnative-pg/postgresql:${PG_VERSION} A
 USER root
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 RUN \
-    export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update -y -qq && \
-    apt-get install -y -qq --no-install-recommends gnupg postgresql-common apt-transport-https lsb-release curl && \
-    echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -c -s) main" | tee /etc/apt/sources.list.d/timescaledb.list && \
-    curl -fsSL https://packagecloud.io/timescale/timescaledb/gpgkey | gpg --dearmor -o /etc/apt/trusted.gpg.d/timescaledb.gpg && \
-    apt-get update -y -qq && \
-    apt-get install -y -qq --no-install-recommends "timescaledb-2-postgresql-${PG_MAJOR}" "timescaledb-tools" "timescaledb-toolkit-postgresql-${PG_MAJOR}" && \
-    # cleanup
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false curl && \
-    rm /etc/apt/sources.list.d/timescaledb.list /etc/apt/trusted.gpg.d/timescaledb.gpg &&\
-    rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
+  export DEBIAN_FRONTEND=noninteractive && \
+  apt-get update -y -qq && \
+  apt-get install -y -qq --no-install-recommends gnupg postgresql-common apt-transport-https lsb-release curl && \
+  echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -c -s) main" | tee /etc/apt/sources.list.d/timescaledb.list && \
+  curl -fsSL https://packagecloud.io/timescale/timescaledb/gpgkey | gpg --dearmor -o /etc/apt/trusted.gpg.d/timescaledb.gpg && \
+  apt-get update -y -qq && \
+  apt-get install -y -qq --no-install-recommends "timescaledb-2-postgresql-${PG_MAJOR}" "timescaledb-tools" "timescaledb-toolkit-postgresql-${PG_MAJOR}" && \
+  # cleanup
+  apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false curl && \
+  rm /etc/apt/sources.list.d/timescaledb.list /etc/apt/trusted.gpg.d/timescaledb.gpg &&\
+  rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
 
 USER 26
