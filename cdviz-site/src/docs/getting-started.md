@@ -64,7 +64,45 @@ Now that your local environment is running, let's send some events and see them 
 
    ![Incident Metrics View](/quickstart/metrics_with_incident.png)
 
-## 3. Exploring Further
+## 3. Alternative: Using GitHub Actions
+
+If you're using GitHub for your code repositories, you can send CDEvents directly from your GitHub workflows without setting up webhooks. The `send-cdevents` GitHub Action makes it easy to integrate CDviz into your CI/CD pipelines.
+
+### Quick Example
+
+Add this to your `.github/workflows/main.yml`:
+
+```yaml
+name: Notify CDviz
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send deployment event
+        uses: cdviz-dev/send-cdevents@v1
+        with:
+          data: |
+            {
+              "context": {
+                "version": "0.4.1",
+                "source": "github.com/${{ github.repository }}",
+                "type": "dev.cdevents.service.deployed.0.1.4"
+              },
+              "subject": {
+                "id": "myapp/production",
+                "type": "service"
+              }
+            }
+          url: 'http://localhost:8080/webhook/github-actions'
+```
+
+For complete setup instructions, see the [GitHub Action Integration Guide](/docs/cdviz-collector/integrations/github-action).
+
+## 4. Exploring Further
 
 Congratulations! You've successfully sent your first CDEvents and visualized them in Grafana. Here are a few things you can do to continue exploring CDviz:
 

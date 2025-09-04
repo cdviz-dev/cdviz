@@ -107,3 +107,27 @@ To configure the GitHub integration, you need to set up a webhook in your GitHub
    - Workflow runs
 8. Make sure the "Active" checkbox is checked.
 9. Click on "Add webhook" to save the configuration.
+
+## Complementary: GitHub Action Integration
+
+For enhanced control and custom events, you can also use the **[GitHub Action integration](/docs/cdviz-collector/integrations/github-action)** alongside or instead of webhooks.
+
+**These approaches can be used together** for comprehensive event coverage:
+
+| Feature           | Webhook Integration           | GitHub Action          |
+| ----------------- | ----------------------------- | ---------------------- |
+| **Setup**         | Configure webhook + collector | Add action to workflow |
+| **Event Control** | All GitHub events             | Custom events only     |
+| **Custom Data**   | Limited to webhook payload    | Full control           |
+| **Timing**        | Real-time                     | Workflow-controlled    |
+| **Maintenance**   | Central configuration         | Per-workflow setup     |
+
+**Recommended combinations:**
+
+- **Webhooks only**: Complete GitHub activity tracking with automatic setup
+- **GitHub Action only**: Custom events for specific workflows with full control
+- **Both together**: Comprehensive GitHub events (webhooks) + custom workflow data (actions)
+
+**Example combined use case**: Use webhooks to track all repository activity automatically, while adding GitHub Actions to specific deployment workflows to send detailed deployment context and custom metrics.
+
+For step-by-step instructions, see the [GitHub Action Integration Guide](/docs/cdviz-collector/integrations/github-action).
