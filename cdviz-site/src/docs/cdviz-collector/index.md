@@ -43,6 +43,12 @@ Complete technical specifications:
 - **[TOML Syntax](./toml-guide.md)** - Configuration file format help
 - **[CLI Usage](./usage.md)** - Command-line interface
 
+**Commands:**
+
+- [`connect`](./connect.md) - Launch collector as a server to connect sources to sinks.
+- [`send`](./send.md) - Send JSON data directly to a sink for testing and scripting.
+- [`transform`](./transform.md) - Transform local JSON files using configured transformers or test transformer.
+
 **Components:**
 
 - **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Noop](./sources/noop.md)

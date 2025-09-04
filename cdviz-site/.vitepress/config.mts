@@ -98,6 +98,21 @@ export default defineConfig({
             {
               text: "Usage",
               link: "/docs/cdviz-collector/usage",
+              collapsed: true,
+              items: [
+                {
+                  text: "connect",
+                  link: "/docs/cdviz-collector/connect",
+                },
+                {
+                  text: "send",
+                  link: "/docs/cdviz-collector/send",
+                },
+                {
+                  text: "transform",
+                  link: "/docs/cdviz-collector/transform",
+                },
+              ],
             },
             {
               text: "Configuration",
