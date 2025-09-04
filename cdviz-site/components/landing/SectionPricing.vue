@@ -9,20 +9,82 @@ import H3 from "./H3.vue";
 const isYearly = ref(true);
 const isToggling = ref(false);
 
-const pricing = {
-  community: {
-    monthly: 0,
-    yearly: 0,
+const pricingPlans = [
+  {
+    id: "community",
+    title: "Community",
+    subtitle: "Forever free",
+    pricing: {
+      monthly: 0,
+      yearly: 0,
+    },
+    features: [
+      { icon: "icon-[lucide--workflow]", text: "Collector (AGPL v3)" },
+      { icon: "icon-[lucide--database]", text: "Database schemas (ASL v2)" },
+      {
+        icon: "icon-[lucide--bar-chart-3]",
+        text: "Grafana components (ASL v2)",
+      },
+      { icon: "icon-[lucide--users]", text: "Community Support" },
+    ],
+    button: {
+      text: "Get Started",
+      href: "/docs",
+      primary: false,
+    },
+    colorScheme: "secondary",
+    highlighted: false,
+    disabled: false,
   },
-  enterprise: {
-    monthly: 109,
-    yearly: 1100,
+  {
+    id: "enterprise",
+    title: "Enterprise",
+    subtitle: "",
+    pricing: {
+      monthly: 109,
+      yearly: 1100,
+    },
+    features: [
+      { icon: "icon-[lucide--building]", text: "On-premise" },
+      { icon: "icon-[lucide--workflow]", text: "Optional Commercial License" },
+      { icon: "icon-[lucide--plug]", text: "Additional integrations" },
+      { icon: "icon-[lucide--headphones]", text: "Professional support" },
+    ],
+    button: {
+      text: "Subscribe Now",
+      href: "",
+      primary: true,
+    },
+    colorScheme: "primary",
+    highlighted: true,
+    disabled: false,
   },
-  saas: {
-    monthly: 129,
-    yearly: 1390,
+  {
+    id: "saas",
+    title: "SaaS",
+    subtitle: "",
+    pricing: {
+      monthly: 129,
+      yearly: 1390,
+    },
+    features: [
+      {
+        icon: "icon-[lucide--workflow]",
+        text: "Same features than Enterprise",
+      },
+      { icon: "icon-[lucide--cloud]", text: "Collector on our infrastructure" },
+    ],
+    button: {
+      text: "Join Waitlist",
+      href: "/contact",
+      primary: false,
+    },
+    colorScheme: "secondary",
+    highlighted: false,
+    disabled: true,
+    badge: "Coming Soon",
   },
-};
+];
 
 const getSubscriptionUrl = (tier) => {
   if (tier === "enterprise") {
@@ -34,25 +96,46 @@ const getSubscriptionUrl = (tier) => {
   return "";
 };
 
-const getPrice = (tier) => {
+const getPrice = (plan) => {
   if (isYearly.value) {
-    return Math.ceil(pricing[tier].yearly / 12);
+    return Math.ceil(plan.pricing.yearly / 12);
   }
-  return pricing[tier].monthly;
+  return plan.pricing.monthly;
 };
 
-const getDiscount = (tier) => {
-  if (tier === "community") return 0;
-  const monthly = pricing[tier].monthly * 12;
-  const yearly = pricing[tier].yearly;
+const getDiscount = (plan) => {
+  if (plan.id === "community") return 0;
+  const monthly = plan.pricing.monthly * 12;
+  const yearly = plan.pricing.yearly;
   return Math.round(((monthly - yearly) / monthly) * 100);
 };
 
 const getDiscountMax = () => {
-  return Object.keys(pricing).reduce((max, key) => {
-    const discount = getDiscount(key);
+  return pricingPlans.reduce((max, plan) => {
+    const discount = getDiscount(plan);
     return discount > max ? discount : max;
   }, 0);
+};
+
+const getButtonHref = (plan) => {
+  if (plan.id === "enterprise") {
+    return getSubscriptionUrl("enterprise");
+  }
+  return plan.button.href;
+};
+
+const getCardClasses = (plan) => {
+  const baseClasses =
+    "flex flex-col justify-between rounded-xl p-6 text-center relative transform-gpu card-hover";
+  const colorClasses =
+    plan.colorScheme === "primary"
+      ? "border-2 border-primary/30 bg-primary/5"
+      : "border-2 border-secondary/20 bg-secondary/5";
+  const highlightClasses = plan.highlighted
+    ? "transform md:scale-105 md:shadow-xl md:z-10"
+    : "";
+
+  return `${baseClasses} ${colorClasses} ${highlightClasses}`;
 };
 
 const togglePricing = () => {
@@ -97,230 +180,140 @@ onMounted(() => {
     </div>
 
     <!-- Pricing Toggle -->
-    <div class="flex items-center justify-center my-xl">
-      <span
-        class="text-lg mr-4 font-medium"
-        :class="{ 'text-current': isYearly, 'text-current/80': !isYearly }"
-        >Monthly</span
-      >
-      <button
-        @click="togglePricing"
-        class="relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
-        :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
-        :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
-        role="switch"
-        :aria-checked="isYearly.toString()"
+    <div class="flex flex-col sm:flex-row items-center justify-center my-xl gap-4 sm:gap-0">
+      <div class="flex items-center gap-3 sm:gap-4">
+        <span
+          class="text-base sm:text-lg font-medium transition-colors duration-200"
+          :class="{ 'text-current': !isYearly, 'text-current/60': isYearly }"
+        >
+          Monthly
+        </span>
+        <button
+          @click="togglePricing"
+          class="relative inline-flex h-7 w-12 sm:h-8 sm:w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
+          :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
+          :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
+          role="switch"
+          :aria-checked="isYearly.toString()"
+        >
+          <span
+            class="inline-block h-5 w-5 sm:h-6 sm:w-6 transform rounded-full transition-all duration-300 shadow-sm"
+            :class="[
+              isYearly ? 'translate-x-6 sm:translate-x-7 bg-white' : 'translate-x-1 bg-primary',
+              isToggling ? 'scale-110' : 'scale-100',
+            ]"
+          />
+        </button>
+        <span
+          class="text-base sm:text-lg font-medium transition-colors duration-200"
+          :class="{ 'text-current': isYearly, 'text-current/60': !isYearly }"
+        >
+          Annual
+        </span>
+      </div>
+      <div
+        class="flex items-center justify-center mt-2 sm:mt-0 sm:ml-4"
       >
         <span
-          class="inline-block h-6 w-6 transform rounded-full transition-all duration-300 shadow-sm"
-          :class="[
-            isYearly ? 'translate-x-7 bg-white' : 'translate-x-1 bg-primary',
-            isToggling ? 'scale-110' : 'scale-100',
-          ]"
-        />
-      </button>
-      <span
-        class="text-lg ml-4 flex items-center font-medium"
-        :class="{ 'text-current': !isYearly, 'text-current/80': isYearly }"
-      >
-        Annual
-        <span
-          class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full font-normal"
+          class="text-xs sm:text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full font-normal whitespace-nowrap"
         >
           Save up to {{ getDiscountMax() }}%
         </span>
-      </span>
+      </div>
     </div>
-    <div class="grid space-content md:grid-cols-3 max-w-5xl mx-auto">
-      <!-- Community Plan -->
+    <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
       <div
-        data-animate-pricing
-        class="flex flex-col justify-between rounded-xl p-lg text-center border-2 border-secondary/20 bg-secondary/5 relative transform-gpu card-hover"
+        v-for="plan in pricingPlans"
+        :key="plan.id"
+        :data-animate-pricing="true"
+        :class="getCardClasses(plan)"
       >
-        <div>
-          <H3 class="text-secondary">Open Source / Community</H3>
-          <div
-            class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden"
-          >
-            <div
-              :key="getPrice('community')"
-              class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
-            >
-              <AnimatedCounter
-                :end="getPrice('community')"
-                prefix="€"
-                class="text-4xl font-bold text-secondary"
-              />
-            </div>
-          </div>
-          <div class="text-sm font-semibold text-secondary/80 mb-4">
-            Forever free
-          </div>
-          <ul class="my-6 text-left">
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Collector (AGPL v3)</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Database schemas (ASL v2)</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--bar-chart-3] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Grafana components (ASL v2)</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--users] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Community Support</span>
-            </li>
-          </ul>
-        </div>
-        <Btn href="/docs">Get Started</Btn>
-      </div>
-      <!-- Enterprise Plan -->
-      <div
-        data-animate-pricing
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center border-2 border-primary/30 bg-primary/5 relative transform md:scale-105 md:shadow-xl md:z-10 transform-gpu card-hover"
-      >
-        <div>
-          <H3 class="text-primary">Enterprise</H3>
-          <div
-            class="text-4xl sm:text-5xl font-bold mx-auto my-4 text-primary relative overflow-hidden"
-          >
-            <div
-              :key="getPrice('enterprise')"
-              class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
-            >
-              <AnimatedCounter
-                :end="getPrice('enterprise')"
-                prefix="€"
-                suffix="/month"
-                class="text-4xl sm:text-5xl font-bold text-primary"
-              />
-            </div>
-          </div>
-          <div v-if="isYearly" class="text-sm text-green-600 mb-4">
-            Save {{ getDiscount("enterprise") }}%
-          </div>
-          <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-6 text-left">
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--building] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
-              <span>On-premise</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--workflow] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
-              <span>Optional Commercial License</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--plug] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
-              <span>Additional integrations</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--headphones] h-5 w-5 text-primary flex-shrink-0"
-              ></span>
-              <span>Professional support</span>
-            </li>
-            <!-- <li class="check-circle mb-4 pl-8">
-              Create a custom source or sink
-            </li>
-            <li class="check-circle mb-4 pl-8">
-              Create a custom dashboard or alert
-            </li>
-            <li class="check-circle mb-4 pl-8">Adapt to your needs</li> -->
-          </ul>
-        </div>
-        <Btn
-          :href="getSubscriptionUrl('enterprise')"
-          aria-label="Subscribe to Enterprise"
-          primary
-          >Subscribe Now</Btn
-        >
-      </div>
-      <!-- SaaS Plan - Preview -->
-      <div
-        data-animate-pricing
-        class="flex flex-col justify-between rounded-xl p-6 sm:p-8 pt-4 text-center relative border-2 border-secondary/20 bg-secondary/5 transform-gpu card-hover"
-      >
+        <!-- Badge for special plans -->
         <div
-          class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold text-secondary bg-secondary/10 border border-secondary/30 shadow-sm"
+          v-if="plan.badge"
+          class="absolute z-10 right-3 top-3 rotate-12 rounded-lg px-3 py-1 text-center text-sm font-semibold bg-secondary/10 border border-secondary/30 shadow-sm"
+          :class="`text-${plan.colorScheme}`"
         >
-          Coming Soon
+          {{ plan.badge }}
         </div>
-        <div class="isDisabled">
-          <H3 class="text-secondary">SaaS</H3>
+
+        <div :class="{ isDisabled: plan.disabled }" class="mb-8">
+          <!-- Title -->
+          <H3 :class="`text-${plan.colorScheme} mb-4`">
+            {{ plan.title }}
+          </H3>
+
+          <!-- Price -->
           <div
-            class="text-4xl font-bold mx-auto my-4 text-secondary relative overflow-hidden"
+            class="text-4xl font-bold mx-auto mb-4 relative overflow-hidden"
+            :class="[
+              `text-${plan.colorScheme}`,
+              plan.highlighted ? 'sm:text-5xl' : '',
+            ]"
           >
             <div
-              :key="getPrice('saas')"
+              :key="getPrice(plan)"
               class="transition-all duration-300 transform"
               :class="
                 isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
               "
             >
               <AnimatedCounter
-                :end="getPrice('saas')"
+                :end="getPrice(plan)"
                 prefix="€"
-                suffix="/month"
-                class="text-4xl font-bold text-secondary"
+                :suffix="plan.pricing.monthly > 0 ? '/month' : ''"
+                class="font-bold"
+                :class="[
+                  `text-${plan.colorScheme}`,
+                  plan.highlighted ? 'text-4xl sm:text-5xl' : 'text-4xl',
+                ]"
               />
             </div>
           </div>
-          <div v-if="isYearly" class="text-sm text-green-600 mb-4">
-            Save {{ getDiscount("saas") }}%
+
+          <!-- Subtitle and discount -->
+          <div
+            v-if="plan.subtitle"
+            class="text-sm font-semibold mb-6"
+            :class="`text-${plan.colorScheme}/80`"
+          >
+            {{ plan.subtitle }}
           </div>
-          <div v-else class="text-sm text-gray-600 mb-4">&nbsp;</div>
-          <ul class="my-6 text-left">
-            <li class="flex items-center gap-3 mb-4">
+          <div
+            v-else-if="isYearly && getDiscount(plan) > 0"
+            class="text-sm text-green-600 mb-6"
+          >
+            Save {{ getDiscount(plan) }}%
+          </div>
+          <div v-else class="text-sm text-gray-600 mb-6">&nbsp;</div>
+
+          <!-- Features -->
+          <ul class="mb-8 text-left space-y-3">
+            <li
+              v-for="feature in plan.features"
+              :key="feature.text"
+              class="flex items-center gap-3"
+            >
               <span
-                class="icon-[lucide--workflow] h-5 w-5 text-secondary flex-shrink-0"
+                :class="[
+                  feature.icon,
+                  'h-5 w-5 flex-shrink-0',
+                  `text-${plan.colorScheme}`,
+                ]"
               ></span>
-              <span>Same features than Enterprise</span>
+              <span>{{ feature.text }}</span>
             </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--cloud] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Collector on our infrastructure</span>
-            </li>
-            <!-- <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--database] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Database operated by you or your provider</span>
-            </li>
-            <li class="flex items-center gap-3 mb-4">
-              <span
-                class="icon-[lucide--monitor] h-5 w-5 text-secondary flex-shrink-0"
-              ></span>
-              <span>Dashboard operated by you or your provider</span>
-            </li> -->
           </ul>
         </div>
-        <!-- href="mailto:contact@cdviz.dev?subject=SaaS%20plan%20inquiry" -->
-        <Btn href="/contact" aria-label="Join the waitlist">Join Waitlist</Btn>
+
+        <!-- Button -->
+        <Btn
+          :href="getButtonHref(plan)"
+          :primary="plan.button.primary"
+          :aria-label="plan.button.text"
+        >
+          {{ plan.button.text }}
+        </Btn>
       </div>
     </div>
     <div class="text-center mt-12 text-current/90">
