@@ -94,10 +94,10 @@ onMounted(() => {
     <div
       class="text-sm sm:text-base text-center my-lg max-w-5xl mx-auto text-text/90 italic"
     >
-      <a href="docs/cdviz-grafana/artifact_timeline.html">
+      <a href="/docs/cdviz-grafana/artifact_timeline.html">
         Example of a panel to track timeline & deployment of an artifact.<br />
         <img
-          src="screenshots/grafana_panel_timeline_version_on_stage-legend.svg"
+          src="/screenshots/grafana_panel_timeline_version_on_stage-legend.svg"
           atl="artifact timeline panel with legend and annotation"
           class="w-full h-auto object-cover"
           role="img"
