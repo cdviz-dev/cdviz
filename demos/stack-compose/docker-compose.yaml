@@ -2,7 +2,7 @@
 services:
   #region database
   postgres:
-    image: ghcr.io/cdviz-dev/cdviz-db-pg:latest
+    image: ghcr.io/cdviz-dev/cdviz-db-pg:17.2 # until fix on timescale db recent version `undefined symbol: ExecBRUpdateTriggersNew`
     command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     # restart: always
     # platform: linux/amd64
@@ -21,14 +21,14 @@ services:
       - "5432:5432"
     # user: "${MY_UID:-1000}:${MY_GID:-1000}"
     # volumes:
-      # # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
-      # # It means that every time the repository is modifying the data inside
-      # # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
-      # # You don't need to create the `db-data` folder. Docker Compose will do it for you
-      # - ./tmp/postgres/data:/var/lib/postgresql/data
-      # # In this example, we share an init.sql script with the container
-      # # The init script will be executed when the database is first run
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    # # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
+    # # It means that every time the repository is modifying the data inside
+    # # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
+    # # You don't need to create the `db-data` folder. Docker Compose will do it for you
+    # - ./tmp/postgres/data:/var/lib/postgresql/data
+    # # In this example, we share an init.sql script with the container
+    # # The init script will be executed when the database is first run
+    # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   cdviz-db-migrate:
     image: ghcr.io/cdviz-dev/cdviz-db-migration:latest
     command:
