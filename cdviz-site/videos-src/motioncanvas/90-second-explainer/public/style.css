@@ -1,0 +1,17 @@
+/* CDviz Brand Colors and Typography for Motion Canvas */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --cdviz-primary: #3B82F6;
+  --cdviz-secondary: #10B981;
+  --cdviz-danger: #EF4444;
+  --cdviz-warning: #F59E0B;
+  --cdviz-background: #0F172A;
+  --cdviz-text: #F1F5F9;
+  --cdviz-text-muted: #94A3B8;
+}
+
+/* Ensure consistent font loading */
+.motion-canvas-ui {
+  font-family: 'Inter', sans-serif;
+}

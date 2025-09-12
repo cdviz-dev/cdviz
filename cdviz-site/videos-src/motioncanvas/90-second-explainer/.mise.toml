@@ -1,0 +1,98 @@
+# Motion Canvas project tasks for CDviz 90-second explainer
+
+[tasks.dev-start]
+description = "Start development server (internal task)"
+run = "bun run start"
+
+[tasks.dev-stop]
+description = "Stop development server"
+run = [
+  "pkill -f 'vite.*9[0-9][0-9][0-9]' || echo 'No dev server running'",
+  "sleep 1"
+]
+
+[tasks.dev-status]
+description = "Show development server status"
+run = '''
+if pgrep -f "vite.*9[0-9][0-9][0-9]" > /dev/null; then
+  echo "✅ Dev server is running"
+  netstat -tlnp 2>/dev/null | grep :90 | head -1 | awk '{print "   Port: " $4}' | cut -d: -f2 || echo "   Port: unknown"
+else
+  echo "❌ Dev server is not running"
+fi
+'''
+
+[tasks.dev-check]
+description = "Check if dev server is running, start if not"
+depends = ["dev-status"]
+run = '''
+if ! pgrep -f "vite.*9[0-9][0-9][0-9]" > /dev/null; then
+  echo "Starting dev server..."
+  bun run start &
+  sleep 2
+  echo "Dev server started in background"
+fi
+'''
+
+[tasks.dev]
+description = "Start development server with live preview (smart restart)"
+depends = ["dev-stop"]
+run = [
+  "sleep 1",  # Wait for processes to terminate
+  "bun run start"
+]
+
+[tasks.build]
+description = "Build the TypeScript and Motion Canvas project"
+run = "bun run build"
+
+[tasks.ci]
+description = "Run CI tasks (install dependencies + build + test)"
+depends = ["install"]
+run = "bun run build"
+
+# Aliases
+[tasks.preview]
+alias = "dev-check"
+description = "Start preview server (check if running first)"
+
+[tasks.edit]
+alias = "dev"
+description = "Open Motion Canvas editor for interactive development"
+
+[tasks.serve]
+alias = "dev-start"
+description = "Serve built files"
+
+[tasks.watch]
+alias = "dev-check"
+description = "Watch for changes and rebuild"
+
+[tasks.install]
+description = "Install project dependencies"
+run = "bun install"
+
+[tasks.clean]
+description = "Clean build artifacts and dependencies"
+run = [
+  "rm -rf dist",
+  "rm -rf node_modules"
+]
+
+[tasks.export]
+description = "Export video (requires Motion Canvas UI)"
+run = "echo 'Use the Motion Canvas UI at http://localhost:9000 to export video'"
+
+[tasks.lint]
+description = "Lint TypeScript files"
+run = "bunx tsc --noEmit"
+
+# Environment setup
+[env]
+NODE_ENV = "development"
+
+# Tool versions (if needed)
+[tools]
+# Uncomment if you want to pin specific versions
+# bun = "latest"
+# node = "20"
