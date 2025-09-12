@@ -1,36 +1,49 @@
-# ADR 001: License Choices for cdviz Projects
+# ADR 001: Initial License Choices for CDviz Project Ecosystem
 
-## Context
+- **Status:** Superseded by ADR-002 (for cdviz-collector)
+- **Date:** 2025-05-05
+- **Decision-makers:** Achim312, CDviz team
+- **Consulted:** Open source legal experts, enterprise contributors
+- **Informed:** CDviz contributors, community
 
-The `cdviz` ecosystem includes:
+## Context and Problem Statement
+
+CDviz is building an ecosystem of components for software delivery observability. We need to establish licensing strategy that balances multiple objectives:
+
+The CDviz ecosystem includes:
 
 - **cdviz-collector**: Core connector software (interfaces with external services like S3, Kafka, GitHub, etc.)
 - **cdviz**: Demos, documentation, Helm charts, and integrations (e.g., Grafana)
 - **extensions/transformers**: Paid features and add-ons
 - **SaaS**: Hosted version of the service
 
-**Goals**:
+**Key challenges:**
 
-- Protect core code while encouraging adoption
-- Monetize via extensions, SaaS, and potentially the core
-- Facilitate contributions from enterprises (e.g., Apple)
+- How do we protect core intellectual property while encouraging adoption?
+- What licensing enables sustainable monetization through extensions and SaaS?
+- How do we facilitate contributions from enterprises while maintaining control?
 
-**References**:
+## Decision Drivers
 
-- [AGPL-3.0 Full Text](https://www.gnu.org/licenses/agpl-3.0.html)
-- [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0)
-- [MIT License](https://opensource.org/licenses/MIT)
-- [BSD Licenses](https://opensource.org/licenses/BSD-3-Clause)
-- [Commons Clause](https://commonsclause.com/)
-- [PolyForm Licenses](https://polyformproject.org/)
-- [Creative Commons](https://creativecommons.org/)
-- [Open Source Initiative](https://opensource.org/licenses)
+- **IP Protection**: Prevent competitors from building proprietary forks of core components
+- **Monetization Strategy**: Enable revenue through commercial licensing, extensions, and SaaS
+- **Community Growth**: Encourage open source contributions and enterprise participation
+- **Legal Clarity**: Provide clear licensing terms for different use cases
+- **Business Flexibility**: Allow future pivots in business model and licensing
 
----
+## Considered Options
 
-## Decision
+1. **Full Open Source (Apache/MIT)** - All components permissively licensed
+2. **Dual License Core (AGPL + Commercial)** - Core protected, ecosystem permissive
+3. **Business Source License** - Eventually open source with commercial protection
+4. **Full Proprietary** - Closed source commercial model
+5. **Apache + Commons Clause** - Permissive with anti-competition terms
 
-### Chosen Licenses
+## Decision Outcome
+
+**Chosen option: "Dual License Core (AGPL + Commercial)"** - Strategic licensing by component
+
+### Component Licensing Decision
 
 | Component                   | License                             | Rationale                                                                        |
 | --------------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
@@ -39,11 +52,51 @@ The `cdviz` ecosystem includes:
 | **extensions/transformers** | **Proprietary/Commercial**          | Direct monetization of advanced features                                         |
 | **SaaS**                    | **Proprietary/Commercial**          | Full control over hosted offering                                                |
 
----
+### Justification
 
-## Comprehensive License Comparison
+- **Core Protection**: AGPL ensures competitors cannot build proprietary services without contributing back
+- **Ecosystem Growth**: Apache licensing for tooling maximizes adoption and contributions
+- **Clear Monetization**: Commercial licensing provides direct revenue path for core component
+- **Business Flexibility**: Multiple licensing options enable various business models
 
-### 1. **AGPL + Commercial License** (Selected for cdviz-collector)
+## Consequences
+
+### Positive
+
+- **IP Protection**: AGPL provides strong protection against proprietary competitive forks
+- **Multiple Revenue Streams**: Commercial licensing, extensions, and SaaS all enabled
+- **Community Growth**: Apache licensing for tooling encourages contributions
+- **Enterprise Adoption**: Commercial license option removes AGPL concerns for enterprise users
+- **Strategic Flexibility**: Different licenses for different components enable varied business models
+
+### Negative
+
+- **Dual License Complexity**: Managing two licenses for core component increases operational overhead
+- **AGPL Adoption Barriers**: Some enterprises may avoid AGPL even with commercial option available
+- **Legal Overhead**: Requires clear documentation of license boundaries and compliance requirements
+- **Contributor Management**: Need CLA to enable dual licensing of contributions
+
+### Mitigation Strategies
+
+- **Clear Documentation**: Provide comprehensive license compliance guides
+- **CLA Implementation**: Use Contributor License Agreement to manage contribution rights
+- **Legal Support**: Offer guidance to enterprises on license compliance
+- **Simple Commercial Terms**: Make commercial licensing straightforward and accessible
+
+## Confirmation
+
+- [x] Implement CLA for all repositories to enable dual licensing
+- [x] Update license files with AGPL-3.0 and commercial license terms
+- [x] Create comprehensive licensing documentation
+- [x] Integrate commercial license into Terms & Conditions
+- [ ] Monitor adoption rates across different license options
+- [ ] Review effectiveness after 12 months
+
+## More Information
+
+### Detailed License Analysis
+
+#### 1. **AGPL + Commercial License** (Selected for cdviz-collector)
 
 **Usage**:
 
@@ -307,12 +360,12 @@ The Software is provided to you for your internal use only, and you may not use 
 
 | License                  | Protection Against Forks | Enterprise Adoption | Core Monetization | Extensions Monetization | Legal Complexity | Community Contributions | Usage Examples                  |
 | ------------------------ | ------------------------ | ------------------- | ----------------- | ----------------------- | ---------------- | ----------------------- | ------------------------------- |
-| **AGPL + Commercial**    | ✅ Strong                | ⚠️ Limited          | ✅ Yes            | ✅ Yes                  | ⚠️ High          | ✅ Encouraged           | MongoDB, Grafana, Elasticsearch |
-| **AGPL Only**            | ✅ Strongest             | ❌ Low              | ❌ No             | ✅ Yes                  | ⚠️ High          | ✅ Encouraged           | Nextcloud, Mastodon             |
-| **ASL + Commons Clause** | ⚠️ Medium                | ✅ High             | ❌ No             | ✅ Yes                  | ✅ Low           | ⚠️ Limited              | Redis, TimescaleDB              |
-| **ASL 2.0 Only**         | ❌ None                  | ✅ Very High        | ❌ No             | ✅ Yes                  | ✅ Very Low      | ⚠️ Limited              | Kubernetes, Kafka               |
-| **MIT/BSD**              | ❌ None                  | ✅ Very High        | ❌ No             | ✅ Yes                  | ✅ Very Low      | ⚠️ Limited              | React, jQuery                   |
-| **PolyForm**             | ⚠️ Medium                | ✅ High             | ⚠️ Possible       | ✅ Yes                  | ⚠️ Medium        | ⚠️ Limited              | Modern startups                 |
+| **AGPL + Commercial**    | ✅ Strong                | ⚠️ Limited           | ✅ Yes            | ✅ Yes                  | ⚠️ High           | ✅ Encouraged           | MongoDB, Grafana, Elasticsearch |
+| **AGPL Only**            | ✅ Strongest             | ❌ Low              | ❌ No             | ✅ Yes                  | ⚠️ High           | ✅ Encouraged           | Nextcloud, Mastodon             |
+| **ASL + Commons Clause** | ⚠️ Medium                 | ✅ High             | ❌ No             | ✅ Yes                  | ✅ Low           | ⚠️ Limited               | Redis, TimescaleDB              |
+| **ASL 2.0 Only**         | ❌ None                  | ✅ Very High        | ❌ No             | ✅ Yes                  | ✅ Very Low      | ⚠️ Limited               | Kubernetes, Kafka               |
+| **MIT/BSD**              | ❌ None                  | ✅ Very High        | ❌ No             | ✅ Yes                  | ✅ Very Low      | ⚠️ Limited               | React, jQuery                   |
+| **PolyForm**             | ⚠️ Medium                 | ✅ High             | ⚠️ Possible        | ✅ Yes                  | ⚠️ Medium         | ⚠️ Limited               | Modern startups                 |
 | **Creative Commons**     | N/A (not for software)   | N/A                 | N/A               | N/A                     | ✅ Low           | ✅ Encouraged           | Wikipedia, OSM                  |
 | **Full Proprietary**     | ✅ Strongest             | ✅ High             | ✅ Yes            | ✅ Yes                  | ✅ Low           | ❌ None                 | Microsoft Office, Photoshop     |
 
@@ -337,45 +390,33 @@ The Software is provided to you for your internal use only, and you may not use 
 | **DCO**  | Simple, standard                   | No relicensing possible     | Not selected              |
 | **None** | No friction                        | High legal risks            | Not selected              |
 
----
+### References and Resources
 
-## Action Items
+- **License Texts:**
+  - [AGPL-3.0 Full Text](https://www.gnu.org/licenses/agpl-3.0.html)
+  - [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0)
+  - [MIT License](https://opensource.org/licenses/MIT)
+  - [BSD Licenses](https://opensource.org/licenses/BSD-3-Clause)
+  - [Commons Clause](https://commonsclause.com/)
+  - [PolyForm Licenses](https://polyformproject.org/)
 
-### For Current Setup (AGPL + Commercial for cdviz-collector)
+- **Implementation Resources:**
+  - [CLA Assistant](https://cla-assistant.io/)
+  - [Open Source Initiative](https://opensource.org/licenses)
+  - [Alchim312 CLA Template](https://gist.github.com/alchim312/EXAMPLE)
 
-- [ ] Update license files with [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.txt) and commercial license
-- [ ] Configure [CLA Assistant](https://cla-assistant.io/) with [Gist](https://gist.github.com/alchim312/EXAMPLE)
-- [ ] Update `CONTRIBUTING.md` with license explanations
-- [ ] Integrate commercial license into [Terms & Conditions](https://cdviz.dev/pro/terms.html)
-- [ ] Document AGPL obligations and risks in README.md
+- **Related Decisions:** Later superseded by [ADR 002: Migrate cdviz-collector from AGPL v3 to Apache License v2](./002-licensing-2.md)
 
-### If Switching cdviz-collector to ASL 2.0 + Commons Clause
+### Implementation Notes
 
-- [ ] Replace AGPL with [ASL 2.0](https://www.apache.org/licenses/LICENSE-2.0) + Commons Clause
-- [ ] Update CLA to reflect new license terms
-- [ ] Communicate changes to contributors
-- [ ] Verify dependency compatibility
-
----
-
-## Status
-
-**Approved**: 2025-05-05
-
-## Additional Notes
-
-### Risk Mitigation Strategies
+**Risk Mitigation Strategies:**
 
 1. **AGPL Compliance**: Provide clear architecture guidelines
 2. **Contributor Relations**: Maintain transparency about licensing
 3. **Fork Protection**: Focus on support/extensions/SaaS for monetization
 
-### User Scripts/Templates
+**Technical Boundaries:**
 
-- Not subject to AGPL if dynamically loaded
-- Subject to AGPL if bundled with core
-
-### External Services
-
-- No AGPL impact on S3, Kafka, GitHub, etc.
-- Document this clearly to avoid misconceptions
+- User Scripts/Templates: Not subject to AGPL if dynamically loaded
+- External Services: No AGPL impact on S3, Kafka, GitHub, etc.
+- Clear documentation prevents misconceptions about license scope
