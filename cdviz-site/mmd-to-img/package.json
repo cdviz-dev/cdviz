@@ -1,0 +1,39 @@
+{
+  "name": "@cdviz/mmd-to-img",
+  "version": "1.0.0",
+  "description": "CLI tool to convert mermaid diagrams (.mmd) to SVG/PNG images",
+  "type": "module",
+  "bin": {
+    "mmd-to-img": "./bin/mmd-to-img.js"
+  },
+  "scripts": {
+    "test": "bun test",
+    "dev": "bun run bin/mmd-to-img.js"
+  },
+  "keywords": [
+    "mermaid",
+    "excalidraw",
+    "svg",
+    "png",
+    "cli",
+    "diagram"
+  ],
+  "author": "CDviz Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
+    "@excalidraw/mermaid-to-excalidraw": "^1.1.2",
+    "commander": "^14",
+    "glob": "^11",
+    "gray-matter": "^4.0.3",
+    "jsdom": "^26.1.0",
+    "mermaid": "^11",
+    "playwright": "^1.54.2"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
