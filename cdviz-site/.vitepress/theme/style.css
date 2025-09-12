@@ -4,8 +4,8 @@
 
 @plugin "@iconify/tailwind4";
 
-/* Override VitePress Google Fonts import to use local fonts only */
-/* This eliminates external network requests and improves performance */
+/* Material Design 3 Typography - Google Fonts for Roboto */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap");
 
 @theme {
   /* Perfect Ratio Spacing System - Optimized for Visual Harmony */
@@ -52,13 +52,41 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
 
-  /* Enhanced font stacks with optimized fallbacks */
-  --font-family-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  /* Material Design 3 inspired font stack - unified for body and headings */
+  --font-family-base:
+    "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Oxygen, Ubuntu, Cantarell,
+    "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono:
-    "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Menlo,
+    "Roboto Mono", "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", Menlo,
     "DejaVu Sans Mono", Consolas, monospace;
+
+  /* Material Design 3 Typography Scale */
+  --md-display-large: 3.5625rem; /* 57px - Display L */
+  --md-display-medium: 2.8125rem; /* 45px - Display M */
+  --md-display-small: 2.25rem; /* 36px - Display S */
+  --md-headline-large: 2rem; /* 32px - Headline L */
+  --md-headline-medium: 1.75rem; /* 28px - Headline M */
+  --md-headline-small: 1.5rem; /* 24px - Headline S */
+  --md-title-large: 1.375rem; /* 22px - Title L */
+  --md-title-medium: 1rem; /* 16px - Title M */
+  --md-title-small: 0.875rem; /* 14px - Title S */
+  --md-body-large: 1rem; /* 16px - Body L */
+  --md-body-medium: 0.875rem; /* 14px - Body M */
+  --md-body-small: 0.75rem; /* 12px - Body S */
+
+  /* Material Design 3 Line Heights */
+  --md-display-large-height: 4rem; /* 64px */
+  --md-display-medium-height: 3.25rem; /* 52px */
+  --md-display-small-height: 2.75rem; /* 44px */
+  --md-headline-large-height: 2.5rem; /* 40px */
+  --md-headline-medium-height: 2.25rem; /* 36px */
+  --md-headline-small-height: 2rem; /* 32px */
+  --md-title-large-height: 1.875rem; /* 30px */
+  --md-title-medium-height: 1.5rem; /* 24px */
+  --md-title-small-height: 1.25rem; /* 20px */
+  --md-body-large-height: 1.5rem; /* 24px */
+  --md-body-medium-height: 1.25rem; /* 20px */
+  --md-body-small-height: 1rem; /* 16px */
 }
 
 :root {
@@ -92,23 +120,26 @@ html {
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
-/* Enhanced typography for better readability */
+/* Material Design 3 typography foundation */
 body {
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-large);
+  line-height: var(--md-body-large-height);
+  font-weight: 400;
   font-variant-ligatures: common-ligatures;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
-/* Optimize rendering for landing page headings */
+/* Unified font family for all headings - Material Design approach */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-sans);
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+  font-family: var(--font-family-base);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   text-rendering: optimizeLegibility;
 }
 
@@ -186,8 +217,8 @@ main[role="main"] .my-md {
   margin-bottom: var(--spacing-md);
 }
 
-/* Preserve documentation styles - enhanced heading vertical spacing with baseline grid */
-/* These styles will only apply to documentation sections */
+/* Material Design 3 Typography - Documentation Only */
+/* All headings use same font family with appropriate weights and sizes */
 .vp-doc h1,
 .vp-doc h2,
 .vp-doc h3,
@@ -200,46 +231,70 @@ main[role="main"] .my-md {
 .content h4,
 .content h5,
 .content h6 {
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-family: var(--font-family-base);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: 0; /* Material Design uses normal letter spacing */
+  color: var(--primary); /* Orange accent color for titles */
 }
 
+/* H1 - Display Medium style */
 .vp-doc h1,
 .content h1 {
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.1;
-  font-size: clamp(2rem, 5vw, 4.236rem);
-  letter-spacing: -0.035em;
+  font-size: clamp(var(--md-headline-large), 4vw, var(--md-display-medium));
+  line-height: var(--md-display-medium-height);
+  font-weight: 300; /* Light weight for display text */
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: -0.025em; /* Slight negative spacing for large text */
 }
 
+/* H2 - Headline Large style */
 .vp-doc h2,
 .content h2 {
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  line-height: 1.15;
-  font-size: clamp(1.5rem, 4vw, 2.618rem);
-  letter-spacing: -0.03em;
+  font-size: var(--md-headline-large);
+  line-height: var(--md-headline-large-height);
+  font-weight: 300; /* Light weight */
+  letter-spacing: 0;
 }
 
+/* H3 - Headline Medium style */
 .vp-doc h3,
 .content h3 {
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  line-height: 1.2;
-  font-size: clamp(1.25rem, 3vw, 1.618rem);
-  letter-spacing: -0.025em;
+  font-size: var(--md-headline-medium);
+  line-height: var(--md-headline-medium-height);
+  font-weight: 400; /* Regular weight */
+  letter-spacing: 0;
 }
 
+/* H4 - Headline Small style */
 .vp-doc h4,
 .content h4 {
+  font-size: var(--md-headline-small);
+  line-height: var(--md-headline-small-height);
+  font-weight: 400; /* Regular weight */
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+/* H5 - Title Large style */
+.vp-doc h5,
+.content h5 {
+  font-size: var(--md-title-large);
+  line-height: var(--md-title-large-height);
+  font-weight: 400; /* Regular weight */
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  line-height: 1.25;
-  font-size: clamp(1.125rem, 2.5vw, 1.236rem);
+}
+
+/* H6 - Title Medium style */
+.vp-doc h6,
+.content h6 {
+  font-size: var(--md-title-medium);
+  line-height: var(--md-title-medium-height);
+  font-weight: 500; /* Medium weight for smallest headings */
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 /* Reset paragraphs and lists for landing page */
@@ -261,38 +316,48 @@ main[role="main"] li {
   padding: 0;
 }
 
-/* Enhanced paragraph spacing and flow - documentation only */
+/* Material Design 3 body text - documentation only */
 .vp-doc p,
 .content p {
-  margin-bottom: var(--spacing-md);
-  line-height: 1.6;
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-large);
+  line-height: var(--md-body-large-height);
+  font-weight: 400;
+  margin-bottom: var(--spacing-lg);
   hanging-punctuation: first last;
+  letter-spacing: 0.01em; /* Slight positive spacing for body text readability */
 }
 
 .vp-doc p + p,
 .content p + p {
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
-/* Enhanced list spacing with baseline alignment - documentation only */
+/* Material Design 3 lists - documentation only */
 .vp-doc ul,
 .vp-doc ol,
 .content ul,
 .content ol {
-  margin-bottom: var(--spacing-md);
-  padding-left: var(--spacing-lg);
-  line-height: 1.5;
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-large);
+  line-height: var(--md-body-large-height);
+  font-weight: 400;
+  margin-bottom: var(--spacing-lg);
+  padding-left: var(--spacing-xl);
+  letter-spacing: 0.01em;
 }
 
 .vp-doc li,
 .content li {
-  margin-bottom: var(--spacing-xs);
-  line-height: 1.5;
+  font-size: var(--md-body-large);
+  line-height: var(--md-body-large-height);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 0.01em;
 }
 
 .vp-doc li + li,
 .content li + li {
-  margin-top: var(--spacing-2xs);
+  margin-top: var(--spacing-xs);
 }
 
 /* Nested list spacing - documentation only */
@@ -300,8 +365,8 @@ main[role="main"] li {
 .vp-doc li ol,
 .content li ul,
 .content li ol {
-  margin-top: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 /* Fix excessive TOC sidebar spacing */
@@ -337,15 +402,15 @@ main[role="main"] li {
 /* Enhanced content flow spacing with rhythm - only for documentation */
 .vp-doc * + h1,
 .content * + h1 {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-2xl); /* Increased for better section separation */
 }
 .vp-doc * + h2,
 .content * + h2 {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl); /* Increased for better section separation */
 }
 .vp-doc * + h3,
 .content * + h3 {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-lg); /* Increased from md for better spacing */
 }
 
 /* First element spacing reset - only for documentation, not landing page */
@@ -410,13 +475,14 @@ figcaption {
   color: var(--color-text / 70);
 }
 
-/* Enhanced blockquote with rhythm */
-blockquote {
-  margin: var(--spacing-lg) 0;
-  padding: var(--spacing-md) 0 var(--spacing-md) var(--spacing-lg);
+/* Enhanced blockquote with rhythm - documentation only */
+.vp-doc blockquote,
+.content blockquote {
+  margin: var(--spacing-xl) 0; /* Increased from lg for better breathing room */
+  padding: var(--spacing-lg) 0 var(--spacing-lg) var(--spacing-xl); /* Increased padding */
   border-left: 4px solid var(--color-primary);
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.6; /* Increased from 1.5 for better readability */
   position: relative;
 }
 
@@ -429,20 +495,34 @@ blockquote::before {
   top: 0;
 }
 
-/* Code block spacing and rhythm */
-pre,
-code {
+/* Material Design 3 code blocks - documentation only */
+.vp-doc pre,
+.vp-doc code,
+.content pre,
+.content code {
   font-family: var(--font-family-mono);
-  line-height: 1.4;
+  font-size: var(--md-body-medium); /* Slightly smaller for code */
+  line-height: var(--md-body-medium-height);
+  letter-spacing: 0;
 }
 
-pre {
-  margin: var(--spacing-lg) 0;
-  padding: var(--spacing-md);
+.vp-doc pre,
+.content pre {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 12px; /* Material Design uses larger border radius */
   background: var(--color-secondary / 5);
   border: 1px solid var(--color-secondary / 20);
+}
+
+/* Inline code styling */
+.vp-doc code:not(pre code),
+.content code:not(pre code) {
+  font-size: var(--md-body-medium);
+  padding: 0.125rem 0.25rem;
+  border-radius: 4px;
+  background: var(--color-secondary / 8);
 }
 
 /* Table spacing */
