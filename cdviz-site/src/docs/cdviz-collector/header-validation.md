@@ -1,13 +1,14 @@
 # Header Validation
 
-Header validation is used by components that **receive incoming HTTP requests** to verify the authenticity and authorization of those requests. This includes [webhook](./sources/webhook.md) sources that accept events from external systems and [SSE sinks](./sinks/sse.md) that receive HTTP requests.
+Header validation is used by components that **receive incoming messages** to verify the authenticity and authorization of those messages. This includes [webhook](./sources/webhook.md) sources that accept HTTP events from external systems, [Kafka sources](./sources/kafka.md) that validate Kafka message headers, and [SSE sinks](./sinks/sse.md) that receive HTTP requests.
 
 ## Components Using Header Validation
 
-| Component          | Purpose                                                                   |
-| ------------------ | ------------------------------------------------------------------------- |
-| **Source webhook** | Validate incoming webhook events from CI/CD systems, GitHub, GitLab, etc. |
-| **Sink SSE**       | Validate incoming HTTP requests to SSE endpoints                          |
+| Component          | Purpose                                                                      |
+| ------------------ | ---------------------------------------------------------------------------- |
+| **Source webhook** | Validate incoming webhook events from CI/CD systems, GitHub, GitLab, etc.    |
+| **Source Kafka**   | Validate incoming Kafka message headers for authentication and authorization |
+| **Sink SSE**       | Validate incoming HTTP requests to SSE endpoints                             |
 
 ## Validation Process
 
@@ -210,6 +211,7 @@ Header validation affects HTTP response codes:
 ## Related
 
 - [Webhook Source](./sources/webhook.md) - HTTP webhook endpoint configuration
+- [Kafka Source](./sources/kafka.md) - Kafka source message validation
 - [SSE Sink](./sinks/sse.md) - Server-Sent Events sink configuration
 - [Header Authentication](./header-authentication.md) - Outgoing request headers
 - [Security Configuration](./configuration.md#security) - Overall security setup
