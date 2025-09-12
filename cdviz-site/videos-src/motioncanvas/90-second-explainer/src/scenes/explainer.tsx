@@ -1,4 +1,4 @@
-import {makeScene2D} from '@motion-canvas/2d';
+import { makeScene2D } from "@motion-canvas/2d";
 import {
   View2D,
   Img,
@@ -8,7 +8,7 @@ import {
   Line,
   Rect,
   Node,
-} from '@motion-canvas/2d/lib/components';
+} from "@motion-canvas/2d/lib/components";
 import {
   all,
   chain,
@@ -23,65 +23,135 @@ import {
   tween,
   waitFor,
   createSignal,
-} from '@motion-canvas/core';
+} from "@motion-canvas/core";
 
 export default makeScene2D(function* (view) {
   // CDviz Dark Theme - Monochrome Black & Orange
   const colors = {
-    primary: '#F59E0B',      // CDviz authentic orange (from CSS)
-    secondary: '#FB923C',    // Lighter orange variation
-    danger: '#EF4444',       // Red for problems
-    warning: '#FCD34D',      // Warm orange for highlights
-    background: '#000000',   // Pure black for maximum contrast
-    text: '#FFFFFF',         // Pure white text
-    textMuted: '#D1D5DB',    // Light gray for secondary text
-    textDark: '#6B7280',     // Medium gray for subtle elements
+    primary: "#F59E0B", // CDviz authentic orange (from CSS)
+    secondary: "#FB923C", // Lighter orange variation
+    danger: "#EF4444", // Red for problems
+    warning: "#FCD34D", // Warm orange for highlights
+    background: "#000000", // Pure black for maximum contrast
+    text: "#FFFFFF", // Pure white text
+    textMuted: "#D1D5DB", // Light gray for secondary text
+    textDark: "#6B7280", // Medium gray for subtle elements
+  };
+
+  // Excalidraw-Style Typography Settings
+  const typography = {
+    // Authentic Excalidraw hand-drawn style
+    excalidraw: '"Excalifont", "Inter", system-ui, sans-serif', // Primary Excalidraw font
+
+    // Professional fonts (only for technical elements)
+    code: '"JetBrains Mono", "Fira Code", Consolas, monospace', // Technical (cdviz.dev)
+    clean: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif', // Clean fallback
+
+    // Since Excalifont is one weight, we simulate emphasis with size and spacing
+    excalidrawNormal: 400, // Normal weight
+    excalidrawBold: 400, // Same weight, but larger size for "bold" effect
+
+    letterSpacing: {
+      tight: 0,
+      normal: 1, // Natural spacing for hand-drawn
+      wide: 2, // Slightly wider
+      wider: 3, // More spaced for emphasis
+    },
+    lineHeight: {
+      tight: 1.2, // Compact for diagrams
+      normal: 1.4, // Natural for Excalidraw
+      relaxed: 1.6, // Relaxed for notes
+    },
+  };
+
+  // Optimized Animation Curves - Simpler calculations for better performance
+  const easings = {
+    // Simplified curves for better performance
+    smooth: easeInOutCubic, // Use built-in cubic
+    bounce: easeOutCubic, // Simplified bounce
+    elastic: easeInOutCubic, // Simplified elastic (was too complex)
+
+    // Standard Motion Canvas easings for best performance
+    material: easeInOutCubic, // Material Design standard
+    organic: easeInOutCubic, // Simplified organic
+    sharp: easeInCubic, // Sharp entry
+    gentle: easeOutCubic, // Gentle exit
   };
 
   // Set background to pure black
-  view.fill('#000000');
+  view.fill("#000000");
 
   // Refs for all major elements
-  const titleRef = createRef<Txt>();
-  const subtitleRef = createRef<Txt>();
+  const titleRef = createRef<Layout>();
+  const subtitleRef = createRef<Layout>();
   const toolIconsRef = createRef<Layout>();
-  const problemTextRef = createRef<Txt>();
+  const problemTextRef = createRef<Layout>();
   const solutionLayoutRef = createRef<Layout>();
   const dashboardRef = createRef<Img>();
   const ctaRef = createRef<Layout>();
 
   // === SCENE 1: Opening Hook (0-15 seconds) ===
-  
+
   // Main title that will animate in (positioned for vertical layout)
   view.add(
-    <Txt
-      ref={titleRef}
-      fontSize={92}
-      fontWeight={700}
-      fill={colors.primary}
-      fontFamily="Inter, sans-serif"
-      textAlign="center"
-      y={-650}
-      opacity={0}
-    >
-      Know What's{'\n'}Deployed When
-    </Txt>
+    <Layout ref={titleRef} x={0} y={-650} opacity={0}>
+      <Txt
+        fontSize={100}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.primary}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={-50}
+        shadowColor="rgba(245, 158, 11, 0.3)"
+        shadowBlur={15}
+        shadowOffset={[0, 3]}
+      >
+        Know What's
+      </Txt>
+      <Txt
+        fontSize={100}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.primary}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={50}
+        shadowColor="rgba(245, 158, 11, 0.3)"
+        shadowBlur={15}
+        shadowOffset={[0, 3]}
+      >
+        Deployed When
+      </Txt>
+    </Layout>,
   );
 
   // Subtitle
   view.add(
-    <Txt
-      ref={subtitleRef}
-      fontSize={48}
-      fontWeight={500}
-      fill={colors.textMuted}
-      fontFamily="Inter, sans-serif"
-      textAlign="center"
-      y={-450}
-      opacity={0}
-    >
-      Deployment visibility is{'\n'}scattered across tools
-    </Txt>
+    <Layout ref={subtitleRef} x={0} y={-470} opacity={0}>
+      <Txt
+        fontSize={44}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.textMuted}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={-25}
+      >
+        Deployment visibility is
+      </Txt>
+      <Txt
+        fontSize={44}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.textMuted}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={25}
+      >
+        scattered across tools
+      </Txt>
+    </Layout>,
   );
 
   // Tool icons arranged vertically for portrait layout - much larger, no backgrounds
@@ -117,71 +187,119 @@ export default makeScene2D(function* (view) {
         position={[180, 200]}
         rotation={-10}
       />
-    </Layout>
+    </Layout>,
   );
 
-  // Scene 1 Animation: Opening Hook (0-15s)
+  // Scene 1 Animation: Opening Hook (0-15s) - Professional staggered entrance
   yield* sequence(
-    0.2,
-    titleRef().opacity(1, 1.0, easeOutCubic),
-    subtitleRef().opacity(1, 0.8, easeOutCubic),
-    toolIconsRef().opacity(1, 0.6, easeOutCubic),
+    0.15,
+    // Title appears with smooth scale and fade
+    all(
+      titleRef().opacity(1, 1.2, easings.organic),
+      titleRef().scale(0.95, 0).to(1, 1.2, easings.bounce),
+    ),
+    // Subtitle flows in smoothly
+    all(subtitleRef().opacity(1, 0.9, easings.gentle), subtitleRef().y(-430, 0.9, easings.smooth)),
+    // Icons appear with staggered timing
+    toolIconsRef().opacity(1, 0.8, easings.material),
   );
 
-  // Chaotic icon movement to show scattered nature
-  yield* loop(3, function* () {
-    yield* all(
-      ...toolIconsRef().children().map((icon, i) => 
-        icon.rotation(Math.random() * 30 - 15, 0.8, easeInOutCubic)
-      )
-    );
-  });
+  // Simplified chaotic icon movement - less intensive
+  yield* all(
+    ...toolIconsRef()
+      .children()
+      .map((icon, i) =>
+        all(
+          icon.rotation(Math.sin(i) * 15, 3.6, easings.gentle),
+          icon.scale(0.95 + Math.sin(i * 0.5) * 0.05, 3.6, easings.gentle),
+        ),
+      ),
+  );
 
   yield* waitFor(2); // Let opening hook sink in
 
   // === SCENE 2: Problem Deep Dive (15-30 seconds) ===
-  
-  // Fade out opening elements
+
+  // Smooth transition to problem scene
   yield* all(
-    titleRef().opacity(0, 0.8),
-    subtitleRef().opacity(0, 0.8),
+    titleRef().opacity(0, 1.0, easings.smooth),
+    titleRef().scale(0.9, 1.0, easings.gentle),
+    subtitleRef().opacity(0, 0.9, easings.smooth),
+    toolIconsRef().opacity(0.3, 0.6, easings.material), // Keep icons but dimmed
   );
 
   // New problem statement
   view.add(
-    <Txt
-      ref={problemTextRef}
-      fontSize={84}
-      fontWeight={700}
-      fill={colors.danger}
-      fontFamily="Inter, sans-serif"
-      textAlign="center"
-      y={-700}
-      opacity={0}
-    >
-      Scattered History{'\n'}={'\n'}Lost Context
-    </Txt>
+    <Layout ref={problemTextRef} x={0} y={-700} opacity={0}>
+      <Txt
+        fontSize={80}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.danger}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={-80}
+        shadowColor="rgba(239, 68, 68, 0.4)"
+        shadowBlur={12}
+        shadowOffset={[0, 2]}
+      >
+        Scattered History
+      </Txt>
+      <Txt
+        fontSize={80}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.danger}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={0}
+        shadowColor="rgba(239, 68, 68, 0.4)"
+        shadowBlur={12}
+        shadowOffset={[0, 2]}
+      >
+        =
+      </Txt>
+      <Txt
+        fontSize={80}
+        fontWeight={typography.excalidrawNormal}
+        fill={colors.danger}
+        fontFamily={typography.excalidraw}
+        textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        y={80}
+        shadowColor="rgba(239, 68, 68, 0.4)"
+        shadowBlur={12}
+        shadowOffset={[0, 2]}
+      >
+        Lost Context
+      </Txt>
+    </Layout>,
   );
 
-  yield* problemTextRef().opacity(1, 1.0);
+  // Problem statement appears with dramatic entrance
+  yield* all(
+    problemTextRef().opacity(1, 1.4, easings.organic),
+    problemTextRef().scale(0.8, 0).to(1, 1.4, easings.bounce),
+    problemTextRef().y(-680, 1.4, easings.smooth),
+  );
 
   // Add connection lines showing fragmentation - draw BEFORE icons (behind them)
   const connectionLines: Line[] = [];
-  
+
   // Define icon positions manually (same as in toolIconsRef layout)
   const iconPositions = [
     [-200, -150], // Jenkins
-    [200, -80],   // Docker  
-    [0, 0],       // Dashboard
-    [-180, 120],  // Timeline
-    [180, 200],   // Database
+    [200, -80], // Docker
+    [0, 0], // Dashboard
+    [-180, 120], // Timeline
+    [180, 200], // Database
   ];
-  
+
   for (let i = 0; i < iconPositions.length; i++) {
     const line = createRef<Line>();
     const startPos = iconPositions[i];
     const endPos = iconPositions[(i + 1) % iconPositions.length];
-    
+
     view.add(
       <Line
         ref={line}
@@ -190,24 +308,25 @@ export default makeScene2D(function* (view) {
         opacity={0}
         points={[
           [startPos[0], startPos[1] - 100], // Adjust for toolIconsRef y offset
-          [endPos[0], endPos[1] - 100]
+          [endPos[0], endPos[1] - 100],
         ]}
         lineDash={[15, 15]}
-        zIndex={-1}  // Behind icons
-      />
+        zIndex={-1} // Behind icons
+      />,
     );
     connectionLines.push(line());
   }
 
-  // Draw fragmented connection lines
+  // Draw fragmented connection lines with smooth progression
   yield* sequence(
-    0.3,
-    ...connectionLines.map(line => 
+    0.2,
+    ...connectionLines.map((line, i) =>
       all(
-        line.opacity(0.7, 0.5),
-        line.end(1, 1.0, easeOutCubic),
-      )
-    )
+        line.opacity(0.8, 0.6, easings.gentle),
+        line.end(1, 1.2, easings.organic),
+        line.lineWidth(8, 0.8, easings.bounce).to(6, 0.4, easings.smooth),
+      ),
+    ),
   );
 
   // Add question marks to show uncertainty - better positioned
@@ -217,79 +336,96 @@ export default makeScene2D(function* (view) {
     [150, -50],
     [-50, 100],
   ];
-  
+
   questionPositions.forEach((pos, i) => {
     const questionMark = createRef<Txt>();
     view.add(
       <Txt
         ref={questionMark}
         text="?"
-        fontSize={64}
-        fontWeight={700}
+        fontSize={68}
+        fontWeight={typography.excalidrawNormal}
         fill={colors.primary}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.excalidraw}
         position={[pos[0], pos[1] - 100]} // Adjust for scene offset
         opacity={0}
         zIndex={1} // Above lines, below icons
-      />
+      />,
     );
     questionMarks.push(questionMark());
   });
 
+  // Question marks appear with bouncy, organic timing
   yield* sequence(
-    0.2,
-    ...questionMarks.map(mark => mark.opacity(1, 0.5))
+    0.3,
+    ...questionMarks.map((mark, i) =>
+      all(
+        mark.opacity(1, 0.8, easings.bounce),
+        mark.scale(0.3, 0).to(1, 0.8, easings.elastic),
+        mark.rotation(-10 + Math.random() * 20, 0.8, easings.gentle),
+      ),
+    ),
   );
 
   yield* waitFor(3); // Let problem explanation complete
 
   // === SCENE 3: Solution Introduction (30-50 seconds) ===
-  
-  // Clear problem elements
+
+  // Smooth transition away from problem scene with professional timing
   yield* all(
-    problemTextRef().opacity(0, 0.8),
-    toolIconsRef().opacity(0, 0.8),
-    ...connectionLines.map(line => line.opacity(0, 0.8)),
-    ...questionMarks.map(mark => mark.opacity(0, 0.8)),
+    problemTextRef().opacity(0, 1.2, easings.smooth),
+    problemTextRef().scale(0.85, 1.2, easings.gentle),
+    toolIconsRef().opacity(0, 1.0, easings.material),
+    toolIconsRef().scale(0.9, 1.0, easings.smooth),
+    ...connectionLines.map((line) =>
+      all(line.opacity(0, 0.9, easings.gentle), line.lineWidth(2, 0.9, easings.smooth)),
+    ),
+    ...questionMarks.map((mark) =>
+      all(mark.opacity(0, 0.8, easings.smooth), mark.scale(0.7, 0.8, easings.gentle)),
+    ),
   );
 
   // Solution layout - stacked vertically for portrait with larger elements
   view.add(
-    <Layout ref={solutionLayoutRef} opacity={0}>
-      <Img
-        src="/assets/logos/cdevents.svg"
-        size={200}
-        y={-600}
-      />
+    <Layout ref={solutionLayoutRef} opacity={0} scale={0.8}>
+      <Img src="/assets/logos/cdevents.svg" size={200} y={-600} />
       <Txt
-        fontSize={56}
-        fontWeight={600}
+        fontSize={52}
+        fontWeight={typography.excalidrawNormal}
         fill={colors.text}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.excalidraw}
         textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
         y={-350}
       >
-        CDEvents{'\n'}Standard
+        CDEvents Standard
       </Txt>
       <Txt
-        fontSize={72}
-        fontWeight={700}
+        fontSize={70}
+        fontWeight={typography.excalidrawNormal}
         fill={colors.primary}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.excalidraw}
         textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
+        lineHeight={typography.lineHeight.tight}
         y={-100}
+        shadowColor="rgba(245, 158, 11, 0.3)"
+        shadowBlur={12}
       >
-        Unified{'\n'}SDLC Timeline
+        Unified SDLC Timeline
       </Txt>
-      <Img
-        src="/assets/logos/cdviz.svg"
-        size={180}
-        y={250}
-      />
-    </Layout>
+      <Img src="/assets/logos/cdviz.svg" size={180} y={250} />
+    </Layout>,
   );
 
-  yield* solutionLayoutRef().opacity(1, 1.2, easeOutCubic);
+  // Professional solution introduction with staggered reveal
+  yield* sequence(
+    0.3,
+    all(
+      solutionLayoutRef().opacity(1, 1.4, easings.organic),
+      solutionLayoutRef().scale(1, 1.4, easings.bounce),
+    ),
+  );
 
   // Animate standardized event flow with particles (vertical flow) - larger particles
   const eventParticles: Circle[] = [];
@@ -303,30 +439,35 @@ export default makeScene2D(function* (view) {
         x={0}
         y={500 + i * 80}
         opacity={0}
-      />
+        scale={0.5}
+      />,
     );
     eventParticles.push(particle());
   }
 
-  // Animate particles flowing vertically
+  // Optimized particle flow - removed expensive glow effect
   yield* sequence(
-    0.1,
+    0.15,
     ...eventParticles.map((particle, i) =>
       all(
-        particle.opacity(1, 0.3),
-        particle.y(1000 - i * 80, 2.5, easeInOutCubic),
-      )
-    )
+        particle.opacity(1, 0.4, easings.gentle),
+        particle.scale(1, 0.4, easings.material), // Use simpler easing
+        particle.y(1000 - i * 80, 2.5, easings.material), // Shorter duration, simpler easing
+      ),
+    ),
   );
 
-  yield* waitFor(4); // Let solution explanation complete
+  yield* waitFor(3.5); // Let solution explanation complete with better pacing
 
   // === SCENE 4: Product Demo (50-75 seconds) ===
-  
-  // Fade solution, bring in dashboard
+
+  // Professional transition to demo scene with elegant timing
   yield* all(
-    solutionLayoutRef().opacity(0, 1.0),
-    ...eventParticles.map(particle => particle.opacity(0, 0.5)),
+    solutionLayoutRef().opacity(0, 1.3, easings.smooth),
+    solutionLayoutRef().scale(0.85, 1.3, easings.gentle),
+    ...eventParticles.map((particle) =>
+      all(particle.opacity(0, 0.7, easings.smooth), particle.scale(0.3, 0.7, easings.gentle)),
+    ),
   );
 
   // Dashboard screenshot (larger for vertical viewing)
@@ -340,113 +481,146 @@ export default makeScene2D(function* (view) {
       radius={16}
       shadowColor="rgba(0,0,0,0.3)"
       shadowBlur={20}
-    />
+    />,
   );
 
-  yield* dashboardRef().opacity(1, 1.0);
+  // Dashboard appears with professional reveal animation
+  yield* all(
+    dashboardRef().opacity(1, 1.6, easings.organic),
+    dashboardRef().scale(0.5, 0).to(0.6, 1.6, easings.bounce),
+    dashboardRef().y(-420, 0).to(-400, 1.6, easings.smooth),
+  );
 
-  // Feature highlights stacked vertically for mobile viewing - much larger
-  const featureTexts: Txt[] = [];
+  // Feature highlights with proper icons - create layout with icon + text
+  const featureLayouts: Layout[] = [];
   const features = [
-    "📊 Timeline View",
-    "🔗 Metrics Correlation", 
-    "📈 DORA Metrics",
-    "⚡ Event Automation",
+    {
+      icon: "/assets/icons_48x48_monochrome/mdi--graph-timeline-variant.svg",
+      text: "Timeline View",
+    },
+    { icon: "/assets/icons_48x48_monochrome/mdi--graph-line.svg", text: "Metrics & Analytics" },
+    { icon: "/assets/icons_48x48_monochrome/mdi--graph-outline.svg", text: "DORA Metrics" },
+    { icon: "/assets/icons_48x48_monochrome/mdi--webhook.svg", text: "Event Automation" },
   ];
 
   features.forEach((feature, i) => {
-    const featureText = createRef<Txt>();
-    
+    const featureLayout = createRef<Layout>();
+
     view.add(
-      <Txt
-        ref={featureText}
-        text={feature}
-        fontSize={56}
-        fontWeight={600}
-        fill={colors.primary}
-        fontFamily="Inter, sans-serif"
-        y={150 + i * 120}
-        opacity={0}
-      />
+      <Layout ref={featureLayout} x={0} y={200 + i * 100} opacity={0} scale={0.8}>
+        <Txt
+          text={feature.text}
+          fontSize={44}
+          fontWeight={typography.excalidrawNormal}
+          fill={colors.primary}
+          fontFamily={typography.excalidraw}
+          letterSpacing={typography.letterSpacing.normal}
+          textAlign="center"
+          width={900}
+          x={0}
+          y={-20}
+        />
+        <Img src={feature.icon} size={32} x={0} y={25} />
+      </Layout>,
     );
-    
-    featureTexts.push(featureText());
+
+    featureLayouts.push(featureLayout());
   });
 
-  // Animate feature highlights appearing in sequence
+  // Professional staggered feature reveal with organic timing
   yield* sequence(
-    0.8,
-    ...featureTexts.map((text) =>
+    0.4,
+    ...featureLayouts.map((layout, i) =>
       all(
-        text.opacity(1, 0.6),
-        text.scale(1.1, 0.3).to(1, 0.3),
-      )
-    )
+        layout.opacity(1, 0.9, easings.organic),
+        layout.scale(1, 0.9, easings.bounce),
+        layout
+          .x(-20 + Math.sin(i * 0.5) * 10, 0)
+          .to(0, 0.9, easings.smooth), // Subtle entry motion
+      ),
+    ),
   );
 
-  yield* waitFor(4); // Show demo features
+  // Simplified floating animation - less intensive
+  yield* all(
+    ...featureLayouts.map((layout, i) =>
+      all(
+        layout
+          .y(layout.y() + (i % 2 === 0 ? 5 : -5), 3.0, easings.gentle)
+          .to(layout.y(), 3.0, easings.gentle),
+      ),
+    ),
+  );
+
+  yield* waitFor(2.5); // Show demo features with better pacing
 
   // === SCENE 5: Call to Action (75-90 seconds) ===
-  
-  // Fade dashboard and features
+
+  // Professional final transition with elegant fade timing
   yield* all(
-    dashboardRef().opacity(0, 1.0),
-    ...featureTexts.map(text => text.opacity(0, 0.8)),
+    dashboardRef().opacity(0, 1.4, easings.smooth),
+    dashboardRef().scale(0.5, 1.4, easings.gentle),
+    ...featureLayouts.map((layout, i) =>
+      all(
+        layout.opacity(0, 1.0, easings.smooth),
+        layout.scale(0.8, 1.0, easings.gentle),
+        layout.y(layout.y() + 50, 1.0, easings.smooth), // Drift down as they fade
+      ),
+    ),
   );
 
   // CTA Layout - much larger for vertical mobile viewing
   view.add(
-    <Layout ref={ctaRef} opacity={0}>
+    <Layout ref={ctaRef} opacity={0} scale={0.85}>
       <Txt
         text="cdviz.dev"
-        fontSize={110}
+        fontSize={98}
         fontWeight={700}
         fill={colors.primary}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.code}
+        letterSpacing={typography.letterSpacing.normal}
         y={-500}
+        shadowColor="rgba(245, 158, 11, 0.4)"
+        shadowBlur={20}
       />
       <Txt
-        fontSize={64}
-        fontWeight={600}
+        fontSize={60}
+        fontWeight={typography.excalidrawNormal}
         fill={colors.text}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.excalidraw}
         textAlign="center"
+        letterSpacing={typography.letterSpacing.normal}
         y={-250}
       >
-        Complete{'\n'}SDLC Visibility
+        Complete SDLC Visibility
       </Txt>
-      <Rect
-        size={[480, 100]}
-        fill={colors.primary}
-        radius={20}
-        y={50}
-      >
-        <Txt
-          text="Start Free Today"
-          fontSize={44}
-          fontWeight={600}
-          fill="white"
-          fontFamily="Inter, sans-serif"
-        />
-      </Rect>
       <Txt
         text="Open Source • Enterprise Ready"
         fontSize={36}
-        fontWeight={400}
+        fontWeight={typography.excalidrawNormal}
         fill={colors.textMuted}
-        fontFamily="Inter, sans-serif"
+        fontFamily={typography.excalidraw}
         textAlign="center"
-        y={200}
+        letterSpacing={typography.letterSpacing.normal}
+        y={50}
       />
-    </Layout>
+    </Layout>,
   );
 
-  yield* ctaRef().opacity(1, 1.2, easeOutCubic);
+  // Professional CTA entrance with dramatic impact
+  yield* all(ctaRef().opacity(1, 1.8, easings.organic), ctaRef().scale(1, 1.8, easings.bounce));
 
-  // Subtle button highlight animation
-  yield* loop(2, function* () {
-    yield* (ctaRef().children()[2] as Rect).scale(1.05, 0.8).to(1, 0.8);
-  });
+  // Simplified breathing effect - single cycle, less intensive
+  const mainText = ctaRef().children()[0]; // cdviz.dev text
+  yield* all(mainText.scale(1.015, 2.0, easings.gentle).to(1, 2.0, easings.gentle));
 
-  yield* waitFor(3); // Final call to action display
+  // Final elegant fade to black
+  yield* waitFor(1.5); // Let CTA settle
+
+  yield* all(
+    ctaRef().opacity(0.8, 2.0, easings.smooth),
+    view.opacity(0.95, 2.0, easings.gentle), // Subtle fade to suggest ending
+  );
+
+  yield* waitFor(0.5); // Final moment
 });

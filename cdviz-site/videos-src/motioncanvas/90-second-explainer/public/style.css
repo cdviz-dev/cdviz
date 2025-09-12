@@ -1,17 +1,27 @@
 /* CDviz Brand Colors and Typography for Motion Canvas */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap");
+
+/* Excalidraw Font - Authentic Hand-drawn Style */
+@font-face {
+  font-family: "Excalifont";
+  src: url("./Excalifont-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --cdviz-primary: #3B82F6;
-  --cdviz-secondary: #10B981;
-  --cdviz-danger: #EF4444;
-  --cdviz-warning: #F59E0B;
-  --cdviz-background: #0F172A;
-  --cdviz-text: #F1F5F9;
-  --cdviz-text-muted: #94A3B8;
+  --cdviz-primary: #3b82f6;
+  --cdviz-secondary: #10b981;
+  --cdviz-danger: #ef4444;
+  --cdviz-warning: #f59e0b;
+  --cdviz-background: #0f172a;
+  --cdviz-text: #f1f5f9;
+  --cdviz-text-muted: #94a3b8;
 }
 
 /* Ensure consistent font loading */
 .motion-canvas-ui {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
