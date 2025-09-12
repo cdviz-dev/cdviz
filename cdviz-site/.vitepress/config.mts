@@ -158,6 +158,10 @@ export default defineConfig({
                   text: "OpenDAL / Files",
                   link: "/docs/cdviz-collector/sources/opendal",
                 },
+                {
+                  text: "Kafka",
+                  link: "/docs/cdviz-collector/sources/kafka",
+                },
               ],
             },
             {
@@ -188,6 +192,10 @@ export default defineConfig({
                 {
                   text: "SSE",
                   link: "/docs/cdviz-collector/sinks/sse",
+                },
+                {
+                  text: "Kafka",
+                  link: "/docs/cdviz-collector/sinks/kafka",
                 },
               ],
             },

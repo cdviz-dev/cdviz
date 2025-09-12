@@ -1,13 +1,14 @@
 # Header Authentication
 
-Header authentication is used by components that **make outgoing HTTP requests** to authenticate with external services. This includes [SSE](./sources/sse.md) sources that connect to event streams and [HTTP sinks](./sinks/http.md) that post events to external endpoints.
+Header authentication is used by components that **send outgoing messages** to authenticate with external services. This includes [SSE](./sources/sse.md) sources that connect to HTTP event streams, [HTTP sinks](./sinks/http.md) that post events to external endpoints, and [Kafka sinks](./sinks/kafka.md) that generate authentication headers for Kafka messages.
 
 ## Components Using Header Authentication
 
-| Component        | Purpose                                                        |
-| ---------------- | -------------------------------------------------------------- |
-| **Source SSE**   | Authenticate with SSE event stream endpoints                   |
-| **Sink webhook** | Authenticate when posting events to external webhook endpoints |
+| Component      | Purpose                                                     |
+| -------------- | ----------------------------------------------------------- |
+| **Source SSE** | Authenticate with SSE event stream endpoints                |
+| **Sink HTTP**  | Authenticate when posting events to external HTTP endpoints |
+| **Sink Kafka** | Generate authentication headers for Kafka message consumers |
 
 ## Authentication Process
 
@@ -297,6 +298,7 @@ curl -v https://api.example.com/events
 ## Related
 
 - [SSE Source](./sources/sse.md) - Server-Sent Events source configuration
-- [HTTP Sinks](./sinks/http.md) - HTTP sink configuration
+- [HTTP Sink](./sinks/http.md) - HTTP sink configuration
+- [Kafka Sink](./sinks/kafka.md) - Kafka sink header generation
 - [Header Validation](./header-validation.md) - Incoming request headers
 - [Security Configuration](./configuration.md#security) - Overall security setup

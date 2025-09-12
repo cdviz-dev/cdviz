@@ -125,7 +125,6 @@ const comparisonFeatures = {
       },
     },
     "Kafka Topic": {
-      comingSoon: true,
       community: {
         value: true,
       },
@@ -393,7 +392,6 @@ const comparisonFeatures = {
       },
     },
     "Kafka Topic": {
-      comingSoon: true,
       community: {
         value: true,
       },
