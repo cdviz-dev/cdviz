@@ -1,0 +1,5 @@
+graph TD
+  GH[GitHub Actions] -->|"1. POST /events"| Col[CDviz Collector]
+  Col -->|"2. INSERT event"| DB[(PostgreSQL)]
+  Graf[Grafana Dashboard] -->|"3. SELECT events"| DB
+  User[Developer] -->|"4. Display metrics"| Graf
