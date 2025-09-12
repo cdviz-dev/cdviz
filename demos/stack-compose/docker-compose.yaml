@@ -3,6 +3,7 @@ services:
   #region database
   postgres:
     image: ghcr.io/cdviz-dev/cdviz-db-pg:17.2 # until fix on timescale db recent version `undefined symbol: ExecBRUpdateTriggersNew`
+    # image: timescale/timescaledb-ha:pg17
     command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     # restart: always
     # platform: linux/amd64
