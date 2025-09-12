@@ -1,6 +1,7 @@
 # Artifact Timeline Dashboard
 
 <!--![Artifact timeline visualization](/screenshots/grafana_panel_timeline_version_on_stage-20250606_2018.png)-->
+
 ![Artifact timeline visualization - Legend](/screenshots/grafana_panel_timeline_version_on_stage-legend.svg)
 
 ## Overview

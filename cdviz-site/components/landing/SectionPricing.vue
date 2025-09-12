@@ -131,9 +131,7 @@ const getCardClasses = (plan) => {
     plan.colorScheme === "primary"
       ? "border-2 border-primary/30 bg-primary/5"
       : "border-2 border-secondary/20 bg-secondary/5";
-  const highlightClasses = plan.highlighted
-    ? "transform md:scale-105 md:shadow-xl md:z-10"
-    : "";
+  const highlightClasses = plan.highlighted ? "transform md:scale-105 md:shadow-xl md:z-10" : "";
 
   return `${baseClasses} ${colorClasses} ${highlightClasses}`;
 };
@@ -157,9 +155,7 @@ const { observeMultiple } = useScrollAnimation({
 
 onMounted(() => {
   if (sectionRef.value) {
-    const pricingCards = sectionRef.value.querySelectorAll(
-      "[data-animate-pricing]",
-    );
+    const pricingCards = sectionRef.value.querySelectorAll("[data-animate-pricing]");
     observeMultiple(Array.from(pricingCards), "scale-in");
   }
 });
@@ -172,11 +168,9 @@ onMounted(() => {
   >
     <a id="pricing"></a>
     <H2>Pricing & Editions</H2>
-    <div
-      class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90"
-    >
-      Start free with open source, scale with enterprise features. Built for
-      teams that value transparency and control.
+    <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
+      Start free with open source, scale with enterprise features. Built for teams that value
+      transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
@@ -184,36 +178,34 @@ onMounted(() => {
       <div class="flex items-center gap-3 sm:gap-4">
         <span
           class="text-base sm:text-lg font-medium transition-colors duration-200"
-          :class="{ 'text-current': !isYearly, 'text-current/60': isYearly }"
+          :class='{ "text-current": !isYearly, "text-current/60": isYearly }'
         >
           Monthly
         </span>
         <button
           @click="togglePricing"
           class="relative inline-flex h-7 w-12 sm:h-8 sm:w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
-          :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
-          :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
+          :class='isYearly ? "bg-primary" : "bg-gray-300"'
+          :aria-label='`Switch to ${isYearly ? "monthly" : "yearly"} billing`'
           role="switch"
           :aria-checked="isYearly.toString()"
         >
           <span
             class="inline-block h-5 w-5 sm:h-6 sm:w-6 transform rounded-full transition-all duration-300 shadow-sm"
-            :class="[
-              isYearly ? 'translate-x-6 sm:translate-x-7 bg-white' : 'translate-x-1 bg-primary',
-              isToggling ? 'scale-110' : 'scale-100',
-            ]"
+            :class='[
+              isYearly ? "translate-x-6 sm:translate-x-7 bg-white" : "translate-x-1 bg-primary",
+              isToggling ? "scale-110" : "scale-100",
+            ]'
           />
         </button>
         <span
           class="text-base sm:text-lg font-medium transition-colors duration-200"
-          :class="{ 'text-current': isYearly, 'text-current/60': !isYearly }"
+          :class='{ "text-current": isYearly, "text-current/60": !isYearly }'
         >
           Annual
         </span>
       </div>
-      <div
-        class="flex items-center justify-center mt-2 sm:mt-0 sm:ml-4"
-      >
+      <div class="flex items-center justify-center mt-2 sm:mt-0 sm:ml-4">
         <span
           class="text-xs sm:text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full font-normal whitespace-nowrap"
         >
@@ -246,27 +238,22 @@ onMounted(() => {
           <!-- Price -->
           <div
             class="text-4xl font-bold mx-auto mb-4 relative overflow-hidden"
-            :class="[
-              `text-${plan.colorScheme}`,
-              plan.highlighted ? 'sm:text-5xl' : '',
-            ]"
+            :class='[`text-${plan.colorScheme}`, plan.highlighted ? "sm:text-5xl" : ""]'
           >
             <div
               :key="getPrice(plan)"
               class="transition-all duration-300 transform"
-              :class="
-                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-              "
+              :class='isToggling ? "scale-110 opacity-0" : "scale-100 opacity-100"'
             >
               <AnimatedCounter
                 :end="getPrice(plan)"
                 prefix="€"
-                :suffix="plan.pricing.monthly > 0 ? '/month' : ''"
+                :suffix='plan.pricing.monthly > 0 ? "/month" : ""'
                 class="font-bold"
-                :class="[
+                :class='[
                   `text-${plan.colorScheme}`,
-                  plan.highlighted ? 'text-4xl sm:text-5xl' : 'text-4xl',
-                ]"
+                  plan.highlighted ? "text-4xl sm:text-5xl" : "text-4xl",
+                ]'
               />
             </div>
           </div>
@@ -295,11 +282,7 @@ onMounted(() => {
               class="flex items-center gap-3"
             >
               <span
-                :class="[
-                  feature.icon,
-                  'h-5 w-5 flex-shrink-0',
-                  `text-${plan.colorScheme}`,
-                ]"
+                :class='[feature.icon, "h-5 w-5 flex-shrink-0", `text-${plan.colorScheme}`]'
               ></span>
               <span>{{ feature.text }}</span>
             </li>
@@ -318,9 +301,9 @@ onMounted(() => {
     </div>
     <div class="text-center mt-12 text-current/90">
       <p>
-        All prices are in Euro (€) and exclude VAT. The Community edition is
-        free forever, while the Enterprise and SaaS editions offer additional
-        features and support. For more information or custom request, please
+        All prices are in Euro (€) and exclude VAT. The Community edition is free forever, while the
+        Enterprise and SaaS editions offer additional features and support. For more information or
+        custom request, please
         <a href="/contact" class="text-primary hover:underline">contact us</a>.
       </p>
     </div>

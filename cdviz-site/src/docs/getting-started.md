@@ -97,7 +97,7 @@ jobs:
                 "type": "service"
               }
             }
-          url: 'http://localhost:8080/webhook/github-actions'
+          url: "http://localhost:8080/webhook/github-actions"
 ```
 
 For complete setup instructions, see the [GitHub Action Integration Guide](/docs/cdviz-collector/integrations/github-action).
