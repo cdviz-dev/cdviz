@@ -1,6 +1,6 @@
 # Stop Flying Blind: Why You Need Pipeline Visibility Yesterday
 
-*Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots.*
+_Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots._
 
 ## The Multi-Tool Nightmare
 
@@ -63,7 +63,7 @@ Event Sources → CDviz Collector → PostgreSQL/TimescaleDB → Grafana Dashboa
 
 CDviz is built with a strong commitment to open source principles:
 
-- **Core collector**: AGPL v3 licensed
+- **Core collector**: Apache License v2 (from v0.15+)
 - **Database and Grafana components**: Apache License v2
 - **Kubernetes-native**: Deploy anywhere with Helm charts
 - **Standard-based**: Built on CDEvents specification for interoperability
@@ -98,7 +98,7 @@ The future of software delivery observability isn't about more dashboards—it's
 
 ---
 
-*Want to dive deeper? Check out the [CDviz documentation](https://cdviz.dev) or explore the [GitHub repository](https://github.com/cdviz-dev/cdviz). Questions? The CDviz team is active in the CDEvents community and welcomes feedback.*
+_Want to dive deeper? Check out the [CDviz documentation](https://cdviz.dev) or explore the [GitHub repository](https://github.com/cdviz-dev/cdviz). Questions? The CDviz team is active in the CDEvents community and welcomes feedback._
 
 ---
 
