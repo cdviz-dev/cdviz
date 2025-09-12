@@ -1,7 +1,14 @@
 ---
-title: "Pipeline Visibility Crisis: When Your Tools Don't Talk"
+title: "Stop Building Spreadsheets: Your CI/CD Tools Should Talk to Each Other"
 description: "Engineering teams waste time correlating data across CI/CD tools. CDviz provides unified event collection and visualization for deployment tracking."
-tags: ["devops", "cicd", "observability", "dorametrics", "engineering management", "platformengineering"]
+tags: [
+  "devops",
+  "cicd",
+  "observability",
+  "dorametrics",
+  "engineering management",
+  "platformengineering",
+]
 target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
 series: "CDviz Pipeline Visibility"
@@ -12,10 +19,10 @@ publications:
     url: "https://dev.to/davidb31/pipeline-visibility-crisis-when-your-tools-dont-talk-3ch"
 ---
 
-# Pipeline Visibility Crisis: When Your Tools Don't Talk
+# Stop Building Spreadsheets: Your CI/CD Tools Should Talk to Each Other
 
 _You have an impressive CI/CD stack: GitHub, Jenkins, Kubernetes, Datadog, PagerDuty. But when leadership asks "How fast do we deploy?" you're opening 6
-  browser tabs and building spreadsheets._
+browser tabs and building spreadsheets._
 
 ## The Current Reality
 

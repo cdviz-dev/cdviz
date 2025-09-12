@@ -26,27 +26,20 @@ onMounted(() => {
   >
     <a id="why"></a>
     <H2 id="why-heading">Transform Your Software Delivery</H2>
-    <div
-      class="flex flex-col items-stretch space-content md:flex-row max-w-6xl mx-auto"
-    >
+    <div class="flex flex-col items-stretch space-content md:flex-row max-w-6xl mx-auto">
       <div
         data-animate-card
         class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 card-hover transform-gpu"
       >
         <div class="flex items-center space-element my-sm">
-          <div
-            class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float"
-          >
-            <span
-              class="icon-[lucide--eye] h-5 sm:h-6 w-5 sm:w-6 text-primary"
-            ></span>
+          <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float">
+            <span class="icon-[lucide--eye] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
           </div>
           <H3>Complete Pipeline Visibility</H3>
         </div>
         <p class="leading-relaxed text-sm sm:text-base text-text/90">
-          Track deployments, monitor performance, and identify bottlenecks
-          across your entire CI/CD pipeline with real-time dashboards and
-          analytics.
+          Track deployments, monitor performance, and identify bottlenecks across your entire CI/CD
+          pipeline with real-time dashboards and analytics.
         </p>
       </div>
       <div
@@ -58,15 +51,13 @@ onMounted(() => {
             class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float"
             style="animation-delay: 0.5s"
           >
-            <span
-              class="icon-[lucide--plug-zap] h-5 sm:h-6 w-5 sm:w-6 text-primary"
-            ></span>
+            <span class="icon-[lucide--plug-zap] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
           </div>
           <H3>Zero-Friction Integration</H3>
         </div>
         <p class="leading-relaxed text-sm sm:text-base text-text/90">
-          Connect with your existing tools—GitHub, GitLab, Jenkins, Kubernetes—
-          without changing workflows or disrupting development teams.
+          Connect with your existing tools—GitHub, GitLab, Jenkins, Kubernetes— without changing
+          workflows or disrupting development teams.
         </p>
       </div>
       <div
@@ -78,22 +69,17 @@ onMounted(() => {
             class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float"
             style="animation-delay: 1s"
           >
-            <span
-              class="icon-[lucide--users-round] h-5 sm:h-6 w-5 sm:w-6 text-primary"
-            ></span>
+            <span class="icon-[lucide--users-round] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
           </div>
           <H3>Unified Tool Collaboration</H3>
         </div>
         <p class="leading-relaxed text-sm sm:text-base text-text/90">
-          Break down silos between development, operations, and quality teams by
-          providing a single source of truth for all delivery events and
-          metrics.
+          Break down silos between development, operations, and quality teams by providing a single
+          source of truth for all delivery events and metrics.
         </p>
       </div>
     </div>
-    <div
-      class="text-sm sm:text-base text-center my-lg max-w-5xl mx-auto text-text/90 italic"
-    >
+    <div class="text-sm sm:text-base text-center my-lg max-w-5xl mx-auto text-text/90 italic">
       <a href="/docs/cdviz-grafana/artifact_timeline.html">
         Example of a panel to track timeline & deployment of an artifact.<br />
         <img

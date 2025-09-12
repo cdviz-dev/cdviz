@@ -365,7 +365,7 @@ For comprehensive GitHub activity tracking, you can use the **[GitHub Webhook in
 **Recommended combinations:**
 
 - **GitHub Action only**: Custom events for specific workflows with full control
-- **Webhooks only**: Complete GitHub activity tracking with automatic setup  
+- **Webhooks only**: Complete GitHub activity tracking with automatic setup
 - **Both together**: Comprehensive GitHub events (webhooks) + custom workflow data (actions)
 
 **Example combined use case**: Use webhooks to track all repository activity automatically, while adding GitHub Actions to specific deployment workflows to send detailed deployment context and custom metrics.

@@ -106,7 +106,7 @@ You should see:
 
 ### Real Integrations
 
-- **[GitHub](./integrations/github.md)** - Repository events with proper signatures  
+- **[GitHub](./integrations/github.md)** - Repository events with proper signatures
 - **[GitHub Action](./integrations/github-action.md)** - Send events directly from workflows
 - **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
 - **GitLab** and **Jenkins** - CI/CD events (coming soon)
