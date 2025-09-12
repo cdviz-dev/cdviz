@@ -1,0 +1,8 @@
+node_modules/
+dist/
+output/
+tests/output/
+tests/cli-test/
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,47 @@
+[tools]
+bun = "latest"
+
+[tasks.install]
+description = "Install dependencies"
+run = ["bun install"]
+
+[tasks.test]
+description = "Run all tests"
+run = ["bun test"]
+depends = ["install"]
+
+[tasks.dev]
+description = "Run CLI in development mode"
+run = ["bun run dev"]
+depends = ["install"]
+
+[tasks.build]
+description = "Build and test the CLI"
+run = ["bun install", "bun test"]
+
+# CLI usage examples
+[tasks."convert:example"]
+description = "Convert example mermaid files to SVG"
+run = [
+  "bun run bin/mmd-to-img.js",
+  "--input",
+  "examples",
+  "--output",
+  "dist",
+  "--format",
+  "svg",
+]
+depends = ["install"]
+
+[tasks."convert:batch"]
+description = "Convert multiple mermaid files to PNG"
+run = [
+  "bun run bin/mmd-to-img.js",
+  "--input",
+  ".",
+  "--output",
+  "output",
+  "--format",
+  "png",
+]
+depends = ["install"]
