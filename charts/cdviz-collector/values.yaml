@@ -43,8 +43,8 @@ securityContext:
     drop:
       - ALL
   readOnlyRootFilesystem: true
-  runAsUser: 10001
-  runAsGroup: 10001
+  runAsUser: 65532
+  runAsGroup: 65532
 
 service:
   type: ClusterIP
