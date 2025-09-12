@@ -10,7 +10,7 @@ const comparisonFeatures = {
       },
       enterprise: {
         value: true,
-        tooltip: "Optional Commercial license for enterprise usage",
+        tooltip: "Enterprise features and support subscription",
       },
       saas: {
         value: true,

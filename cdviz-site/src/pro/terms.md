@@ -6,9 +6,9 @@ comments: false
 
 **Last Updated:** July 1, 2025
 
-**Effective Date:** July 1, 2025
+**Effective Date:** September 12, 2025
 
-Alchim312 have developed and market a SDLC monitoring software solution, "CDviz enterprise", “CDviz Saas” which are its exclusive ownership excluding explicit parts under other Licenses (AGPL,...), related Maintenance services and related services. "CDviz saas" software solution is available as a Software-as-a-Service (SaaS).
+Alchim312 have developed and market a SDLC monitoring software solution, "CDviz enterprise", “CDviz Saas” which are its exclusive ownership excluding explicit parts under other Licenses (Apache-2.0,...), related Maintenance services and related services. "CDviz saas" software solution is available as a Software-as-a-Service (SaaS).
 
 By creating a user account and an organization or by purchasing a subscription to the saas offers or to the enterprise offers, Client agrees upon the following terms and conditions without any restriction, modification, alteration or reservation, unless otherwise agreed in writing between the Parties. CDviz may change these Terms & Conditions.
 

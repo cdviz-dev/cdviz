@@ -7,7 +7,7 @@ ARG PG_MAJOR=${PG_VERSION%%.*}
 # trivy:ignore:AVD-DS-0001
 FROM --platform=$BUILDPLATFORM arigaio/atlas:0.36.0-community-alpine AS cdviz-db-migration
 LABEL org.opencontainers.image.source="https://github.com/cdviz-dev/cdviz"
-LABEL org.opencontainers.image.licenses="MIT OR Apache-2.0"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 # Create appuser
 ENV USER=nonroot

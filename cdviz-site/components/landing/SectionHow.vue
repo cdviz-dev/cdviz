@@ -282,9 +282,8 @@ const selectComponent = async (componentName) => {
               <div>
                 <div class="font-medium text-primary mb-2">Licensing</div>
                 <div class="text-text/80 space-y-1">
-                  <div>• AGPL v3 (Community)</div>
-                  <div>• Commercial (Enterprise)</div>
-                  <div>• More sources & sinks</div>
+                  <div>• Apache License 2.0</div>
+                  <div>• Commercial integrations</div>
                   <div>• Professional support</div>
                 </div>
               </div>

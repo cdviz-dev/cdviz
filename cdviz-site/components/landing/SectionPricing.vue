@@ -19,7 +19,7 @@ const pricingPlans = [
       yearly: 0,
     },
     features: [
-      { icon: "icon-[lucide--workflow]", text: "Collector (AGPL v3)" },
+      { icon: "icon-[lucide--workflow]", text: "Collector (ASL v2)" },
       { icon: "icon-[lucide--database]", text: "Database schemas (ASL v2)" },
       {
         icon: "icon-[lucide--bar-chart-3]",

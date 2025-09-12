@@ -5,34 +5,92 @@ markdownStyles: true
 
 # Licensing
 
-CDviz is dual licensed under GNU AGPL v3 and commercial license, except for the components explicitly under the Apache Software License v2.
+CDviz components are licensed under the Apache Software License v2 (Apache-2.0), providing you with the freedom to use, modify, and distribute the software.
 
-The GNU AGPL v3 is designed for developers who are building open source applications in compliance with the GNU AGPL v3 license and are able to support themselves. It is fully featured. If you distribute, host or create derivative works of the CDviz software over the network, the GNU AGPL v3 license requires that you also distribute the complete, corresponding source code of the combined work under the same GNU AGPL v3 license. This requirement applies whether or not you modified CDviz. Please consult the license [here](https://www.gnu.org/licenses/agpl-3.0.en.html) or review the FAQs below.
+## License Changes
 
-A commercial license is available.
+**Important:** The cdviz-collector has migrated from AGPL v3 to Apache License v2 starting with version v0.15. This eliminates the need for licensing compliance concerns while using the open source version.
+
+- **cdviz-collector v0.15+**: Apache License v2
+- **cdviz-collector v0.14 and earlier**: AGPL v3 (legacy versions)
+- **cdviz-db**: Apache License v2
+- **cdviz-grafana**: Apache License v2
+
+## Apache License v2
+
+The Apache License v2 is a permissive open source license that allows you to:
+
+- Use the software for any purpose, including commercial use
+- Distribute it
+- Modify it
+- Distribute modified versions
+- Use it in proprietary software without open sourcing your changes
+
+The main requirements are:
+
+- Include the license and copyright notice
+- State changes made to the original work
+- Include the NOTICE file if one exists
+
+For the full license text, see [Apache License v2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Commercial Subscriptions
+
+While the open source components are freely available under Apache License v2, CDviz offers commercial subscriptions that provide:
+
+- **Enterprise features**: Additional functionality not available in the open source version
+- **Professional support**: Direct access to our engineering team
+- **Service level agreements**: Guaranteed response times and support commitments
+- **Consultation services**: Help with implementation, optimization, and best practices
+- **Development support**: Your subscription helps fund the ongoing maintenance and development of CDviz, including the open source components
+
+These subscriptions are service offerings, not licensing requirements. By subscribing, you're not only getting additional features and support, but also contributing to the sustainable development of the entire CDviz ecosystem.
 
 ## Licensing FAQs
 
-### What is the GNU AGPL v3?
+### Why did CDviz change from AGPL v3 to Apache License v2?
 
-The GNU AGPL v3 is short for the "GNU Affero General Public License v3." It is a [FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software) license certified by the [Free Software Foundation](https://www.fsf.org/) and the [Open Source Initiative](https://opensource.org/). You can get a copy of the GNU AGPL v3 license with CDviz source code or at <https://www.gnu.org/licenses/agpl-3.0.en.html>.
+We changed the license to Apache License v2 starting with cdviz-collector v0.15 to:
 
-### What does it mean for me to comply with the GNU AGPL v3?
+- **Increase adoption**: Apache License v2 is more business-friendly and widely accepted
+- **Simplify compliance**: Permissive license reduces legal complexity
+- **Enable enterprise use**: Easier integration into commercial products and services
+- **Align with ecosystem**: Many CNCF and open source projects use Apache License v2
 
-When you host or distribute CDviz over a network, the AGPL v3 applies to you. Any distribution or copying of CDviz software modified or not has to comply with the obligations specified in the AGPL v3 license. You must include the source code, full license text and the original copyright notice along with the object code.
+### What does Apache License v2 mean for users?
 
-We recommend the [Free Software Foundation’s interpretation](https://www.gnu.org/licenses/agpl-3.0.en.html) of the GNU AGPL v3 license.
+The Apache License v2 is a permissive license that gives you significant freedom:
 
-### Making combined or derivative works of CDviz
+- **Commercial use**: You can use CDviz in commercial products without restrictions
+- **Modification**: You can modify the source code for your needs
+- **Distribution**: You can distribute original or modified versions
+- **Private use**: You can use and modify CDviz privately without sharing changes
+- **Patent protection**: The license provides an express grant of patent rights
 
-Creating combined or derivative works of CDviz requires all such works to be released under the same license.
+### Do I need to open source my modifications?
 
-If CDviz source code is included in the same executable file, they are definitely combined in one program. If modules are designed to run linked together in a shared address space, that almost surely means combining them into one program.
+No. Unlike copyleft licenses (such as AGPL v3), Apache License v2 does not require you to open source your modifications or derivative works. You only need to:
 
-By contrast, pipes, sockets, RESTful APIs, and command-line arguments are communication mechanisms normally used between two separate programs. So when they are used for communication, the modules normally are separate programs. But if the semantics of the communication are intimate enough, exchanging complex internal data structures, that too could be a basis to consider the two parts as combined into a larger program.
+- Include the original license and copyright notices
+- Document changes you made to the original work
+- Include the NOTICE file if one exists
 
-Merely aggregating CDviz software into your distribution does not constitute derivative works. For more information, please refer to the [GPL FAQ.](https://www.gnu.org/licenses/gpl-faq.en.html#MereAggregation).
+### What about older versions under AGPL v3?
 
-### Talking to your Legal Counsel
+cdviz-collector versions v0.14 and earlier remain under AGPL v3. If you're using these older versions, the AGPL v3 license terms still apply. We recommend upgrading to v0.15+ to benefit from the Apache License v2.
 
-If you have questions, we recommend that you talk to your own attorney for legal advice. Purchasing a commercial license from CDviz removes the GNU AGPL v3 obligations from CDviz software.
+### When should I consider a commercial subscription?
+
+Consider a commercial subscription if you:
+
+- **Need enterprise features**: Additional functionality not available in the open source version
+- **Want professional support**: Direct access to our engineering team
+- **Require service level agreements**: Guaranteed response times and support commitments
+- **Need consultation services**: Help with implementation, optimization, and best practices
+- **Want to support open source development**: Help fund the ongoing maintenance and enhancement of CDviz
+
+Note: This is a service subscription, not a licensing requirement. You can use all open source components freely under Apache License v2, and your subscription helps ensure the continued development and maintenance of the entire project.
+
+### Legal Questions
+
+For specific legal questions about licensing, we recommend consulting with your legal counsel. The information provided here is for general guidance and should not be considered legal advice.

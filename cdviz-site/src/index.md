@@ -51,10 +51,11 @@ faq:
       Self-hosting involves expenses for configuration, maintenance, and infrastructure support.
       <br/>
       However, open source projects need community support and sustainable funding to thrive.
-      Without contributions—whether through paid plans, community involvement, or enterprise
-      licenses—continuous improvement and long-term maintenance wouldn't be possible.
+      Without contributions—whether through paid subscriptions, community involvement, or donations—
+      continuous improvement and long-term maintenance wouldn't be possible.
       <br/>
-      Some enterprise components may require a commercial license.
+      Some enterprise features may require a commercial subscription, and subscriptions help
+      support the ongoing development of all CDviz components.
 
   - q: "Technical Architecture"
     a: ""
@@ -77,15 +78,17 @@ faq:
   - q: What is CDviz's commitment to Open Source?
     a: |
       At CDviz, we firmly believe in Open Source and collaborative development.
-      The cdviz-collector core is licensed under AGPL v3. The database and
+      The cdviz-collector is licensed under Apache License v2 (from v0.15+). The database and
       Grafana components are under Apache License v2. For details, see our
       <a href="/compliance">Compliance Page</a>.
-  - q: When should I consider a Commercial license?
+  - q: When should I consider a Commercial subscription?
     a: |
-      Consider a commercial license if you cannot fulfill the obligations of
-      "copyleft" licenses like AGPL v3, or if you need enterprise features
-      and professional support. The commercial license provides development
-      rights without open source obligations plus access to our support services.
+      Consider a commercial subscription if you need enterprise features,
+      professional support, or want to support the ongoing development of CDviz.
+      The subscription provides access to additional functionality, our support services,
+      and helps fund the maintenance and enhancement of all CDviz components, including open source.
+      <br/>
+      Note: All open source components use Apache License v2, so no licensing fees are required.
 
   - q: "Pricing & Plans"
     a: ""
@@ -95,26 +98,25 @@ faq:
       and pricing yet. We're open to discussions and partnerships.
       <br/>
       If you're interested in SaaS, please <a href="/contact">contact us</a>.
-  - q: Can I continue using my commercial license after it expires?
+  - q: Can I continue using CDviz after my commercial subscription expires?
     a: |
-      No. Commercial license rights expire when the subscription ends or is canceled.
-      You must maintain an active subscription to continue using the commercial license.
+      Yes. You can always use the open source components under Apache License v2.
+      However, access to enterprise features and professional support requires an active subscription.
   - q: Are prices inclusive of taxes?
     a: |
       Prices exclude applicable sales tax, VAT, and withholdings.
       These obligations are the buyer's responsibility.
 
 faq_off:
-  - q: What are the licensing options available for the cdviz-collector ?
+  - q: What licensing is used for cdviz-collector?
     a: |
-      <ul>
-        <li>Commercial License</li>
-        <li>GNU AGPL v3 Open Source license</li>
-      </ul>
+      cdviz-collector uses Apache License v2 (from v0.15+), which is a permissive open source license.
+      No commercial license is needed - you can use it freely for any purpose, including commercial use.
+      <br/>
       For more information please see our <a href="compliance">Compliance Page</a>.
   - q: Is support included with the subscription?
     a: |
-      A commercial license includes direct-to-engineering support delivered through ???TBD???.
+      A commercial subscription includes direct-to-engineering support delivered through ???TBD???.
 ---
 
 <script setup>
