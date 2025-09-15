@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-collector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.16.0"
+  tag: "0.17.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -103,7 +103,7 @@ configFiles:
     [sinks.debug]
     enabled = true
 
-    [sinks.cdviz_db]
+    [sinks.database]
     enabled = false
 
     [sources.cdevents_webhook]
@@ -123,7 +123,7 @@ configFiles:
     headers_to_keep = []
 
     [sources.github_webhook.extractor.headers]
-    "x-hub-signature-256" = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", token = "changeme" }
+    "x-hub-signature-256" = { type = "signature", signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", token = "changeme" }
 
     [transformers.github_events]
     type = "vrl"
