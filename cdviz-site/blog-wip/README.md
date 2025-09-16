@@ -7,14 +7,19 @@ This directory contains draft blog content, ideas, and the asset generation pipe
 ```txt
 blog-wip/                       # Working area for drafts and ideas
 ├── README.md                   # This file
-├── src/                        # Draft blog posts and ideas
-│   ├── series-*.md            # Blog post series (drafts)
-│   ├── plan-*.txt             # Planning documents and ideas
-│   └── *.md                   # Individual blog posts (drafts)
+├── cdevents-in-action/         # CDEvents in Action series episodes
+│   └── episode-*.md           # Individual episode drafts
+├── ideas/                      # Content ideas and future planning
+│   ├── ideas-bank.md          # Educational article ideas
+│   └── future-roadmap.md      # Future series and content roadmap
+├── archive/                    # Outdated planning documents
+│   └── *.md                   # Superseded plans and series concepts
 ├── assets-src/                 # Source assets for blog posts (if needed)
 │   ├── *.excalidraw          # Excalidraw diagrams
 │   └── icons_48x48_monochrome/ # Icon collection
-└── *.md                        # Planning documents and roadmaps
+├── VISUAL_GUIDE.md            # CDviz brand guidelines for blog assets
+├── WORK_SUMMARY.md            # Historical record of previous blog work
+└── .mise.toml                  # Asset generation pipeline
 ```
 
 ### Published Content Location
@@ -73,22 +78,44 @@ Create any needed diagrams or images:
 
 ## Content Strategy
 
-### Current Focus: Deployment Monitoring Series
+### Current Focus: "CDEvents in Action" Series
 
-1. **Problem identification** - Published: "Pipeline Visibility Crisis"
-2. **Direct pipeline integration** - Planned: GitHub Actions, Jenkins, GitLab CI
-3. **Kubernetes passive monitoring** - Planned: Webhooks and controllers
-4. **GitOps and registry integration** - Planned: ArgoCD, container registries
-5. **Advanced patterns** - Future: Multi-cluster, compliance, scaling
+Educational series introducing CDEvents and practical implementation patterns for dev.to community.
 
-### Future Roadmap
+**Overview:**
+- **Goal**: Position as definitive CDEvents learning resource on dev.to
+- **Strategy**: Educational content in blog + detailed implementation in CDviz docs
+- **Publishing**: Weekly episodes with optimal learning progression
+- **Target**: DevOps engineers, platform engineers, developers implementing SDLC observability
 
-See `FUTURE_ROADMAP_ambitious_blog_series.md` for enterprise use cases when product matures.
+**Series Progress:**
+- **Episode #0**: "Monitor Your Software Factory" ✅ Published & rebranded
+- **Episodes 1-2**: Foundations (Consumer/Producer basics)
+- **Episodes 3-4**: Direct Integration (GitHub, Jenkins, GitLab)
+- **Episodes 5-7**: Advanced & Passive Monitoring
+- **Episodes 8-10**: Event-Driven Automation
+
+**📋 Detailed Series Plan**: See [`cdevents-in-action/README.md`](cdevents-in-action/README.md) for complete episode structure, learning progression, and documentation dependencies.
+
+### Future Content Ideas
+
+See `ideas/future-roadmap.md` for enterprise use cases and advanced series when product matures.
 
 ## Publishing Recommendations
 
+### Series Format
+- **Title Format**: "CDEvents in Action #N: Episode Title" for optimal dev.to SEO
+- **Series Branding**: Consistent naming builds topic authority and searchability
+- **Progressive Complexity**: Start accessible, build to advanced implementation patterns
+
+### Content Guidelines
 - **Tone**: Conversational yet professional, honest about limitations
 - **Structure**: Problem → Solution → Demo → Value → Next Steps
-- **Length**: 5-8 minute reads (1000-1500 words)
-- **SEO**: Target keywords: devops, cicd, observability, deployment monitoring
+- **Length**: 6-12 minute reads (1200-2000 words)
+- **SEO**: Target keywords: cdvents, ci-cd-standardization, pipeline-observability
 - **Engagement**: Include working code examples and immediate demos
+
+### Dev.to Strategy
+- **First-mover advantage**: Few compete for "CDEvents" searches
+- **Community building**: Encourage discussion and experience sharing
+- **Cross-references**: Link episodes together for SEO and user journey
