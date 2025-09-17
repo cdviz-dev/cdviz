@@ -1,17 +1,17 @@
 ---
-title: "Stop Building Spreadsheets: Your CI/CD Tools Should Talk to Each Other"
-description: "Engineering teams waste time correlating data across CI/CD tools. CDviz provides unified event collection and visualization for deployment tracking."
+title: "CDEvents in Action #0: Monitor Your Software Factory"
+description: "Engineering teams waste time correlating data across CI/CD tools. CDviz provides unified CDEvents-based event collection and visualization for deployment tracking."
 tags: [
   "devops",
   "cicd",
   "observability",
-  "dorametrics",
+  "cdevents",
   "engineering management",
   "platformengineering",
 ]
 target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
-series: "CDviz Pipeline Visibility"
+series: "CDEvents in Action"
 series_part: 0
 published: true
 publications:
@@ -19,7 +19,7 @@ publications:
     url: "https://dev.to/davidb31/pipeline-visibility-crisis-when-your-tools-dont-talk-3ch"
 ---
 
-# Stop Building Spreadsheets: Your CI/CD Tools Should Talk to Each Other
+# CDEvents in Action #0: Monitor Your Software Factory
 
 _You have an impressive CI/CD stack: GitHub, Jenkins, Kubernetes, Datadog, PagerDuty. But when leadership asks "How fast do we deploy?" you're opening 6
 browser tabs and building spreadsheets._
@@ -123,4 +123,10 @@ Some events are generated automatically by the demo. Browse the other dashboard 
 
 ## Next Steps
 
-You can look at [CDviz's documentation](https://cdviz.dev) until the coming articles about how to instrument and generate CDEvents, how to improve communication between tools via CDEvents + CDviz.
+This is Episode 0 of our "CDEvents in Action" series. Coming up:
+
+- **Episode #1**: "Simulate a Consumer" - Test your CDEvents integration before building with webhook.site, CDviz docker compose, and cdviz-collector
+- **Episode #2**: "Send CDEvents for Custom Integration" - Producer patterns with curl+bash, cdviz-collector send, and send-cdevents GitHub Action
+- **Episode #3**: "Webhook and Transformer Patterns" - Reduce manual instrumentation overhead
+
+You can explore [CDviz's documentation](https://cdviz.dev) and try the [5-minute demo](https://github.com/cdviz-dev/cdviz) to get started with CDEvents-based pipeline visibility.
