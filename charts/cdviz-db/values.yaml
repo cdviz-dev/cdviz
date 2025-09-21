@@ -11,10 +11,20 @@ annotations: {}
 env:
   # DATABASE_URL children node could be any env's value definition supported by kubernetes's pod manifest
   # helm template could be used
+  # Example configurations:
+  # 1. Reference existing secret:
+  #    DATABASE_URL:
+  #      valueFrom:
+  #        secretKeyRef:
+  #          name: "my-database-secret"
+  #          key: DATABASE_URL
+  # 2. Direct value (not recommended for production):
+  #    DATABASE_URL:
+  #      value: "postgresql://user:pass@host:5432/cdviz"
   DATABASE_URL:
     valueFrom:
       secretKeyRef:
-        name: ""
+        name: "cdviz-db-secret"
         key: DATABASE_URL
 
 # Additional kubernetes resources to create. Helm template could be used.

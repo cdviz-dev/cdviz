@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "/home/luke/projects/github/argo-multiverse-labs/local-cluster/argo-cdviz"
+    ]
+  }
+}
