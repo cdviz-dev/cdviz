@@ -41,6 +41,9 @@ spec:
               - file:///migrations/
             env:
             {{- range $key, $value := .Values.env }}
+            {{- if and $value.valueFrom $value.valueFrom.secretKeyRef (not $value.valueFrom.secretKeyRef.name) }}
+            {{- fail (printf "Environment variable %s requires a valid secretKeyRef.name, but got empty string. Please configure env.%s.valueFrom.secretKeyRef.name in your values." $key $key) }}
+            {{- end }}
               - name: {{ $key }}
                 {{- tpl (toYaml $value) $ | nindent 16 }}
             {{- end}}
