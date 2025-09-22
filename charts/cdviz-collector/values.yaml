@@ -162,15 +162,21 @@ log:
 env:
   CDVIZ_COLLECTOR__HTTP__PORT:
     value: "{{ .Values.service.port }}"
+  # Enable sinks (uncomment and configure as needed)
+  # CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED:
+  #   value: "true"
+  # CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED:
+  #   value: "true"
   # CDVIZ_COLLECTOR__SINKS__DATABASE__URL:
   #   valueFrom:
   #     secretKeyRef:
-  #       name: ""
+  #       name: "cdviz-collector-secret"
   #       key: DATABASE_URL
-  # CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
+  # GitHub webhook signature token (for validating GitHub webhooks)
+  # CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN:
   #   valueFrom:
   #     secretKeyRef:
-  #       name: ""
+  #       name: "cdviz-collector-secret"
   #       key: GITHUB_WEBHOOK_SIGNATURE_TOKEN
 
 # Additional kubernetes resources to create. Helm template could be used.
