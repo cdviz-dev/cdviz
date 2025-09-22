@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cdviz-grafana
-description: cdviz's grafana resources (dashboards, datasources, ...)
+description: Helm chart for cdviz-grafana - Grafana dashboards and datasources for CDviz SDLC observability platform
 type: application
 version: 0.0.0 # version set during release
 icon: https://cdviz.dev/assets/favicon.svg

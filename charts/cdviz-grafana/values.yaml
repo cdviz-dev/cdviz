@@ -1,28 +1,31 @@
+# Grafana datasources configuration
 datasources:
-  enabled: false
+  enabled: false  # Set to true to create datasource configmaps
   annotations:
     grafana_datasource: "1"
   definitions:
     cdviz-db:
       enabled: false # enable/disable the datasource
-      # same syntax than on grafana datasources provisionner
+      # Grafana datasource configuration (same syntax as Grafana provisioning)
       type: postgres
-      url: '$POSTGRES_HOST'
-      user: '$POSTGRES_USER_CDVIZ_READER' # from env var (injected via secrets)
+      access: proxy
+      url: 'postgresql://host:5432'  # Override with actual database URL
+      user: 'cdviz'  # Database username
       secureJsonData:
-        password: '$POSTGRES_PASSWORD_CDVIZ_READER'
+        password: 'your-password'  # Database password
       jsonData:
-        database: '$POSTGRES_DB'
-        sslmode: 'require' # disable/require/verify-ca/verify-full
+        database: 'cdviz'  # Database name
+        sslmode: 'disable' # disable/require/verify-ca/verify-full
         maxOpenConns: 10 # Grafana v5.4+
         maxIdleConns: 10 # Grafana v5.4+
         maxIdleConnsAuto: true # Grafana v9.5.1+
         connMaxLifetime: 14400 # Grafana v5.4+
-        postgresVersion: 1000
+        postgresVersion: 1600  # PostgreSQL version (1200=12, 1300=13, 1400=14, 1500=15, 1600=16)
         timescaledb: true
 
+# Grafana dashboards configuration
 dashboards:
-  enabled: true
+  enabled: true  # Set to true to create dashboard configmaps
   annotations:
     grafana_dashboard: "1"
 
