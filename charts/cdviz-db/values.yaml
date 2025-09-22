@@ -43,7 +43,9 @@ extraObjects:
       name: cdviz-db
     spec:
       instances: 1
-      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.4
+      # PostgreSQL image with TimescaleDB extension
+      # PG 17.4 support is available but may have compatibility issues
+      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.2
       imagePullPolicy: IfNotPresent
       # postgresUID: 26
       # postgresGID: 26
