@@ -258,8 +258,16 @@ export default defineConfig({
       "/blog/": [
         //{ text: "Blog", link: "/blog/" },
         {
-          text: "Pipeline Visibility Crisis: When Your Tools Don't Talk",
-          link: "/blog/20250821-manager-problem",
+          text: "CDEvents in Action #2: Send Your First CDEvent",
+          link: "/blog/20251001-episode-2-send-first-cdevent",
+        },
+        {
+          text: "CDEvents in Action #1: Simulate a Consumer",
+          link: "/blog/20250916-episode-1-simulate-consumer",
+        },
+        {
+          text: "CDEvents in Action #0: Monitor Your Software Factory",
+          link: "/blog/20250821-episode-0-manager-problem",
         },
       ],
     },
@@ -269,7 +277,8 @@ export default defineConfig({
     },
     socialLinks: [{ icon: "github", link: "https://github.com/cdviz-dev" }],
     editLink: {
-      pattern: "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
+      pattern:
+        "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
     },
     footer: {
       message:
@@ -319,7 +328,12 @@ export default defineConfig({
       {
         name: "vp-tw-order-fix",
         configResolved(c) {
-          movePlugin(c.plugins as any, "@tailwindcss/vite:scan", "after", "vitepress");
+          movePlugin(
+            c.plugins as any,
+            "@tailwindcss/vite:scan",
+            "after",
+            "vitepress",
+          );
         },
       },
     ],
