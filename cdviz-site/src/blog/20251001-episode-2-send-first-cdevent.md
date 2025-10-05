@@ -15,7 +15,7 @@ _You've tested receiving CDEvents. Now learn how to send them from your pipeline
 
 ## The Producer Problem
 
-In [Episode #1](./episode-1-simulate-consumer.md), you learned how to simulate receiving CDEvents. Now you need to **send** events from your actual pipelines and tools.
+In [Episode #1](./20250916-episode-1-simulate-consumer.md), you learned how to simulate receiving CDEvents. Now you need to **send** events from your actual pipelines and tools.
 
 But sending events properly means handling:
 
@@ -493,7 +493,7 @@ In the next episode, we'll explore **GitHub Actions integration** - how to autom
 
 - [cdviz-collector send documentation](https://cdviz.dev/docs/cdviz-collector/send.html) - Complete command reference
 - [HTTP Sink documentation](https://cdviz.dev/docs/cdviz-collector/sinks/http.html) - Authentication patterns
-- [Episode #1: Simulate a Consumer](./episode-1-simulate-consumer.md) - Learn to test event reception
+- [Episode #1: Simulate a Consumer](./20250916-episode-1-simulate-consumer.md) - Learn to test event reception
 
 ### Alternative Tools
 
