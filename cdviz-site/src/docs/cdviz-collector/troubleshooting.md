@@ -200,7 +200,7 @@ log("Output event: " + string!(.body), level: "info")
 '''
 ```
 
-> **⚠️ CDEvents Transformation Note:**
+> [!NOTE] CDEvents Transformation Note
 > VRL examples are for debugging purposes and may not produce valid CDEvents. For production CDEvents transformations, use provided templates at `/etc/cdviz-collector/transformers/` and validate against the [CDEvents specification](https://cdevents.dev/).
 
 **Filter logs:**
@@ -378,12 +378,14 @@ rate_limit = "100/minute"
 **Diagnostic Steps:**
 
 1. **Check source is receiving events:**
+
    ```bash
    # Look for log messages
    grep "Processing event from" collector.log
    ```
 
 2. **Check transformation is working:**
+
    ```toml
    # Enable debug sink temporarily
    [sinks.debug]
@@ -392,12 +394,14 @@ rate_limit = "100/minute"
    ```
 
 3. **Check sink is enabled and configured:**
+
    ```bash
    # Verify in logs
    grep "Sink.*connected" collector.log
    ```
 
 4. **Check destination is reachable:**
+
    ```bash
    # Test database
    psql $DATABASE_URL -c "SELECT 1;"
