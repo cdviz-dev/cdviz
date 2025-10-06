@@ -48,7 +48,6 @@ Setting up `cdviz-collector.toml` to receive ArgoCD notification webhooks involv
 type = "github"
 owner = "cdviz-dev"
 repo = "transformers-community"
-# reference = "HEAD"  # Optional: specify branch, tag, or commit
 
 [sources.argocd_webhook]
 enabled = true
@@ -81,6 +80,8 @@ template_rfile = "transformers-community:///argocd_notifications/transformer.vrl
 ```
 
 The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting ArgoCD notification events into CDEvents. The source code can be found at [argocd_notifications/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/argocd_notifications/transformer.vrl).
+
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
 
 ### Setting Up ArgoCD Notifications
 
