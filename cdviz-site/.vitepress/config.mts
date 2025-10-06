@@ -208,6 +208,10 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
+                  text: "ArgoCD",
+                  link: "/docs/cdviz-collector/integrations/argocd",
+                },
+                {
                   text: "GitHub",
                   link: "/docs/cdviz-collector/integrations/github",
                 },
