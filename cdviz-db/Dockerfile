@@ -1,6 +1,5 @@
 # hadolint global ignore=DL3006,DL3007,DL3008
-ARG PG_VERSION=17.5
-ARG PG_MAJOR=${PG_VERSION%%.*}
+ARG PG_VERSION=17.6
 
 #---------------------------------------------------------------------------------------------------
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
@@ -45,12 +44,17 @@ COPY --chown=$USER migrations /migrations
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
 # trivy:ignore:AVD-DS-0001
 # FROM --platform=$BUILDPLATFORM ghcr.io/cloudnative-pg/postgresql:${PG_VERSION}-minimal-bookworm AS cdviz-db-pg
-FROM --platform=$BUILDPLATFORM ghcr.io/cloudnative-pg/postgresql:${PG_VERSION} AS cdviz-db-pg
+FROM --platform=$BUILDPLATFORM ghcr.io/cloudnative-pg/postgresql:${PG_VERSION}-standard-trixie AS cdviz-db-pg
+
+ARG PG_VERSION
 
 USER root
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
+  export PG_MAJOR="${PG_VERSION%%.*}" && \
+  echo "PG_VERSION=$PG_VERSION" && \
+  echo "PG_MAJOR=$PG_MAJOR" && \
   apt-get update -y -qq && \
   apt-get install -y -qq --no-install-recommends gnupg postgresql-common apt-transport-https lsb-release curl && \
   echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -c -s) main" | tee /etc/apt/sources.list.d/timescaledb.list && \
@@ -63,3 +67,8 @@ RUN \
   rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
 
 USER 26
+ENV PGDATA=/var/lib/postgresql/data
+RUN \
+  initdb && \
+  timescaledb-tune --quiet --yes
+EXPOSE 5432

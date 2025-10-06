@@ -25,9 +25,11 @@ run = "atlas migrate apply --env db-local"
 # cmd: atlas schema apply --env local
 
 [tasks."db-local:start-empty"]
-depends = ["build:cdviz-db-pg"]
+wait_for = ["build:cdviz-db-pg"]
 description = "start a container for the local db (empty: no data, no schema)"
-run = ["mise run db-local:stop", """docker run --name cdviz-db \
+run = [
+ {task = "db-local:stop"}, # remove pre-existing
+  """docker run --rm --name cdviz-db \
     -e \"POSTGRES_PASSWORD=$PG_LOCAL_PWD\" \
     -e \"POSTGRES_USER=$PG_LOCAL_USER\" \
     -p 5432:5432 \
@@ -35,11 +37,16 @@ run = ["mise run db-local:stop", """docker run --name cdviz-db \
     ghcr.io/cdviz-dev/cdviz-db-pg:latest \
     postgres \
     -c "shared_preload_libraries=timescaledb"
-  """, "sleep 3 # wait for the container to be ready"]
+  """,
+  "sleep 3 # wait for the container to be ready"
+]
 
 [tasks."db-local:start"]
 description = "start a container for the local db with the migrations applied"
-run = ["mise run db-local:start-empty", "mise run apply"]
+run = [
+  {task = "db-local:start-empty"},
+  {task = "apply"},
+]
 
 [tasks."db-local:stop"]
 description = "stop the container of the local db"
@@ -53,15 +60,15 @@ run = [
 ]
 
 [tasks."test"]
-run = ["mise run db-local:start", "mise run db-local:stop"]
+wait_for = ["build:cdviz-db-pg"]
+run = [
+  {task = "db-local:start"},
+  {task = "db-local:stop"},
+]
 
 [tasks."ci"]
 description = "set of tasks run by CI"
-run = [
-  "mise run test",
-  # "mise run check"
-  # "mise run lint"
-]
+run = ["build:cdviz-db-pg", "test"]
 
 [tasks."list:containers"]
 description = "list all containers images"
