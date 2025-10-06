@@ -46,9 +46,16 @@ import IntegrationCard from '../../../../components/IntegrationCard.vue'
 Setting up `cdviz-collector.toml` to receive GitHub events involves defining a webhook source in the collector configuration file. Below is an example configuration snippet:
 
 ```toml
+# Remote transformers repository configuration
+[remote.transformers-community]
+type = "github"
+owner = "cdviz-dev"
+repo = "transformers-community"
+# reference = "HEAD"  # Optional: specify branch, tag, or commit
+
 [sources.kubewatch_webhook]
 enabled = true
-transformer_refs = [ "kubewatch_metadata", "kubewatch_cloudevents" ]
+transformer_refs = ["kubewatch_metadata", "kubewatch_cloudevents"]
 
 [sources.kubewatch_webhook.extractor]
 type = "webhook"
@@ -68,12 +75,13 @@ template = """
 }]
 """
 
+# Transformer from transformers-community repository
 [transformers.kubewatch_cloudevents]
 type = "vrl"
-template_file = "/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl"
+template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vrl"
 ```
 
-The `template_file` points to the VRL (Vector Remap Language) file that contains the transformation logic for converting GitHub webhook events into cdevents. The file `/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl` is included in the container image. The source code for this file can be found in the [cdviz-collector repository](https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/kubewatch_cloudevents.vrl).
+The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting Kubewatch cloudevents into CDEvents. The source code can be found at [kubewatch_cloudevents/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/kubewatch_cloudevents/transformer.vrl).
 
 The `kubewatch_metadata` transformer is used to add metadata to the events, such as the environment ID. You can customize the `environment_id` field to match your environment.
 
