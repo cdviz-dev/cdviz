@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-collector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.18.0"
+  tag: "0.18.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -127,7 +127,7 @@ configFiles:
 
     [transformers.github_events]
     type = "vrl"
-    template_file = "/etc/cdviz-collector/transformers/github_events.vrl"
+    template_rfile = "transformers-community:///github_events/transformer.vrl"
 
     [sources.kubewatch_webhook]
     enabled = {{ $.Values.kubewatch.enabled }}
@@ -154,7 +154,12 @@ configFiles:
 
     [transformers.kubewatch_cloudevents]
     type = "vrl"
-    template_file = "/etc/cdviz-collector/transformers/kubewatch_cloudevents.vrl"
+    template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vrl"
+
+    [remote.transformers-community]
+    type = "github"
+    owner = "cdviz-dev"
+    repo = "transformers-community"
 
 log:
   level: info # debug, info, warn, error
