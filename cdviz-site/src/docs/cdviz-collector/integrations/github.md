@@ -70,7 +70,6 @@ Setting up `cdviz-collector.toml` to receive GitHub events involves defining a w
 type = "github"
 owner = "cdviz-dev"
 repo = "transformers-community"
-# reference = "HEAD"  # Optional: specify branch, tag, or commit
 
 [sources.github_webhook]
 enabled = true
@@ -91,6 +90,8 @@ template_rfile = "transformers-community:///github_events/transformer.vrl"
 The `signature` field is used to verify the authenticity of the webhook payload. You should replace `"changeme"` with your actual secret token that you set in your GitHub webhook configuration.
 
 The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting GitHub webhook events into CDEvents. The source code can be found at [github_events/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/github_events/transformer.vrl).
+
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
 
 ### Setting Up GitHub Webhook
 

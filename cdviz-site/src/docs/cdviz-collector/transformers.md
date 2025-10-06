@@ -153,7 +153,6 @@ Remote transformers use [OpenDAL](https://opendal.apache.org/) for storage acces
 type = "github"
 owner = "cdviz-dev"
 repo = "transformers-community"
-# reference = "HEAD"  # Optional: specify branch, tag, or commit
 # token = "ghp_..."  # Optional: GitHub token for private repositories
 
 # Use remote transformer
@@ -169,6 +168,19 @@ template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vr
 type = "vrl"
 template_rfile = "transformers-community:///argocd_notifications/transformer.vrl"
 ```
+
+> [!NOTE] Using Specific Tags or Commits
+> The GitHub remote type always fetches from the default branch (typically `main`). To use a specific tag or commit, switch to the HTTP remote type:
+>
+> ```toml
+> [remote.raw_github]
+> type = "http"
+> endpoint = "https://raw.githubusercontent.com"
+>
+> [transformers.github_events]
+> type = "vrl"
+> template_rfile = "raw_github:///cdviz-dev/transformers-community/refs/tags/v1.0.0/github_events/transformer.vrl"
+> ```
 
 #### S3-Compatible Storage
 

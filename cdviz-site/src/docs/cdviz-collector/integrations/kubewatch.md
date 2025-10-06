@@ -51,7 +51,6 @@ Setting up `cdviz-collector.toml` to receive GitHub events involves defining a w
 type = "github"
 owner = "cdviz-dev"
 repo = "transformers-community"
-# reference = "HEAD"  # Optional: specify branch, tag, or commit
 
 [sources.kubewatch_webhook]
 enabled = true
@@ -84,6 +83,8 @@ template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vr
 The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting Kubewatch cloudevents into CDEvents. The source code can be found at [kubewatch_cloudevents/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/kubewatch_cloudevents/transformer.vrl).
 
 The `kubewatch_metadata` transformer is used to add metadata to the events, such as the environment ID. You can customize the `environment_id` field to match your environment.
+
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
 
 ### Setting Up Kubewatch's side
 
