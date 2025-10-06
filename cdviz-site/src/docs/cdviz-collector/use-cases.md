@@ -2,7 +2,7 @@
 
 Common scenarios and complete configurations for real-world deployments.
 
-> **⚠️ CDEvents Transformation Disclaimer:**
+> [!WARNING] CDEvents Transformation Disclaimer
 > VRL templates in these examples may be incomplete, outdated, or incorrect. For production use: consult the [CDEvents specification](https://cdevents.dev/) and use provided transformers at `/etc/cdviz-collector/transformers/` (GitHub, etc.).
 
 ## Development & Testing
