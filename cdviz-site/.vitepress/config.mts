@@ -252,7 +252,7 @@ export default defineConfig({
             },
           ],
         },
-        { text: "Alternatives", link: "/docs/alternatives" },
+        { text: "Alternatives, tools, ...", link: "/docs/alternatives" },
       ],
       "/pro/": [
         { text: "Terms & Conditions", link: "/pro/terms" },
