@@ -262,6 +262,10 @@ export default defineConfig({
       "/blog/": [
         //{ text: "Blog", link: "/blog/" },
         {
+          text: "CDEvents in Action #3: Direct CI/CD Pipeline Integration",
+          link: "/blog/20251007-episode-3-cicd-integration.md",
+        },
+        {
           text: "CDEvents in Action #2: Send Your First CDEvent",
           link: "/blog/20251001-episode-2-send-first-cdevent",
         },
