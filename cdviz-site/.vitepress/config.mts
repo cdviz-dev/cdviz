@@ -69,7 +69,7 @@ export default defineConfig({
     nav: [
       { text: "Documentation", link: "/docs/" },
       { text: "Pricing", link: "/#pricing" },
-      // { text: "Blog", link: "/blog/" },
+      { text: "Blog", link: "/blog/20251007-episode-3-cicd-integration" },
     ],
     sidebar: {
       "/docs/": [
@@ -260,10 +260,9 @@ export default defineConfig({
         { text: "Legal Information", link: "/pro/legal" },
       ],
       "/blog/": [
-        //{ text: "Blog", link: "/blog/" },
         {
           text: "CDEvents in Action #3: Direct CI/CD Pipeline Integration",
-          link: "/blog/20251007-episode-3-cicd-integration.md",
+          link: "/blog/20251007-episode-3-cicd-integration",
         },
         {
           text: "CDEvents in Action #2: Send Your First CDEvent",
