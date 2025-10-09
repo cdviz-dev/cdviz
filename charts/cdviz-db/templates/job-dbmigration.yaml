@@ -22,7 +22,7 @@ spec:
         metadata:
           name: '{{ $name }}'
           labels:
-            {{- include "my.labels" . | nindent 8 }}
+            {{- include "my.labels" . | nindent 12 }}
         spec:
           securityContext:
             runAsNonRoot: true
