@@ -8,7 +8,7 @@
     "ignoreUnknown": false,
     "includes": [
       "src/**/*.{ts,tsx,js,jsx,json,md,mdx,html,css,scss,vue,yml,yaml,jsonc}",
-      "!build/**"
+      "!build"
     ]
   },
   "formatter": {
