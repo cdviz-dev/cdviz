@@ -1,0 +1,35 @@
+[tools]
+# docker = "latest"     # to build, to run containers, should be available for some of thoses tools
+# dive = "latest"       # to explore content of image container
+helm = "3"         # to check helm chart
+yq = "latest" # used by build to update / normalize dashboards
+git-cliff = "latest" # used by build to update / normalize dashboards
+
+# TODO upgrade version only if change in the context of the Dockerfile
+# TODO sign container (see <https://www.sigstore.dev/how-it-works>)
+# TODO sign chart (see <https://www.sigstore.dev/how-it-works>)
+
+[env]
+# Shared registry for Helm charts
+OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
+
+[tasks."release:status"]
+description = "Show release status for all charts"
+run = """
+echo "=== Chart Release Status ==="
+for chart in charts/cdviz-*/; do
+  if [[ ! -f "$chart/Chart.yaml" ]]; then continue; fi
+  name=$(basename "$chart")
+  version=$(yq .version "$chart/Chart.yaml" 2>/dev/null || echo "N/A")
+  if helm show chart "$OCI_REGISTRY/$name" --version "$version" &>/dev/null; then
+    status="✅ published"
+  else
+    status="❌ not published"
+  fi
+  echo "  $name: $version $status"
+done
+"""
+
+[tasks.ci]
+description = "set of tasks run by CI"
+depends = ["//charts/...:ci"]

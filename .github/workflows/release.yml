@@ -38,12 +38,10 @@ jobs:
       - run: mise install # cdviz-db
         shell: bash
         working-directory: cdviz-db
-      - run: mise run publish # cdviz-db
+      - run: mise run '//cdviz-db:publish' # cdviz-db
         shell: bash
-        working-directory: cdviz-db
       - run: mise install # charts
         shell: bash
         working-directory: charts
-      - run: mise run publish  # charts
+      - run: mise run //charts:publish # charts
         shell: bash
-        working-directory: charts

@@ -33,10 +33,12 @@ Each component has `.mise.toml` for tasks. Component-specific AI instructions:
 ### Development Workflow
 
 ```bash
+mise tasks --all  # Full list of tasks
+
 cd {{component}}
-mise install      # Install dependencies
-mise tasks        # List available tasks
-mise run ci       # Full CI pipeline
+mise install       # Install dependencies
+mise tasks         # List local available tasks
+mise run :ci       # Full CI pipeline
 ```
 
 Key patterns:
@@ -55,13 +57,13 @@ Key patterns:
 
 ## Quick Command Reference
 
-| Task                | Command                     | Location       |
-| ------------------- | --------------------------- | -------------- |
-| Start dev server    | `mise run dev`              | cdviz-site/    |
-| Generate dashboards | `mise run build`            | cdviz-grafana/ |
-| Create DB migration | `mise run plan`             | cdviz-db/      |
-| Full stack demo     | `mise run stack:compose:up` | demos/         |
-| Lint Helm charts    | `mise run lint:*`           | charts/        |
+| Task                | Command                             |
+| ------------------- | ----------------------------------- |
+| Start dev server    | `mise run //cdviz-site:dev`         |
+| Generate dashboards | `mise run //cdviz-grafana:build`    |
+| Create DB migration | `mise run //cdviz-db:plan`          |
+| Full stack demo     | `mise run //demos/stack-compose:up` |
+| Lint Helm charts    | `mise run //charts/...:lint`        |
 
 ## Resources
 

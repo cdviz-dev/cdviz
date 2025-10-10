@@ -1,0 +1,6 @@
+# CDviz Monorepo Configuration
+min_version = "2025.10.6" # "2025.9.7"
+experimental_monorepo_root = true
+
+[settings]
+experimental = true

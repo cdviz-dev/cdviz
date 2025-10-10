@@ -1,0 +1,85 @@
+[tools]
+# local kubernetes (k8s)
+kubectl = "1.34.0" # to interact with k8s cluster
+kind = "0.30.0"    # to run local k8s cluster for testing
+
+[tasks.lint]
+description = "Lint Helm chart"
+run = [
+  "helm dependency update .",
+  "helm lint .",
+  "helm template . | kubectl apply --dry-run=client -f -"
+]
+
+[tasks.test]
+description = "Test helm chart in k8s cluster"
+shell = 'bash -c'
+wait_for = [":lint"]
+run = """
+set -euxo pipefail
+
+CLUSTER_NAME="kind-cdviz-test-$$"
+NAMESPACE="cdviz-collector-test"
+RELEASE_NAME="cdviz-collector-test"
+
+# Function to cleanup on exit
+cleanup() {
+  echo "Cleaning up cluster: $CLUSTER_NAME"
+  kind delete cluster --name "$CLUSTER_NAME" || true
+}
+trap cleanup EXIT
+
+# Create kind cluster
+echo "Creating kind cluster: $CLUSTER_NAME"
+kind create cluster --name "$CLUSTER_NAME" --wait 60s
+
+# Create namespace
+kubectl create namespace "$NAMESPACE"
+
+# Update helm dependencies
+helm dependency update cdviz-collector
+
+# Deploy the chart
+echo "Deploying cdviz-collector chart"
+helm upgrade --install "$RELEASE_NAME" ./cdviz-collector \
+  --namespace "$NAMESPACE" \
+  --wait \
+  --timeout 1m \
+  --set kubewatch.enabled=true \
+  --set "kubewatch.cloudevent.url=http://$RELEASE_NAME:8080/webhook/000-kubewatch"
+
+# Wait for deployment to be ready
+echo "Waiting for cdviz-collector to be ready"
+kubectl wait --for=condition=ready pod \
+  --selector=app.kubernetes.io/name=cdviz-collector \
+  --namespace "$NAMESPACE" \
+  --timeout=300s
+
+# Check readiness probe endpoint
+echo "Testing readiness endpoint"
+kubectl port-forward "service/$RELEASE_NAME" 8080:8080 --namespace "$NAMESPACE" &
+PORT_FORWARD_PID=$!
+sleep 5
+
+# Test the readiness endpoint
+curl -f http://localhost:8080/readyz || {
+  echo "Readiness check failed"
+  kill $PORT_FORWARD_PID || true
+  exit 1
+}
+
+# Test the health endpoint
+curl -f http://localhost:8080/healthz || {
+  echo "Health check failed"
+  kill $PORT_FORWARD_PID || true
+  exit 1
+}
+
+kill $PORT_FORWARD_PID || true
+
+echo "✅ cdviz-collector test completed successfully"
+"""
+
+[tasks.ci]
+# depends = [":lint", ":test"]
+depends = [":lint"]

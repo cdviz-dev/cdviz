@@ -1,12 +1,10 @@
 [tools]
 "yq" = "latest" # used by build to update / normalize dashboards
-"bun" = "latest"
-"biome" = "latest"
 # "watchexec" = "latest"
 
 [tasks.build]
 description = "build, normalize/reset dashboard (uid, title, version,..."
-depends = ["build:dashboards"]
+depends = ["//cdviz-grafana/...:build"]
 run = [
   """
   #!/usr/bin/env bash
@@ -30,46 +28,7 @@ run = [
   """
 ]
 
-[tasks."build:dashboards"]
-description = "build dashboards"
-dir = "dashboards_generator"
-run = "bun run src/index.ts --output ../dashboards"
-outputs = ["dashboards/*.json"]
-sources = ["*/src/**"]
-wait_for = ["install:deps", "check", "test"]
-
-[tasks."install:deps"]
-dir = "dashboards_generator"
-run = "bun install"
-
-[tasks.check]
-# use https://biomejs.dev/guides/getting-started/
-description = "lint"
-dir = "dashboards_generator"
-run = [
-  "bun run tsc",
-  "biome check",
-]
-wait_for = ["install:deps"]
-
-[tasks.format]
-alias = "fmt"
-# use https://biomejs.dev/guides/getting-started/
-description = "format"
-dir = "dashboards_generator"
-run = [
-  "biome format --write",
-  "biome check --write",
-]
-wait_for = ["install:deps"]
-
-[tasks.test]
-depends = ["check"]
-dir = "dashboards_generator"
-run = "bun test"
-wait_for = ["install:deps"]
-
 [tasks.ci]
 description = "tasks for CI (build, test, ...)"
-depends = ["install:deps", "check", "build", "test"]
+depends = ["//cdviz-grafana/dashboards_generator:ci", ":build"]
 # TODO check that no uncommitted change in dashboard after build
