@@ -2,7 +2,7 @@ apiVersion: v2
 name: cdviz-db
 description: chart to manage cdviz-db (schema, data, functions,...)
 type: application
-version: 0.0.0 # version set during release
+version: 0.5.1 # version set during release
 icon: https://cdviz.dev/assets/favicon.svg
 keywords:
   - sdlc
@@ -10,3 +10,4 @@ keywords:
 home: https://cdviz.dev/
 sources:
   - https://github.com/cdviz-dev/cdviz
+appVersion: 0.5.1
