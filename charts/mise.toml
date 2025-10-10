@@ -13,7 +13,15 @@ git-cliff = "latest" # used by build to update / normalize dashboards
 # Shared registry for Helm charts
 OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
 
-[tasks."release:status"]
+[tasks."release_prepare"]
+description = "Prepare releases for all charts (update versions & changelogs)"
+depends = ["//charts/...:release_prepare"]
+
+[tasks."release_publish"]
+description = "Publish all charts to OCI registry"
+depends = ["//charts/...:release_publish"]
+
+[tasks."release_status"]
 description = "Show release status for all charts"
 run = """
 echo "=== Chart Release Status ==="

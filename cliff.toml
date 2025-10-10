@@ -45,7 +45,7 @@ postprocessors = [
 ]
 [git]
 # parse the commits based on https://www.conventionalcommits.org
-conventional_commits = false
+conventional_commits = true
 # filter out the commits that are not conventional
 filter_unconventional = false
 # process each line of a commit as an individual commit
@@ -57,28 +57,28 @@ commit_preprocessors = [
 # regex for parsing and grouping commits
 # try to follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 commit_parsers = [
-  { message = "^(feat|✨|💥)", group = "Added" },
-  { message = "^(fix|🐛|🚑️|👽️)", group = "Fixed" },
-  { message = "^(doc|✏️|📝)", group = "Changed" },
-  { message = "^(perf|⚡️)", group = "Changed" },
+  { message = "^(feat|✨|💥)", group = "Added", bump = "minor" },
+  { message = "^(fix|🐛|🚑️|👽️)", group = "Fixed", bump = "patch" },
+  { message = "^(doc|✏️|📝)", group = "Changed", bump = "patch" },
+  { message = "^(perf|⚡️)", group = "Changed", bump = "patch" },
   { message = "^(refactor|🎨|🔥|♻️)", group = "Refactor", skip = true },
   { message = "^(style|💄)", group = "Changed" },
   { message = "^(test|✅)", group = "Fixed", skip = true },
   { message = "^(chore\\(release\\): prepare for|🔖|🚀)", skip = true },
-  { message = "^(chore\\(deps\\)|⬇️|⬆️|➕|➖)", group = "Changed" },
+  { message = "^(chore\\(deps\\)|⬇️|⬆️|➕|➖)", group = "Changed", bump = "minor" },
   { message = "^chore\\(pr\\)", skip = true },
   { message = "^chore\\(pull\\)", skip = true },
   { message = "^(chore|ci|💚|👷|🚧)", group = "Changed", skip = true },
-  { message = "^(🔒️|🔐)", group = "Security" },
-  { body = ".*security", group = "Security" },
+  { message = "^(🔒️|🔐)", group = "Security", bump = "patch" },
+  { body = ".*security", group = "Security", bump = "patch" },
   { message = "^revert", group = "Changed" },
-  { message = "^.*: add", group = "Added" },
-  { message = "^.*: support", group = "Added" },
-  { message = "^.*: remove", group = "Removed" },
-  { message = "^.*: delete", group = "Removed" },
+  { message = "^.*: add", group = "Added", bump = "minor" },
+  { message = "^.*: support", group = "Added", bump = "minor" },
+  { message = "^.*: remove", group = "Removed", bump = "minor" },
+  { message = "^.*: delete", group = "Removed", bump = "minor" },
 ]
 # protect breaking changes from being skipped due to matching a skipping commit_parser
-protect_breaking_commits = false
+protect_breaking_commits = true
 # filter out the commits that are not matched by commit parsers
 filter_commits = true
 # regex for matching git tags
@@ -94,3 +94,11 @@ topo_order = false
 sort_commits = "oldest"
 # limit the number of commits included in the changelog.
 # limit_commits = 42
+
+[bump]
+# Initial version for new projects/modules
+initial_tag = "1.0.0"
+# Bump minor version for each feature
+features_always_bump_minor = true
+# Bump major version for breaking changes
+breaking_always_bump_major = true
