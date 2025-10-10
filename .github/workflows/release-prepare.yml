@@ -29,6 +29,7 @@ jobs:
 
       - name: Prepare releases
         id: prepare
+        shell: bash
         run: |
           mise run //charts:release_prepare
 

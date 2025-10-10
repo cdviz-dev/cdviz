@@ -35,3 +35,4 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Publish charts
         run: mise run //charts:release_publish
+        shell: bash
