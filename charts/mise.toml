@@ -9,10 +9,6 @@ git-cliff = "latest" # used by build to update / normalize dashboards
 # TODO sign container (see <https://www.sigstore.dev/how-it-works>)
 # TODO sign chart (see <https://www.sigstore.dev/how-it-works>)
 
-[env]
-# Shared registry for Helm charts
-OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
-
 [tasks."release_prepare"]
 description = "Prepare releases for all charts (update versions & changelogs)"
 depends = ["//charts/...:release_prepare"]
@@ -29,7 +25,7 @@ for chart in charts/cdviz-*/; do
   if [[ ! -f "$chart/Chart.yaml" ]]; then continue; fi
   name=$(basename "$chart")
   version=$(yq .version "$chart/Chart.yaml" 2>/dev/null || echo "N/A")
-  if helm show chart "$OCI_REGISTRY/$name" --version "$version" &>/dev/null; then
+  if helm show chart "$CHARTS_OCI_REGISTRY/$name" --version "$version" &>/dev/null; then
     status="✅ published"
   else
     status="❌ not published"

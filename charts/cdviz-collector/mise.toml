@@ -49,7 +49,7 @@ set -euo pipefail
 VERSION=$(yq .version Chart.yaml)
 
 # Check if already published
-if helm show chart "$OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
+if helm show chart "$CHARTS_OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
   echo "⏭️  $NAME $VERSION already published"
   exit 0
 fi
@@ -62,7 +62,7 @@ mkdir -p ../../build
 helm package -d ../../build .
 
 # Push to OCI registry
-helm push "../../build/$NAME-$VERSION.tgz" "$OCI_REGISTRY"
+helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"
 
 # Create git tag
 git tag "$NAME-$VERSION" -m "Release $NAME $VERSION"

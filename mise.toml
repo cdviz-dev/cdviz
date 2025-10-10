@@ -4,3 +4,7 @@ experimental_monorepo_root = true
 
 [settings]
 experimental = true
+
+[env]
+# Shared registry for Helm charts
+CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
