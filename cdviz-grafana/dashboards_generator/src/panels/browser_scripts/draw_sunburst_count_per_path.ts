@@ -53,7 +53,7 @@ export function draw(context: DrawContext<Datum>) {
     .hierarchy(dataHierarchy)
     .sum((d) => d.value)
     .sort((a, b) => (b.value || 0) - (a.value || 0));
-  //@ts-ignore
+  //@ts-expect-error
   const root: HNode = d3
     .partition<DatumNode>()
     .size([2 * Math.PI, hierarchy.height + 1])(hierarchy);
@@ -159,7 +159,7 @@ export function draw(context: DrawContext<Datum>) {
     // so that if this transition is interrupted, entering arcs will start
     // the next transition from the desired position.
     path
-      //@ts-ignore
+      //@ts-expect-error
       .transition(t)
       .tween("data", (d) => {
         if (d.target) {
@@ -172,15 +172,15 @@ export function draw(context: DrawContext<Datum>) {
           //   d.current.y1 = step.y1;
           // };
           return (t) => {
-            // @ts-ignore
+            // @ts-expect-error
             d.current = i(t);
           };
         }
         return (_t) => {};
       })
-      //@ts-ignore
+      //@ts-expect-error
       .filter((d) => {
-        //@ts-ignore
+        //@ts-expect-error
         return +this?.getAttribute("fill-opacity") || arcVisible(d.target);
       })
       .attr("fill-opacity", (d) =>
@@ -188,16 +188,16 @@ export function draw(context: DrawContext<Datum>) {
       )
       .attr("pointer-events", (d) => (arcVisible(d.target) ? "auto" : "none"))
 
-      //@ts-ignore
+      //@ts-expect-error
       .attrTween("d", (d) => () => arc(d.current));
 
     label
-      //@ts-ignore
+      //@ts-expect-error
       .filter((d) => {
-        //@ts-ignore
+        //@ts-expect-error
         return +this.getAttribute("fill-opacity") || labelVisible(d.target);
       })
-      //@ts-ignore
+      //@ts-expect-error
       .transition(t)
       .attr("fill-opacity", (d) => +labelVisible(d.target))
       .attrTween("transform", (d) => () => labelTransform(d.current));

@@ -36,7 +36,7 @@ export async function buildDashboard(): Promise<Dashboard> {
           new DataqueryBuilder()
             .datasource(datasource)
             .editorMode(EditorMode.Code)
-            // @ts-ignore
+            // @ts-expect-error
             .format("table")
             .rawQuery(true)
             .rawSql(dedent`
