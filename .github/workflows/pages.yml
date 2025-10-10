@@ -43,8 +43,8 @@ jobs:
         with:
           working_directory: ./cdviz-site
       - run: |
-          mise run install
-          mise run build
+          mise run :install
+          mise run :build
         working-directory: ./cdviz-site
 
       # - uses: actions/configure-pages@v4

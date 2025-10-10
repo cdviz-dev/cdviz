@@ -51,7 +51,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
         working-directory: ${{ matrix.folder }}
-      - run: mise run ci
+      - run: |
+          mise run '//${{ matrix.folder }}:ci'
         if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
-        working-directory: ${{ matrix.folder }}

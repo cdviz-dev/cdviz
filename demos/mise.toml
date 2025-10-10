@@ -1,0 +1,13 @@
+[tasks."delete"]
+alias = "clean"
+description = "Clean / Delete every stacks"
+depends = ["//demos/...:delete"]
+
+
+[tasks."grafana:view"]
+description = "Open the Grafana dashboard (compose demo, k8s demo (after port-forward))"
+run = ["open http://127.0.0.1:3000"]
+
+[tasks."ci"]
+description = "Run all the ci tasks"
+depends = ["//demos/...:ci"]

@@ -1,0 +1,27 @@
+[tools]
+# docker / docker compose is not installed by mise :-(
+
+[tasks."up"]
+description = "Launch the docker compose demo (in foreground)"
+run = """
+  # export MY_UID=$(id -u)
+  # export MY_GID=$(id -g)
+  docker compose -f docker-compose.yaml pull
+  docker compose -f docker-compose.yaml up --remove-orphans
+  """
+
+[tasks."down"]
+description = "Stop the docker compose demo"
+run = """
+  # export MY_UID=$(id -u)
+  # export MY_GID=$(id -g)
+  docker compose -f docker-compose.yaml stop
+  """
+
+[tasks."delete"]
+description = "Stop & remove the docker compose demo (and local data)"
+run = [
+  "mise run stack:compose:down",
+  "docker compose -f docker-compose.yaml rm",
+  "rm -rf tmp",
+]

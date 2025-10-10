@@ -50,91 +50,13 @@ cd {{subfolder}}
 mise install          # Install dependencies for the component
 
 # to have list of tasks
-mise tasks
+mise tasks --all
 
 # to run a task
 mise run {{task}}
 
 # to run the CI tasks
-mise run ci
-```
-
-## Component-Specific Development
-
-### Site Documentation (cdviz-site/)
-
-```bash
-cd cdviz-site
-mise install          # Install dependencies (bun, biome)
-mise run dev           # Start development server (bun run docs:dev)
-mise run build         # Build for production (bun run docs:build)
-mise run preview       # Preview built site
-mise run format        # Format code with biome
-```
-
-### Grafana Dashboards (cdviz-grafana/)
-
-```bash
-cd cdviz-grafana
-mise install                    # Install dependencies (yq, bun, biome)
-mise run build                  # Build and normalize dashboards
-mise run build:dashboards       # Generate dashboards from TypeScript
-mise run check                  # Lint with TypeScript and biome
-mise run test                   # Run tests with bun
-mise run format                 # Format code
-mise run ci                     # Run all CI tasks
-```
-
-### Database Management (cdviz-db/)
-
-```bash
-cd cdviz-db
-mise install                    # Install Atlas
-mise run plan                   # Create migration for schema changes
-mise run apply                  # Apply migrations to local database
-mise run db-local:start         # Start PostgreSQL container with migrations
-mise run db-local:start-empty   # Start empty PostgreSQL container
-mise run db-local:stop          # Stop PostgreSQL container
-mise run db-local:psql          # Connect to database with psql
-mise run test                   # Test database setup
-mise run ci                     # Run CI tasks
-```
-
-### Charts Management (charts/)
-
-```bash
-cd charts
-mise install                    # Install helm, kubectl
-mise run lint:cdviz-collector   # Lint collector chart
-mise run lint:cdviz-db          # Lint database chart
-mise run lint:cdviz-grafana     # Lint grafana chart
-mise run publish                # Publish all charts to OCI registry
-mise run ci                     # Run all CI tasks
-```
-
-### Demo Environment (demos/)
-
-```bash
-cd demos
-mise install                    # Install dependencies (kubectl, ctlptl, kind, helmwave)
-
-# Docker Compose stack
-mise run stack:compose:up       # Start compose demo
-mise run stack:compose:down     # Stop compose demo
-mise run stack:compose:delete   # Remove compose demo and data
-
-# Kubernetes stack
-mise run stack:k8s:create       # Create kind cluster
-mise run stack:k8s:deploy       # Deploy full cdviz stack
-mise run stack:k8s:delete       # Delete cluster and resources
-
-# Port forwarding
-mise run stack:k8s:port-forward:grafana      # Access Grafana at localhost:3000
-mise run stack:k8s:port-forward:cdviz-db     # Access database at localhost:5432
-mise run stack:k8s:port-forward:cdviz-collector # Access collector at localhost:8080
-
-# Use cases and testing
-mise run use_cases:run          # Run collector with sample events
+mise run '//...:ci'
 ```
 
 ## Development Workflow
@@ -151,7 +73,7 @@ mise run use_cases:run          # Run collector with sample events
 
 ```bash
 cd {{subfolder}}
-mise run test
+mise run :test
 ```
 
 ## Important File Locations

@@ -1,0 +1,9 @@
+[tasks.lint]
+description = "Lint Helm chart"
+run = [
+  "helm lint .",
+  "helm template . | kubectl apply --dry-run=client -f -"
+]
+
+[tasks.ci]
+depends = [":lint"]
