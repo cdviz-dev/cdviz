@@ -4,6 +4,7 @@ DEPENDS = "**/cdviz-grafana/**"
 
 [tasks."release_prepare"]
 description = "Prepare release (calculate version & generate changelog)"
+shell = "bash -c"
 run = """
 set -euo pipefail
 
@@ -36,6 +37,7 @@ echo "✅ Prepared $NAME $VERSION"
 
 [tasks."release_publish"]
 description = "Publish chart to OCI registry"
+shell = "bash -c"
 run = """
 set -euo pipefail
 

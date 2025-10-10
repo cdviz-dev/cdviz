@@ -9,6 +9,7 @@ DEPENDS = "charts/cdviz-collector/*"
 
 [tasks."release_prepare"]
 description = "Prepare release (calculate version & generate changelog)"
+shell = "bash -c"
 run = """
 set -euo pipefail
 
@@ -41,6 +42,7 @@ echo "✅ Prepared $NAME $VERSION"
 
 [tasks."release_publish"]
 description = "Publish chart to OCI registry"
+shell = "bash -c"
 run = """
 set -euo pipefail
 
@@ -79,7 +81,7 @@ run = [
 
 [tasks.test]
 description = "Test helm chart in k8s cluster"
-shell = 'bash -c'
+shell = "bash -c"
 wait_for = [":lint"]
 run = """
 set -euxo pipefail
