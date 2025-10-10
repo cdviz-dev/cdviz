@@ -2,11 +2,8 @@ name: release
 
 on:
   push:
-    # branches:
-    #   - main
-    tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
-  workflow_dispatch: {}
+    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,30 +15,26 @@ permissions:
   # id-token: write
 
 jobs:
-  push-store-image:
+  publish:
+    # Only run if the commit message starts with "chore(release):"
+    if: startsWith(github.event.head_commit.message, 'chore(release):') || (github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
-          fetch-depth: "0" # to be able to use `git describe` and retrieve tags
-
-      - name: "Login to GitHub Container Registry"
+          fetch-depth: 0 # Full history needed for git tags and git describe
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Docker Buildx # to support buildx, multi-arch builds
         uses: docker/setup-buildx-action@v3
       - uses: jdx/mise-action@v3
-      - run: mise install # cdviz-db
+        with:
+          experimental: true
+      - run: mise run '//cdviz-db:publish'
         shell: bash
-        working-directory: cdviz-db
-      - run: mise run '//cdviz-db:publish' # cdviz-db
-        shell: bash
-      - run: mise install # charts
-        shell: bash
-        working-directory: charts
-      - run: mise run //charts:publish # charts
+      - run: mise run //charts:release_publish
         shell: bash
