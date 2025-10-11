@@ -2,7 +2,7 @@
 kubectl = "1.34.0"                                                    # to interact with k8s cluster
 ctlptl = "0.8"                                                        # to setup / manage local k8s (kind) cluster
 kind = "0.30.0"                                                       # to have a local k8s cluster (on top of docker)
-"ubi:helmwave/helmwave" = { version = "0.41", matching = "helmwave" }
+"ubi:helmwave/helmwave" = { version = "0.42.2", matching = "helmwave" }
 
 [env]
 CLUSTER_NAME = "kind-local"
