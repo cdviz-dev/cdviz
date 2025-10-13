@@ -96,8 +96,8 @@ services:
     environment:
       - CDVIZ_COLLECTOR__HTTP__PORT=8080
       - CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED=true
-      - CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__ENABLED=true
-      - CDVIZ_COLLECTOR__SINKS__CDVIZ_DB__URL=postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
+      - CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED=true
+      - CDVIZ_COLLECTOR__SINKS__DATABASE__URL=postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
       - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_WEBHOOK__ENABLED=true
       - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_WEBHOOK__EXTRACTOR__ID=000-cdevents
       - CDVIZ_COLLECTOR__SOURCES__CDEVENTS_LOCAL_JSON__ENABLED=false
