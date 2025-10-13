@@ -1,7 +1,7 @@
 [sinks.debug]
 enabled = true
 
-[sinks.cdviz_db]
+[sinks.database]
 enabled = true
 type = "db"
 url = "postgresql://cdviz:postgres-password@127.0.0.1:5432/cdviz"

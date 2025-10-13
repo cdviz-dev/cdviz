@@ -147,19 +147,44 @@ configFiles:
       "metadata": merge(.metadata, {
         "environment_id": "cluster/A-dev",
       }),
-      "header": .header,
+      "headers": .headers,
       "body": .body,
     }]
     """
 
-    [transformers.kubewatch_cloudevents]
+    [sources.argocd_webhook]
+    enabled = true
+    transformer_refs = [ "argocd_metadata", "argocd_notifications" ]
+
+    [sources.argocd_webhook.extractor]
+    type = "webhook"
+    id = "000-argocd"
+
+    [transformers.argocd_metadata]
     type = "vrl"
-    template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vrl"
+    template = """
+    .metadata = object(.metadata) ?? {}
+
+    [{
+      "metadata": merge(.metadata, {
+        "environment_id": "cluster/A-dev",
+        # .body.context.environment || .body.app.spec.destination.server || "unknown"
+      }),
+      "headers": .headers,
+      "body": .body,
+    }]
+    """
 
     [remote.transformers-community]
     type = "github"
     owner = "cdviz-dev"
     repo = "transformers-community"
+    # token = "gh...."  # Optional: github token
+
+    [transformers]
+    github_events = { type = "vrl", template_rfile = "transformers-community:///github_events/transformer.vrl" }
+    kubewatch_cloudevents = { type = "vrl", template_rfile = "transformers-community:///kubewatch_cloudevents/transformer.vrl" }
+    argocd_notifications = { type = "vrl", template_rfile = "transformers-community:///argocd_notifications/transformer.vrl" }
 
 log:
   level: info # debug, info, warn, error
