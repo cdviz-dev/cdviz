@@ -7,7 +7,7 @@
     "@iconify/tailwind4": "^1.0.6",
     "@tailwindcss/vite": "^4.1.13",
     "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14",
+    "prettier-plugin-tailwindcss": "^0.7.0",
     "tailwindcss": "^4.1.13",
     "vitepress": "^2.0.0-alpha.12"
   },
