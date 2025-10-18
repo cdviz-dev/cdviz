@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
   packages: write
   # id-token: write
 
@@ -40,5 +40,5 @@ jobs:
           experimental: true
       - run: mise run '//cdviz-db:publish'
         shell: bash
-      - run: mise run //charts:release_publish
+      - run: mise run '//charts:release_publish'
         shell: bash
