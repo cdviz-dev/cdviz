@@ -17,11 +17,16 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: get_token
+        with:
+          private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.INTBOT_APP_ID }}
       - name: Checkout
         uses: actions/checkout@v5
         with:
           fetch-depth: 0 # Full history needed for git-cliff
-
+          token: ${{ steps.get_token.outputs.token }}
       - name: Install mise
         uses: jdx/mise-action@v3
         with:
@@ -29,9 +34,9 @@ jobs:
 
       - name: Prepare releases
         id: prepare
-        shell: bash
+        # shell: bash
         run: |
-          mise run //charts:release_prepare
+          mise run '//charts:release_prepare'
 
           # Check if any files changed
           if git diff --quiet; then
@@ -47,7 +52,8 @@ jobs:
         if: steps.prepare.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.get_token.outputs.token }}
           commit-message: "chore(release): prepare releases"
           title: "chore(release): prepare releases"
           body: |

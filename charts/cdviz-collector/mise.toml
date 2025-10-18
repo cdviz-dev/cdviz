@@ -14,10 +14,11 @@ run = """
 set -euo pipefail
 
 # Calculate next version using git-cliff
-VERSION=$(git cliff --config ../../cliff.toml \
+VERSION=$(git-cliff --config ../../cliff.toml \
   --include-path "$DEPENDS" \
+  --exclude-path ".github/*" \
   --bumped-version \
-  --unreleased 2>/dev/null || echo "")
+  --unreleased || echo "")
 
 # If no version bump detected, exit
 if [[ -z "$VERSION" ]]; then

@@ -8,3 +8,7 @@ experimental = true
 [env]
 # Shared registry for Helm charts
 CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
+
+[tools]
+yq = "latest" # used by build to update / normalize dashboards / release
+git-cliff = "latest"

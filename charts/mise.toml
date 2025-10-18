@@ -2,8 +2,6 @@
 # docker = "latest"     # to build, to run containers, should be available for some of thoses tools
 # dive = "latest"       # to explore content of image container
 helm = "3"         # to check helm chart
-yq = "latest" # used by build to update / normalize dashboards
-git-cliff = "latest" # used by build to update / normalize dashboards
 
 # TODO upgrade version only if change in the context of the Dockerfile
 # TODO sign container (see <https://www.sigstore.dev/how-it-works>)
