@@ -6,7 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.0] - 2025-10-10
+## [0.5.1] - 2025-10-18
+
+### Changed
+
+- Update ghcr.io/cdviz-dev/cdviz-collector docker tag to v0.19.0 ([dd58b51](dd58b512881280c03831d4b1fa7391e0839e384c))
+
+### Fixed
+
+- Use explicitly bash for release script ([f9831b1](f9831b107673a0bb995f813f2218758a6ae837d2))
+- Update cdviz-collector.toml ([8e17063](8e17063d216397d81c6420d49248462d2344ea76))
+
+## [0.5.0] - 2025-10-06
 
 ### Added
 

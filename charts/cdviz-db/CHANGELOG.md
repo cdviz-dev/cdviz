@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.1] - 2025-10-10
+## [0.5.1] - 2025-10-18
 
 ### Added
 
@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix errors in chart of cdviz-db ([480b79f](480b79f8e96e4e01a8889c42cc8c2304cd0fecfc))
 - Invalid chart for secret (when merged with same name) and generated indentation ([aebf626](aebf62665891e5497886904062da46224e512ce3))
+- Use explicitly bash for release script ([f9831b1](f9831b107673a0bb995f813f2218758a6ae837d2))
 
 ## [0.1.0] - 2025-01-31
 

@@ -2,7 +2,7 @@ apiVersion: v2
 name: cdviz-collector
 description: Helm chart for cdviz-collector - Event collection service for CDEvents and CI/CD pipeline observability
 type: application
-version: 0.5.0 # version set during release
+version: 0.5.1 # version set during release
 icon: https://cdviz.dev/assets/favicon.svg
 keywords:
   - sdlc
@@ -15,4 +15,4 @@ dependencies:
     version: 3.5.0
     repository: https://robusta-charts.storage.googleapis.com
     condition: kubewatch.enabled
-appVersion: 0.5.0
+appVersion: 0.5.1
