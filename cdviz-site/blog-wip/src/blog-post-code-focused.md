@@ -1,6 +1,6 @@
 # Stop Flying Blind: Why You Need Pipeline Visibility Yesterday
 
-*Your software delivery metrics are scattered across a dozen tools. Here's how to code your way to unified pipeline visibility.*
+_Your software delivery metrics are scattered across a dozen tools. Here's how to code your way to unified pipeline visibility._
 
 ## The Multi-Tool Nightmare
 
@@ -10,7 +10,7 @@ You've invested in the best CI/CD tools money can buy, but when leadership asks 
 # Jenkins API call
 curl -u admin:token "http://jenkins.company.com/api/json" | jq '.jobs[].lastBuild.duration'
 
-# GitHub Actions via gh CLI  
+# GitHub Actions via gh CLI
 gh run list --limit 100 --json conclusion,createdAt,updatedAt
 
 # Kubernetes deployment check
@@ -28,19 +28,19 @@ CDviz solves this with standardized event collection and a database-first approa
 
 ```typescript
 // Instead of this scattered approach...
-const jenkinsData = await fetch('/jenkins/api');
-const githubData = await fetch('/github/api');  
-const k8sData = await kubectl('get deployments');
+const jenkinsData = await fetch("/jenkins/api");
+const githubData = await fetch("/github/api");
+const k8sData = await kubectl("get deployments");
 
 // You get this unified query
 const pipelineMetrics = await db.query(`
-  SELECT 
+  SELECT
     service_name,
     environment,
     deployment_frequency,
     lead_time_minutes,
     success_rate
-  FROM deployment_events 
+  FROM deployment_events
   WHERE timestamp >= NOW() - INTERVAL '30 days'
   ORDER BY timestamp DESC
 `);
@@ -53,7 +53,7 @@ const pipelineMetrics = await db.query(`
 git clone https://github.com/cdviz-dev/cdviz.git
 cd cdviz/demos/stack-compose
 
-# 2. Start everything  
+# 2. Start everything
 docker compose up -d
 
 # 3. Send your first event
@@ -83,12 +83,12 @@ curl -X POST http://localhost:8080/events \
 
 # 4. Query your data directly
 docker exec cdviz-db psql -U postgres -d cdviz -c "
-  SELECT 
+  SELECT
     subject_id,
-    subject_environment_id, 
-    timestamp 
-  FROM cdevents 
-  ORDER BY timestamp DESC 
+    subject_environment_id,
+    timestamp
+  FROM cdevents
+  ORDER BY timestamp DESC
   LIMIT 5;"
 
 # 5. View dashboards
@@ -107,18 +107,18 @@ name: Deploy
 on:
   push:
     branches: [main]
-    
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Deploy to production
         run: |
           # Your deployment logic here
           kubectl apply -f k8s/
-          
+
       - name: Send CDEvent
         run: |
           curl -X POST ${{ secrets.CDVIZ_COLLECTOR_URL }}/events \
@@ -127,7 +127,7 @@ jobs:
               "context": {
                 "version": "0.4.0",
                 "id": "${{ github.run_id }}-deployed",
-                "source": "github-actions", 
+                "source": "github-actions",
                 "type": "dev.cdevents.service.deployed.0.1.1",
                 "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
               },
@@ -151,21 +151,21 @@ jobs:
 // Jenkinsfile
 pipeline {
     agent any
-    
+
     stages {
         stage('Deploy') {
             steps {
                 script {
                     // Your deployment logic
                     sh 'kubectl apply -f k8s/'
-                    
+
                     // Send CDEvent
                     def eventPayload = [
                         context: [
                             version: "0.4.0",
                             id: "${BUILD_ID}-deployed",
                             source: "jenkins",
-                            type: "dev.cdevents.service.deployed.0.1.1", 
+                            type: "dev.cdevents.service.deployed.0.1.1",
                             timestamp: new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'")
                         ],
                         subject: [
@@ -178,7 +178,7 @@ pipeline {
                             ]
                         ]
                     ]
-                    
+
                     sh """
                         curl -X POST ${CDVIZ_COLLECTOR_URL}/events \\
                              -H 'Content-Type: application/json' \\
@@ -204,14 +204,14 @@ metadata:
 data:
   config.toml: |
     [sources.kubernetes]
-    type = "webhook" 
+    type = "webhook"
     listen = "0.0.0.0:8080"
     path = "/k8s-events"
-    
+
     [sinks.cdviz]
     type = "http"
     url = "http://cdviz-collector:8080/events"
-    
+
     [[transformers]]
     type = "k8s_to_cdevents"
 ---
@@ -230,20 +230,20 @@ spec:
         app: cdviz-k8s-webhook
     spec:
       containers:
-      - name: webhook
-        image: ghcr.io/cdviz-dev/cdviz-collector:latest
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: config
-          mountPath: /config
-        env:
-        - name: CDVIZ_CONFIG
-          value: /config/config.toml
+        - name: webhook
+          image: ghcr.io/cdviz-dev/cdviz-collector:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          env:
+            - name: CDVIZ_CONFIG
+              value: /config/config.toml
       volumes:
-      - name: config
-        configMap:
-          name: cdviz-webhook-config
+        - name: config
+          configMap:
+            name: cdviz-webhook-config
 ```
 
 ## Advanced Queries: Your Data, Your Rules
@@ -254,39 +254,39 @@ Since CDviz stores everything in PostgreSQL, you can run sophisticated analyses:
 
 ```sql
 -- Deployment Frequency (deployments per day)
-SELECT 
+SELECT
   DATE(timestamp) as day,
   COUNT(*) as deployments
-FROM cdevents 
+FROM cdevents
 WHERE context_type = 'dev.cdevents.service.deployed.0.1.1'
   AND timestamp >= NOW() - INTERVAL '30 days'
 GROUP BY DATE(timestamp)
 ORDER BY day;
 
--- Lead Time (time from commit to deployment) 
+-- Lead Time (time from commit to deployment)
 WITH commits AS (
   SELECT subject_id, timestamp as commit_time
-  FROM cdevents 
+  FROM cdevents
   WHERE context_type = 'dev.cdevents.change.merged.0.1.2'
 ),
 deployments AS (
-  SELECT subject_id, timestamp as deploy_time  
+  SELECT subject_id, timestamp as deploy_time
   FROM cdevents
   WHERE context_type = 'dev.cdevents.service.deployed.0.1.1'
 )
-SELECT 
+SELECT
   d.subject_id,
   AVG(EXTRACT(EPOCH FROM (d.deploy_time - c.commit_time))/60) as avg_lead_time_minutes
 FROM deployments d
-JOIN commits c ON d.subject_id = c.subject_id 
+JOIN commits c ON d.subject_id = c.subject_id
   AND d.deploy_time > c.commit_time
 GROUP BY d.subject_id;
 
 -- Change Failure Rate
-SELECT 
+SELECT
   subject_id,
   COUNT(CASE WHEN subject_outcome = 'failure' THEN 1 END) * 100.0 / COUNT(*) as failure_rate
-FROM cdevents 
+FROM cdevents
 WHERE context_type = 'dev.cdevents.service.deployed.0.1.1'
   AND timestamp >= NOW() - INTERVAL '30 days'
 GROUP BY subject_id;
@@ -303,29 +303,31 @@ const dashboard = {
       {
         title: "Deployment Frequency",
         type: "stat",
-        targets: [{
-          rawSql: `
-            SELECT 
+        targets: [
+          {
+            rawSql: `
+            SELECT
               COUNT(*) as deployments
-            FROM cdevents 
+            FROM cdevents
             WHERE subject_id = 'my-service'
               AND context_type = 'dev.cdevents.service.deployed.0.1.1'
               AND timestamp >= NOW() - INTERVAL '7 days'
-          `
-        }]
-      }
-    ]
-  }
+          `,
+          },
+        ],
+      },
+    ],
+  },
 };
 
 // Deploy via Grafana API
-fetch('http://localhost:3000/api/dashboards/db', {
-  method: 'POST',
+fetch("http://localhost:3000/api/dashboards/db", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + grafanaApiKey
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + grafanaApiKey,
   },
-  body: JSON.stringify(dashboard)
+  body: JSON.stringify(dashboard),
 });
 ```
 
@@ -347,9 +349,9 @@ collector:
       memory: 256Mi
       cpu: 250m
     limits:
-      memory: 512Mi  
+      memory: 512Mi
       cpu: 500m
-  
+
 database:
   postgresql:
     auth:
@@ -358,7 +360,7 @@ database:
     persistence:
       size: 100Gi
       storageClass: fast-ssd
-      
+
 grafana:
   admin:
     password: super-secure-password
@@ -385,7 +387,7 @@ port = 8080
 # Multiple sources
 [sources.github_webhook]
 type = "webhook"
-listen = "0.0.0.0:8081" 
+listen = "0.0.0.0:8081"
 path = "/github"
 
 [sources.jenkins_sse]
@@ -393,7 +395,7 @@ type = "sse"
 url = "http://jenkins.company.com/sse-gateway/listen"
 headers = { "Authorization" = "Bearer ${JENKINS_TOKEN}" }
 
-[sources.k8s_events]  
+[sources.k8s_events]
 type = "opendal"
 scheme = "s3"
 bucket = "k8s-events"
@@ -415,7 +417,7 @@ type = "db"
 url = "postgresql://user:pass@postgres:5432/cdviz"
 
 [sinks.webhook_alerts]
-type = "http" 
+type = "http"
 url = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
 filter = "$.context.type == 'dev.cdevents.incident.reported.0.1.0'"
 ```
@@ -426,17 +428,17 @@ CDviz is built for scale. Here's how to optimize for high-throughput environment
 
 ```sql
 -- Optimize your database
-CREATE INDEX CONCURRENTLY idx_cdevents_timestamp 
+CREATE INDEX CONCURRENTLY idx_cdevents_timestamp
   ON cdevents USING BTREE (timestamp DESC);
-  
+
 CREATE INDEX CONCURRENTLY idx_cdevents_subject_type
   ON cdevents USING BTREE (subject_id, context_type);
 
--- Partition large tables  
+-- Partition large tables
 SELECT create_hypertable('cdevents', 'timestamp');
 
 -- Set up read replicas for dashboard queries
-CREATE SUBSCRIPTION dashboard_replica 
+CREATE SUBSCRIPTION dashboard_replica
 CONNECTION 'host=postgres-primary port=5432 user=replication'
 PUBLICATION cdviz_events;
 ```
@@ -454,7 +456,7 @@ from datetime import datetime
 class CDvizClient:
     def __init__(self, collector_url):
         self.base_url = collector_url
-    
+
     def send_deployment_event(self, service_name, environment, artifact_id):
         event = {
             "context": {
@@ -466,14 +468,14 @@ class CDvizClient:
             },
             "subject": {
                 "id": service_name,
-                "type": "service", 
+                "type": "service",
                 "content": {
                     "environment": {"id": environment},
                     "artifactId": artifact_id
                 }
             }
         }
-        
+
         response = requests.post(
             f"{self.base_url}/events",
             headers={"Content-Type": "application/json"},
@@ -484,7 +486,7 @@ class CDvizClient:
 # Usage
 client = CDvizClient("http://localhost:8080")
 client.send_deployment_event(
-    "my-service", 
+    "my-service",
     "production",
     "pkg:oci/my-service@sha256:abc123"
 )
@@ -504,14 +506,14 @@ metadata:
     app: cdviz-collector
 spec:
   ports:
-  - name: metrics
-    port: 9090
-    targetPort: metrics
+    - name: metrics
+      port: 9090
+      targetPort: metrics
   selector:
     app: cdviz-collector
 ---
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor  
+kind: ServiceMonitor
 metadata:
   name: cdviz-collector
 spec:
@@ -519,8 +521,8 @@ spec:
     matchLabels:
       app: cdviz-collector
   endpoints:
-  - port: metrics
-    path: /metrics
+    - port: metrics
+      path: /metrics
 ```
 
 ## Next Steps: Code Your Pipeline Visibility
@@ -528,7 +530,7 @@ spec:
 Ready to stop playing deployment detective? Here's your implementation roadmap:
 
 1. **Start local** (5 min): `git clone` and `docker compose up`
-2. **Send test events** (10 min): Use the curl examples above  
+2. **Send test events** (10 min): Use the curl examples above
 3. **Connect your CI** (30 min): Add webhook calls to your pipelines
 4. **Deploy to prod** (1 hour): Use the Helm chart with your values
 5. **Build custom queries** (ongoing): PostgreSQL is your playground
@@ -537,7 +539,7 @@ The future of software delivery observability is **data-driven and programmable*
 
 ---
 
-*Ready to code your way to pipeline clarity? Explore the [GitHub repo](https://github.com/cdviz-dev/cdviz) and join the [CDEvents community](https://cdevents.dev). Questions? File an issue or join the discussions.*
+_Ready to code your way to pipeline clarity? Explore the [GitHub repo](https://github.com/cdviz-dev/cdviz) and join the [CDEvents community](https://cdevents.dev). Questions? File an issue or join the discussions._
 
 ---
 
