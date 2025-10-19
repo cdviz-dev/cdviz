@@ -227,6 +227,10 @@ export default defineConfig({
                   link: "/docs/cdviz-collector/integrations/github-action",
                 },
                 {
+                  text: "GitLab",
+                  link: "/docs/cdviz-collector/integrations/gitlab",
+                },
+                {
                   text: "Kubernetes (via Kubewatch)",
                   link: "/docs/cdviz-collector/integrations/kubewatch",
                 },
