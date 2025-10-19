@@ -56,6 +56,12 @@ outputs = [
 description = "rebuild all optimized images (favicon + hero images)"
 depends = [":build_favicon", ":build_hero-images"]
 
+[tasks."build_markdown"]
+description = "generate, import some markdown"
+run = [
+  "curl -sfL 'https://github.com/cdviz-dev/transformers-community/raw/refs/heads/main/RULES.md' -o src/docs/cdviz-collector/transformers-rules.md",
+]
+
 [tasks.format]
 alias = "fmt"
 description = "format with dprint (includes biome plugin)"
