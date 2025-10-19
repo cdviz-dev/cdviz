@@ -21,6 +21,7 @@ headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 
 - **`headers_to_keep`** (array of strings): List of HTTP header names to preserve and forward through the pipeline
 - **`headers`** (array): Header validation rules for incoming requests (see [Security](#security))
+- **`metadata`** (object): Static metadata to include in all events from this extractor. The `metadata.context.source` field will be automatically populated if not explicitly set (see [Extractor Metadata Configuration](./index.md#extractor-metadata-configuration))
 
 ### Deprecated Parameters
 
@@ -60,7 +61,7 @@ A pipeline event is created with:
 
 - **Body**: Parsed JSON from request body
 - **Headers**: Filtered headers as key-value pairs
-- **Metadata**: Empty (populated by transformers)
+- **Metadata**: Base metadata from extractor configuration (merged with transformer metadata)
 
 ## Security
 

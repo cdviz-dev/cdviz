@@ -28,6 +28,7 @@ parser = "json"
 
 - **`recursive`** (boolean): Search subdirectories recursively (default: true)
 - **`try_read_headers_json`** (boolean): Attempt to read headers from `.headers.json` files (default: false)
+- **`metadata`** (object): Static metadata to include in all events from this extractor. The `metadata.context.source` field will be automatically populated if not explicitly set (see [Extractor Metadata Configuration](./index.md#extractor-metadata-configuration))
 
 ## Supported Storage Services
 
@@ -192,6 +193,24 @@ path_patterns = [
 
 ## Metadata Enhancement
 
+### Base Metadata
+
+All events include base extractor metadata with automatic `context.source` population:
+
+```json
+{
+  "metadata": {
+    "context": {
+      "source": "http://cdviz-collector.example.com/?source=file_source"
+    }
+  }
+}
+```
+
+The `context.source` is automatically populated from `http.root_url` configuration unless explicitly set in extractor metadata.
+
+### Header Files
+
 Files can have associated header files for additional metadata:
 
 ```toml
@@ -208,7 +227,7 @@ try_read_headers_json = true
 }
 ```
 
-These headers will be included in the message metadata.
+These headers will be merged with base extractor metadata in the message.
 
 ## Examples
 

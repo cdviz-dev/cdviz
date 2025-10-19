@@ -27,10 +27,33 @@ parameters = { root = "./events" }
 
 ### Main Sections
 
-- **`[http]`** - Server host and port (default: `0.0.0.0:8080`)
+- **`[http]`** - HTTP server configuration (host, port, root_url)
 - **`[sources.*]`** - Event collection (see [Sources](./sources/))
 - **`[transformers.*]`** - Event processing (see [Transformers](./transformers.md))
 - **`[sinks.*]`** - Event delivery (see [Sinks](./sinks/))
+
+### HTTP Configuration
+
+The `[http]` section configures the HTTP server:
+
+```toml
+[http]
+host = "0.0.0.0"           # Bind address (default: "0.0.0.0")
+port = 8080                # Port to listen on (default: 8080)
+root_url = "http://cdviz-collector.example.com"  # Base URL for generating source URLs
+```
+
+**`root_url`** is used to automatically populate `context.source` in CDEvents when not explicitly set. The format is:
+
+```
+{root_url}/?source={source_name}
+```
+
+For example, with `root_url = "https://cdviz.example.com"` and a source named `github_webhook`, the `context.source` will be:
+
+```
+https://cdviz.example.com/?source=github_webhook
+```
 
 ## Environment Overrides
 

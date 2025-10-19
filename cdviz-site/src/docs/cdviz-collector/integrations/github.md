@@ -79,7 +79,10 @@ transformer_refs = ["github_events"]
 type = "webhook"
 id = "000-github"
 headers_to_keep = []
-signature = { signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", header = "x-hub-signature-256", token = "changeme" }
+
+[sources.github_webhook.extractor.headers]
+"x-hub-signature-256" = { type = "signature", signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", token = "changeme" }
+
 
 # Transformer from transformers-community repository
 [transformers.github_events]

@@ -54,24 +54,12 @@ repo = "transformers-community"
 
 [sources.kubewatch_webhook]
 enabled = true
-transformer_refs = ["kubewatch_metadata", "kubewatch_cloudevents"]
+transformer_refs = ["kubewatch_cloudevents"]
 
 [sources.kubewatch_webhook.extractor]
 type = "webhook"
 id = "000-kubewatch"
-
-[transformers.kubewatch_metadata]
-type = "vrl"
-template = """
-.metadata = object(.metadata) ?? {}
-
-[{
-  "metadata": merge(.metadata, {
-    "environment_id": "cluster/A-dev",
-  }),
-  "header": .header,
-  "body": .body,
-}]
+metadata.environment_id = "/production/eu-1"
 """
 
 # Transformer from transformers-community repository
@@ -95,6 +83,7 @@ For more details on remote transformers, including using specific tags or commit
     helm install cdviz-collector oci://ghcr.io/cdviz-dev/charts/cdviz-collector --set kubewatch.enabled=true
     ```
 - Configure Kubewatch to send **cloudevents** to the `cdviz-collector` service (webhook events doesn't contains enough information)
+
   ```yaml
   resourcesToWatch:
     deployment: true

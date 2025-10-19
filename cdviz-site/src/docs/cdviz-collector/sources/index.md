@@ -41,9 +41,97 @@ type = "abc"
 
 A Message is composed of:
 
-- `metadata`: a `Map<String, JSON>`
+- `metadata`: a `Map<String, JSON>` - Includes base extractor metadata with automatic `context.source` population
 - `headers`: a `Map<String, String>`
 - `body`: a `JSON` like structure, also named `payload`
+
+### Extractor Metadata Configuration
+
+All extractors support a `metadata` field for injecting static metadata into every event. This is useful for adding context information without creating custom transformers.
+
+#### Automatic `context.source` Population
+
+If `metadata.context.source` is not explicitly set, it will be automatically populated using the pattern:
+
+```
+{http.root_url}/?source={source_name}
+```
+
+Where:
+
+- `{http.root_url}` is configured in `[http]` section (default: `http://cdviz-collector.example.com`)
+- `{source_name}` is the configuration key for the source (e.g., `github_webhook`, `file_source`)
+
+#### Example: Custom Metadata
+
+```toml
+[http]
+root_url = "https://cdviz.example.com"
+
+[sources.my_webhook]
+enabled = true
+
+[sources.my_webhook.extractor]
+type = "webhook"
+id = "custom-events"
+
+# Custom metadata injected into all events
+[sources.my_webhook.extractor.metadata]
+environment = "production"
+team = "platform"
+
+[sources.my_webhook.extractor.metadata.context]
+source = "/my-custom-source"  # Override automatic source URL
+```
+
+#### Example: Automatic Source URL
+
+```toml
+[http]
+root_url = "https://cdviz.example.com"
+
+[sources.github_webhook]
+enabled = true
+
+[sources.github_webhook.extractor]
+type = "webhook"
+id = "github"
+
+# No metadata.context.source specified
+# Will automatically be set to: https://cdviz.example.com/?source=github_webhook
+```
+
+#### Use Cases
+
+**Avoid Creating Transformers for Static Metadata**: Instead of creating a VRL transformer just to add static fields, use the `metadata` configuration:
+
+```toml
+# Before: Required a transformer to add static fields
+[sources.my_webhook]
+transformer_refs = ["add_metadata", "my_transform"]
+
+# After: Use extractor metadata directly
+[sources.my_webhook]
+transformer_refs = ["my_transform"]
+
+[sources.my_webhook.extractor]
+type = "webhook"
+id = "events"
+
+[sources.my_webhook.extractor.metadata]
+datacenter = "us-east-1"
+version = "v2"
+```
+
+**Environment-Specific Configuration**: Tag events with environment information:
+
+```toml
+[sources.production_webhook.extractor]
+type = "webhook"
+id = "prod"
+metadata.environment_id = "/production/eu-1"
+metadata.criticality = "high"
+```
 
 ## Extractors
 
@@ -220,4 +308,4 @@ template = """
 
 [Sinks]: ../sinks/
 [Transformers]: transformers
-[service]: <https://docs.rs/opendal/latest/opendal/services/index.html>
+[service]: https://docs.rs/opendal/latest/opendal/services/index.html
