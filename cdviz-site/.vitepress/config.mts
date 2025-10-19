@@ -167,6 +167,13 @@ export default defineConfig({
             {
               text: "Transformers",
               link: "/docs/cdviz-collector/transformers",
+              collapsed: true,
+              items: [
+                {
+                  text: "Transformers & CDEvents Rules",
+                  link: "/docs/cdviz-collector/transformers-rules",
+                },
+              ],
             },
             {
               text: "Sinks",
@@ -284,7 +291,8 @@ export default defineConfig({
     },
     socialLinks: [{ icon: "github", link: "https://github.com/cdviz-dev" }],
     editLink: {
-      pattern: "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
+      pattern:
+        "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
     },
     footer: {
       message:
@@ -334,7 +342,12 @@ export default defineConfig({
       {
         name: "vp-tw-order-fix",
         configResolved(c) {
-          movePlugin(c.plugins as any, "@tailwindcss/vite:scan", "after", "vitepress");
+          movePlugin(
+            c.plugins as any,
+            "@tailwindcss/vite:scan",
+            "after",
+            "vitepress",
+          );
         },
       },
     ],

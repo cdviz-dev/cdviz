@@ -40,3 +40,7 @@ A CDEvent is a JSON object with a specific structure. Here is an example of a `s
 - **`subject.content`:** A JSON object that contains the details of the event.
 
 For a complete list of all the available event types and their fields, please refer to the [CDEvents specification](https://cdevents.dev/docs/spec).
+
+## Guidelines
+
+You can see some **opinionated** rules to create CDEvents at [Transformers & CDEvents Rules](/docs/cdviz-collector/transformers-rules).
