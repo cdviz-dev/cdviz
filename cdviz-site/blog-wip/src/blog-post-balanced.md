@@ -1,6 +1,6 @@
 # Stop Flying Blind: Why You Need Pipeline Visibility Yesterday
 
-*Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots with code and clear visualization.*
+_Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots with code and clear visualization._
 
 ## The Multi-Tool Nightmare
 
@@ -127,7 +127,7 @@ open http://localhost:3000/d/demo-service-deployed/demo-service-deployed
 ```
 
 ![Demo Dashboard](https://via.placeholder.com/700x400/7ed321/ffffff?text=CDviz+Demo+Dashboard)
-*What you'll see: Real-time deployment metrics and event timeline*
+_What you'll see: Real-time deployment metrics and event timeline_
 
 ## Real Integration Examples
 
@@ -171,18 +171,18 @@ spec:
   template:
     spec:
       containers:
-      - name: collector
-        image: ghcr.io/cdviz-dev/cdviz-collector:latest
-        env:
-        - name: CDVIZ_CONFIG
-          value: |
-            [sources.k8s]
-            type = "webhook"
-            listen = "0.0.0.0:8080"
+        - name: collector
+          image: ghcr.io/cdviz-dev/cdviz-collector:latest
+          env:
+            - name: CDVIZ_CONFIG
+              value: |
+                [sources.k8s]
+                type = "webhook"
+                listen = "0.0.0.0:8080"
 
-            [sinks.database]
-            type = "db"
-            url = "postgresql://user:pass@postgres:5432/cdviz"
+                [sinks.database]
+                type = "db"
+                url = "postgresql://user:pass@postgres:5432/cdviz"
 ```
 
 ## The Data is Yours: Advanced Analytics
@@ -226,7 +226,7 @@ GROUP BY subject_id;
 What these queries produce in your Grafana dashboards:
 
 ![DORA Metrics](https://via.placeholder.com/600x350/4a90e2/ffffff?text=DORA+Metrics+Dashboard)
-*Deployment frequency, lead time, and failure rates visualized*
+_Deployment frequency, lead time, and failure rates visualized_
 
 ## Production Deployment: Helm Charts
 
@@ -259,10 +259,10 @@ helm install cdviz cdviz/cdviz -f production-values.yaml
 
 ## Before vs After: The Transformation
 
-| Before CDviz | After CDviz |
-|-------------|-------------|
-| 🔴 12+ browser tabs | ✅ Single dashboard |
-| 🔴 Manual correlation | ✅ Automated insights |
+| Before CDviz            | After CDviz              |
+| ----------------------- | ------------------------ |
+| 🔴 12+ browser tabs     | ✅ Single dashboard      |
+| 🔴 Manual correlation   | ✅ Automated insights    |
 | 🔴 Hours to investigate | ✅ Seconds to understand |
 | 🔴 Spreadsheet analysis | ✅ SQL-powered analytics |
 
@@ -317,7 +317,7 @@ print(f"Average deployments per day: {velocity}")
 
 ![Architecture Diagram](https://via.placeholder.com/600x300/50e3c2/ffffff?text=Open+Source+Architecture)
 
-- **CDviz Collector**: AGPL v3 (core event processing)
+- **CDviz Collector**: Apache v2 (from v0.15+, core event processing)
 - **Database components**: Apache v2 (your data, your control)
 - **Grafana dashboards**: Apache v2 (full customization)
 - **Your infrastructure**: Deploy anywhere with standard tools
@@ -353,7 +353,7 @@ Ready to stop flying blind? The combination of **standardized events + open data
 
 ---
 
-*Start your pipeline visibility transformation: [Live demo](https://cdviz.dev) • [GitHub repo](https://github.com/cdviz-dev/cdviz) • [CDEvents community](https://cdevents.dev)*
+_Start your pipeline visibility transformation: [Live demo](https://cdviz.dev) • [GitHub repo](https://github.com/cdviz-dev/cdviz) • [CDEvents community](https://cdevents.dev)_
 
 ---
 

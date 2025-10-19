@@ -1,9 +1,9 @@
 # Stop Flying Blind: Why You Need Pipeline Visibility Yesterday
 
-*Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots.*
+_Your software delivery metrics are scattered across a dozen tools. Here's how to finally connect the dots._
 
 ![Pipeline Visibility Problem](https://via.placeholder.com/800x400/2d3748/ffffff?text=Before%3A+Scattered+Tools+%26+Blind+Spots)
-*The current state: Your pipeline data is trapped in silos*
+_The current state: Your pipeline data is trapped in silos_
 
 ## The Multi-Tool Nightmare
 
@@ -21,11 +21,11 @@ graph TB
     D[Datadog] --> Z
     E[PagerDuty] --> Z
     F[Kubernetes] --> Z
-    
+
     Z --> Q1["❓ Deployment Success Rate?"]
     Z --> Q2["❓ MTTR Across Services?"]
     Z --> Q3["❓ Release Velocity?"]
-    
+
     style Z fill:#ff6b6b
     style Q1 fill:#ffd93d
     style Q2 fill:#ffd93d
@@ -39,7 +39,7 @@ This isn't a tooling problem—it's a **visibility problem**. Your pipeline even
 CDviz solves this with a simple but powerful approach: **unified visibility** across your entire software delivery lifecycle. No more tool-hopping. No more manual correlation. Just real-time insights into what's actually happening in your pipeline.
 
 ![CDviz Solution Architecture](https://via.placeholder.com/800x400/4a90e2/ffffff?text=After%3A+Unified+Pipeline+Visibility)
-*The CDviz solution: All your pipeline events in one place*
+_The CDviz solution: All your pipeline events in one place_
 
 ### The Architecture That Makes It Work
 
@@ -52,27 +52,27 @@ graph LR
         D[Kubernetes]
         E[PagerDuty]
     end
-    
+
     subgraph CDviz["CDviz Platform"]
         F[CDviz Collector]
         G[(PostgreSQL + TimescaleDB)]
         H[Grafana Dashboards]
     end
-    
+
     A --> F
     B --> F
     C --> F
     D --> F
     E --> F
-    
+
     F --> G
     G --> H
-    
+
     H --> I[📊 DORA Metrics]
-    H --> J[📈 Deployment Frequency]  
+    H --> J[📈 Deployment Frequency]
     H --> K[⏱️ Lead Time]
     H --> L[🔍 Incident Correlation]
-    
+
     style F fill:#4a90e2
     style G fill:#50e3c2
     style H fill:#7ed321
@@ -85,22 +85,23 @@ Built on the [CDEvents specification](https://cdevents.dev/)—the emerging Clou
 ### Before: Scattered Metrics Across Multiple Tools
 
 ![Scattered Tools](https://via.placeholder.com/600x300/ff6b6b/ffffff?text=Jenkins+Build+Dashboard)
-*Jenkins: Build status and duration*
+_Jenkins: Build status and duration_
 
-![Separate Monitoring](https://via.placeholder.com/600x300/ff6b6b/ffffff?text=Datadog+Infrastructure+Monitoring)  
-*Datadog: Infrastructure monitoring*
+![Separate Monitoring](https://via.placeholder.com/600x300/ff6b6b/ffffff?text=Datadog+Infrastructure+Monitoring)
+_Datadog: Infrastructure monitoring_
 
 ![Incident Management](https://via.placeholder.com/600x300/ff6b6b/ffffff?text=PagerDuty+Incident+Dashboard)
-*PagerDuty: Incident management*
+_PagerDuty: Incident management_
 
 ### After: Unified CDviz Dashboards
 
 ![CDviz Deployment Dashboard](https://via.placeholder.com/800x500/7ed321/ffffff?text=CDviz+Unified+Deployment+Dashboard)
-*CDviz: All your deployment metrics in one unified view*
+_CDviz: All your deployment metrics in one unified view_
 
 Key metrics visible at a glance:
+
 - ✅ Deployment frequency across all services
-- ⏱️ Lead time from commit to production  
+- ⏱️ Lead time from commit to production
 - 🎯 Success/failure rates by environment
 - 🔍 Incident correlation with deployments
 
@@ -118,10 +119,10 @@ Key metrics visible at a glance:
 sequenceDiagram
     participant Dev as Developer
     participant GH as GitHub Actions
-    participant Col as CDviz Collector  
+    participant Col as CDviz Collector
     participant DB as PostgreSQL
     participant Graf as Grafana
-    
+
     Dev->>GH: Push code
     GH->>Col: Deployment Event
     Col->>DB: Store CDEvent
@@ -134,16 +135,19 @@ sequenceDiagram
 Here's what CDviz helps you visualize that your current stack probably can't:
 
 ### 1. Deployment Timeline Visualization
-![Timeline View](https://via.placeholder.com/800x300/50e3c2/ffffff?text=Service+Deployment+Timeline)
-*See exactly when each service was deployed across all environments*
 
-### 2. DORA Metrics Dashboard  
+![Timeline View](https://via.placeholder.com/800x300/50e3c2/ffffff?text=Service+Deployment+Timeline)
+_See exactly when each service was deployed across all environments_
+
+### 2. DORA Metrics Dashboard
+
 ![DORA Metrics](https://via.placeholder.com/800x400/7ed321/ffffff?text=DORA+Metrics+Dashboard)
-*Track deployment frequency, lead time, MTTR, and change failure rate*
+_Track deployment frequency, lead time, MTTR, and change failure rate_
 
 ### 3. Incident Correlation View
+
 ![Incident Correlation](https://via.placeholder.com/800x350/ffd93d/ffffff?text=Incident+vs+Deployment+Correlation)
-*Instantly see which deployments correlate with incidents*
+_Instantly see which deployments correlate with incidents_
 
 ## Getting Started: See Results in 5 Minutes
 
@@ -160,23 +164,24 @@ open http://localhost:3000/d/demo-service-deployed/demo-service-deployed
 ```
 
 ![Demo Setup](https://via.placeholder.com/600x400/4a90e2/ffffff?text=CDviz+Demo+Setup)
-*The demo environment running locally*
+_The demo environment running locally_
 
 Within minutes, you'll see:
+
 - 📊 Real-time deployment metrics
-- 🎯 Service health across environments  
+- 🎯 Service health across environments
 - ⚡ Event timeline visualization
 - 📈 DORA metrics baseline
 
 ## Visual Comparison: Before vs After
 
-| Before CDviz | After CDviz |
-|-------------|-------------|
+| Before CDviz                                                                     | After CDviz                                                                   |
+| -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | ![Before](https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Scattered+Data) | ![After](https://via.placeholder.com/300x200/7ed321/ffffff?text=Unified+View) |
-| 🔴 12+ tools to check | ✅ Single dashboard |
-| 🔴 Manual correlation | ✅ Automated insights |  
-| 🔴 Hours to investigate | ✅ Seconds to understand |
-| 🔴 Tribal knowledge | ✅ Standardized metrics |
+| 🔴 12+ tools to check                                                            | ✅ Single dashboard                                                           |
+| 🔴 Manual correlation                                                            | ✅ Automated insights                                                         |
+| 🔴 Hours to investigate                                                          | ✅ Seconds to understand                                                      |
+| 🔴 Tribal knowledge                                                              | ✅ Standardized metrics                                                       |
 
 ## The Open Source Advantage
 
@@ -185,23 +190,23 @@ CDviz architecture diagram:
 ```mermaid
 graph TB
     subgraph "Open Source Components"
-        A[CDviz Collector<br/>AGPL v3]
-        B[CDviz Database<br/>Apache v2]  
+        A[CDviz Collector<br/>Apache v2]
+        B[CDviz Database<br/>Apache v2]
         C[CDviz Grafana<br/>Apache v2]
     end
-    
+
     subgraph "Your Infrastructure"
         D[PostgreSQL]
         E[Grafana]
         F[Kubernetes]
     end
-    
+
     A --> D
     B --> D
     C --> E
-    
+
     style A fill:#7ed321
-    style B fill:#7ed321  
+    style B fill:#7ed321
     style C fill:#7ed321
 ```
 
@@ -218,7 +223,7 @@ mindmap
       Centralized metrics
       No more internal tools
       Standard deployments
-    Engineering Managers  
+    Engineering Managers
       Deployment velocity
       Team performance
       Data-driven decisions
@@ -228,7 +233,7 @@ mindmap
       Pipeline bottlenecks
     CTOs
       Engineering efficiency
-      ROI measurement  
+      ROI measurement
       Strategic planning
 ```
 
@@ -240,14 +245,14 @@ Ready to stop playing deployment detective? Here's your visual roadmap:
 
 1. **Try the demo** (5 minutes): [cdviz.dev](https://cdviz.dev)
 2. **Deploy collector** (30 minutes): Point at your existing tools
-3. **Configure dashboards** (1 hour): Customize for your metrics  
+3. **Configure dashboards** (1 hour): Customize for your metrics
 4. **Share insights** (Ongoing): Transform your team's visibility
 
 The future of software delivery observability isn't about more dashboards—it's about **connected, visual insights**. CDviz gives you that clarity.
 
 ---
 
-*Ready to see your pipeline clearly? Check out the [live demo](https://cdviz.dev) or explore the [visual documentation](https://github.com/cdviz-dev/cdviz). Questions? The CDviz team is active in the CDEvents community.*
+_Ready to see your pipeline clearly? Check out the [live demo](https://cdviz.dev) or explore the [visual documentation](https://github.com/cdviz-dev/cdviz). Questions? The CDviz team is active in the CDEvents community._
 
 ---
 
