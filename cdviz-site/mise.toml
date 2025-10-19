@@ -9,7 +9,7 @@ dev = "bun run docs:dev"
 build = "bun run docs:build"
 preview = "bun run docs:preview"
 
-[tasks."build:favicon"]
+[tasks."build_favicon"]
 description = "rebuild favicon.{ico,png,webp} from favicon.svg"
 dir = "assets"
 run = [
@@ -24,7 +24,7 @@ run = [
 sources = ["favicon.svg"]
 outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 
-[tasks."build:hero-images"]
+[tasks."build_hero-images"]
 description = "rebuild optimized hero images from hero-dashboard-01.webp"
 dir = "assets/illustrations"
 run = [
@@ -52,17 +52,17 @@ outputs = [
   "hero-dashboard-01-400w.avif",
 ]
 
-[tasks."build:images"]
+[tasks."build_images"]
 description = "rebuild all optimized images (favicon + hero images)"
-depends = ["build:favicon", "build:hero-images"]
+depends = [":build_favicon", ":build_hero-images"]
 
 [tasks.format]
 alias = "fmt"
 description = "format with dprint (includes biome plugin)"
-depends = ["trim:trailing_space"]
+depends = [":trim_trailing-space"]
 run = ["dprint fmt"]
 
-[tasks."perf:report"]
+[tasks."perf_report"]
 description = "analyze performance of a running local preview server & published landing page"
 dir = "perf"
 run = [
@@ -70,7 +70,7 @@ run = [
   "lighthouse --quiet --view --chrome-flags='--headless' https://cdviz.dev/",
 ]
 
-[tasks."trim:trailing_space"]
+[tasks."trim_trailing-space"]
 description = "trim trailing whitespace"
 run = [
   "find . -type f -name '*.md' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
