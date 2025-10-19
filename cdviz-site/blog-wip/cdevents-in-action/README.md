@@ -37,14 +37,14 @@ This directory contains episodes for the "CDEvents in Action" educational series
 - **Audience**: Engineering Managers, Team Leads
 - **CDviz Docs**: Uses existing docker compose setup
 
-**Episode #1: "Simulate a Consumer"** 📝 Published
+**Episode #1: "Simulate a Consumer"** ✅ Published
 
 - **Focus**: Test CDEvents integration approaches before building
 - **Tools Comparison**: webhook.site, CDviz docker compose, cdviz-collector connect debug
 - **Audience**: Developers starting CDEvents integration
 - **CDviz Docs**: ✅ Existing (docker compose, webhook endpoints)
 
-**Episode #2: "Send Your First CDEvent"** 📝 Ready
+**Episode #2: "Send Your First CDEvent"** ✅ Published
 
 - **Focus**: `cdviz-collector send` vs raw curl comparison
 - **Tools**: cdviz-collector CLI (primary), curl (comparison/debugging), bash scripts
@@ -55,7 +55,7 @@ This directory contains episodes for the "CDEvents in Action" educational series
 
 **Learning Goal**: Instrument existing pipelines to send CDEvents
 
-**Episode #3: "Direct CI/CD Pipeline Integration"** 📝 Planned
+**Episode #3: "Direct CI/CD Pipeline Integration"** ✅ Published
 
 - **Focus**: Universal CI/CD integration patterns with GitHub Actions as primary example
 - **Pattern-Based Teaching**: Three universal patterns applicable to all CI/CD systems
