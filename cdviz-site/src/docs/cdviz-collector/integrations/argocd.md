@@ -51,26 +51,14 @@ repo = "transformers-community"
 
 [sources.argocd_webhook]
 enabled = true
-transformer_refs = ["argocd_metadata", "argocd_notifications"]
+transformer_refs = ["argocd_notifications"]
 
 [sources.argocd_webhook.extractor]
 type = "webhook"
 id = "000-argocd"
 headers_to_keep = []
-
-# Metadata transformer injects environment_id from ArgoCD destination
-[transformers.argocd_metadata]
-type = "vrl"
-template = """
-.metadata = object(.metadata) ?? {}
-
-[{
-  "metadata": merge(.metadata, {
-    "environment_id": .body.app.spec.destination.server || "unknown",
-  }),
-  "headers": .headers,
-  "body": .body,
-}]
+# Metadata to injects environment_id from ArgoCD destination
+metadata.environment_id = "/production/eu-1"
 """
 
 # Main transformer from transformers-community repository

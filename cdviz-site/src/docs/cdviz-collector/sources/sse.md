@@ -21,6 +21,7 @@ max_retries = 10
 
 - **`max_retries`** (integer): Maximum number of reconnection attempts (default: 10)
 - **`headers`** (array): HTTP headers to include in SSE requests (default: [])
+- **`metadata`** (object): Static metadata to include in all events from this extractor. The `metadata.context.source` field will be automatically populated if not explicitly set (see [Extractor Metadata Configuration](./index.md#extractor-metadata-configuration))
 
 ## Authentication
 
@@ -60,11 +61,14 @@ SSE messages are automatically processed and converted to pipeline events:
 
 ### Metadata
 
-Each SSE message includes metadata:
+Each SSE message includes metadata merged with base extractor metadata:
 
 ```json
 {
   "metadata": {
+    "context": {
+      "source": "http://cdviz-collector.example.com/?source=events"
+    },
     "sse_id": "message-id-or-uuid",
     "sse_event": "event-type",
     "sse_url": "source-endpoint-url"
@@ -73,6 +77,8 @@ Each SSE message includes metadata:
   "body": { "parsed": "json-data" }
 }
 ```
+
+The `context.source` is automatically populated from `http.root_url` configuration unless explicitly set in extractor metadata.
 
 ### Data Handling
 

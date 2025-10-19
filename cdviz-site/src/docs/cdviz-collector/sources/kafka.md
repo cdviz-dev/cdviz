@@ -28,6 +28,7 @@ group_id = "cdviz-collector"
 - **`auto_commit`** (boolean): Whether to commit offsets automatically (default: `true`)
 - **`rdkafka_config`** (object): Additional rdkafka consumer configuration options
 - **`headers`** (array): Header validation rules for incoming messages (see [Security](#security))
+- **`metadata`** (object): Static metadata to include in all events from this extractor. The `metadata.context.source` field will be automatically populated if not explicitly set (see [Extractor Metadata Configuration](./index.md#extractor-metadata-configuration))
 
 ## Message Processing
 
@@ -52,16 +53,21 @@ If header validation rules are configured, incoming messages are validated again
 
 ### 5. Metadata Preservation
 
-Kafka-specific metadata is preserved in the event:
+Kafka-specific metadata is merged with base extractor metadata:
 
 ```json
 {
+  "context": {
+    "source": "http://cdviz-collector.example.com/?source=kafka_events"
+  },
   "kafka_topic": "events",
   "kafka_partition": 0,
   "kafka_offset": 12345,
   "kafka_timestamp": 1640995200000
 }
 ```
+
+The `context.source` is automatically populated from `http.root_url` configuration unless explicitly set in extractor metadata.
 
 ## Security
 
