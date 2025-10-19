@@ -191,22 +191,22 @@ deploy:
 
     # Send deployment event (minimal format - collector generates ID/timestamp)
     - |
-      cdviz-collector send --data '{
-        "context": {
-          "version": "0.4.1",
-          "source": "'"${CI_PIPELINE_URL}"'",
-          "type": "dev.cdevents.service.deployed.0.2.0"
-        },
-        "subject": {
-          "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
-          "type": "service",
-          "content": {
-            "environment": {"id": "production"},
-            "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
+        cdviz-collector send --data '{
+          "context": {
+            "version": "0.4.1",
+            "source": "'"${CI_PIPELINE_URL}"'",
+            "type": "dev.cdevents.service.deployed.0.2.0"
+          },
+          "subject": {
+            "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
+            "type": "service",
+            "content": {
+              "environment": {"id": "production"},
+              "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
+            }
           }
-        }
-      }' --url "${CDEVENTS_ENDPOINT_URL}" \
-         --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
+        }' --url "${CDEVENTS_ENDPOINT_URL}" \
+           --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
 ```
 
 **What this does**:
@@ -432,9 +432,9 @@ deploy:
   script:
     # ... (existing deployment steps)
     - |
-      cdviz-collector send --data '{...}' \
-        --url "${CDEVENTS_ENDPOINT_URL}" \
-        --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
+        cdviz-collector send --data '{...}' \
+          --url "${CDEVENTS_ENDPOINT_URL}" \
+          --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
 ```
 
 **Pattern C (GitHub Actions)** - Add HMAC signature via config:
@@ -519,12 +519,12 @@ When creating CDEvents, choosing good values for key fields improves observabili
 "subject.id": "my-service/production"
 "subject.id": "frontend/staging/web-app"
 "subject.id": "backend/dev/api-gateway"
-"subject.id": "/team/my-service/production"  # Include team for larger orgs
+"subject.id": "/team/my-service/production" # Include team for larger orgs
 
 # ❌ Avoid - Not unique or too generic within your scope
-"subject.id": "550e8400-e29b-41d4-a716-446655440000"  # UUID (use context.id for that)
-"subject.id": "run-12345"  # Run-specific (use context.id for that)
-"subject.id": "production"  # Too generic - which service?
+"subject.id": "550e8400-e29b-41d4-a716-446655440000" # UUID (use context.id for that)
+"subject.id": "run-12345" # Run-specific (use context.id for that)
+"subject.id": "production" # Too generic - which service?
 ```
 
 ### environment.id - Deployment Environment
@@ -535,14 +535,14 @@ When creating CDEvents, choosing good values for key fields improves observabili
 
 ```yaml
 # ✅ Good - Consistent naming
-"environment": {"id": "production"}
-"environment": {"id": "staging"}
-"environment": {"id": "dev"}
+"environment": { "id": "production" }
+"environment": { "id": "staging" }
+"environment": { "id": "dev" }
 
 # ❌ Avoid - Inconsistent naming
-"environment": {"id": "prod"}     # vs "production"
-"environment": {"id": "STAGING"}  # vs "staging"
-"environment": {"id": "dev-123"}  # too specific
+"environment": { "id": "prod" } # vs "production"
+"environment": { "id": "STAGING" } # vs "staging"
+"environment": { "id": "dev-123" } # too specific
 ```
 
 ### artifactId - Package URL (PURL)
