@@ -1,16 +1,19 @@
 # CDviz Deployment Monitoring Series: Detailed Outline
 
 ## Series Overview
+
 5-part blog series focused on deployment visibility, progressing from simple direct integration to advanced monitoring patterns.
 
 ---
 
 ## Article 1: "Pipeline Visibility Crisis: When Your Tools Don't Talk"
+
 **Status**: Keep existing, minor refinements
-**Target**: Engineering Managers, Tech Leads  
+**Target**: Engineering Managers, Tech Leads
 **Reading Time**: 5 minutes
 
 ### Refinements Needed:
+
 - Remove detailed installation steps (link to official docs)
 - Strengthen the problem statement with more specific pain points
 - Add brief preview of solution approaches (direct vs passive monitoring)
@@ -19,17 +22,20 @@
 ---
 
 ## Article 2: "Direct Pipeline Integration: Sending Deployment Events"
+
 **Target**: DevOps Engineers, Developers
 **Reading Time**: 8-10 minutes
 
 ### Structure:
 
 #### Introduction (2 minutes)
+
 - When to choose direct pipeline integration
 - Benefits: immediate data, complete control, custom metadata
 - Trade-offs: maintenance overhead, security considerations
 
 #### GitHub Actions Deep Dive (3 minutes)
+
 ```yaml
 # Enhanced example with error handling
 - name: Send Deployment Event
@@ -72,22 +78,23 @@
 ```
 
 #### Jenkins Integration (3 minutes)
+
 ```groovy
 pipeline {
     agent any
-    
+
     environment {
         CDVIZ_URL = credentials('cdviz-collector-url')
         CDVIZ_TOKEN = credentials('cdviz-token')
     }
-    
+
     stages {
         stage('Deploy') {
             steps {
                 script {
                     // Deployment logic here
                     deployApplication()
-                    
+
                     // Send CDEvent with proper error handling
                     try {
                         sendDeploymentEvent()
@@ -134,7 +141,7 @@ def sendDeploymentEvent() {
         """,
         returnStdout: true
     ).trim()
-    
+
     if (response != "200") {
         throw new Exception("HTTP ${response}")
     }
@@ -142,34 +149,35 @@ def sendDeploymentEvent() {
 ```
 
 #### GitLab CI Integration (2 minutes)
+
 ```yaml
 # .gitlab-ci.yml
 send_deployment_event:
   stage: post-deploy
   script:
     - |
-      curl -X POST "$CDVIZ_COLLECTOR_URL/events" \
-        -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $CDVIZ_TOKEN" \
-        -d '{
-          "context": {
-            "version": "0.4.0",
-            "id": "'$CI_PIPELINE_ID'-deployed",
-            "source": "'$CI_PROJECT_PATH'",
-            "type": "dev.cdevents.service.deployed.0.1.1",
-            "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
-          },
-          "subject": {
-            "id": "'$CI_PROJECT_NAME'",
-            "source": "'$CI_PROJECT_URL'",
-            "type": "service",
-            "content": {
-              "environment": {"id": "'${CI_ENVIRONMENT_NAME:-production}'"},
-              "artifactId": "pkg:oci/'$CI_REGISTRY_IMAGE'@'$CI_COMMIT_SHA'",
-              "deploymentId": "'$CI_PIPELINE_ID'"
+        curl -X POST "$CDVIZ_COLLECTOR_URL/events" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $CDVIZ_TOKEN" \
+          -d '{
+            "context": {
+              "version": "0.4.0",
+              "id": "'$CI_PIPELINE_ID'-deployed",
+              "source": "'$CI_PROJECT_PATH'",
+              "type": "dev.cdevents.service.deployed.0.1.1",
+              "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+            },
+            "subject": {
+              "id": "'$CI_PROJECT_NAME'",
+              "source": "'$CI_PROJECT_URL'",
+              "type": "service",
+              "content": {
+                "environment": {"id": "'${CI_ENVIRONMENT_NAME:-production}'"},
+                "artifactId": "pkg:oci/'$CI_REGISTRY_IMAGE'@'$CI_COMMIT_SHA'",
+                "deploymentId": "'$CI_PIPELINE_ID'"
+              }
             }
-          }
-        }'
+          }'
   variables:
     CDVIZ_COLLECTOR_URL: $CDVIZ_COLLECTOR_URL
     CDVIZ_TOKEN: $CDVIZ_TOKEN
@@ -178,6 +186,7 @@ send_deployment_event:
 ```
 
 #### Decision Framework
+
 - **Use direct integration when**:
   - You need custom metadata
   - You want immediate event sending
@@ -193,17 +202,20 @@ send_deployment_event:
 ---
 
 ## Article 3: "Kubernetes Deployment Monitoring: Passive Event Collection"
+
 **Target**: Platform Engineers, DevOps Teams
 **Reading Time**: 10 minutes
 
 ### Structure:
 
 #### Introduction (2 minutes)
+
 - Benefits of passive monitoring
 - When pipelines can't be modified
 - Platform-level visibility approach
 
 #### kubewatch Integration (3 minutes)
+
 ```yaml
 # kubewatch-cdviz-config.yaml
 apiVersion: v1
@@ -214,19 +226,19 @@ data:
   config.yaml: |
     webhook:
       url: "http://cdviz-collector:8080/events"
-      
+
     resource:
       deployment: true
       pod: false
       replicaset: false
-      
+
     namespace:
       include:
         - production
         - staging
       exclude:
         - kube-system
-        
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -236,20 +248,21 @@ spec:
   template:
     spec:
       containers:
-      - name: kubewatch
-        image: bitnami/kubewatch:latest
-        args:
-        - --config=/config/config.yaml
-        volumeMounts:
-        - name: config
-          mountPath: /config
+        - name: kubewatch
+          image: bitnami/kubewatch:latest
+          args:
+            - --config=/config/config.yaml
+          volumeMounts:
+            - name: config
+              mountPath: /config
       volumes:
-      - name: config
-        configMap:
-          name: kubewatch-config
+        - name: config
+          configMap:
+            name: kubewatch-config
 ```
 
 #### Custom Controller Development (3 minutes)
+
 ```go
 // Simple deployment controller example
 package main
@@ -259,7 +272,7 @@ import (
     "encoding/json"
     "net/http"
     "time"
-    
+
     appsv1 "k8s.io/api/apps/v1"
     "k8s.io/client-go/informers"
     "k8s.io/client-go/tools/cache"
@@ -272,7 +285,7 @@ type CDEvent struct {
 
 func deploymentEventHandler(obj interface{}) {
     deployment := obj.(*appsv1.Deployment)
-    
+
     event := CDEvent{
         Context: CDEventContext{
             Version:   "0.4.0",
@@ -292,12 +305,13 @@ func deploymentEventHandler(obj interface{}) {
             },
         },
     }
-    
+
     sendEvent(event)
 }
 ```
 
 #### Helm Deployment Tracking (2 minutes)
+
 ```yaml
 # helm-hook-example.yaml
 apiVersion: batch/v1
@@ -312,45 +326,47 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: cdviz-reporter
-        image: curlimages/curl:latest
-        command:
-        - /bin/sh
-        - -c
-        - |
-          curl -X POST "$CDVIZ_URL/events" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "context": {
-                "version": "0.4.0",
-                "id": "{{ .Release.Name }}-{{ .Release.Revision }}",
-                "source": "helm/{{ .Chart.Name }}",
-                "type": "dev.cdevents.service.deployed.0.1.1",
-                "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
-              },
-              "subject": {
-                "id": "{{ .Release.Name }}",
-                "type": "service",
-                "content": {
-                  "environment": {"id": "{{ .Release.Namespace }}"},
-                  "artifactId": "helm://{{ .Chart.Name }}@{{ .Chart.Version }}"
-                }
-              }
-            }'
-        env:
-        - name: CDVIZ_URL
-          value: "{{ .Values.cdviz.collectorUrl }}"
+        - name: cdviz-reporter
+          image: curlimages/curl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+                curl -X POST "$CDVIZ_URL/events" \
+                  -H "Content-Type: application/json" \
+                  -d '{
+                    "context": {
+                      "version": "0.4.0",
+                      "id": "{{ .Release.Name }}-{{ .Release.Revision }}",
+                      "source": "helm/{{ .Chart.Name }}",
+                      "type": "dev.cdevents.service.deployed.0.1.1",
+                      "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+                    },
+                    "subject": {
+                      "id": "{{ .Release.Name }}",
+                      "type": "service",
+                      "content": {
+                        "environment": {"id": "{{ .Release.Namespace }}"},
+                        "artifactId": "helm://{{ .Chart.Name }}@{{ .Chart.Version }}"
+                      }
+                    }
+                  }'
+          env:
+            - name: CDVIZ_URL
+              value: "{{ .Values.cdviz.collectorUrl }}"
 ```
 
 ---
 
 ## Article 4: "GitOps and Registry Monitoring: ArgoCD and Artifact Events"
+
 **Target**: Platform Engineers, GitOps Practitioners
 **Reading Time**: 10 minutes
 
 ### Structure:
 
 #### ArgoCD Integration (4 minutes)
+
 ```yaml
 # argocd-webhook-config.yaml
 apiVersion: v1
@@ -363,7 +379,7 @@ data:
     headers:
     - name: Content-Type
       value: application/json
-      
+
   template.cdviz-deployment: |
     webhook:
       cdviz:
@@ -387,13 +403,14 @@ data:
               }
             }
           }
-          
+
   trigger.on-deployed: |
     - when: app.status.health.status == 'Healthy' and app.status.operationState.phase == 'Succeeded'
       send: [cdviz-deployment]
 ```
 
 #### Container Registry Webhooks (3 minutes)
+
 ```yaml
 # Harbor webhook configuration
 # POST to /events endpoint when image pushed
@@ -436,6 +453,7 @@ filter = '''
 ```
 
 #### Git Webhook Integration (3 minutes)
+
 ```yaml
 # GitHub webhook to CDviz for tag events
 # Webhook payload transformation
@@ -467,12 +485,14 @@ filter = '''
 ---
 
 ## Article 5: "Advanced Patterns: Custom Sources and Scaling"
+
 **Target**: Platform Engineers, DevOps Architects
 **Reading Time**: 12 minutes
 
 ### Structure:
 
 #### Custom Source Development (4 minutes)
+
 ```toml
 # Custom source example - database migration tracker
 [[sources]]
@@ -508,6 +528,7 @@ filter = '''
 ```
 
 #### Multi-Cluster Event Aggregation (4 minutes)
+
 ```yaml
 # Federation pattern with cluster identification
 apiVersion: v1
@@ -520,7 +541,7 @@ data:
     type = "webhook"
     listen = "0.0.0.0:8080"
     path = "/events"
-    
+
     [[transformers]]
     name = "add-cluster-metadata"
     type = "jq"
@@ -528,13 +549,14 @@ data:
     .context.source = (.context.source + "/cluster-west") |
     .subject.content.cluster = "production-west"
     '''
-    
+
     [sinks.database]
     type = "db"
     url = "postgresql://user:pass@central-db:5432/cdviz"
 ```
 
 #### Production Scaling Patterns (4 minutes)
+
 ```yaml
 # High availability CDviz deployment
 apiVersion: apps/v1
@@ -546,25 +568,25 @@ spec:
   template:
     spec:
       containers:
-      - name: collector
-        image: cdviz/collector:latest
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "200m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8080
-          initialDelaySeconds: 5
+        - name: collector
+          image: cdviz/collector:latest
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
 ```
 
 ---
@@ -572,26 +594,31 @@ spec:
 ## Cross-Article Elements
 
 ### Decision Framework Summary
+
 Each article includes a decision matrix:
+
 - **Complexity**: Low/Medium/High
-- **Maintenance**: Low/Medium/High  
+- **Maintenance**: Low/Medium/High
 - **Control**: Low/Medium/High
 - **Coverage**: Partial/Full
 - **Best For**: Team size and use case
 
 ### Common Code Patterns
+
 - Error handling and retries
 - Authentication and security
 - Event payload best practices
 - Monitoring and alerting integration
 
 ### Integration with Official Docs
+
 Each article links to:
+
 - Installation guide
-- Configuration reference  
+- Configuration reference
 - Troubleshooting guide
 - API documentation
 
 ---
 
-*This outline provides the detailed structure for creating practical, actionable content that focuses on deployment monitoring while avoiding duplication with official documentation.*
+_This outline provides the detailed structure for creating practical, actionable content that focuses on deployment monitoring while avoiding duplication with official documentation._

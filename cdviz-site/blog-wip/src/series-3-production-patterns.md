@@ -61,6 +61,7 @@ graph TB
 ```
 
 **Key differences from local setup**:
+
 - HA collector (3 replicas)
 - PostgreSQL read replica for dashboards
 - Persistent storage for data retention
@@ -379,9 +380,9 @@ metadata:
   namespace: cdviz
 spec:
   ports:
-  - name: metrics
-    port: 9090
-    targetPort: metrics
+    - name: metrics
+      port: 9090
+      targetPort: metrics
   selector:
     app.kubernetes.io/name: cdviz-collector
 ---
@@ -395,8 +396,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: cdviz-collector
   endpoints:
-  - port: metrics
-    path: /metrics
+    - port: metrics
+      path: /metrics
 ```
 
 ### Database Performance Monitoring
@@ -443,7 +444,7 @@ database:
   postgresql:
     backup:
       enabled: true
-      schedule: "0 2 * * *"  # Daily at 2 AM
+      schedule: "0 2 * * *" # Daily at 2 AM
       s3:
         bucket: "cdviz-backups"
         region: "us-west-2"
@@ -490,7 +491,7 @@ database:
 
 ---
 
-*Got CDviz running in production? Share your deployment patterns and custom metrics in the comments. Questions? The CDviz team is active in the [CDEvents community](https://cdevents.dev).*
+_Got CDviz running in production? Share your deployment patterns and custom metrics in the comments. Questions? The CDviz team is active in the [CDEvents community](https://cdevents.dev)._
 
 ---
 
