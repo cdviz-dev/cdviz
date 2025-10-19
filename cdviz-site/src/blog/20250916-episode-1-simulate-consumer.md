@@ -27,10 +27,10 @@ Building an event consumer before understanding the data flow is like writing SQ
 
 Each approach serves different needs and skill levels:
 
-| Approach                     | Best For                                    | Setup Time | Real Data      |
-| ---------------------------- | ------------------------------------------- | ---------- | -------------- |
-| **webhook.site**             | Quick testing, event structure exploration  | 30 seconds | ❌ Manual only |
-| **CDviz docker compose**     | Full pipeline simulation, realistic testing | 3 minutes  | ✅ Demo events |
+| Approach                       | Best For                                    | Setup Time | Real Data      |
+| ------------------------------ | ------------------------------------------- | ---------- | -------------- |
+| **webhook.site**               | Quick testing, event structure exploration  | 30 seconds | ❌ Manual only |
+| **CDviz docker compose**       | Full pipeline simulation, realistic testing | 3 minutes  | ✅ Demo events |
 | **cdviz-collector connect** ⭐ | Local development, production debugging     | 2 minutes  | ✅ Real events |
 
 Let's explore each approach and learn when to use them.
