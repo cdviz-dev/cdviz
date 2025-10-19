@@ -256,9 +256,8 @@ const comparisonFeatures = {
     },
     GitLab: {
       tooltip: "Collect Events from GitLab repositories via webhooks",
-      comingSoon: true,
       community: {
-        value: true,
+        value: false,
       },
       enterprise: {
         value: true,
@@ -271,7 +270,7 @@ const comparisonFeatures = {
       url: "https://plugins.jenkins.io/cdevents/",
       comingSoon: true,
       community: {
-        value: true,
+        value: false,
       },
       enterprise: {
         value: true,
@@ -305,7 +304,6 @@ const comparisonFeatures = {
       },
     },
     ArgoCD: {
-      comingSoon: true,
       community: {
         value: true,
       },
