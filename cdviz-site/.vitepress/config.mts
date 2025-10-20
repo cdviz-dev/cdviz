@@ -69,7 +69,7 @@ export default defineConfig({
     nav: [
       { text: "Documentation", link: "/docs/" },
       { text: "Pricing", link: "/#pricing" },
-      { text: "Blog", link: "/blog/20251007-episode-3-cicd-integration" },
+      { text: "Blog", link: "/blog/20251020-episode-4-webhook-transformers" },
     ],
     sidebar: {
       "/docs/": [
@@ -271,6 +271,10 @@ export default defineConfig({
         { text: "Legal Information", link: "/pro/legal" },
       ],
       "/blog/": [
+        {
+          text: "CDEvents in Action #4: Webhook Transformers and Passive Monitoring",
+          link: "/blog/20251020-episode-4-webhook-transformers",
+        },
         {
           text: "CDEvents in Action #3: Direct CI/CD Pipeline Integration",
           link: "/blog/20251007-episode-3-cicd-integration",
