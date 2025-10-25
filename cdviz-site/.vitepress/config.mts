@@ -17,6 +17,8 @@ export default defineConfig({
       },
     ],
     ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
+    ["link", { rel: "preconnect", href: "https://eu.i.posthog.com" }],
     [
       "script",
       {},
@@ -312,8 +314,7 @@ export default defineConfig({
     },
     socialLinks: [{ icon: "github", link: "https://github.com/cdviz-dev" }],
     editLink: {
-      pattern:
-        "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
+      pattern: "https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/docs/src/:path",
     },
     footer: {
       message:
@@ -366,12 +367,7 @@ export default defineConfig({
       {
         name: "vp-tw-order-fix",
         configResolved(c) {
-          movePlugin(
-            c.plugins as any,
-            "@tailwindcss/vite:scan",
-            "after",
-            "vitepress",
-          );
+          movePlugin(c.plugins as any, "@tailwindcss/vite:scan", "after", "vitepress");
         },
       },
     ],
