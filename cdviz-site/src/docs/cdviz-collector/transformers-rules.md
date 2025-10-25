@@ -39,9 +39,9 @@ Extract from [context.source](https://github.com/cdevents/spec/blob/main/spec.md
 
 ```yaml
 # ✅ Good - Specific service identifiers
-"source": "https://github.com/myorg/myrepo/workflow-a"  # Event sent from specific workflow
+"source": "https://github.com/myorg/myrepo/workflow-a" # Event sent from specific workflow
 "source": "https://jenkins.example.com/job/job_name"
-"source": "https://cdviz-collector.example.com/?source=source_name"  # Use query params when needed
+"source": "https://cdviz-collector.example.com/?source=source_name" # Use query params when needed
 
 # ❌ Avoid - Too generic, conflicts in larger scopes
 "source": "github.com/myorg/myrepo"
@@ -82,9 +82,9 @@ Use **unique, hierarchical identifiers** scoped to your organization or globally
 "subject.id": "https://jenkins.example.com/job/job_name/"
 
 # ❌ Avoid - Not globally unique or too generic
-"subject.id": "550e8400-e29b-41d4-a716-446655440000"  # UUID
-"subject.id": "run-12345"  # Not globally unique
-"subject.id": "production"  # Too generic, not a path
+"subject.id": "550e8400-e29b-41d4-a716-446655440000" # UUID
+"subject.id": "run-12345" # Not globally unique
+"subject.id": "production" # Too generic, not a path
 ```
 
 ### environment.id - Deployment Environment
@@ -105,11 +105,11 @@ Guidelines:
 **Why**: Enables environment-level dashboards, filtering, and alerts.
 
 ```yaml
-"environment": {"id": "/production"}
-"environment": {"id": "/pro"}
-"environment": {"id": "/pro/us-1/cluster-33"}
-"environment": {"id": "/staging"}
-"environment": {"id": "/dev/ephemeral-42"}
+"environment": { "id": "/production" }
+"environment": { "id": "/pro" }
+"environment": { "id": "/pro/us-1/cluster-33" }
+"environment": { "id": "/staging" }
+"environment": { "id": "/dev/ephemeral-42" }
 ```
 
 ### artifactId - Package URL (PURL)
