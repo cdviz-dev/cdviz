@@ -68,14 +68,6 @@ description = "format with dprint (includes biome plugin)"
 depends = [":trim_trailing-space"]
 run = ["dprint fmt"]
 
-[tasks."perf_report"]
-description = "analyze performance of a running local preview server & published landing page"
-dir = "perf"
-run = [
-  "lighthouse --quiet --view --chrome-flags='--headless' http://localhost:4173/",
-  "lighthouse --quiet --view --chrome-flags='--headless' https://cdviz.dev/",
-]
-
 [tasks."trim_trailing-space"]
 description = "trim trailing whitespace"
 run = [

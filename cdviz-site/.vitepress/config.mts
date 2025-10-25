@@ -81,7 +81,7 @@ export default defineConfig({
     logo: "/favicon.svg",
     nav: [
       { text: "Documentation", link: "/docs/" },
-      { text: "Pricing", link: "/#pricing" },
+      { text: "Pricing", link: "/pricing" },
       { text: "Blog", link: "/blog/20251020-episode-4-webhook-transformers" },
     ],
     sidebar: {
@@ -343,14 +343,17 @@ export default defineConfig({
       // Optimize bundle splitting for better caching
       rollupOptions: {
         output: {
-          // Split landing page components into separate chunk
+          // Split landing page and pricing page components into separate chunks
           manualChunks: {
             landing: [
               "./components/landing/SectionHero.vue",
               "./components/landing/SectionHow.vue",
               "./components/landing/SectionWhy.vue",
-              "./components/landing/SectionFaq.vue",
+            ],
+            pricing: [
               "./components/landing/SectionPricing.vue",
+              "./components/landing/SectionPlans.vue",
+              "./components/landing/SectionFaq.vue",
             ],
           },
         },
