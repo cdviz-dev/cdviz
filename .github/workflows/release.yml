@@ -20,7 +20,7 @@ jobs:
     if: startsWith(github.event.head_commit.message, 'chore(release):') || (github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Full history needed for git tags and git describe
       - run: |
