@@ -46,7 +46,7 @@ jobs:
           app-id: ${{ secrets.INTBOT_APP_ID }}
         #   owner: ${{ github.repository_owner }}
         #   repositories: ${{ github.repository }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.get_token.outputs.token }}
           ref: ${{ github.head_ref }}
