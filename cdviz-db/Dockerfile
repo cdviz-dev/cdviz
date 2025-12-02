@@ -1,5 +1,5 @@
 # hadolint global ignore=DL3006,DL3007,DL3008
-ARG PG_VERSION=17.7
+ARG PG_VERSION=18.1
 ARG PG_MAJOR=${PG_VERSION%%.*}
 
 #---------------------------------------------------------------------------------------------------
