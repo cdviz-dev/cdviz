@@ -1,7 +1,7 @@
 [tools]
 # local kubernetes (k8s)
 kubectl = "1.35.0" # to interact with k8s cluster
-kind = "0.30.0"    # to run local k8s cluster for testing
+kind = "0.31.0"    # to run local k8s cluster for testing
 
 [env]
 NAME = "cdviz-collector"
