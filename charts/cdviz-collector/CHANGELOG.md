@@ -6,11 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.1] - 2025-10-19
+## [0.5.2] - 2025-12-21
 
 ### Changed
 
 - Update ghcr.io/cdviz-dev/cdviz-collector docker tag to v0.19.0 ([dd58b51](dd58b512881280c03831d4b1fa7391e0839e384c))
+- Update dependency kubectl to v1.35.0 (#329) ([d8817ab](d8817abd71ae7050e832a57dec7821826d2b1b53))
+- Update dependency kind to v0.31.0 (#328) ([b673990](b67399041ef4258e73e3d79aaff3ceca21d3b4fb))
 
 ### Fixed
 
