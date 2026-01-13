@@ -34,41 +34,7 @@ env:
 # - the 'enabled' field is used to enable/disable the resource (removed when the resource is templated)
 # - user can add any other resource definition as child node of extraObjects
 # The manifests can be defined as a string or as a dictionary. But the string doesn't use the 'enabled' field.
-extraObjects:
-  cloudnative-pg-basic:
-    enabled: false
-    apiVersion: postgresql.cnpg.io/v1
-    kind: Cluster
-    metadata:
-      name: cdviz-db
-    spec:
-      instances: 1
-      # PostgreSQL image with TimescaleDB extension
-      # PG 17.4 support is available but may have compatibility issues
-      imageName: ghcr.io/cdviz-dev/cdviz-db-pg:17.2
-      imagePullPolicy: IfNotPresent
-      # postgresUID: 26
-      # postgresGID: 26
-      postgresql:
-        shared_preload_libraries:
-          - timescaledb
-        # Parameters configuration will be append
-        # to the default ones to make the cluster work
-        # parameters:
-        #   auto_explain.log_min_duration: "10s"
-      bootstrap:
-        initdb:
-          database: cdviz
-          owner: cdviz
-          secret:
-            name: cdviz-db-owner-secret
-          postInitTemplateSQL:
-            - CREATE EXTENSION IF NOT EXISTS timescaledb;
-            - CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
-      storage:
-        size: 100Mi
-      monitoring:
-        enablePodMonitor: true
+extraObjects: {}
   # cdviz-db-owner-secret:
   #   enabled: false
   #   apiVersion: v1

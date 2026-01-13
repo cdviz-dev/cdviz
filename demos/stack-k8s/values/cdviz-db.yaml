@@ -8,22 +8,7 @@ env:
         key: DATABASE_URL
 
 extraObjects:
-  cloudnative-pg-basic:
-    enabled: true
-    spec:
-      storage:
-        size: 100Mi
-      monitoring:
-        enablePodMonitor: true
-      bootstrap:
-        initdb:
-          owner: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER }}"
   cdviz-db-owner-secret:
-    enabled: true
-    data:
-      username: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER | b64enc }}"
-      password: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"
-  migration-secret:
     enabled: true
     apiVersion: v1
     kind: Secret
@@ -33,3 +18,80 @@ extraObjects:
     data:
       DATABASE_URL: |-
         {{ $.Values.secrets.DATABASE_URL | default (printf "postgres://%s:%s@%s:%s/%s" $.Values.secrets.CDVIZ_SU_POSTGRES_USER $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD $.Values.secrets.POSTGRES_HOST $.Values.secrets.POSTGRES_PORT_NUMBER $.Values.secrets.POSTGRES_DB) | b64enc }}
+      POSTGRES_USER: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER | b64enc }}"
+      POSTGRES_PASSWORD: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"
+      POSTGRES_DB: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_DB | b64enc }}"
+  # based on https://www.tigerdata.com/docs/self-hosted/latest/install/installation-kubernetes
+  cdviz-db-tigerdata-pvc:
+    enabled: true
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: tigerdata-pvc
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+  cdviz-db-tigerdata:
+    enabled: true
+    apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: timescaledb
+    spec:
+      serviceName: timescaledb
+      replicas: 1
+      selector:
+        matchLabels:
+          app: timescaledb
+      template:
+        metadata:
+          labels:
+            app: timescaledb
+        spec:
+          containers:
+            - name: timescaledb
+              image: "timescale/timescaledb-ha:pg18"
+              env:
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: "cdviz-db-su"
+                      key: POSTGRES_USER
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: "cdviz-db-su"
+                      key: POSTGRES_PASSWORD
+                - name: POSTGRES_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: "cdviz-db-su"
+                      key: POSTGRES_DB
+                - name: PGDATA
+                  value: /var/lib/postgresql/data/pgdata
+              ports:
+                - containerPort: 5432
+              volumeMounts:
+                - mountPath: /var/lib/postgresql/data
+                  name: tigerdata-storage
+          volumes:
+            - name: tigerdata-storage
+              persistentVolumeClaim:
+                claimName: tigerdata-pvc
+  cdviz-db-tigerdata-service:
+    enabled: true
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: timescaledb
+    spec:
+      selector:
+        app: timescaledb
+      ports:
+        - protocol: TCP
+          port: 5432
+          targetPort: 5432
+      type: ClusterIP

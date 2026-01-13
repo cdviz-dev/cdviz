@@ -2,9 +2,7 @@
 services:
   #region database
   postgres:
-    image: ghcr.io/cdviz-dev/cdviz-db-pg:17.4 # until fix on timescale db recent version `undefined symbol: ExecBRUpdateTriggersNew`
-    # image: timescale/timescaledb-ha:pg17
-    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
+    image: timescale/timescaledb-ha:pg18
     # restart: always
     # platform: linux/amd64
     shm_size: 128mb
@@ -80,6 +78,9 @@ services:
       - ../../cdviz-grafana/dashboards:/var/provisioning/dashboards:rw
       - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       # - ./tmp/grafana.ini:/etc/grafana/grafana.ini
+    depends_on:
+      postgres:
+        condition: service_healthy
   # endregion grafana
 
   # region cdviz-collector

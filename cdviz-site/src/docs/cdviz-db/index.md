@@ -57,5 +57,4 @@ The database schema is defined in the following resources:
 The following container images are available for deployment:
 
 - [cdviz-db-migration](https://github.com/orgs/cdviz-dev/packages/container/package/cdviz-db-migration) - Handles database schema migrations
-- [cdviz-db-pg](https://github.com/orgs/cdviz-dev/packages/container/package/cdviz-db-pg) - PostgreSQL instance pre-configured for CDViz
 - [charts/cdviz-db](https://github.com/orgs/cdviz-dev/packages/container/package/charts%2Fcdviz-db) - Helm chart for Kubernetes deployment

@@ -27,7 +27,6 @@ run = "atlas migrate apply --env db-local"
 [tasks."db-local_start-empty"]
 description = "start a container for the local db (empty: no data, no schema)"
 run = [
-  "mise run :build_cdviz-db-pg",
   "mise run :db-local_stop",
   """docker run --rm --name cdviz-db \
     -e \"POSTGRES_PASSWORD={{env.PG_LOCAL_PWD}}\" \
@@ -38,7 +37,7 @@ run = [
     --health-timeout 5s \
     --health-retries 5 \
     -d \
-    ghcr.io/cdviz-dev/cdviz-db-pg:latest postgres -c "shared_preload_libraries=timescaledb"
+    timescale/timescaledb-ha:pg18
   """, "sleep 6 # wait for the container to be ready"]
 
 [tasks."db-local_start"]
@@ -65,7 +64,7 @@ run = ["mise run :db-local_start", "mise run :db-local_stop"]
 [tasks."ci"]
 description = "set of tasks run by CI"
 #TODO fix test, check, lint
-depends = [":build_cdviz-db-pg", ":build_cdviz-db-migration"]
+depends = [":build_cdviz-db-migration"]
 # run = [
 #   "mise run :test",
 #   # "mise run :check"
@@ -82,14 +81,6 @@ run = [
   "docker info -f '{{ .DriverStatus }}'",
   "docker buildx bake --print",
 ]
-
-[tasks."build_cdviz-db-pg"]
-description = "build the docker image for the postgresql + extension (tag is based on posgresql version)"
-run = ["docker buildx bake --progress=plain cdviz-db-pg"]
-
-[tasks."publish_cdviz-db-pg"]
-description = "build the docker image for the postgresql + extension and push it to ghcr.io (tag is based on posgresql version)"
-run = ["docker buildx bake --push cdviz-db-pg"]
 
 [tasks."build_cdviz-db-migration"]
 description = "build the docker image for the migration"

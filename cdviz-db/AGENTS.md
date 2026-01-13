@@ -46,7 +46,6 @@ mise run db-local:stop          # Stop and remove database container
 mise run db-local:psql          # Connect with psql
 
 # Container Management
-mise run build:cdviz-db-pg      # Build PostgreSQL image with extensions
 mise run publish                # Publish container images to registry
 
 # Testing
@@ -134,7 +133,7 @@ CREATE TABLE "cdviz"."cdevents_lake" (
 
 - Base image: PostgreSQL 16 with TimescaleDB and timescaledb_toolkit extensions
 - Migration image: Contains Atlas and migration files for deployment
-- Published to `ghcr.io/cdviz-dev/cdviz-db-pg` and `ghcr.io/cdviz-dev/cdviz-db-migration`
+- Published to `ghcr.io/cdviz-dev/cdviz-db-migration`
 
 ## Common Tasks
 
@@ -218,3 +217,4 @@ SELECT * FROM timescaledb_information.hypertables;  # Check hypertable status
 - **Atlas Documentation**: [atlasgo.io](https://atlasgo.io)
 - **PostgreSQL JSONB**: [PostgreSQL JSON docs](https://www.postgresql.org/docs/current/datatype-json.html)
 - **CDEvents Specification**: [cdevents.dev](https://cdevents.dev)
+cdevents.dev](https://cdevents.dev)
