@@ -5,7 +5,7 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 
 [tools]
 # docker = "latest"
-atlas = "0.35.0"
+atlas = "1"
 
 [tasks."plan"]
 description = "update the migrations to reflect target `src/schema.sql`"
@@ -27,17 +27,19 @@ run = "atlas migrate apply --env db-local"
 [tasks."db-local_start-empty"]
 description = "start a container for the local db (empty: no data, no schema)"
 run = [
-  "mise run :build:cdviz-db-pg",
+  "mise run :build_cdviz-db-pg",
   "mise run :db-local_stop",
-  """docker run --name cdviz-db \
-    -e \"POSTGRES_PASSWORD=$PG_LOCAL_PWD\" \
-    -e \"POSTGRES_USER=$PG_LOCAL_USER\" \
+  """docker run --rm --name cdviz-db \
+    -e \"POSTGRES_PASSWORD={{env.PG_LOCAL_PWD}}\" \
+    -e \"POSTGRES_USER={{env.PG_LOCAL_USER}}\" \
     -p 5432:5432 \
+    --health-cmd "pg_isready -U {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}" \
+    --health-interval 2s \
+    --health-timeout 5s \
+    --health-retries 5 \
     -d \
-    ghcr.io/cdviz-dev/cdviz-db-pg:latest \
-    postgres \
-    -c "shared_preload_libraries=timescaledb"
-  """, "sleep 3 # wait for the container to be ready"]
+    ghcr.io/cdviz-dev/cdviz-db-pg:latest postgres -c "shared_preload_libraries=timescaledb"
+  """, "sleep 6 # wait for the container to be ready"]
 
 [tasks."db-local_start"]
 description = "start a container for the local db with the migrations applied"
@@ -45,7 +47,10 @@ run = ["mise run :db-local_start-empty", "mise run :apply"]
 
 [tasks."db-local_stop"]
 description = "stop the container of the local db"
-run = ["docker rm -f cdviz-db || true"]
+run = [
+  # "docker stop cdviz-db || true",
+  "docker rm -f cdviz-db || true",
+]
 
 [tasks."db-local_psql"]
 description = "connect to the local db with psql"
@@ -60,7 +65,7 @@ run = ["mise run :db-local_start", "mise run :db-local_stop"]
 [tasks."ci"]
 description = "set of tasks run by CI"
 #TODO fix test, check, lint
-# depends = [":test"]
+depends = [":build_cdviz-db-pg", ":build_cdviz-db-migration"]
 # run = [
 #   "mise run :test",
 #   # "mise run :check"
