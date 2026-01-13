@@ -6,7 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.1] - 2025-12-21
+## [0.5.3] - 2026-01-13
+
+### Added
+
+- Feat!(cdviz-db): remove cnpg image creation & support ([3ee7335](3ee7335b9c8a0b0c483867ae479ca8ce9a6700c4))
+
+## [0.5.2] - 2025-12-21
 
 ### Added
 
