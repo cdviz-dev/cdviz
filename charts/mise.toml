@@ -14,6 +14,26 @@ depends = ["//charts/...:release_prepare"]
 [tasks."release_publish"]
 description = "Publish all charts to OCI registry"
 depends = ["//charts/...:release_publish"]
+shell = "bash -c"
+run = """
+set -euo pipefail
+
+# Get version from first chart (all charts share same version)
+VERSION=$(yq .version charts/cdviz-collector/Chart.yaml)
+
+# Check if tag already exists
+if git rev-parse "$VERSION" >/dev/null 2>&1; then
+  echo "⏭️  Tag $VERSION already exists"
+  exit 0
+fi
+
+# Create unified version tag
+echo "🏷️  Creating unified tag: $VERSION"
+git tag "$VERSION" -m "Release charts $VERSION"
+git push origin "$VERSION"
+
+echo "✅ Published unified tag $VERSION"
+"""
 
 [tasks."release_status"]
 description = "Show release status for all charts"

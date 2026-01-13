@@ -5,6 +5,7 @@ Automated semantic versioning for Helm charts using git-cliff and mise.
 ## Overview
 
 - **Versioning**: Pure SemVer (MAJOR.MINOR.PATCH) starting at 1.0.0
+- **Unified Versioning**: All charts share the same version, one git tag per release
 - **Automation**: git-cliff analyzes conventional commits to bump versions
 - **Workflow**: Two-step process (prepare → review → publish)
 - **Tools**: mise monorepo tasks + GitHub Actions
@@ -55,7 +56,7 @@ This will:
 1. Check if version already published (skip if yes)
 2. Package chart with helm
 3. Push to `oci://ghcr.io/cdviz-dev/charts`
-4. Create git tag `{chart-name}-{version}`
+4. Create unified git tag `{version}` (e.g., `1.0.0`)
 5. Push tag to remote
 
 ### Check Status
@@ -92,25 +93,31 @@ Shows current versions and whether they're published to OCI registry.
 
 ## Initial Setup (One-Time)
 
-After merging these changes, create initial tags to establish baseline:
+After merging these changes, create initial tag to establish baseline:
 
 ```bash
 git checkout main
 git pull
 
-# Create 1.0.0 tags for all charts
-git tag -a cdviz-collector-1.0.0 -m "Release cdviz-collector 1.0.0"
-git tag -a cdviz-db-1.0.0 -m "Release cdviz-db 1.0.0"
-git tag -a cdviz-grafana-1.0.0 -m "Release cdviz-grafana 1.0.0"
+# Create unified 1.0.0 tag for all charts
+git tag -a 1.0.0 -m "Release charts 1.0.0"
 
-# Push tags
-git push origin cdviz-collector-1.0.0
-git push origin cdviz-db-1.0.0
-git push origin cdviz-grafana-1.0.0
-
-# Or push all at once
-git push origin --tags
+# Push tag
+git push origin 1.0.0
 ```
+
+**Note**: All charts share the same version in this monorepo, so only one tag per release is needed.
+
+## Unified Versioning Strategy
+
+This monorepo uses unified versioning where all charts share the same version number:
+
+- **One Tag Per Release**: Instead of per-chart tags (`cdviz-collector-1.0.0`), we use unified tags (`1.0.0`)
+- **Synchronized Releases**: All charts are released together with the same version
+- **Simpler Git History**: Easier to track releases with a single tag
+- **git-cliff Compatibility**: Tag pattern `[0-9]+\.[0-9]+\.[0-9]+.*` matches version tags directly
+
+When a change affects only one chart, all charts still bump to the same version. This simplifies dependency management and ensures the entire CDviz stack is always version-aligned.
 
 ## Files Created
 
