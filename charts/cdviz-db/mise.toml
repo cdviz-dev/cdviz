@@ -59,10 +59,6 @@ helm package -d ../../build .
 # Push to OCI registry
 helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"
 
-# Create git tag
-git tag "$NAME-$VERSION" -m "Release $NAME $VERSION"
-git push origin "$NAME-$VERSION"
-
 echo "✅ Published $NAME $VERSION"
 """
 
