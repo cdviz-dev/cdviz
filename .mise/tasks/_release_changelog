@@ -14,7 +14,7 @@ VERSION="${usage_version:?}"
 ROOT=$(git rev-parse --show-toplevel)
 git cliff --config "$ROOT/cliff.toml" \
   --include-path "$DEPENDS" \
-  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
+  --tag-pattern "($NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*)|([0-9]+\\.[0-9]+\\.[0-9]+.*)" \
   --tag "$VERSION" \
   -o CHANGELOG.md
 
