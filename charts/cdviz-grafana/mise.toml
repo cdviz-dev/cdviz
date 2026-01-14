@@ -8,21 +8,31 @@ shell = "bash -c"
 run = """
 set -euo pipefail
 
-# Calculate next version using git-cliff
-VERSION=$(git-cliff --config ../../cliff.toml \
+# Read minimum version from root VERSION file
+MIN_VERSION=$(cat ../../VERSION | tr -d '[:space:]')
+
+# Calculate next version using git-cliff with component-specific tag pattern
+CALCULATED_VERSION=$(git-cliff --config ../../cliff.toml \
   --include-path "$DEPENDS" \
-  --exclude-path ".github/*" \
+  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
   --bumped-version \
   --unreleased || echo "")
 
-# If no version bump detected, exit
-if [[ -z "$VERSION" ]]; then
+# If no version bump detected, use minimum version as floor
+if [[ -z "$CALCULATED_VERSION" ]]; then
   CURRENT=$(yq .version Chart.yaml)
-  echo "No changes detected for $NAME, staying at $CURRENT"
-  exit 0
+  # Check if current version is already >= minimum
+  if [[ "$(printf '%s\n' "$MIN_VERSION" "$CURRENT" | sort -V | tail -1)" == "$CURRENT" ]]; then
+    echo "No changes detected for $NAME, staying at $CURRENT"
+    exit 0
+  fi
+  CALCULATED_VERSION="$MIN_VERSION"
 fi
 
-echo "Preparing $NAME: $VERSION"
+# Use the higher of calculated version or minimum version
+VERSION=$(printf '%s\n' "$MIN_VERSION" "$CALCULATED_VERSION" | sort -V | tail -1)
+
+echo "Preparing $NAME: $VERSION (min: $MIN_VERSION, calculated: $CALCULATED_VERSION)"
 
 # Update Chart.yaml
 yq -i ".version = \\"$VERSION\\" | .appVersion = \\"$VERSION\\"" Chart.yaml
@@ -30,7 +40,8 @@ yq -i ".version = \\"$VERSION\\" | .appVersion = \\"$VERSION\\"" Chart.yaml
 # Generate changelog
 git cliff --config ../../cliff.toml \
   --include-path "$DEPENDS" \
-  --tag "$VERSION" \
+  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
+  --tag "$NAME-$VERSION" \
   -o CHANGELOG.md
 
 echo "✅ Prepared $NAME $VERSION"
@@ -58,6 +69,10 @@ helm package -d ../../build .
 
 # Push to OCI registry
 helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"
+
+# Create component-specific git tag
+git tag "$NAME-$VERSION" -m "Release $NAME $VERSION"
+git push origin "$NAME-$VERSION"
 
 echo "✅ Published $NAME $VERSION"
 """
