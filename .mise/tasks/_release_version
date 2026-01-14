@@ -16,8 +16,9 @@ MIN_VERSION=$(cat "$ROOT/VERSION" | tr -d '[:space:]')
 
 CALCULATED=$(git-cliff --config "$ROOT/cliff.toml" \
   --include-path "$DEPENDS" \
-  --tag-pattern "($NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*)|([0-9]+\\.[0-9]+\\.[0-9]+.*)" \
+  --tag-pattern "^($NAME-)?[0-9]+\\.[0-9]+\\.[0-9]+.*$" \
   --bumped-version --unreleased 2>/dev/null || echo "")
+CALCULATED=${CALCULATED#"$NAME"-}
 
 # Get current version
 if [[ "$VERSION_FILE" == *"Chart.yaml" ]]; then
