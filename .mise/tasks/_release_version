@@ -42,7 +42,7 @@ VERSION=$(printf '%s\n' "$MIN_VERSION" "$CALCULATED" | sort -V | tail -1)
 if [[ "$VERSION_FILE" == *"Chart.yaml" ]]; then
   yq -i ".version = \"$VERSION\" | .appVersion = \"$VERSION\"" "$VERSION_FILE"
 else
-  echo "$VERSION" > "$VERSION_FILE"
+  echo "$VERSION" >"$VERSION_FILE"
 fi
 
 echo "$VERSION"

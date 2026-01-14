@@ -12,7 +12,6 @@ VERSION="${usage_version:?}"
 CHARTS_OCI_REGISTRY="${usage_charts_oci_registry:?}"
 
 ROOT=$(git rev-parse --show-toplevel)
-MIN_VERSION=$(cat "$ROOT/VERSION" | tr -d '[:space:]')
 
 set -euo pipefail
 
