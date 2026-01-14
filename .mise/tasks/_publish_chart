@@ -11,9 +11,7 @@ NAME="${usage_name:?}"
 VERSION="${usage_version:?}"
 CHARTS_OCI_REGISTRY="${usage_charts_oci_registry:?}"
 
-ROOT=$(git rev-parse --show-toplevel)
-
-set -euo pipefail
+# ROOT=$(git rev-parse --show-toplevel)
 
 if helm show chart "$CHARTS_OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
   echo "$NAME $VERSION already published"
