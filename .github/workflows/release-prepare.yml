@@ -4,9 +4,12 @@ on:
   push:
     branches: [main]
     paths:
+      - "cdviz-grafana/**"
+      - "cdviz-db/**"
       - "charts/**"
       - "cliff.toml"
       - ".github/workflows/release-prepare.yml"
+      - ".mise/tasks"
   workflow_dispatch:
 
 permissions:
