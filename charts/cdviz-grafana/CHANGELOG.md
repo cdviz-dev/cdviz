@@ -6,7 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.2] - 2026-01-13
+## [1.0.0] - 2026-01-14
+
+### Changed
+
+- Update deps of cdviz-grafana ([53bee9e](53bee9e891c0844b96b92c7931ee0f310ee3c09b))
+
+## [0.5.2] - 2025-12-21
 
 ### Added
 
