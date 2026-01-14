@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#MISE description="[internal] package and publish a chart to oci registry"
+#MISE hide=true
+#MISE dir="{{cwd}}"
+#USAGE arg "<name>" help="Component name (e.g., cdviz-collector)"
+#USAGE arg "<version>" help="Version for this release"
+#USAGE arg "<charts_oci_registry>" help="the oci registry"
+set -euo pipefail
+
+NAME="${usage_name:?}"
+VERSION="${usage_version:?}"
+CHARTS_OCI_REGISTRY="${usage_charts_oci_registry:?}"
+
+ROOT=$(git rev-parse --show-toplevel)
+MIN_VERSION=$(cat "$ROOT/VERSION" | tr -d '[:space:]')
+
+set -euo pipefail
+
+if helm show chart "$CHARTS_OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
+  echo "$NAME $VERSION already published"
+  exit 0
+fi
+
+echo "Publishing $NAME $VERSION..."
+helm dependency build .
+mkdir -p ../../build
+helm package -d ../../build .
+helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"

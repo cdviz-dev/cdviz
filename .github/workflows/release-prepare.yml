@@ -36,6 +36,7 @@ jobs:
         id: prepare
         # shell: bash
         run: |
+          mise run '//cdviz-db:release_prepare'
           mise run '//charts:release_prepare'
 
           # Check if any files changed

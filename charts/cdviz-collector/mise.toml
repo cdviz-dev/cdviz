@@ -1,55 +1,18 @@
-[tools]
-# local kubernetes (k8s)
-kubectl = "1.35.0" # to interact with k8s cluster
-kind = "0.31.0"    # to run local k8s cluster for testing
-
 [env]
 NAME = "cdviz-collector"
-DEPENDS = "charts/cdviz-collector/*"
+
+[tools]
+# local kubernetes (k8s)
+kubectl = "1.35.0"  # to interact with k8s cluster
+kind = "0.31.0"  # to run local k8s cluster for testing
 
 [tasks."release_prepare"]
 description = "Prepare release (calculate version & generate changelog)"
 shell = "bash -c"
 run = """
-set -euo pipefail
-
-# Read minimum version from root VERSION file
-MIN_VERSION=$(cat ../../VERSION | tr -d '[:space:]')
-
-# Calculate next version using git-cliff with component-specific tag pattern
-CALCULATED_VERSION=$(git-cliff --config ../../cliff.toml \
-  --include-path "$DEPENDS" \
-  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
-  --bumped-version \
-  --unreleased || echo "")
-
-# If no version bump detected, use minimum version as floor
-if [[ -z "$CALCULATED_VERSION" ]]; then
-  CURRENT=$(yq .version Chart.yaml)
-  # Check if current version is already >= minimum
-  if [[ "$(printf '%s\n' "$MIN_VERSION" "$CURRENT" | sort -V | tail -1)" == "$CURRENT" ]]; then
-    echo "No changes detected for $NAME, staying at $CURRENT"
-    exit 0
-  fi
-  CALCULATED_VERSION="$MIN_VERSION"
-fi
-
-# Use the higher of calculated version or minimum version
-VERSION=$(printf '%s\n' "$MIN_VERSION" "$CALCULATED_VERSION" | sort -V | tail -1)
-
-echo "Preparing $NAME: $VERSION (min: $MIN_VERSION, calculated: $CALCULATED_VERSION)"
-
-# Update Chart.yaml
-yq -i ".version = \\"$VERSION\\" | .appVersion = \\"$VERSION\\"" Chart.yaml
-
-# Generate changelog
-git cliff --config ../../cliff.toml \
-  --include-path "$DEPENDS" \
-  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
-  --tag "$NAME-$VERSION" \
-  -o CHANGELOG.md
-
-echo "✅ Prepared $NAME $VERSION"
+VERSION=$(mise run //:_release_version $NAME "charts/$NAME/*" Chart.yaml)
+mise run //:_release_changelog $NAME "charts/$NAME/*" "$VERSION"
+echo "Prepared $NAME $VERSION"
 """
 
 [tasks."release_publish"]
@@ -57,30 +20,10 @@ description = "Publish chart to OCI registry"
 shell = "bash -c"
 run = """
 set -euo pipefail
-
 VERSION=$(yq .version Chart.yaml)
 
-# Check if already published
-if helm show chart "$CHARTS_OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
-  echo "⏭️  $NAME $VERSION already published"
-  exit 0
-fi
-
-echo "📦 Publishing $NAME $VERSION..."
-
-# Build and package
-helm dependency build .
-mkdir -p ../../build
-helm package -d ../../build .
-
-# Push to OCI registry
-helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"
-
-# Create component-specific git tag
-git tag "$NAME-$VERSION" -m "Release $NAME $VERSION"
-git push origin "$NAME-$VERSION"
-
-echo "✅ Published $NAME $VERSION"
+mise run //:_publish_chart "$NAME" "$VERSION" "$CHARTS_OCI_REGISTRY"
+mise run //:_release_tag "$NAME" "$VERSION"
 """
 
 [tasks.lint]
@@ -99,8 +42,8 @@ run = """
 set -euxo pipefail
 
 CLUSTER_NAME="kind-cdviz-test-$$"
-NAMESPACE="cdviz-collector-test"
-RELEASE_NAME="cdviz-collector-test"
+NAMESPACE="$NAME-test"
+RELEASE_NAME="$NAME-test"
 
 # Function to cleanup on exit
 cleanup() {
@@ -117,11 +60,11 @@ kind create cluster --name "$CLUSTER_NAME" --wait 60s
 kubectl create namespace "$NAMESPACE"
 
 # Update helm dependencies
-helm dependency update cdviz-collector
+helm dependency update $NAME
 
 # Deploy the chart
-echo "Deploying cdviz-collector chart"
-helm upgrade --install "$RELEASE_NAME" ./cdviz-collector \
+echo "Deploying $NAME chart"
+helm upgrade --install "$RELEASE_NAME" ./$NAME \
   --namespace "$NAMESPACE" \
   --wait \
   --timeout 1m \
@@ -129,9 +72,9 @@ helm upgrade --install "$RELEASE_NAME" ./cdviz-collector \
   --set "kubewatch.cloudevent.url=http://$RELEASE_NAME:8080/webhook/000-kubewatch"
 
 # Wait for deployment to be ready
-echo "Waiting for cdviz-collector to be ready"
+echo "Waiting for $NAME to be ready"
 kubectl wait --for=condition=ready pod \
-  --selector=app.kubernetes.io/name=cdviz-collector \
+  --selector=app.kubernetes.io/name=$NAME \
   --namespace "$NAMESPACE" \
   --timeout=300s
 
@@ -157,7 +100,7 @@ curl -f http://localhost:8080/healthz || {
 
 kill $PORT_FORWARD_PID || true
 
-echo "✅ cdviz-collector test completed successfully"
+echo "✅ $NAME test completed successfully"
 """
 
 [tasks.ci]

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+#MISE description="[internal] Calculate and set release version"
+#MISE hide=true
+#MISE dir="{{cwd}}"
+#USAGE arg "<name>" help="Component name (e.g., cdviz-collector)"
+#USAGE arg "<depends>" help="Path pattern for git-cliff (e.g., charts/cdviz-collector/*)"
+#USAGE arg "<version_file>" help="Version file name (Chart.yaml or VERSION)"
+set -euo pipefail
+
+NAME="${usage_name:?}"
+DEPENDS="${usage_depends:?}"
+VERSION_FILE="${usage_version_file:?}"
+
+ROOT=$(git rev-parse --show-toplevel)
+MIN_VERSION=$(cat "$ROOT/VERSION" | tr -d '[:space:]')
+
+CALCULATED=$(git-cliff --config "$ROOT/cliff.toml" \
+  --include-path "$DEPENDS" \
+  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
+  --bumped-version --unreleased 2>/dev/null || echo "")
+
+# Get current version
+if [[ "$VERSION_FILE" == *"Chart.yaml" ]]; then
+  CURRENT=$(yq .version "$VERSION_FILE" 2>/dev/null || echo "0.0.0")
+else
+  CURRENT=$(cat "$VERSION_FILE" 2>/dev/null || echo "0.0.0")
+fi
+
+# No changes detected
+if [[ -z "$CALCULATED" ]]; then
+  if [[ "$(printf '%s\n' "$MIN_VERSION" "$CURRENT" | sort -V | tail -1)" == "$CURRENT" ]]; then
+    echo "$CURRENT"
+    exit 0
+  fi
+  CALCULATED="$MIN_VERSION"
+fi
+
+# Use higher of calculated or minimum
+VERSION=$(printf '%s\n' "$MIN_VERSION" "$CALCULATED" | sort -V | tail -1)
+
+# Update version file
+if [[ "$VERSION_FILE" == *"Chart.yaml" ]]; then
+  yq -i ".version = \"$VERSION\" | .appVersion = \"$VERSION\"" "$VERSION_FILE"
+else
+  echo "$VERSION" > "$VERSION_FILE"
+fi
+
+echo "$VERSION"

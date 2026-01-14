@@ -1,50 +1,13 @@
 [env]
 NAME = "cdviz-grafana"
-DEPENDS = "**/cdviz-grafana/**"
 
 [tasks."release_prepare"]
 description = "Prepare release (calculate version & generate changelog)"
 shell = "bash -c"
 run = """
-set -euo pipefail
-
-# Read minimum version from root VERSION file
-MIN_VERSION=$(cat ../../VERSION | tr -d '[:space:]')
-
-# Calculate next version using git-cliff with component-specific tag pattern
-CALCULATED_VERSION=$(git-cliff --config ../../cliff.toml \
-  --include-path "$DEPENDS" \
-  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
-  --bumped-version \
-  --unreleased || echo "")
-
-# If no version bump detected, use minimum version as floor
-if [[ -z "$CALCULATED_VERSION" ]]; then
-  CURRENT=$(yq .version Chart.yaml)
-  # Check if current version is already >= minimum
-  if [[ "$(printf '%s\n' "$MIN_VERSION" "$CURRENT" | sort -V | tail -1)" == "$CURRENT" ]]; then
-    echo "No changes detected for $NAME, staying at $CURRENT"
-    exit 0
-  fi
-  CALCULATED_VERSION="$MIN_VERSION"
-fi
-
-# Use the higher of calculated version or minimum version
-VERSION=$(printf '%s\n' "$MIN_VERSION" "$CALCULATED_VERSION" | sort -V | tail -1)
-
-echo "Preparing $NAME: $VERSION (min: $MIN_VERSION, calculated: $CALCULATED_VERSION)"
-
-# Update Chart.yaml
-yq -i ".version = \\"$VERSION\\" | .appVersion = \\"$VERSION\\"" Chart.yaml
-
-# Generate changelog
-git cliff --config ../../cliff.toml \
-  --include-path "$DEPENDS" \
-  --tag-pattern "$NAME-[0-9]+\\.[0-9]+\\.[0-9]+.*" \
-  --tag "$NAME-$VERSION" \
-  -o CHANGELOG.md
-
-echo "✅ Prepared $NAME $VERSION"
+VERSION=$(mise run //:_release_version $NAME "**/$NAME/**" Chart.yaml)
+mise run //:_release_changelog $NAME "**/$NAME/**" "$VERSION"
+echo "Prepared $NAME $VERSION"
 """
 
 [tasks."release_publish"]
@@ -52,37 +15,15 @@ description = "Publish chart to OCI registry"
 shell = "bash -c"
 run = """
 set -euo pipefail
-
 VERSION=$(yq .version Chart.yaml)
 
-# Check if already published
-if helm show chart "$CHARTS_OCI_REGISTRY/$NAME" --version "$VERSION" &>/dev/null; then
-  echo "⏭️  $NAME $VERSION already published"
-  exit 0
-fi
-
-echo "📦 Publishing $NAME $VERSION..."
-
-# Package chart (no dependencies for this chart)
-mkdir -p ../../build
-helm package -d ../../build .
-
-# Push to OCI registry
-helm push "../../build/$NAME-$VERSION.tgz" "$CHARTS_OCI_REGISTRY"
-
-# Create component-specific git tag
-git tag "$NAME-$VERSION" -m "Release $NAME $VERSION"
-git push origin "$NAME-$VERSION"
-
-echo "✅ Published $NAME $VERSION"
+mise run //:_publish_chart "$NAME" "$VERSION" "$CHARTS_OCI_REGISTRY"
+mise run //:_release_tag "$NAME" "$VERSION"
 """
 
 [tasks.lint]
 description = "Lint Helm chart"
-run = [
-  "helm lint .",
-  "helm template . | kubectl apply --dry-run=client -f -"
-]
+run = ["helm lint .", "helm template . | kubectl apply --dry-run=client -f -"]
 
 [tasks.ci]
 depends = [":lint"]

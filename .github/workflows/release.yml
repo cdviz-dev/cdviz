@@ -38,7 +38,7 @@ jobs:
       - uses: jdx/mise-action@v3
         with:
           experimental: true
-      - run: mise run '//cdviz-db:publish'
+      - run: mise run '//cdviz-db:release_publish'
         shell: bash
       - run: mise run '//charts:release_publish'
         shell: bash

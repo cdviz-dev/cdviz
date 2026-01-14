@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#MISE description="[internal] Create and push git tag"
+#MISE hide=true
+#MISE dir="{{cwd}}"
+#USAGE arg "<name>" help="Component name"
+#USAGE arg "<version>" help="Version to tag"
+set -euo pipefail
+
+NAME="${usage_name:?}"
+VERSION="${usage_version:?}"
+TAG="$NAME-$VERSION"
+
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+  echo "Tag $TAG already exists" >&2
+  exit 0
+fi
+
+git tag "$TAG" -m "Release $NAME $VERSION"
+git push origin "$TAG"
+
+echo "Created tag $TAG" >&2

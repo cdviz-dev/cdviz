@@ -38,7 +38,9 @@ run = [
     --health-retries 5 \
     -d \
     timescale/timescaledb-ha:pg18
-  """, "sleep 6 # wait for the container to be ready"]
+  """,
+  "sleep 6 # wait for the container to be ready"
+]
 
 [tasks."db-local_start"]
 description = "start a container for the local db with the migrations applied"
@@ -63,7 +65,7 @@ run = ["mise run :db-local_start", "mise run :db-local_stop"]
 
 [tasks."ci"]
 description = "set of tasks run by CI"
-#TODO fix test, check, lint
+# TODO fix test, check, lint
 depends = [":build_cdviz-db-migration"]
 # run = [
 #   "mise run :test",
@@ -86,16 +88,36 @@ run = [
 description = "build the docker image for the migration"
 run = ["docker buildx bake --progress=plain cdviz-db-migration"]
 
-[tasks."publish_cdviz-db-migration"]
-description = "build the docker image for the migration and push it to ghcr.io (tag is the latest migrations name)"
+[tasks."release_prepare"]
+description = "Prepare release (calculate version & generate changelog)"
+shell = "bash -c"
 run = """
-MIGRATION_VERSION=$(ls -1 migrations/*.sql | tail -1)
-MIGRATION_VERSION=${MIGRATION_VERSION#migrations/}
-MIGRATION_VERSION=${MIGRATION_VERSION%.sql}
-export MIGRATION_VERSION="0.$MIGRATION_VERSION.0"
-docker buildx bake --push cdviz-db-migration
+VERSION=$(mise run //:_release_version cdviz-db-migration "cdviz-db/**" VERSION)
+mise run //:_release_changelog cdviz-db-migration "cdviz-db/**" "$VERSION"
+echo "Prepared cdviz-db-migration $VERSION"
 """
 
-[tasks."publish"]
-description = "publish all containers images"
-depends = [":publish_*"]
+[tasks."release_publish"]
+description = "Build and publish container image to registry"
+shell = "bash -c"
+run = """
+set -euo pipefail
+VERSION=$(cat VERSION 2>/dev/null || echo "0.0.0")
+NAME=cdviz-db-migration
+
+if [[ "$VERSION" == "0.0.0" ]]; then
+  echo "No VERSION file. Run release_prepare first."
+  exit 1
+fi
+
+if git rev-parse "$NAME-$VERSION" >/dev/null 2>&1; then
+  echo "$NAME $VERSION already published"
+  exit 0
+fi
+
+echo "Publishing $NAME $VERSION..."
+export MIGRATION_VERSION="$VERSION"
+docker buildx bake --push "$NAME"
+
+mise run //:_release_tag "$NAME" "$VERSION"
+"""
