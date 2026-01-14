@@ -11,7 +11,7 @@ metadata:
     {{- toYaml . | nindent 8 }}
   {{- end }}
 spec:
-  schedule: "0 0 * * 1,3"
+  schedule: "{{ .Values.schedule }}"
   timeZone: "Etc/UTC"
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 7
@@ -39,6 +39,8 @@ spec:
               - "$(DATABASE_URL)"
               - --dir
               - file:///migrations/
+              - --revisions-schema
+              - "$(DATABASE_REVISIONS_SCHEMA)"
             env:
             {{- range $key, $value := .Values.env }}
             {{- if and $value.valueFrom $value.valueFrom.secretKeyRef (not $value.valueFrom.secretKeyRef.name) }}
