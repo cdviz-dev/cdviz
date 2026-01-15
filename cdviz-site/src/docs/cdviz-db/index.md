@@ -45,11 +45,10 @@ Please refer to the hosting documentation for supported deployment options.
 
 The database schema is defined in the following resources:
 
-- [schema.sql](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/schema.sql)
 - [Migration files](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-db/migrations)
 
-::: details Database Schema Definition
-<<< ../../../../cdviz-db/src/schema.sql
+::: details Database Schema Definition (base)
+<<< ../../../../cdviz-db/migrations/202601010000_baseline.up.sql
 :::
 
 ### Available Packages

@@ -60,6 +60,6 @@ WHERE $__timeFilter(timestamp)
 
 ## Source Code References
 
-- Database schema: [schema.sql](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/schema.sql)
+- Database schema: [migrations](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-db/src/migrations)
 - Dashboard generator: [artifact_timeline.ts](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/dashboards/artifact_timeline.ts)
 - Visualization implementation: [draw_timeline_version_on_stage.ts](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/panels/browser_scripts/draw_timeline_version_on_stage.ts)
