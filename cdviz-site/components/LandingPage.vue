@@ -1,6 +1,7 @@
 <script setup>
 import Hero from "./landing/SectionHero.vue";
 import How from "./landing/SectionHow.vue";
+import PanelSamples from "./landing/SectionPanelSamples.vue";
 import Why from "./landing/SectionWhy.vue";
 </script>
 
@@ -19,6 +20,7 @@ import Why from "./landing/SectionWhy.vue";
   >
     <Hero />
     <Why />
+    <PanelSamples />
     <!-- <section class="my-xl md:my-2xl">
       <a id="features"></a>
     </section> -->

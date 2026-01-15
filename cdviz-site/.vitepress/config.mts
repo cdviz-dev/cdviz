@@ -1,6 +1,7 @@
 // import { defineConfig as viteDefineConfig } from 'vite'
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vitepress";
+import svgLoader from "vite-svg-loader";
 // import { configureDiagramsPlugin } from "vitepress-plugin-diagrams";
 
 // https://vitepress.dev/reference/site-config
@@ -364,6 +365,20 @@ export default defineConfig({
     },
     plugins: [
       tailwindcss() as any,
+      // https://iconvectors.io/tutorials/use-svg-icons-in-vue-3-with-vite.html
+      svgLoader({
+        // Use SVGO and keep viewBox; strip width/height so CSS controls size
+        svgo: true,
+        svgoConfig: {
+          // https://svgo.dev/docs/preset-default/
+          plugins: [
+            { name: "preset-default", params: { overrides: { removeViewBox: false } } },
+            "removeDimensions",
+            "prefixIds", // avoid ID collisions if your SVG uses ids/gradients
+          ],
+        },
+        defaultImport: "component", // allow: import Icon from './icon.svg'
+      }),
       {
         name: "vp-tw-order-fix",
         configResolved(c) {

@@ -79,19 +79,5 @@ onMounted(() => {
         </p>
       </div>
     </div>
-    <div class="text-sm sm:text-base text-center my-lg max-w-5xl mx-auto text-text/90 italic">
-      <a href="/docs/cdviz-grafana/artifact_timeline.html">
-        Example of a panel to track timeline & deployment of an artifact.<br />
-        <img
-          src="/screenshots/grafana_panel_timeline_version_on_stage-legend.svg"
-          atl="artifact timeline panel with legend and annotation"
-          class="w-full h-auto object-cover"
-          role="img"
-          loading="lazy"
-          decoding="async"
-          fetchpriority="low"
-        />
-      </a>
-    </div>
   </section>
 </template>
