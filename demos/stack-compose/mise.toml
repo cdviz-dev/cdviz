@@ -21,7 +21,7 @@ run = """
 [tasks."delete"]
 description = "Stop & remove the docker compose demo (and local data)"
 run = [
-  "mise run stack:compose:down",
+  {task = ":down"},
   "docker compose -f docker-compose.yaml rm",
   "rm -rf tmp",
 ]
