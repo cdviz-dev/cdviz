@@ -65,7 +65,7 @@ run = [
 [tasks.format]
 alias = "fmt"
 description = "format with dprint (includes biome plugin)"
-depends = [":trim_trailing-space"]
+#depends = [":trim_trailing-space"]
 run = ["dprint fmt"]
 
 [tasks."trim_trailing-space"]
