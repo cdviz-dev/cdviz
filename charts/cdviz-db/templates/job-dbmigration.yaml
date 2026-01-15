@@ -31,16 +31,13 @@ spec:
           containers:
           - name: 'cdviz-db-migration'
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            # args for https://atlasgo.io/declarative/apply
+            # args for https://github.com/golang-migrate/migrate
             args:
-              - migrate # or schema
-              - apply
-              - -u
+              - -database
               - "$(DATABASE_URL)"
-              - --dir
-              - file:///migrations/
-              - --revisions-schema
-              - "$(DATABASE_REVISIONS_SCHEMA)"
+              - -path
+              - /migrations/
+              - up
             env:
             {{- range $key, $value := .Values.env }}
             {{- if and $value.valueFrom $value.valueFrom.secretKeyRef (not $value.valueFrom.secretKeyRef.name) }}

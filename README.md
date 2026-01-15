@@ -9,7 +9,7 @@ Documentation: <https://cdviz.dev/>
 ## Core Components
 
 - **[cdviz-collector](https://github.com/cdviz-dev/cdviz-collector)**: Event collection service that gathers events (CI, CD, test, artifacts, etc.) from multiple sources and forwards them to other components (PostgreSQL, third-party services, etc.)
-- **cdviz-db**: PostgreSQL database with TimescaleDB extension and Atlas migrations for schema management
+- **cdviz-db**: PostgreSQL database with TimescaleDB extension and golang-migrate migrations for schema management
 - **cdviz-grafana**: Dashboard components with custom Grafana panels and dashboards for visualization
 - **cdviz-site**: Documentation website built with VitePress and Bun
 - **charts/**: Helm charts for Kubernetes deployment
@@ -17,7 +17,7 @@ Documentation: <https://cdviz.dev/>
 
 ## Key Technologies
 
-- **PostgreSQL + TimescaleDB**: Database with Atlas for schema migrations
+- **PostgreSQL + TimescaleDB**: Database with golang-migrate for schema migrations
 - **TypeScript/Bun**: Grafana dashboards generator and site tooling
 - **VitePress**: Documentation site framework
 - **Helm**: Kubernetes deployment charts
@@ -38,9 +38,9 @@ Documentation: <https://cdviz.dev/>
 ### Database Design
 
 - Uses PostgreSQL with TimescaleDB extension as primary event store
-- Atlas handles schema migrations in `cdviz-db/migrations/`
+- golang-migrate handles schema migrations in `cdviz-db/migrations/`
 - Direct database access pattern for dashboards rather than API abstraction
-- Schema defined in `cdviz-db/src/schema.sql`
+- Migrations tracked by timestamp with up/down SQL files (YYYYMMDDHHmm format)
 - Docker image built with necessary extensions pre-installed
 
 ### Dashboard System

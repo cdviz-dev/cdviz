@@ -31,12 +31,11 @@ services:
   cdviz-db-migrate:
     image: ghcr.io/cdviz-dev/cdviz-db-migration:latest
     command:
-      - migrate
-      - apply
-      - --url
+      - -database
       - postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
-      - --dir
-      - file:///migrations/
+      - -path
+      - /migrations/
+      - up
     # network_mode: host
     depends_on:
       postgres:

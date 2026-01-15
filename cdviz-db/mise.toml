@@ -5,29 +5,42 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 
 [tools]
 # docker = "latest"
-atlas = "1"
+"ubi:golang-migrate/migrate" = "latest"
+"ubi:quarylabs/sqruff" = "latest"
 
-[tasks."plan"]
-description = "update the migrations to reflect target `src/schema.sql`"
-run = [
-  "mise run :db-local_start-empty",
-  "atlas migrate diff --env db-local",
-  "atlas migrate lint --env db-local --latest 10",
-  "atlas migrate validate --env db-local",
-  "atlas migrate hash",
-  "mise run :db-local_stop",
-]
+[tasks."migrate:create"]
+description = "Create a new migration file (usage: mise run migrate:create name)"
+run = "migrate create -ext sql -dir migrations -format 200601021504 $@"
 
-[tasks."apply"]
-description = "apply the schema & data migrations"
-run = "atlas migrate apply --env db-local"
+[tasks."migrate:up"]
+description = "Apply all pending migrations"
+run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' up"
 
-# cmd: atlas schema apply --env local
+[tasks."migrate:down"]
+description = "Rollback the last migration"
+run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' down 1"
+
+[tasks."migrate:version"]
+description = "Show current migration version"
+run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' version"
+
+[tasks."migrate:force"]
+description = "Force set migration version (usage: mise run migrate:force VERSION)"
+run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' force $@"
+
+[tasks.lint]
+description = "Lint SQL files with sqruff"
+run = "sqruff lint migrations/"
+
+[tasks."format"]
+alias = "fmt"
+description = "Format SQL files with sqruff"
+run = "sqruff fix migrations/"
 
 [tasks."db-local_start-empty"]
 description = "start a container for the local db (empty: no data, no schema)"
 run = [
-  "mise run :db-local_stop",
+  { task = ":db-local_stop"},
   """docker run --rm --name cdviz-db \
     -e \"POSTGRES_PASSWORD={{env.PG_LOCAL_PWD}}\" \
     -e \"POSTGRES_USER={{env.PG_LOCAL_USER}}\" \
@@ -39,12 +52,17 @@ run = [
     -d \
     timescale/timescaledb-ha:pg18
   """,
-  "sleep 6 # wait for the container to be ready"
+  "echo 'Waiting for database to be ready...'",
+  "until docker exec cdviz-db pg_isready -U cdviz -d cdviz > /dev/null 2>&1; do echo 'Still waiting...'; sleep 2; done",
+  "sleep 2 # Extra wait to ensure full readiness",
 ]
 
 [tasks."db-local_start"]
 description = "start a container for the local db with the migrations applied"
-run = ["mise run :db-local_start-empty", "mise run :apply"]
+run = [
+  {task = ":db-local_start-empty"},
+  {task = ":migrate:up"},
+]
 
 [tasks."db-local_stop"]
 description = "stop the container of the local db"
@@ -61,17 +79,24 @@ run = [
 ]
 
 [tasks."test"]
-run = ["mise run :db-local_start", "mise run :db-local_stop"]
+description = "Test full migration lifecycle (up, verify, down)"
+run = [
+  {task = ":db-local_start-empty"},
+  {task = ":migrate:up"},
+  "echo '=== Migration version after up ==='",
+  {task = ":migrate:version"},
+  "echo '=== Verifying schema exists ==='",
+  "docker exec cdviz-db psql -U cdviz -d cdviz -c '\\dt cdviz.*'",
+  "echo '=== Rolling back migration ==='",
+  {task = ":migrate:down"},
+  "echo '=== Migration version after down (should be none) ==='",
+  "mise run :migrate:version || echo 'No migrations applied (expected after full rollback)'",
+  {task = ":db-local_stop"},
+]
 
 [tasks."ci"]
 description = "set of tasks run by CI"
-# TODO fix test, check, lint
-depends = [":build_cdviz-db-migration"]
-# run = [
-#   "mise run :test",
-#   # "mise run :check"
-#   # "mise run :lint"
-# ]
+depends = [":lint", ":test", ":build"]
 
 [tasks."list_containers"]
 description = "list all containers images"
@@ -84,7 +109,7 @@ run = [
   "docker buildx bake --print",
 ]
 
-[tasks."build_cdviz-db-migration"]
+[tasks."build"]
 description = "build the docker image for the migration"
 run = ["docker buildx bake --progress=plain cdviz-db-migration"]
 

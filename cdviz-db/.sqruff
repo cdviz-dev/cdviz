@@ -1,0 +1,13 @@
+# default: https://github.com/quarylabs/sqruff/blob/main/crates/lib/src/core/default_config.cfg
+[sqruff]
+# SQL dialect for PostgreSQL and TimescaleDB
+dialect = postgres
+# exclude_rules = AM01,AM02
+rules = all
+max_line_length = 200
+
+[sqruff:indentation]
+indent_unit = space
+tab_space_size = 4
+indented_joins = True
+indented_ctes = True

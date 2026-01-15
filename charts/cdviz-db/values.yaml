@@ -29,10 +29,6 @@ env:
       secretKeyRef:
         name: "cdviz-db-secret"
         key: DATABASE_URL
-  DATABASE_REVISIONS_SCHEMA:
-    # could be "public" if database doesn't respect "search_path" (like neon, supabase,...)
-    # see [atlas migrate apply --url $DATABASE\_URL fails · Issue #2509 · ariga/atlas](https://github.com/ariga/atlas/issues/2509)
-    value: "atlas_schema_revisions"
 
 # Additional kubernetes resources to create. Helm template could be used.
 # you could use it to create secrets, external secrets,
