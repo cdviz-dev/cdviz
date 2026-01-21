@@ -31,13 +31,14 @@ const buttonClasses = computed(() => {
       base +
       `
       bg-primary text-background
-      hover:scale-105 hover:shadow-lg hover:shadow-primary/30
+      hover:scale-105 hover:shadow-[0_8px_30px_-8px_var(--primary)] hover:shadow-primary/50
       focus:ring-primary focus:scale-105
       active:scale-95 active:shadow-sm
       before:absolute before:inset-0 before:bg-gradient-to-r
       before:from-transparent before:via-white/20 before:to-transparent
       before:translate-x-[-100%] hover:before:translate-x-[100%]
       before:transition-transform before:duration-700 before:ease-out
+      shadow-lg shadow-primary/20
     `
     );
   } else {

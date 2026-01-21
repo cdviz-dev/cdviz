@@ -29,7 +29,7 @@ onMounted(() => {
     <div class="flex flex-col items-stretch space-content md:flex-row max-w-6xl mx-auto">
       <div
         data-animate-card
-        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 card-hover transform-gpu"
+        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 hover:border-primary/40 hover:shadow-[0_8px_25px_-8px_var(--primary)] hover:shadow-primary/25 transition-all duration-300 transform-gpu"
       >
         <div class="flex items-center space-element my-sm">
           <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float">
@@ -44,7 +44,7 @@ onMounted(() => {
       </div>
       <div
         data-animate-card
-        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 card-hover transform-gpu"
+        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 hover:border-primary/40 hover:shadow-[0_8px_25px_-8px_var(--primary)] hover:shadow-primary/25 transition-all duration-300 transform-gpu"
       >
         <div class="flex items-center space-element my-sm">
           <div
@@ -62,7 +62,7 @@ onMounted(() => {
       </div>
       <div
         data-animate-card
-        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 card-hover transform-gpu"
+        class="bg-background/80 w-full rounded-xl p-lg shadow-sm border border-secondary/20 hover:border-primary/40 hover:shadow-[0_8px_25px_-8px_var(--primary)] hover:shadow-primary/25 transition-all duration-300 transform-gpu"
       >
         <div class="flex items-center space-element my-sm">
           <div
