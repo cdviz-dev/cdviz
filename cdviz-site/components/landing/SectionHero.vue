@@ -28,7 +28,7 @@ onMounted(() => {
     <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
-      class="order-last items-center overflow-hidden rounded-xl md:relative my-lg md:my-0"
+      class="order-2 md:order-last flex items-center justify-center rounded-xl my-lg md:my-0"
     >
       <!-- class="order-last items-center overflow-hidden rounded-xl md:absolute md:relative" -->
       <!-- Help people visualize what we're offering: snapshot/screenshot of the product -->
@@ -71,7 +71,7 @@ onMounted(() => {
           id="hero-image-img"
           width="666"
           height="596"
-          class="left-0 top-0 h-48 sm:h-56 md:h-64 lg:h-full w-full rounded-xl object-cover md:absolute parallax-element"
+          class="w-full h-auto max-h-[500px] md:max-h-[600px] lg:max-h-none rounded-xl object-contain parallax-element"
           src="/illustrations/hero-dashboard-01-q60.webp"
           alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
           fetchpriority="high"
@@ -79,7 +79,7 @@ onMounted(() => {
         />
       </picture>
     </div>
-    <div class="overflow-hidden rounded-xl p-lg">
+    <div class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10">
       <h1
         id="hero-title"
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"

@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 @source "../../components/";
 @source "../../src/";
 
 @plugin "@iconify/tailwind4";
 
-/* Material Design 3 Typography - Google Fonts for Roboto */
+/* Typography - JetBrains Mono for technical/display, Inter for readability */
 
 @theme {
   /* Perfect Ratio Spacing System - Optimized for Visual Harmony */
@@ -52,12 +52,14 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
 
-  /* Material Design 3 inspired font stack - unified for body and headings */
+  /* Typography stack - JetBrains Mono for technical feel, Inter for readability */
   --font-family-base:
-    "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Oxygen, Ubuntu, Cantarell,
-    "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Oxygen, Ubuntu, Cantarell,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-display:
+    "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
   --font-family-mono:
-    "Roboto Mono", "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", Menlo,
+    "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Menlo,
     "DejaVu Sans Mono", Consolas, monospace;
 
   /* Material Design 3 Typography Scale */
@@ -131,16 +133,17 @@ body {
   text-size-adjust: 100%;
 }
 
-/* Unified font family for all headings - Material Design approach */
+/* Distinctive font family for headings - technical/developer aesthetic */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-base);
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-family: var(--font-family-display);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "zero" 1;
   text-rendering: optimizeLegibility;
+  letter-spacing: -0.02em; /* Tighter spacing for monospace display */
 }
 
 /* Code blocks optimization */
@@ -202,9 +205,10 @@ main[role="main"] h5,
 main[role="main"] h6 {
   margin: 0;
   padding: 0;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-family: var(--font-family-display);
 }
 
 /* Only apply landing page spacing to landing components */

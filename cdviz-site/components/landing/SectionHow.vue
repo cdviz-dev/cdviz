@@ -95,12 +95,12 @@ const selectComponent = async (componentName) => {
     <H2>How CDviz Works</H2>
 
     <!-- Process Flow Steps -->
-    <div class="grid space-content lg:grid-cols-2 lg:grid-rows-2">
+    <div class="grid space-content lg:grid-cols-2 lg:grid-rows-2 max-w-7xl mx-auto">
       <!-- Process Steps Loop -->
       <div
         v-for="step in processSteps"
         :key="step.id"
-        class="group flex flex-col sm:flex-row items-start space-component bg-background/80 p-lg rounded-xl border border-secondary/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
+        class="group flex flex-col sm:flex-row items-start space-component bg-background/80 p-lg rounded-xl border border-secondary/20 shadow-sm hover:shadow-[0_8px_25px_-8px_var(--primary)] hover:shadow-primary/20 hover:border-primary/40 hover:scale-[1.02] transition-all duration-300 transform-gpu"
       >
         <div class="flex flex-row sm:flex-col items-center space-element">
           <div class="bg-primary rounded-full w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center font-bold text-lg sm:text-xl shadow-md text-background">
@@ -143,7 +143,7 @@ const selectComponent = async (componentName) => {
       </div>
     </div>
     <!-- Architecture Diagram -->
-    <div class="mt-12">
+    <div class="mt-12 max-w-6xl mx-auto">
       <div class="text-center mb-6">
         <h3 class="text-xl sm:text-2xl font-bold text-primary mb-2">
           Complete Architecture Overview
@@ -154,10 +154,13 @@ const selectComponent = async (componentName) => {
       </div>
 
       <!-- Diagram Container -->
-      <div class="bg-background/50 rounded-xl border border-secondary/20 overflow-hidden shadow-lg">
+      <div class="bg-gradient-to-br from-background/80 to-primary/5 rounded-xl border-2 border-primary/20 overflow-hidden shadow-lg hover:shadow-[0_12px_40px_-8px_var(--primary)] hover:shadow-primary/30 hover:border-primary/30 transition-all duration-500 relative group max-w-5xl mx-auto">
+        <!-- Decorative corner accent -->
+        <div class="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <img
           src="/architectures/overview_04.excalidraw.svg"
-          class="w-full h-auto object-cover"
+          class="w-full h-auto object-cover relative z-10 transition-transform duration-500 group-hover:scale-[1.02]"
           alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
           role="img"
           loading="lazy"
@@ -167,7 +170,7 @@ const selectComponent = async (componentName) => {
       </div>
 
       <!-- Interactive Component Explorer -->
-      <div class="mt-6 space-y-6">
+      <div class="mt-6 space-y-6 max-w-5xl mx-auto">
         <!-- Component Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <button
