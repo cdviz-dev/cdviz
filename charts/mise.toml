@@ -1,7 +1,7 @@
 [tools]
 # docker = "latest"     # to build, to run containers, should be available for some of thoses tools
 # dive = "latest"       # to explore content of image container
-helm = "4.0.0"         # to check helm chart
+helm = "4.1.0"         # to check helm chart
 
 # TODO upgrade version only if change in the context of the Dockerfile
 # TODO sign container (see <https://www.sigstore.dev/how-it-works>)
