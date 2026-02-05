@@ -372,9 +372,26 @@ export default defineConfig({
         svgoConfig: {
           // https://svgo.dev/docs/preset-default/
           plugins: [
-            { name: "preset-default", params: { overrides: { removeViewBox: false } } },
+            {
+              name: "preset-default",
+              params: {
+                overrides: {
+                  removeViewBox: false,
+                  // Disable cleanupIds to preserve id attributes
+                  cleanupIds: false,
+                },
+              },
+            },
             "removeDimensions",
-            "prefixIds", // avoid ID collisions if your SVG uses ids/gradients
+            {
+              // avoid ID collisions if your SVG uses ids/gradients
+              name: "prefixIds",
+              params: {
+                // Prefix ids and classes with the filename to avoid conflicts
+                prefixIds: true,
+                prefixClassNames: true,
+              },
+            },
           ],
         },
         defaultImport: "component", // allow: import Icon from './icon.svg'

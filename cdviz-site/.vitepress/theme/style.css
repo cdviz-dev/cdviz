@@ -60,8 +60,7 @@
   --font-family-mono:
     "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Menlo, "DejaVu Sans Mono", Consolas,
     monospace;
-  --font-family-sketch:
-      "Excalifont", "Xiaolai", Comic Sans MS, sans-serif;
+  --font-family-sketch: "Excalifont", "Xiaolai", Comic Sans MS, sans-serif;
 
   /* Material Design 3 Typography Scale */
   --md-display-large: 3.5625rem; /* 57px - Display L */

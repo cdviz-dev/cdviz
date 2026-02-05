@@ -1,26 +1,7 @@
 <script setup>
-import { gsap } from "gsap";
-import { onMounted } from "vue";
 import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
-import PanelTimelineSvg from "../../assets/screenshots/grafana_panel_timeline_version_on_stage-legend.svg";
-
-onMounted(() => {
-  const tl = gsap.timeline();
-  // class "annotation" is prefixed by svgo with filename to avoid conflict
-  const selector = ".grafana_panel_timeline_version_on_stage-legend_svg__annotation";
-  tl.from(selector, {
-    opacity: 0,
-    duration: 0.5,
-    ease: "power2.inOut",
-    stagger: {
-      from: "end",
-      each: 0.8,
-    },
-    repeat: -1,
-    repeatDelay: 2,
-  });
-});
+import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWithLegend.vue";
 </script>
 <template>
   <section class="space-section">

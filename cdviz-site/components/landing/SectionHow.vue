@@ -3,6 +3,7 @@ import { nextTick, ref } from "vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 import SkeletonLoader from "./SkeletonLoader.vue";
+import CdvizArchitecture from "../diagrams/CdvizArchitecture.vue";
 
 // Interactive diagram state
 const activeComponent = ref(null);
@@ -160,15 +161,7 @@ const selectComponent = async (componentName) => {
         </div>
         <div class="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         </div>
-        <img
-          src="/architectures/overview_04.excalidraw.svg"
-          class="w-full h-auto object-cover relative z-10 transition-transform duration-500 group-hover:scale-[1.02]"
-          alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
-          role="img"
-          loading="lazy"
-          decoding="async"
-          fetchpriority="low"
-        />
+        <CdvizArchitecture />
       </div>
 
       <!-- Interactive Component Explorer -->
