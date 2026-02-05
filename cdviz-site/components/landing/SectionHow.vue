@@ -3,6 +3,7 @@ import { nextTick, ref } from "vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 import SkeletonLoader from "./SkeletonLoader.vue";
+import CdvizArchitecture from "../diagrams/CdvizArchitecture.vue";
 
 // Interactive diagram state
 const activeComponent = ref(null);
@@ -156,17 +157,11 @@ const selectComponent = async (componentName) => {
       <!-- Diagram Container -->
       <div class="bg-gradient-to-br from-background/80 to-primary/5 rounded-xl border-2 border-primary/20 overflow-hidden shadow-lg hover:shadow-[0_12px_40px_-8px_var(--primary)] hover:shadow-primary/30 hover:border-primary/30 transition-all duration-500 relative group max-w-5xl mx-auto">
         <!-- Decorative corner accent -->
-        <div class="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div class="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <img
-          src="/architectures/overview_04.excalidraw.svg"
-          class="w-full h-auto object-cover relative z-10 transition-transform duration-500 group-hover:scale-[1.02]"
-          alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
-          role="img"
-          loading="lazy"
-          decoding="async"
-          fetchpriority="low"
-        />
+        <div class="absolute top-0 left-0 w-20 h-20 bg-primary/5 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <div class="absolute bottom-0 right-0 w-20 h-20 bg-primary/5 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        </div>
+        <CdvizArchitecture />
       </div>
 
       <!-- Interactive Component Explorer -->

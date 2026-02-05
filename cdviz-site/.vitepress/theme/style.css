@@ -56,13 +56,11 @@
   --font-family-base:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Oxygen, Ubuntu, Cantarell,
     "Helvetica Neue", Arial, sans-serif;
-  --font-family-display:
-    "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+  --font-family-display: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
   --font-family-mono:
-    "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Menlo,
-    "DejaVu Sans Mono", Consolas, monospace;
-  --font-family-sketch:
-      "Excalifont", "Xiaolai", Comic Sans MS, sans-serif;
+    "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Menlo, "DejaVu Sans Mono", Consolas,
+    monospace;
+  --font-family-sketch: "Excalifont", "Xiaolai", Comic Sans MS, sans-serif;
 
   /* Material Design 3 Typography Scale */
   --md-display-large: 3.5625rem; /* 57px - Display L */
