@@ -55,8 +55,8 @@ WHERE $__timeFilter(timestamp)
 
 - Package identification follows the [Package URL (PURL) specification](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst)
 - For OCI packages, version identification uses:
-  - Package digest when available (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db@sha256:1234567890abcdef`)
-  - Package tag as fallback when digest is unavailable (e.g., `pkg:oci/ghcr.io/cdviz-dev/cdviz-db?tag=0.1.0`)
+  - Package digest when available (e.g., `pkg:oci/cdviz-db@sha256:1234567890abcdef?repository_url=ghcr.io/cdviz-dev`)
+  - Package tag as fallback when digest is unavailable (e.g., `pkg:oci/cdviz-db?repository_url=ghcr.io/cdviz-dev&tag=0.1.0`)
 
 ## Source Code References
 
