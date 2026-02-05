@@ -60,6 +60,8 @@
   --font-family-mono:
     "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", Menlo, "DejaVu Sans Mono", Consolas,
     monospace;
+  --font-family-sketch:
+      "Excalifont", "Xiaolai", Comic Sans MS, sans-serif;
 
   /* Material Design 3 Typography Scale */
   --md-display-large: 3.5625rem; /* 57px - Display L */
@@ -111,6 +113,17 @@
   src:
     local("Inter"),
     local("Inter-Regular");
+}
+
+/* Font mainly used with svg diagram */
+@font-face {
+  font-family: "Excalifont";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src:
+    local("Excalifont"),
+    url("fonts/Excalifont-Regular.woff2") format("woff2");
 }
 
 /* Typography rendering optimizations */
