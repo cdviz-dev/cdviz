@@ -3,7 +3,7 @@
   "editable": true,
   "graphTooltip": 0,
   "fiscalYearStartMonth": 0,
-  "schemaVersion": 39,
+  "schemaVersion": 41,
   "templating": {
     "list": [
       {
@@ -11,6 +11,7 @@
         "name": "datasource",
         "skipUrlSync": false,
         "multi": false,
+        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -23,6 +24,7 @@
         "name": "selected_value",
         "skipUrlSync": false,
         "multi": true,
+        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -45,6 +47,7 @@
         "name": "limit",
         "skipUrlSync": false,
         "multi": false,
+        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -111,7 +114,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -128,5 +130,5 @@
       }
     }
   ],
-  "version": 2026011418
+  "version": 2026020720
 }

@@ -40,13 +40,19 @@ export async function buildDashboard(): Promise<Dashboard> {
             .format("table")
             .rawQuery(true)
             .rawSql(dedent`
+              WITH artifact_filter AS (
+                SELECT
+                  SPLIT_PART('\${artifact_fnames:raw}', '\n', 1) as base_name,
+                  NULLIF(SPLIT_PART('\${artifact_fnames:raw}', '\n', 2), '') as repository_url
+              )
               SELECT timestamp,
                 predicate as action,
                 predicate as stage,
                 payload -> 'subject' ->> 'id' as artifact_id
-              FROM cdviz.cdevents_lake
+              FROM cdviz.cdevents_lake, artifact_filter
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
+                AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:' || artifact_filter.base_name || '(@|\\?)%'
+                AND (artifact_filter.repository_url IS NULL OR payload -> 'subject' ->> 'id' SIMILAR TO '%repository_url=' || artifact_filter.repository_url || '(&%)?')
                 AND subject = 'artifact'
                 AND predicate = ANY(ARRAY['published', 'signed'])
 
@@ -56,9 +62,10 @@ export async function buildDashboard(): Promise<Dashboard> {
                 predicate as action,
                 (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,
                 payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id
-              FROM cdviz.cdevents_lake
+              FROM cdviz.cdevents_lake, artifact_filter
               WHERE $__timeFilter(timestamp)
-                AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:\${artifact_fnames:raw}(@|\\?)%'
+                AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:' || artifact_filter.base_name || '(@|\\?)%'
+                AND (artifact_filter.repository_url IS NULL OR payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO '%repository_url=' || artifact_filter.repository_url || '(&%)?')
                 AND subject = 'service'
                 AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
             `),
@@ -71,21 +78,29 @@ export async function buildDashboard(): Promise<Dashboard> {
 export function newVariable4ArtifactFname() {
   return newVariableOnDatasource(
     dedent`
-      SELECT DISTINCT SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\?]+)') as __value
+      SELECT DISTINCT
+        SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\?]+)') ||
+        '\n' ||
+        COALESCE((regexp_match(payload -> 'subject' ->> 'id', 'repository_url=([^&]+)'))[1], '') as __value
       FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
         AND subject = 'artifact'
         AND predicate = ANY(ARRAY['published', 'signed'])
+        AND SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\?]+)') <> ''
 
       UNION
 
-      SELECT DISTINCT SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\?]+)') as __value
+      SELECT DISTINCT
+        SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\?]+)') ||
+        '\n' ||
+        COALESCE((regexp_match(payload -> 'subject' -> 'content' ->> 'artifactId', 'repository_url=([^&]+)'))[1], '') as __value
       FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
         AND subject = 'service'
         AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
+        AND SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\?]+)') <> ''
     `,
     "artifact_fnames",
     "Artifacts",
-  ).description("Artifact type + namespace + name");
+  ).description("Artifact type + namespace + name + repository");
 }

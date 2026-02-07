@@ -1,5 +1,6 @@
 export class ArtifactInfo {
   readonly base: string;
+  readonly repositoryUrl: string | null;
   version: string;
   tags: Set<string>;
 
@@ -9,10 +10,12 @@ export class ArtifactInfo {
     this.base = base;
     this.version = version ? decodeURIComponent(version) : version;
     this.tags = new Set(url.searchParams.getAll("tag"));
+    this.repositoryUrl = url.searchParams.get("repository_url");
   }
 
   isSimilarTo(other: ArtifactInfo, _debug?: boolean): boolean {
-    let res = this.base === other.base;
+    let res =
+      this.base === other.base && this.repositoryUrl === other.repositoryUrl;
     // if (debug) {
     //   console.debug(this.base, other.base, this.base === other.base, res);
     // }
