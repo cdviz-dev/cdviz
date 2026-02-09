@@ -3,7 +3,7 @@
   "editable": true,
   "graphTooltip": 0,
   "fiscalYearStartMonth": 0,
-  "schemaVersion": 41,
+  "schemaVersion": 39,
   "templating": {
     "list": [
       {
@@ -11,7 +11,6 @@
         "name": "datasource",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -24,7 +23,6 @@
         "name": "artifact_fnames",
         "skipUrlSync": false,
         "multi": true,
-        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -54,7 +52,7 @@
     "service"
   ],
   "time": {
-    "from": "now-7d",
+    "from": "now-31d",
     "to": "now"
   },
   "panels": [
@@ -91,6 +89,7 @@
         {
           "format": "table",
           "rawSql": "WITH artifact_filter AS (\n  SELECT\n    SPLIT_PART('${artifact_fnames:raw}', '\n', 1) as base_name,\n    NULLIF(SPLIT_PART('${artifact_fnames:raw}', '\n', 2), '') as repository_url\n)\nSELECT timestamp,\n  predicate as action,\n  predicate as stage,\n  payload -> 'subject' ->> 'id' as artifact_id\nFROM cdviz.cdevents_lake, artifact_filter\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' ->> 'id' SIMILAR TO 'pkg:' || artifact_filter.base_name || '(@|\\\\?)%'\n  AND (artifact_filter.repository_url IS NULL OR payload -> 'subject' ->> 'id' SIMILAR TO '%repository_url=' || artifact_filter.repository_url || '(&%)?')\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n\nUNION ALL\n\nSELECT timestamp,\n  predicate as action,\n  (payload -> 'subject' -> 'content' -> 'environment' ->> 'id') || '\n' || (payload -> 'subject' ->> 'id') as stage,\n  payload -> 'subject' -> 'content' ->> 'artifactId' as artifact_id\nFROM cdviz.cdevents_lake, artifact_filter\nWHERE $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO 'pkg:' || artifact_filter.base_name || '(@|\\\\?)%'\n  AND (artifact_filter.repository_url IS NULL OR payload -> 'subject' -> 'content' ->> 'artifactId' SIMILAR TO '%repository_url=' || artifact_filter.repository_url || '(&%)?')\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -107,5 +106,5 @@
       }
     }
   ],
-  "version": 2026020720
+  "version": 2026021320
 }

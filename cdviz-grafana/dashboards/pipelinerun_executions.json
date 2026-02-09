@@ -3,7 +3,7 @@
   "editable": true,
   "graphTooltip": 0,
   "fiscalYearStartMonth": 0,
-  "schemaVersion": 41,
+  "schemaVersion": 39,
   "templating": {
     "list": [
       {
@@ -11,7 +11,6 @@
         "name": "datasource",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -24,7 +23,6 @@
         "name": "selected_value",
         "skipUrlSync": false,
         "multi": true,
-        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -47,7 +45,6 @@
         "name": "limit",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -58,13 +55,13 @@
     ]
   },
   "annotations": {},
-  "title": "Pipeline: Latest Executions",
+  "title": "Pipeline: Executions",
   "uid": "pipelinerun_executions",
   "tags": [
     "pipelinerun"
   ],
   "time": {
-    "from": "now-7d",
+    "from": "now-31d",
     "to": "now"
   },
   "panels": [
@@ -73,7 +70,7 @@
       "collapsed": false,
       "id": 0,
       "panels": [],
-      "title": "Pipeline: Latest $limit Executions",
+      "title": "Pipeline: Overview",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -82,30 +79,10 @@
       }
     },
     {
-      "type": "marcusolsson-dynamictext-panel",
+      "type": "stat",
       "transparent": false,
       "repeatDirection": "h",
-      "options": {
-        "afterRender": "import(\"https://esm.sh/d3@7.9.0\").then((d3) => {\n\n// src/panels/browser_scripts/tooltip.ts\nclass Tooltip {\n  getTooltipContent;\n  el;\n  constructor(container, getTooltipContent) {\n    this.getTooltipContent = getTooltipContent;\n    this.el = d3.select(document.createElement(\"div\")).style(\"position\", \"absolute\").style(\"pointer-events\", \"none\").style(\"top\", 0).style(\"opacity\", 0).style(\"background\", \"white\").style(\"color\", \"black\").style(\"border-radius\", \"5px\").style(\"box-shadow\", \"0 0 10px rgba(0,0,0,.25)\").style(\"padding\", \"10px\").style(\"line-height\", \"1.3\").style(\"font\", \"11px sans-serif\");\n    container.appendChild(this.el.node());\n  }\n  showOnMouseover(event, d) {\n    const content = this.getTooltipContent(d);\n    this.el.style(\"opacity\", 1).html(content);\n    this.move(event, d);\n  }\n  hideOnMouseleave(_event, _d) {\n    this.el.style(\"opacity\", 0);\n  }\n  move(event, _d) {\n    const element = this.el.node();\n    if (!element)\n      return;\n    const container = element.parentNode;\n    const [x, y] = d3.pointer(event, container);\n    const area = container.getBoundingClientRect();\n    const tooltipRect = element.getBoundingClientRect();\n    let topicLeft = x + 10;\n    if (topicLeft + tooltipRect.width > area.width) {\n      topicLeft = Math.max(0, x - (10 + tooltipRect.width + 30));\n    }\n    let topicTop = y;\n    if (topicTop + tooltipRect.height > area.height) {\n      topicTop = Math.max(0, area.height - tooltipRect.height);\n    }\n    this.el.style(\"left\", `${topicLeft}px`).style(\"top\", `${topicTop}px`);\n  }\n}\n\n// src/panels/browser_scripts/utils.ts\nfunction newSvgArea(container) {\n  const rect = container.parentNode.getBoundingClientRect();\n  const width = rect.width;\n  const height = rect.height;\n  const svg = d3.create(\"svg\").attr(\"width\", \"93%\").attr(\"font-family\", \"sans-serif\").style(\"display\", \"block\");\n  svg.attr(\"viewBox\", [0, 0, width, height]).attr(\"preserveAspectRatio\", \"none\");\n  container.replaceChildren(svg.node());\n  return { svg, width, height };\n}\n\n// src/panels/browser_scripts/draw_barchart_double.ts\nfunction draw(context) {\n  const withQueuedDuration = true;\n  const visibleBars = 20;\n  const data = (context.data[0] || []).reverse().slice(0, visibleBars);\n  const marginTop = 20;\n  const marginRight = 20;\n  const marginBottom = 20;\n  const marginLeft = 50;\n  const container = context.element;\n  const { svg, width, height } = newSvgArea(container);\n  const tooltip = new Tooltip(container, (d) => {\n    const formatDuration = (t) => t ? `${t / 60 | 0}m ${t % 60}s` : \"\";\n    let adds = \"\";\n    if (withQueuedDuration) {\n      adds += `<br/>queued: ${formatDuration(d.queued_duration)}`;\n    }\n    return `<b>${d3.isoFormat(new Date(d.at))}</b>\n        <br/>run id: ${d.subject_id || \"-\"}\n        <br/>result: ${d.outcome || \"-\"}\n        <br/>run: ${formatDuration(d.run_duration)}\n        ${adds}\n        <br/><br/><i>click for details</i>\n        `;\n  });\n  const x = d3.scaleBand().domain(d3.range(visibleBars)).range([marginLeft, width - marginRight]).padding(0.1);\n  const defaultQueuedDisplayed = 2;\n  const defaultRunDisplayed = 10;\n  const y = d3.scaleLinear().domain([\n    -1 * Math.max(30, d3.max(data, (d) => d.queued_duration) || defaultQueuedDisplayed),\n    Math.max(60, d3.max(data, (d) => d.run_duration) || defaultRunDisplayed)\n  ]).range([height - marginBottom, marginTop]);\n  const colors = d3.scaleOrdinal().domain([\n    \"success\",\n    \"pass\",\n    \"ok\",\n    \"failure\",\n    \"fail\",\n    \"cancel\",\n    \"cancelled\",\n    \"skip\",\n    \"skipped\"\n  ]).range([\n    d3.hsl(120, 1, 0.5),\n    d3.hsl(120, 1, 0.5),\n    d3.hsl(120, 1, 0.5),\n    d3.hsl(0, 1, 0.5),\n    d3.hsl(0, 1, 0.5),\n    d3.hsl(0, 0, 0.8),\n    d3.hsl(0, 0, 0.8),\n    d3.hsl(0, 0, 0.5),\n    d3.hsl(0, 0, 0.5)\n  ]).unknown(d3.hsl(229, 1, 0.5));\n  const interval = 60;\n  const axis = svg.append(\"g\");\n  const ticks = d3.range(Math.round(y.domain()[0] / interval) * interval, Math.round(y.domain()[1] / interval) * interval + 1, interval);\n  axis.append(\"g\").selectAll().data(ticks).join(\"text\").attr(\"fill\", d3.hsl(0, 0, 0.9).toString()).attr(\"x\", 0).attr(\"y\", (d) => y(d)).attr(\"dy\", -3).attr(\"text-anchor\", \"start\").text((d) => `${Math.abs(d)}s`);\n  axis.append(\"g\").selectAll().data(ticks).join(\"line\").attr(\"stroke\", (d) => d3.hsl(0, 0, d === 0 ? 0.9 : 0.6).toString()).attr(\"x1\", marginLeft).attr(\"y1\", (d) => y(d)).attr(\"x2\", width - marginRight).attr(\"y2\", (d) => y(d));\n  svg.append(\"g\").selectAll().data(data).join(\"rect\").attr(\"fill\", (d) => colors(d.outcome).copy({ opacity: 0.6 }).toString()).attr(\"stroke\", (d) => colors(d.outcome).toString()).attr(\"x\", (_d, i) => x(i) || 0).attr(\"y\", (d) => y(d.run_duration || defaultRunDisplayed)).attr(\"height\", (d) => y(0) - y(d.run_duration || defaultRunDisplayed)).attr(\"width\", x.bandwidth()).on(\"click\", (_event, d) => {\n    if (d.url) {\n      window.open(d.url, \"_blank\");\n    }\n  }).on(\"mouseleave\", (e, d) => tooltip.hideOnMouseleave(e, d)).on(\"mouseover\", (e, d) => tooltip.showOnMouseover(e, d));\n  if (withQueuedDuration) {\n    svg.append(\"g\").selectAll().data(data).join(\"rect\").attr(\"fill\", (d) => colors(d.outcome).toString()).attr(\"stroke\", (d) => colors(d.outcome).toString()).attr(\"x\", (_d, i) => x(i) || 0).attr(\"y\", (_d, _i) => y(0)).attr(\"height\", (d) => y(0) - y(d.queued_duration || defaultQueuedDisplayed)).attr(\"width\", x.bandwidth()).on(\"mouseleave\", (e, d) => tooltip.hideOnMouseleave(e, d)).on(\"mouseover\", (e, d) => tooltip.showOnMouseover(e, d));\n  }\n}\n\ndraw(context);});\n",
-        "content": "",
-        "contentPartials": [],
-        "defaultContent": "The query didn't return any results.",
-        "editor": {
-          "format": "auto",
-          "language": "html"
-        },
-        "editors": [
-          "afterRender"
-        ],
-        "externalStyles": [],
-        "helpers": "",
-        "renderMode": "data",
-        "style": "",
-        "wrap": false
-      },
-      "title": "$selected_value",
-      "repeat": "selected_value",
-      "maxPerRow": 2,
+      "title": "Total Duration",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -113,7 +90,8 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  LEAST(queued_at, started_at, finished_at) AS at,\n  subject_id AS subject_id,\n  extract('epoch' from (started_at - queued_at)) AS queued_duration,\n  extract('epoch' from (finished_at - started_at)) AS run_duration,\n  --\n  last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n  outcome AS outcome\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  ORDER BY at DESC\n  LIMIT $limit",
+          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (finished_at - started_at))), 0) AS total_duration\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -124,11 +102,479 @@
       ],
       "gridPos": {
         "h": 4,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Avg Runtime",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (finished_at - started_at))), 0) AS avg_runtime\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Avg Queue Time",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (started_at - queued_at))), 0) AS avg_queue_time\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\n  AND queued_at IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "purple"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Failure Rate",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE outcome = 'fail') / NULLIF(COUNT(*), 0),\n    0\n  ) AS failure_rate\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 10,
+                "color": "yellow"
+              },
+              {
+                "value": 25,
+                "color": "red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Pipeline Total Duration per Day",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  SUM(extract('epoch' from (finished_at - started_at))) AS total_duration\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Pipeline Total Number of Run per Day",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN outcome = 'success' THEN 'success'\n    WHEN outcome = 'pass' THEN 'pass'\n    WHEN outcome = 'fail' THEN 'fail'\n    WHEN outcome = 'failure' THEN 'fail'\n    WHEN outcome = 'error' THEN 'error'\n    WHEN outcome = 'skip' THEN 'skip'\n    WHEN outcome = 'skipped' THEN 'skip'\n    ELSE COALESCE(outcome, 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.pipelinerun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*(fail|error).*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*(cancel|skip).*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "semi-dark-orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*(pass|success|complet).*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*warn.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*(unknown|other).*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": true,
+      "id": 0,
+      "panels": [
+        {
+          "type": "cdviz-executiontable-panel",
+          "transparent": false,
+          "repeatDirection": "h",
+          "title": "$selected_value - Summary",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "targets": [
+            {
+              "format": "table",
+              "rawSql": "WITH\n  -- Get last N executions per name with all details\n  execution_history AS (\n    SELECT\n      last_payload -> 'subject' -> 'content' ->> 'pipelineName' AS name,\n      subject_id,\n      outcome,\n      extract('epoch' from (finished_at - started_at)) AS run_duration,\n      extract('epoch' from (started_at - queued_at)) AS queue_duration,\n      last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n      started_at,\n      finished_at,\n      queued_at,\n      row_number() OVER (PARTITION BY last_payload -> 'subject' -> 'content' ->> 'pipelineName' ORDER BY finished_at DESC) AS rn\n    FROM cdviz.pipelinerun\n    WHERE\n      ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n      AND last_payload -> 'subject' -> 'content' ->> 'pipelineName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n      AND finished_at IS NOT NULL\n  ),\n\n  -- Aggregate statistics per name\n  aggregated_stats AS (\n    SELECT\n      name,\n      COALESCE(PERCENTILE_CONT(0.80) WITHIN GROUP (ORDER BY run_duration), 0) AS p80_duration,\n      COUNT(*) AS total_runs\n    FROM execution_history\n    GROUP BY name\n  ),\n\n  -- Create arrays of historical data for visualization\n  history_arrays AS (\n    SELECT\n      name,\n      COALESCE(array_agg(run_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS run_duration_history,\n      COALESCE(array_agg(queue_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS queue_duration_history,\n      COALESCE(array_agg(outcome ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS outcome_history,\n      COALESCE(array_agg(subject_id ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS subject_id_history,\n      COALESCE(array_agg(url ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS url_history,\n      COALESCE(array_agg(started_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS started_times,\n      COALESCE(array_agg(finished_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS completion_times,\n      COALESCE(array_agg(queued_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS queued_times\n    FROM execution_history\n    WHERE rn <= 20\n    GROUP BY name\n  )\n\n-- Main query: 1 row per name\nSELECT\n  s.name AS \"Name\",\n  h.run_duration_history AS \"Run History (s)\",\n  h.outcome_history AS \"Outcome History\",\n  h.subject_id_history AS \"Run IDs\",\n  h.url_history AS \"URLs\",\n  h.started_times AS \"Started Times\",\n  h.completion_times AS \"Completion Times\",\n  h.queue_duration_history AS \"Queue History (s)\",\n  s.p80_duration AS \"P80 Duration (s)\",\n  s.total_runs AS \"Total Runs\"\nFROM aggregated_stats s\nLEFT JOIN history_arrays h ON s.name = h.name\nORDER BY s.name",
+              "refId": "",
+              "datasource": {
+                "type": "grafana-postgresql-datasource",
+                "uid": "${datasource}"
+              },
+              "editorMode": "code",
+              "rawQuery": true
+            }
+          ],
+          "gridPos": {
+            "h": 16,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "options": {
+            "maxHistoryItems": 20,
+            "showQueueHistory": true,
+            "barHeight": 20,
+            "barGap": 2
+          }
+        }
+      ],
+      "title": "Pipeline: Latest $limit Executions",
+      "gridPos": {
+        "x": 0,
+        "y": 13,
+        "h": 1,
+        "w": 24
       }
     }
   ],
-  "version": 2026020720
+  "version": 2026021320
 }

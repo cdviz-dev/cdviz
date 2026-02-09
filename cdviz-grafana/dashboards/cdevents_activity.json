@@ -3,7 +3,7 @@
   "editable": true,
   "graphTooltip": 0,
   "fiscalYearStartMonth": 0,
-  "schemaVersion": 41,
+  "schemaVersion": 39,
   "templating": {
     "list": [
       {
@@ -11,7 +11,6 @@
         "name": "datasource",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -24,7 +23,6 @@
         "name": "subjects",
         "skipUrlSync": false,
         "multi": true,
-        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -47,7 +45,6 @@
         "name": "predicates",
         "skipUrlSync": false,
         "multi": true,
-        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -70,7 +67,6 @@
         "name": "pageSize",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -87,7 +83,6 @@
         "name": "offset",
         "skipUrlSync": false,
         "multi": false,
-        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -108,7 +103,7 @@
     "cdevents"
   ],
   "time": {
-    "from": "now-7d",
+    "from": "now-31d",
     "to": "now"
   },
   "panels": [
@@ -150,6 +145,7 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COUNT(*) as count,\n  subject || '/' || predicate as path\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -187,6 +183,7 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  (subject || '/' || predicate) AS kind,\n  COUNT(*)\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -263,6 +260,7 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COUNT(*) as count,\n  \"payload\" -> 'context' ->> 'source' as \"path\"\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY path\nORDER BY path",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -866,6 +864,7 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"payload\" -> 'customData' as \"payload_custom\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -876,5 +875,5 @@
       ]
     }
   ],
-  "version": 2026020720
+  "version": 2026021320
 }
