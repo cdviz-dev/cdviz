@@ -1,0 +1,32 @@
+dts_0,id,testSuite_id,testSuite_name,environment,queued,started,finished,outcome,severity,reason
+0d 2h,tsr-unit-100,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,45s,pass,,
+0d 8h,tsr-unit-101,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,42s,pass,,
+0d 14h,tsr-integration-10,ts-int-feat,Integration Test Suite - Feature,dev,0s,2s,3m20s,pass,,
+0d 20h,tsr-unit-102,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,44s,pass,,
+1d 1h,tsr-smoke-1,ts-smoke,Smoke Test Suite,dev,0s,1s,25s,pass,,
+1d 7h,tsr-unit-11,ts-unit-feat,Unit Test Suite - Feature,dev,0s,1s,35s,fail,high,3 tests failed
+1d 7h 15m,tsr-unit-11r,ts-unit-feat,Unit Test Suite - Feature,dev,0s,1s,37s,pass,,
+1d 13h,tsr-unit-103,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,43s,pass,,
+1d 19h,tsr-e2e-release,ts-e2e-full,E2E Test Suite - Full,staging,0s,5s,12m30s,pass,,
+2d 3h,tsr-unit-104,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,15s,error,critical,Build artifacts missing
+2d 3h 10m,tsr-unit-104r,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,41s,pass,,
+2d 9h,tsr-integration-12,ts-int-feat,Integration Test Suite - Feature,dev,0s,2s,3m45s,pass,,
+2d 15h,tsr-perf-full,ts-perf-load,Performance Test Suite - Load,staging,0s,10s,38m,pass,,
+2d 21h,tsr-unit-105,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,40s,pass,,
+3d 4h,tsr-security-1,ts-security-full,Security Test Suite - Full,dev,0s,3s,14m20s,pass,,
+3d 10h,tsr-contract-1,ts-contract-api,Contract Test Suite - API,dev,0s,2s,2m15s,pass,,
+3d 16h,tsr-unit-106,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,42s,pass,,
+3d 22h,tsr-integration-full,ts-int-full,Integration Test Suite - Full,staging,0s,5s,28m30s,pass,,
+4d 5h,tsr-unit-107,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,43s,pass,,
+4d 11h,tsr-regression,ts-regression,Regression Test Suite,staging,0s,3s,8m45s,fail,medium,2 regression failures
+4d 11h 30m,tsr-e2e-prod,ts-e2e-prod,E2E Test Suite - Production,prod,0s,8s,6m20s,pass,,
+4d 17h,tsr-unit-108,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,10s,error,critical,Test framework error
+4d 17h 20m,tsr-unit-109,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,41s,pass,,
+4d 23h,tsr-nightly-full,ts-nightly-full,Nightly Test Suite - Complete,dev,0s,15s,48m,pass,,
+5d 6h,tsr-compatibility,ts-compat-browsers,Compatibility Test Suite - Browsers,dev,0s,5s,9m30s,pass,,
+5d 12h,tsr-unit-110,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,44s,pass,,
+5d 18h,tsr-api-contract,ts-api-contract,API Contract Test Suite,dev,0s,2s,4m15s,pass,,
+6d 0h,tsr-unit-111,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,42s,pass,,
+6d 6h,tsr-unit-112,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,43s,pass,,
+6d 12h,tsr-security-2,ts-security-full,Security Test Suite - Full,dev,0s,3s,14m50s,pass,,
+6d 18h,tsr-unit-113,ts-unit-main,Unit Test Suite - Main,dev,0s,1s,41s,pass,,

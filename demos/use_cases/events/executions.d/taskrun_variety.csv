@@ -1,0 +1,56 @@
+dts_0,id,taskName,pipelineRun_id,started,finished,outcome
+0d 2h,t-100-checkout,checkout,pr-main-100,0s,15s,success
+0d 2h,t-100-build,build,pr-main-100,20s,3m,success
+0d 2h,t-100-unit-test,unit-test,pr-main-100,3m5s,5m,success
+0d 2h,t-100-lint,lint,pr-main-100,5m5s,6m30s,success
+0d 2h,t-100-package,package,pr-main-100,6m35s,8m30s,success
+0d 8h,t-101-checkout,checkout,pr-main-101,0s,12s,success
+0d 8h,t-101-build,build,pr-main-101,15s,2m45s,success
+0d 8h,t-101-unit-test,unit-test,pr-main-101,2m50s,4m30s,success
+0d 8h,t-101-lint,lint,pr-main-101,4m35s,6m,success
+0d 8h,t-101-package,package,pr-main-101,6m5s,7m45s,success
+0d 14h,t-10-checkout,checkout,pr-feat-10,0s,18s,success
+0d 14h,t-10-build,build,pr-feat-10,20s,4m,success
+0d 14h,t-10-test,test,pr-feat-10,4m5s,10m,success
+0d 14h,t-10-deploy-dev,deploy-dev,pr-feat-10,10m5s,12m,success
+1d 7h,t-11-checkout,checkout,pr-feat-11,0s,15s,success
+1d 7h,t-11-build,build,pr-feat-11,18s,1m30s,failure
+1d 7h 15m,t-11r-checkout,checkout,pr-feat-11,0s,14s,success
+1d 7h 15m,t-11r-build,build,pr-feat-11,17s,3m,success
+1d 7h 15m,t-11r-test,test,pr-feat-11,3m5s,9m,success
+1d 7h 15m,t-11r-deploy-dev,deploy-dev,pr-feat-11,9m5s,11m30s,success
+1d 19h,t-r1-checkout,checkout,pr-release-1,0s,20s,success
+1d 19h,t-r1-build,build,pr-release-1,25s,5m,success
+1d 19h,t-r1-integration-test,integration-test,pr-release-1,5m5s,18m,success
+1d 19h,t-r1-security-scan,security-scan,pr-release-1,18m5s,23m,success
+1d 19h,t-r1-package,package,pr-release-1,23m5s,25m,success
+2d 3h,t-104-checkout,checkout,pr-main-104,0s,10s,success
+2d 3h,t-104-build,build,pr-main-104,12s,1m,failure
+2d 3h 10m,t-104r-checkout,checkout,pr-main-104,0s,11s,success
+2d 3h 10m,t-104r-build,build,pr-main-104,13s,2m30s,success
+2d 3h 10m,t-104r-unit-test,unit-test,pr-main-104,2m35s,4m20s,success
+2d 3h 10m,t-104r-lint,lint,pr-main-104,4m25s,6m,success
+2d 3h 10m,t-104r-package,package,pr-main-104,6m5s,8m40s,success
+2d 15h,t-perf-1-setup,setup-env,pr-perf-1,0s,2m,success
+2d 15h,t-perf-1-build,build,pr-perf-1,2m5s,8m,success
+2d 15h,t-perf-1-load-test,load-test,pr-perf-1,8m5s,35m,success
+2d 15h,t-perf-1-report,generate-report,pr-perf-1,35m5s,45m,success
+3d 4h,t-sec-1-checkout,checkout,pr-sec-1,0s,15s,success
+3d 4h,t-sec-1-sast,sast-scan,pr-sec-1,18s,8m,success
+3d 4h,t-sec-1-deps,dependency-scan,pr-sec-1,8m5s,12m,success
+3d 4h,t-sec-1-container,container-scan,pr-sec-1,12m5s,15m30s,success
+3d 22h,t-int-1-setup,setup,pr-integration-1,0s,1m,success
+3d 22h,t-int-1-db-migrate,db-migrate,pr-integration-1,1m5s,3m,success
+3d 22h,t-int-1-api-test,api-test,pr-integration-1,3m5s,25m,success
+3d 22h,t-int-1-cleanup,cleanup,pr-integration-1,25m5s,35m,success
+4d 17h,t-108-checkout,checkout,pr-main-108,0s,10s,success
+4d 17h,t-108-build,build,pr-main-108,12s,2m,error
+5d 6h,t-14-checkout,checkout,pr-feat-14,0s,16s,success
+5d 6h,t-14-build,build,pr-feat-14,18s,3m,success
+5d 6h,t-14-test,test,pr-feat-14,3m5s,9m,success
+5d 6h,t-14-deploy-dev,deploy-dev,pr-feat-14,9m5s,11m,success
+6d 6h,t-111-checkout,checkout,pr-main-111,0s,14s,success
+6d 6h,t-111-build,build,pr-main-111,16s,3m,success
+6d 6h,t-111-unit-test,unit-test,pr-main-111,3m5s,5m,success
+6d 6h,t-111-lint,lint,pr-main-111,5m5s,6m30s,success
+6d 6h,t-111-package,package,pr-main-111,6m35s,8m35s,success

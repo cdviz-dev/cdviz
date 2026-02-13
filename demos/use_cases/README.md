@@ -23,9 +23,13 @@
 Located in [`events/executions.d/`](events/executions.d/):
 
 - **pipelinerun_basic.csv**: Basic pipeline execution examples
+- **pipelinerun_variety.csv**: 30+ pipelines with various types, outcomes, and retry patterns distributed over 7 days
 - **taskrun_basic.csv**: Basic task execution examples with links to pipelines
+- **taskrun_variety.csv**: 50+ tasks including builds, tests, security scans, and deployments across different pipeline runs
 - **testsuiterun_basic.csv**: Basic test suite execution examples
+- **testsuiterun_variety.csv**: 30+ test suites covering unit, integration, e2e, performance, security, and regression testing
 - **testcaserun_basic.csv**: Basic test case execution examples with links to test suites
+- **testcaserun_variety.csv**: 40+ test cases with realistic scenarios including failures, retries, and various test types
 
 ### Artifact Lifecycle Events
 

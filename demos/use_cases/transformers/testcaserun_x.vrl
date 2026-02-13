@@ -1,0 +1,101 @@
+output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("6d", unit: "s") ?? 6*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? 0.0)
+
+# Determine event types based on available fields
+event_types = []
+if !is_nullish(.body.queued) {
+  event_types = push(event_types, "queued")
+}
+if !is_nullish(.body.started) {
+  event_types = push(event_types, "started")
+}
+if !is_nullish(.body.finished) && !is_nullish(.body.outcome) {
+  event_types = push(event_types, "finished")
+}
+# Handle skipped events (no queued/started/finished but has reason or severity)
+if length(event_types) == 0 && (!is_nullish(.body.reason) || !is_nullish(.body.severity)) {
+  event_types = push(event_types, "skipped")
+}
+
+for_each(event_types) -> |_index, value| {
+  delta_duration = -1.0
+  if value == "queued" && !is_nullish(.body.queued) {
+    delta_duration = parse_duration(.body.queued, unit: "s") ?? -1.0
+  } else if value == "started" && !is_nullish(.body.started) {
+    delta_duration = parse_duration(.body.started, unit: "s") ?? -1.0
+  } else if value == "finished" && !is_nullish(.body.finished) {
+    delta_duration = parse_duration(.body.finished, unit: "s") ?? -1.0
+  } else if value == "skipped" {
+    delta_duration = 0.0
+  }
+
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+    ts = from_unix_timestamp(t0 + to_int(delta_duration)) ?? now()
+    ts = format_timestamp!(ts, format: "%+")
+    event_type = "dev.cdevents.testcaserun." + to_string!(value) + ".0.2.0"
+
+    event = {
+      "metadata": .metadata,
+      "headers": .headers,
+      "body": {
+        "context": {
+          "version": "0.4.1",
+          "id": "0",
+          "source": "/demo/use_cases",
+          "type": event_type,
+          "timestamp": ts,
+        },
+        "subject": {
+          "id": .body.id,
+          "type": "testCaseRun",
+          "content": {
+            "environment": {
+              "id": .body.environment
+            }
+          }
+        }
+      }
+    }
+
+    # Add testCase information if present
+    if !is_nullish(.body.testCase_id) {
+      event.body.subject.content.testCase = {
+        "id": .body.testCase_id
+      }
+      if !is_nullish(.body.testCase_name) {
+        event.body.subject.content.testCase.name = .body.testCase_name
+      }
+      if !is_nullish(.body.testCase_type) {
+        event.body.subject.content.testCase.type = .body.testCase_type
+      }
+    }
+
+    # Add testSuiteRun reference if present
+    if !is_nullish(.body.testSuiteRun_id) {
+      event.body.subject.content.testSuiteRun = {
+        "id": .body.testSuiteRun_id
+      }
+    }
+
+    # Add outcome for finished events
+    if value == "finished" && !is_nullish(.body.outcome) {
+      event.body.subject.content.outcome = .body.outcome
+    }
+
+    # Add severity if present (for finished or skipped events)
+    if (value == "finished" || value == "skipped") && !is_nullish(.body.severity) {
+      event.body.subject.content.severity = .body.severity
+    }
+
+    # Add reason if present (for finished or skipped events)
+    if (value == "finished" || value == "skipped") && !is_nullish(.body.reason) {
+      event.body.subject.content.reason = .body.reason
+    }
+
+    output = push(output, event)
+  }
+}
+output
