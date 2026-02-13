@@ -16,22 +16,33 @@
   - regions: `eu-1`, `eu-2`, `us-2` (dev and uat on `eu-1`, prod on `us-2` and `eu-2`)
   - namespace: `ns-a`, `ns-b`
 
-## Scenarii
+## Sample Data
 
-### service deployment
+### Execution Events
 
-- sequence stages: [202401-dev-uat-prods](`202401-dev-uat-prods.csv`): dev -> uat -> all prod
-- sequence clusters: [202402-dev-uat-prod1](`202402-dev-uat-prod1.csv`): dev -> uat -> prod 1 -> prod 2
-- wip: [202403-dev](`202403-dev.csv`): dev
-- rejected on uat: [202404-dev-uat](`202404-dev-uat.csv`): dev -> uat
-- hotfix: [202405-dev-prod](`202405-dev-prod.csv`): dev -> prod 1
+Located in [`events/executions.d/`](events/executions.d/):
+
+- **pipelinerun_basic.csv**: Basic pipeline execution examples
+- **taskrun_basic.csv**: Basic task execution examples with links to pipelines
+- **testsuiterun_basic.csv**: Basic test suite execution examples
+- **testcaserun_basic.csv**: Basic test case execution examples with links to test suites
+
+### Artifact Lifecycle Events
+
+Located in [`events/artifact_lifecycle.d/`](events/artifact_lifecycle.d/):
+
+- **app-a.csv**: Artifact deployment lifecycle for app-a across environments
+- **app-b.csv**: Artifact deployment lifecycle for app-b across environments
+- **app-c.csv**: Artifact deployment lifecycle for app-c across environments
 
 ## Usage
 
-1. Setup a `cdviz-collector` with a configution like in [`cdviz-collector.yaml`](./cdviz-collector.toml):
+1. The `cdviz-collector` is configured via [`cdviz-collector.toml`](./cdviz-collector.toml) to:
 
-    - push events into a db
-    - watch content of the `cdevents` folder (json files & csv files)
+    - Watch sample data directories directly (`events/executions.d/`, `events/artifact_lifecycle.d/`)
+    - Transform CSV files using VRL transformers in `transformers/`
+    - Push transformed events into the database
+    - Accept CDEvents JSON files in `events/cdevents.in.d/` (optional)
 
 2. Run the `cdviz-collector`:
 
@@ -40,5 +51,6 @@
   cdviz-collector connect -vv --config ./cdviz-collector.toml
   ```
 
-3. Copy the files (json or csv) from `events/{subject}_{predicate}.sampled.d/*.{json, csv}` into the `eventscdevents/{subject}_{predicate}.in.d/` folder to trigger the processing.
+3. The collector automatically loads all sample CSV files from the data directories. No copying or symlinking needed!
+
 4. Open the dashboard (e.g. for local dev launched via `mise run stack:compose:up`, open <http://localhost:3000/dashboards>)

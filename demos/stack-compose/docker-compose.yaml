@@ -92,7 +92,7 @@ services:
       - /var/use_cases
       - --config
       - ./cdviz-collector.toml
-    # restart: unless-stopped
+    restart: "no"  # Do not restart on failure - stack should fail if collector stops
     environment:
       - CDVIZ_COLLECTOR__HTTP__PORT=8080
       - CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED=true

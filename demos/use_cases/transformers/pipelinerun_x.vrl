@@ -1,4 +1,7 @@
 output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("7d", unit: "s") ?? 7*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
 for_each(["queued", "started", "finished"]) -> |_index, value| {
   delta_duration = -1.0
   # log(value, level: "info")
@@ -19,7 +22,9 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
     ts = from_unix_timestamp(to_unix_timestamp(ts) + to_int(delta_duration)) ?? ts
     ts = format_timestamp!(ts, format: "%+")
     # log(ts, level: "info", rate_limit_secs: 60)
-    pipeline_name = .body.name
+    pipeline_name = to_string!(.body.name)
+    event_type = "dev.cdevents.pipelinerun." + to_string!(value) + ".0.2.0"
+    pipeline_url = "https://www.example.com/pipeline/" + pipeline_name
     event = {
       "metadata": .metadata,
       "headers": .headers,
@@ -29,7 +34,7 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
           "id": "0",
           # "chainId": "0",
           "source": "/demo/use_cases",
-          "type": "dev.cdevents.pipelinerun.{{ value }}.0.2.0",
+          "type": event_type,
           "timestamp": ts,
         },
         "subject": {
@@ -37,7 +42,7 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
           # "source": "/event/source/123",
           "type": "pipelineRun",
           "content": {
-            "url": "https://www.example.com/pipeline/{{ pipeline_name }}" ?? null,
+            "url": pipeline_url,
             "pipelineName": pipeline_name,
           }
         }
