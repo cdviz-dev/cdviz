@@ -85,7 +85,9 @@ onMounted(() => {
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"
       >
         <!-- Explain the value we provide -->
-        <span class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out block">
+        <span
+          class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out block"
+        >
           Monitor Your Software Delivery Pipeline
         </span>
         <span
