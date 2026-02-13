@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-13
+
+### Added
+
+- `execution` dashboards provide an overview section and switch to the `cdiz-executiontable-panel` to display execution as table ([c4955f6](c4955f696ed94acdaf803ed81eb5073c216f3ac5))
+
+### Changed
+
+- Update the informations about the executions dashboards ([d8a14d3](d8a14d39712e218a383ea90a5542e815119411d3))
+
+### Fixed
+
+- Link to database schema/migrations into the documentation ([3f003d9](3f003d98511eeee05b5994a296d97433c12fd3fc))
+- Don't mix package from different repository_url (and sub-namespace) in artifact timeline ([b8f6158](b8f615807a4c837cd52cbba1a95eaaf8779a4022))
+
 ## [1.0.0] - 2026-01-14
 
 ### Changed
