@@ -103,7 +103,7 @@
     "cdevents"
   ],
   "time": {
-    "from": "now-7d",
+    "from": "now-31d",
     "to": "now"
   },
   "panels": [
@@ -875,5 +875,5 @@
       ]
     }
   ],
-  "version": 2026011418
+  "version": 2026021320
 }

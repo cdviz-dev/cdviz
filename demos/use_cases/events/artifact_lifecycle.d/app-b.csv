@@ -1,5 +1,9 @@
 artifact_id,deploy_ns,dts_0,dts_published,dts_signed,dts_group1-dev/eu-1,dts_group1-uat/eu-1,dts_group1-prod/eu-2,dts_group1-prod/us-2
-pkg:oci/app-b?tag=0.1.0,ns-a/deploy-a/container-b,1d,12h,12h 2m,12h 30m,13h,14h,14h
-pkg:oci/app-b?tag=0.2.0,ns-a/deploy-a/container-b,3d,12h,12h 2m,12h 30m,13h,14h,14h
-pkg:oci/app-b?tag=0.3.0,ns-a/deploy-a/container-b,5d,9h,9h 2m,9h 30m,,,
-pkg:oci/app-b?tag=0.3.1,ns-a/deploy-a/container-b,5d,12h,12h 2m,12h 30m,,,
+pkg:oci/app-b?tag=0.1.0&repository_url=ghcr.io/foo,ns-a/deploy-a/container-b,1d,12h,12h 2m,12h 30m,13h,14h,14h
+pkg:oci/app-b?tag=0.1.0&repository_url=ghcr.io/foo/charts,ns-a/deploy-a/container-b,1d,12h 1m,12h 3m,12h 31m,13h 1m,14h 1m,14h 1m
+pkg:oci/app-b?tag=0.2.0&repository_url=ghcr.io/foo,ns-a/deploy-a/container-b,3d,12h,12h 2m,12h 30m,13h,14h,14h
+pkg:oci/app-b?tag=0.2.0&repository_url=ghcr.io/foo/charts,ns-a/deploy-a/container-b,3d,12h 1m,12h 3m,12h 31m,13h 1m,14h 1m,14h 1m
+pkg:oci/app-b?tag=0.3.0&repository_url=ghcr.io/foo,ns-a/deploy-a/container-b,5d,9h,9h 2m,9h 30m,,,
+pkg:oci/app-b?tag=0.3.0&repository_url=ghcr.io/foo/charts,ns-a/deploy-a/container-b,5d,9h 1m,9h 3m,9h 31m,,,
+pkg:oci/app-b?tag=0.3.1&repository_url=ghcr.io/foo,ns-a/deploy-a/container-b,5d,12h,12h 2m,12h 30m,,,
+pkg:oci/app-b?tag=0.3.1&repository_url=ghcr.io/foo/charts,ns-a/deploy-a/container-b,5d,12h 1m,12h 3m,12h 31m,,,

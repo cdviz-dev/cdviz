@@ -53,6 +53,11 @@ function deepCompare(value1: unknown, value2: unknown): boolean {
 
   // compare properties recursively
   if (typeof value1 === "object") {
+    // Handle null case (typeof null === "object" in JavaScript)
+    if (value1 === null || value2 === null) {
+      return value1 === value2;
+    }
+
     if (Array.isArray(value1) !== Array.isArray(value2)) {
       return false;
     }

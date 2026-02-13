@@ -1,0 +1,12 @@
+dts_0,id,testCase_id,testCase_name,testCase_type,testSuiteRun_id,environment,queued,started,finished,outcome,severity,reason
+0s,tc-0-login,tc-login,Login Test,integration,ts-0-auth,dev,0s,5s,15s,pass,,
+0s,tc-0-logout,tc-logout,Logout Test,integration,ts-0-auth,dev,15s,15s,23s,pass,,
+0s,tc-0-signup,tc-signup,Signup Test,integration,ts-0-auth,dev,25s,27s,37s,fail,high,Invalid email validation
+1m,tc-1-api-health,tc-health,API Health Check,functional,ts-1-api,dev,0s,1s,4s,pass,,
+1m,tc-1-api-auth,tc-api-auth,API Authentication,functional,ts-1-api,dev,5s,7s,17s,pass,,
+1m,tc-1-api-perf,tc-perf,API Performance,performance,ts-1-api,dev,20s,25s,70s,pass,,
+2m,tc-2-unit-calc,tc-calc,Calculator Unit Test,unit,ts-2-unit,dev,0s,0s,2s,pass,,
+2m,tc-2-unit-parse,tc-parse,Parser Unit Test,unit,ts-2-unit,dev,5s,5s,6s,error,medium,Timeout during execution
+2m,tc-2-unit-format,tc-format,Formatter Unit Test,unit,ts-2-unit,dev,10s,10s,11s,pass,,
+3m,tc-3-e2e-flow,tc-e2e,End-to-End Flow,e2e,ts-3-e2e,dev,0s,10s,130s,pass,,
+5m,tc-4-skip,tc-skip,Skipped Test,integration,,dev,,,,,low,Not running in dev environment

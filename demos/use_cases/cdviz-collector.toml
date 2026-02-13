@@ -8,6 +8,8 @@ url = "postgresql://cdviz:postgres-password@127.0.0.1:5432/cdviz"
 pool_connections_min = 1
 pool_connections_max = 10
 
+[sources]
+
 [sources.cdevents_local_json]
 enabled = true
 
@@ -20,65 +22,57 @@ recursive = true
 path_patterns = ["*.json"]
 parser = "json"
 
-[sources.service_deployed_local_csv]
-enabled = false
-
-[sources.service_deployed_local_csv.extractor]
-type = "opendal"
-kind = "fs"
-polling_interval = "20s"
-parameters = { root = "./events/service_deployed.in.d" }
-recursive = false
-path_patterns = ["*.csv"]
-parser = "csv_row"
-
-[[sources.service_deployed_local_csv.transformers]]
-type = "vrl"
-template = """
-[{
-    "metadata": .metadata,
-    "headers": .headers,
-    "body": {
-        "context": {
-            "version": "0.4.1",
-            "id": .boby.id,
-            "source": "/demo/use_cases",
-            "type": "dev.cdevents.service.deployed.0.1.1",
-            "timestamp": .body.timestamp,
-            # "chainId": ??
-            # "links": ??
-        },
-        "subject": {
-            "id": .body.id,
-            # "source": ,
-            "type": "service",
-            "content": {
-                "environment": {
-                    "id": .body.env
-                },
-                "artifactId": .body.artifact_id
-            }
-        }
-    }
-}]
-"""
-
 [sources.pipelinerun_x_local_csv]
-enabled = false
+enabled = true
 transformer_refs = ["pipelinerun_x", "log"]
 
 [sources.pipelinerun_x_local_csv.extractor]
 type = "opendal"
 kind = "fs"
 polling_interval = "20s"
-parameters = { root = "./events/pipelinerun_x.in.d" }
+parameters = { root = "./events/executions.d" }
 recursive = false
-path_patterns = ["*.csv"]
+path_patterns = ["pipelinerun_*.csv"]
 parser = "csv_row"
 
-[transformers.pipelinerun_x]
-type = "vrl"
-template_file = "./transformers/pipelinerun_x.vrl"
+[sources.taskrun_x_local_csv]
+enabled = true
+transformer_refs = ["taskrun_x", "log"]
+
+[sources.taskrun_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/executions.d" }
+recursive = false
+path_patterns = ["taskrun_*.csv"]
+parser = "csv_row"
+
+[sources.testcaserun_x_local_csv]
+enabled = true
+transformer_refs = ["testcaserun_x", "log"]
+
+[sources.testcaserun_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/executions.d" }
+recursive = false
+path_patterns = ["testcaserun_*.csv"]
+parser = "csv_row"
+
+[sources.testsuiterun_x_local_csv]
+enabled = true
+transformer_refs = ["testsuiterun_x", "log"]
+
+[sources.testsuiterun_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/executions.d" }
+recursive = false
+path_patterns = ["testsuiterun_*.csv"]
+parser = "csv_row"
 
 [sources.artifact_lifecycle_csv]
 enabled = true
@@ -93,6 +87,9 @@ recursive = false
 path_patterns = ["*.csv"]
 parser = "csv_row"
 
-[transformers.artifact_lifecycle]
-type = "vrl"
-template_file = "./transformers/artifact_lifecycle.vrl"
+[transformers]
+artifact_lifecycle = { type = "vrl", template_file = "./transformers/artifact_lifecycle.vrl" }
+pipelinerun_x = { type = "vrl", template_file = "./transformers/pipelinerun_x.vrl"}
+testsuiterun_x = {type = "vrl", template_file = "./transformers/testsuiterun_x.vrl"}
+testcaserun_x ={ type = "vrl", template_file = "./transformers/testcaserun_x.vrl" }
+taskrun_x = {type = "vrl", template_file = "./transformers/taskrun_x.vrl"}

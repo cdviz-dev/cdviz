@@ -2,6 +2,18 @@
 min_version = "2025.10.6" # "2025.9.7"
 experimental_monorepo_root = true
 
+[monorepo]
+config_roots = [
+    "cdviz-db",
+    "cdviz-grafana",
+    "cdviz-grafana/dashboards_generator",
+    "cdviz-site",
+    "charts",
+    "charts/*",         # Individual chart directories
+    "demos",
+    "demos/*",          # Single-level glob pattern
+]
+
 [settings]
 experimental = true
 

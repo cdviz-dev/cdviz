@@ -1,29 +1,24 @@
 output = []
 t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
 t0 = to_unix_timestamp(t0) - to_int(parse_duration("6d", unit: "s") ?? 6*24*3600)
-t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? 0.0)
+
 for_each(["queued", "started", "finished"]) -> |_index, value| {
   delta_duration = -1.0
-  # log(value, level: "info")
   if value == "queued" && !is_nullish(.body.queued) {
-    # log(.body.queued)
     delta_duration = parse_duration(.body.queued, unit: "s") ?? -1.0
   } else if value == "started" && !is_nullish(.body.started) {
-    # log(.body.started)
     delta_duration = parse_duration(.body.started, unit: "s") ?? -1.0
   } else if value == "finished" && !is_nullish(.body.finished) {
-    # log(.body.finished)
     delta_duration = parse_duration(.body.finished, unit: "s") ?? -1.0
   }
-  # log(delta_duration, level: "info")
+
   if delta_duration >= 0.0 {
     delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
     ts = from_unix_timestamp(t0 + to_int(delta_duration)) ?? now()
     ts = format_timestamp!(ts, format: "%+")
-    # log(ts, level: "info", rate_limit_secs: 60)
-    pipeline_name = to_string!(.body.name)
-    event_type = "dev.cdevents.pipelinerun." + to_string!(value) + ".0.2.0"
-    pipeline_url = "https://www.example.com/pipeline/" + pipeline_name
+    event_type = "dev.cdevents.testsuiterun." + to_string!(value) + ".0.2.0"
+
     event = {
       "metadata": .metadata,
       "headers": .headers,
@@ -31,25 +26,47 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
         "context": {
           "version": "0.4.1",
           "id": "0",
-          # "chainId": "0",
           "source": "/demo/use_cases",
           "type": event_type,
           "timestamp": ts,
         },
         "subject": {
           "id": .body.id,
-          # "source": "/event/source/123",
-          "type": "pipelineRun",
+          "type": "testSuiteRun",
           "content": {
-            "url": pipeline_url,
-            "pipelineName": pipeline_name,
+            "environment": {
+              "id": .body.environment
+            }
           }
         }
       }
     }
+
+    # Add testSuite information if present
+    if !is_nullish(.body.testSuite_id) {
+      event.body.subject.content.testSuite = {
+        "id": .body.testSuite_id
+      }
+      if !is_nullish(.body.testSuite_name) {
+        event.body.subject.content.testSuite.name = .body.testSuite_name
+      }
+    }
+
+    # Add outcome for finished events
     if value == "finished" && !is_nullish(.body.outcome) {
       event.body.subject.content.outcome = .body.outcome
     }
+
+    # Add severity if present (for finished events)
+    if value == "finished" && !is_nullish(.body.severity) {
+      event.body.subject.content.severity = .body.severity
+    }
+
+    # Add reason if present (for finished events)
+    if value == "finished" && !is_nullish(.body.reason) {
+      event.body.subject.content.reason = .body.reason
+    }
+
     output = push(output, event)
   }
 }

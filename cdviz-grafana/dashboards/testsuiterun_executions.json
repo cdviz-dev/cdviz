@@ -27,12 +27,12 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "label": "Test",
+        "label": "Test Suite",
         "datasource": {
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'testcaserun'\nORDER BY __value",
+        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'testsuiterun'\nORDER BY __value",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -55,10 +55,10 @@
     ]
   },
   "annotations": {},
-  "title": "Test: Executions",
-  "uid": "testcaserun_executions",
+  "title": "Test Suite: Executions",
+  "uid": "testsuiterun_executions",
   "tags": [
-    "testcaserun"
+    "testsuiterun"
   ],
   "time": {
     "from": "now-31d",
@@ -70,7 +70,7 @@
       "collapsed": false,
       "id": 0,
       "panels": [],
-      "title": "Test: Overview",
+      "title": "Test Suite: Overview",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -90,7 +90,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (finished_at - started_at))), 0) AS total_duration\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (finished_at - started_at))), 0) AS total_duration\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -134,7 +134,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (finished_at - started_at))), 0) AS avg_runtime\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (finished_at - started_at))), 0) AS avg_runtime\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -178,7 +178,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (started_at - queued_at))), 0) AS avg_queue_time\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\n  AND queued_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (started_at - queued_at))), 0) AS avg_queue_time\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\n  AND queued_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -222,7 +222,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail') / NULLIF(COUNT(*), 0),\n    0\n  ) AS failure_rate\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail') / NULLIF(COUNT(*), 0),\n    0\n  ) AS failure_rate\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -266,7 +266,7 @@
       "type": "timeseries",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Test Total Duration per Day",
+      "title": "Test Suite Total Duration per Day",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -274,7 +274,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  SUM(extract('epoch' from (finished_at - started_at))) AS total_duration\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  SUM(extract('epoch' from (finished_at - started_at))) AS total_duration\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -360,7 +360,7 @@
       "type": "timeseries",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Test Total Number of Run per Day",
+      "title": "Test Suite Total Number of Run per Day",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -368,7 +368,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'success' THEN 'success'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass' THEN 'pass'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'failure' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'error' THEN 'error'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip' THEN 'skip'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skipped' THEN 'skip'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'outcome', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
+          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'success' THEN 'success'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass' THEN 'pass'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'failure' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'error' THEN 'error'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip' THEN 'skip'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skipped' THEN 'skip'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'outcome', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.testsuiterun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -543,7 +543,7 @@
           "targets": [
             {
               "format": "table",
-              "rawSql": "WITH\n  -- Get last N executions per name with all details\n  execution_history AS (\n    SELECT\n      last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' AS name,\n      subject_id,\n      last_payload -> 'subject' -> 'content' ->> 'outcome' AS outcome,\n      extract('epoch' from (finished_at - started_at)) AS run_duration,\n      extract('epoch' from (started_at - queued_at)) AS queue_duration,\n      last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n      started_at,\n      finished_at,\n      queued_at,\n      row_number() OVER (PARTITION BY last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' ORDER BY finished_at DESC) AS rn\n    FROM cdviz.testcaserun\n    WHERE\n      ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n      AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n      AND finished_at IS NOT NULL\n  ),\n\n  -- Aggregate statistics per name\n  aggregated_stats AS (\n    SELECT\n      name,\n      COALESCE(PERCENTILE_CONT(0.80) WITHIN GROUP (ORDER BY run_duration), 0) AS p80_duration,\n      COUNT(*) AS total_runs\n    FROM execution_history\n    GROUP BY name\n  ),\n\n  -- Create arrays of historical data for visualization\n  history_arrays AS (\n    SELECT\n      name,\n      COALESCE(array_agg(run_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS run_duration_history,\n      COALESCE(array_agg(queue_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS queue_duration_history,\n      COALESCE(array_agg(outcome ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS outcome_history,\n      COALESCE(array_agg(subject_id ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS subject_id_history,\n      COALESCE(array_agg(url ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS url_history,\n      COALESCE(array_agg(started_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS started_times,\n      COALESCE(array_agg(finished_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS completion_times,\n      COALESCE(array_agg(queued_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS queued_times\n    FROM execution_history\n    WHERE rn <= 20\n    GROUP BY name\n  )\n\n-- Main query: 1 row per name\nSELECT\n  s.name AS \"Name\",\n  h.run_duration_history AS \"Run History (s)\",\n  h.outcome_history AS \"Outcome History\",\n  h.subject_id_history AS \"Run IDs\",\n  h.url_history AS \"URLs\",\n  h.started_times AS \"Started Times\",\n  h.completion_times AS \"Completion Times\",\n  h.queue_duration_history AS \"Queue History (s)\",\n  s.p80_duration AS \"P80 Duration (s)\",\n  s.total_runs AS \"Total Runs\"\nFROM aggregated_stats s\nLEFT JOIN history_arrays h ON s.name = h.name\nORDER BY s.name",
+              "rawSql": "WITH\n  -- Get last N executions per name with all details\n  execution_history AS (\n    SELECT\n      last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' AS name,\n      subject_id,\n      last_payload -> 'subject' -> 'content' ->> 'outcome' AS outcome,\n      extract('epoch' from (finished_at - started_at)) AS run_duration,\n      extract('epoch' from (started_at - queued_at)) AS queue_duration,\n      last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n      started_at,\n      finished_at,\n      queued_at,\n      row_number() OVER (PARTITION BY last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' ORDER BY finished_at DESC) AS rn\n    FROM cdviz.testsuiterun\n    WHERE\n      ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n      AND last_payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n      AND finished_at IS NOT NULL\n  ),\n\n  -- Aggregate statistics per name\n  aggregated_stats AS (\n    SELECT\n      name,\n      COALESCE(PERCENTILE_CONT(0.80) WITHIN GROUP (ORDER BY run_duration), 0) AS p80_duration,\n      COUNT(*) AS total_runs\n    FROM execution_history\n    GROUP BY name\n  ),\n\n  -- Create arrays of historical data for visualization\n  history_arrays AS (\n    SELECT\n      name,\n      COALESCE(array_agg(run_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS run_duration_history,\n      COALESCE(array_agg(queue_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS queue_duration_history,\n      COALESCE(array_agg(outcome ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS outcome_history,\n      COALESCE(array_agg(subject_id ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS subject_id_history,\n      COALESCE(array_agg(url ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS url_history,\n      COALESCE(array_agg(started_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS started_times,\n      COALESCE(array_agg(finished_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS completion_times,\n      COALESCE(array_agg(queued_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS queued_times\n    FROM execution_history\n    WHERE rn <= 20\n    GROUP BY name\n  ),\n\n  -- For test suites: count passed/failed/skipped from last execution\n  last_suite_breakdown AS (\n    SELECT\n      e.name,\n      COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass') AS passed,\n      COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail') AS failed,\n      COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip') AS skipped\n    FROM (\n      SELECT DISTINCT ON (name) name, subject_id\n      FROM execution_history\n      WHERE rn = 1\n    ) e\n    LEFT JOIN cdviz.testcaserun tc\n      ON tc.last_payload -> 'subject' -> 'content' -> 'testSuiteRun' ->> 'id' = e.subject_id\n    GROUP BY e.name\n  )\n\n-- Main query: 1 row per name\nSELECT\n  s.name AS \"Name\",\n  h.run_duration_history AS \"Run History (s)\",\n  h.outcome_history AS \"Outcome History\",\n  h.subject_id_history AS \"Run IDs\",\n  h.url_history AS \"URLs\",\n  h.started_times AS \"Started Times\",\n  h.completion_times AS \"Completion Times\",\n  h.queue_duration_history AS \"Queue History (s)\",\n  s.p80_duration AS \"P80 Duration (s)\",\n  s.total_runs AS \"Total Runs\",\n  COALESCE(t.passed, 0) AS \"Passed\",\n  COALESCE(t.failed, 0) AS \"Failed\",\n  COALESCE(t.skipped, 0) AS \"Skipped\"\nFROM aggregated_stats s\nLEFT JOIN history_arrays h ON s.name = h.name\nLEFT JOIN last_suite_breakdown t ON s.name = t.name\nORDER BY s.name",
               "refId": "",
               "datasource": {
                 "type": "grafana-postgresql-datasource",
@@ -567,7 +567,7 @@
           }
         }
       ],
-      "title": "Test: Latest $limit Executions",
+      "title": "Test Suite: Latest $limit Executions",
       "gridPos": {
         "x": 0,
         "y": 13,

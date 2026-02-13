@@ -51,7 +51,15 @@ services:
       # To override an option, use a predefined pattern GF_<SectionName>_<KeyName>.
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
+      # NOTE: Volkovlabs plugins discontinued (Sept 2025), but still distributed by Grafana Labs, migrating to custom plugin
+      # Still needed for: artifact_timeline, cdevents_activity (until migrated)
+      # cdviz-executiontable-panel is mounted as local plugin (see volumes below)
+      # GF_PLUGINS_INSTALL (Deprecated since v12.1.0)
       - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel,volkovlabs-form-panel,volkovlabs-table-panel
+      # Format: <plugin ID>@[<plugin version>]@<url to plugin zip>
+      - GF_PLUGINS_PREINSTALL_SYNC=cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip
+      # Allow loading unsigned plugins (required for custom plugins not in Grafana plugin registry)
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=cdviz-executiontable-panel
       # - GF_SECURITY_ADMIN_USER=admin
       # - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -76,6 +84,8 @@ services:
       - ../../cdviz-grafana/datasources:/etc/grafana/provisioning/datasources:ro
       - ../../cdviz-grafana/dashboards:/var/provisioning/dashboards:rw
       - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      # CDviz custom plugin (execution table with bar chart history)
+      # - ../../cdviz-grafana-plugins/cdviz-executiontable-panel/dist:/var/lib/grafana/plugins/cdviz-executiontable-panel:ro
       # - ./tmp/grafana.ini:/etc/grafana/grafana.ini
     depends_on:
       postgres:
@@ -92,7 +102,7 @@ services:
       - /var/use_cases
       - --config
       - ./cdviz-collector.toml
-    # restart: unless-stopped
+    restart: "no"  # Do not restart on failure - stack should fail if collector stops
     environment:
       - CDVIZ_COLLECTOR__HTTP__PORT=8080
       - CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED=true

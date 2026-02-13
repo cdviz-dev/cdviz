@@ -10,4 +10,4 @@ run = ["open http://127.0.0.1:3000"]
 
 [tasks."ci"]
 description = "Run all the ci tasks"
-depends = ["//demos/...:ci"]
+#depends = ["//demos/...:ci"]

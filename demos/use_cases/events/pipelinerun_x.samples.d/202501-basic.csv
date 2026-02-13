@@ -1,9 +1,0 @@
-timestamp,id,name,queued,started,finished,outcome
-2025-01-01T11:00:00.926Z,p-0,ci,0s,10s,3m,success
-2025-01-01T11:30:00.926Z,p-1,ci,0s,0s,3m,failure
-2025-01-01T11:33:00.926Z,p-1,ci,0s,0s,8m,success
-2025-01-01T11:36:00.926Z,p-1,ci,0s,10s,,
-2025-01-01T13:30:00.926Z,s-1,ci-s,10s,,,
-2025-01-01T13:40:00.926Z,s-2,ci-s,,10s,,
-2025-01-01T13:50:00.926Z,s-3,ci-s,,,10s,skip
-2025-01-01T13:52:00.926Z,s-4,ci-s,,,10s,skip
