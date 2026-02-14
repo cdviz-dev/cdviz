@@ -327,7 +327,7 @@ function createFailureRateStatPanel(
   const query = dedent`
     SELECT
       COALESCE(
-        100.0 * COUNT(*) FILTER (WHERE ${outcomeField} = 'fail') / NULLIF(COUNT(*), 0),
+        100.0 * COUNT(*) FILTER (WHERE ${outcomeField} IN ('fail', 'failure', 'error')) / NULLIF(COUNT(*), 0),
         0
       ) AS failure_rate
     FROM cdviz.${subject}
@@ -673,7 +673,6 @@ function createExecutionTablePanel(
   _selectAt: string,
   timeFilter: string,
 ): PanelBuilder {
-  const isTestSuite = subject === "testsuiterun";
   // testcaserun and testsuiterun views don't have outcome column, need to extract from payload
   const needsOutcomeFromPayload =
     subject === "testcaserun" || subject === "testsuiterun";
@@ -726,28 +725,18 @@ function createExecutionTablePanel(
         FROM execution_history
         WHERE rn <= 20
         GROUP BY name
-      )${
-        isTestSuite
-          ? `,
+      ),
 
-      -- For test suites: count passed/failed/skipped from last execution
-      last_suite_breakdown AS (
+      -- Aggregate outcome counts across all runs per name
+      outcome_summary AS (
         SELECT
-          e.name,
-          COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass') AS passed,
-          COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail') AS failed,
-          COUNT(*) FILTER (WHERE tc.last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip') AS skipped
-        FROM (
-          SELECT DISTINCT ON (name) name, subject_id
-          FROM execution_history
-          WHERE rn = 1
-        ) e
-        LEFT JOIN cdviz.testcaserun tc
-          ON tc.last_payload -> 'subject' -> 'content' -> 'testSuiteRun' ->> 'id' = e.subject_id
-        GROUP BY e.name
-      )`
-          : ""
-      }
+          name,
+          COUNT(*) FILTER (WHERE outcome IN ('pass', 'success')) AS passed,
+          COUNT(*) FILTER (WHERE outcome IN ('fail', 'failure', 'error')) AS failed,
+          COUNT(*) FILTER (WHERE outcome IN ('skip', 'skipped')) AS skipped
+        FROM execution_history
+        GROUP BY name
+      )
 
     -- Main query: 1 row per name
     SELECT
@@ -760,21 +749,13 @@ function createExecutionTablePanel(
       h.completion_times AS "Completion Times",
       ${withQueuedAt ? 'h.queue_duration_history AS "Queue History (s)",' : ""}
       s.p80_duration AS "P80 Duration (s)",
-      s.total_runs AS "Total Runs"${
-        isTestSuite
-          ? `,
-      COALESCE(t.passed, 0) AS "Passed",
-      COALESCE(t.failed, 0) AS "Failed",
-      COALESCE(t.skipped, 0) AS "Skipped"`
-          : ""
-      }
+      s.total_runs AS "Total Runs",
+      COALESCE(o.passed, 0) AS "Passed",
+      COALESCE(o.failed, 0) AS "Failed",
+      COALESCE(o.skipped, 0) AS "Skipped"
     FROM aggregated_stats s
-    LEFT JOIN history_arrays h ON s.name = h.name${
-      isTestSuite
-        ? `
-    LEFT JOIN last_suite_breakdown t ON s.name = t.name`
-        : ""
-    }
+    LEFT JOIN history_arrays h ON s.name = h.name
+    LEFT JOIN outcome_summary o ON s.name = o.name
     ORDER BY s.name
   `;
 

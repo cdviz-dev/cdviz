@@ -11,7 +11,7 @@ The Execution Performance Dashboard provides comprehensive visualization capabil
 - Total Duration - Aggregate time spent across all executions
 - Average Runtime - Mean execution time
 - Average Queue Time - Mean time waiting to start (when applicable)
-- Failure Rate - Percentage of failed executions with color-coded thresholds
+- Failure Rate - Percentage of failed executions (fail, failure, error) with color-coded thresholds
 
 **Time Series Visualizations**:
 
@@ -27,6 +27,9 @@ The Execution Performance Dashboard provides comprehensive visualization capabil
 - Last Queue - Most recent queue time
 - P80 Duration - 80th percentile execution time
 - Total Runs - Count of executions in selected time range
+- Passed - Count of executions with outcome pass/success
+- Failed - Count of executions with outcome fail/failure/error
+- Skipped - Count of executions with outcome skip/skipped
 
 ![Execution table detail](/screenshots/grafana_execution_table_detail-20260213.png)
 
@@ -37,10 +40,7 @@ The execution dashboard generator creates dashboards for multiple execution type
 - **Pipeline executions** - CI/CD pipeline runs
 - **Task executions** - Individual task runs
 - **Test case runs** - Individual test executions
-- **Test suite runs** - Test suite executions with additional columns:
-  - **Passed** - Count of passing test cases in the last suite execution
-  - **Failed** - Count of failing test cases in the last suite execution
-  - **Skipped** - Count of skipped test cases in the last suite execution
+- **Test suite runs** - Test suite executions
 
 ## Implementation Details
 
@@ -82,6 +82,7 @@ The table panel uses the custom `cdviz-executiontable-panel` plugin with a compl
 - Aggregates execution history per entity name
 - Creates arrays of historical data for sparkline visualization
 - Calculates P80 duration and total run counts
+- Aggregates outcome counts (passed, failed, skipped) across all runs
 - Includes last execution details (outcome, duration, queue time)
 
 ```sql
@@ -125,6 +126,17 @@ WITH
     FROM execution_history
     WHERE rn <= 20
     GROUP BY name
+  ),
+
+  -- Aggregate outcome counts across all runs per name
+  outcome_summary AS (
+    SELECT
+      name,
+      COUNT(*) FILTER (WHERE outcome IN ('pass', 'success')) AS passed,
+      COUNT(*) FILTER (WHERE outcome IN ('fail', 'failure', 'error')) AS failed,
+      COUNT(*) FILTER (WHERE outcome IN ('skip', 'skipped')) AS skipped
+    FROM execution_history
+    GROUP BY name
   )
 
 SELECT
@@ -135,9 +147,13 @@ SELECT
   h.url_history AS "URLs",
   h.queue_duration_history AS "Queue History (s)",
   s.p80_duration AS "P80 Duration (s)",
-  s.total_runs AS "Total Runs"
+  s.total_runs AS "Total Runs",
+  COALESCE(o.passed, 0) AS "Passed",
+  COALESCE(o.failed, 0) AS "Failed",
+  COALESCE(o.skipped, 0) AS "Skipped"
 FROM aggregated_stats s
 LEFT JOIN history_arrays h ON s.name = h.name
+LEFT JOIN outcome_summary o ON s.name = o.name
 ORDER BY s.name
 ```
 
