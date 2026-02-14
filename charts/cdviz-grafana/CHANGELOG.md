@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-14
+
+### Added
+
+- Add `max` to timeseries in execution dashboards ([77e3c7b](77e3c7b655253cd336fd2d1a2f544e0b56b284d7))
+
+### Fixed
+
+- Purl `pkg:oci` should not include `namespace` ([bbee859](bbee859517857adbdb76d8fe7e3c9b064a0d0cb5))
+- Execution dashboard should aggregate (sum) fail/failure/error ([cc991c0](cc991c0c4500d80d2df1e29d8611c4d840f090d5))
+
 ## [1.2.0] - 2026-02-13
 
 ### Added
