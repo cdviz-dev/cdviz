@@ -479,7 +479,7 @@ function createDurationTimeSeriesPanel(
       displayMode: "table",
       placement: "right",
       showLegend: true,
-      calcs: ["sum"],
+      calcs: ["sum", "max"],
       width: 300,
     },
   };
@@ -656,7 +656,7 @@ function createCountPerDayPanel(
       displayMode: "table",
       placement: "right",
       showLegend: true,
-      calcs: ["sum"],
+      calcs: ["sum", "max"],
       width: 300,
     },
   };
