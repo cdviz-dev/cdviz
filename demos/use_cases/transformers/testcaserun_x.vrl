@@ -14,10 +14,7 @@ if !is_nullish(.body.started) {
 if !is_nullish(.body.finished) && !is_nullish(.body.outcome) {
   event_types = push(event_types, "finished")
 }
-# Handle skipped events (no queued/started/finished but has reason or severity)
-if length(event_types) == 0 && (!is_nullish(.body.reason) || !is_nullish(.body.severity)) {
-  event_types = push(event_types, "skipped")
-}
+# Note: "skipped" is not a valid CDEvents predicate, so we skip those events
 
 for_each(event_types) -> |_index, value| {
   delta_duration = -1.0
@@ -27,8 +24,6 @@ for_each(event_types) -> |_index, value| {
     delta_duration = parse_duration(.body.started, unit: "s") ?? -1.0
   } else if value == "finished" && !is_nullish(.body.finished) {
     delta_duration = parse_duration(.body.finished, unit: "s") ?? -1.0
-  } else if value == "skipped" {
-    delta_duration = 0.0
   }
 
   if delta_duration >= 0.0 {
@@ -69,7 +64,15 @@ for_each(event_types) -> |_index, value| {
         event.body.subject.content.testCase.name = .body.testCase_name
       }
       if !is_nullish(.body.testCase_type) {
-        event.body.subject.content.testCase.type = .body.testCase_type
+        # Map test types to valid CDEvents types
+        # Valid: performance, functional, unit, security, compliance, integration, e2e, other
+        test_type = to_string!(.body.testCase_type)
+        if test_type == "smoke" {
+          test_type = "functional"
+        } else if test_type == "regression" || test_type == "compatibility" || test_type == "contract" || test_type == "accessibility" {
+          test_type = "other"
+        }
+        event.body.subject.content.testCase.type = test_type
       }
     }
 
@@ -82,16 +85,21 @@ for_each(event_types) -> |_index, value| {
 
     # Add outcome for finished events
     if value == "finished" && !is_nullish(.body.outcome) {
-      event.body.subject.content.outcome = .body.outcome
+      # Map outcome to valid CDEvents values: pass, fail, cancel, error
+      outcome = to_string!(.body.outcome)
+      if outcome == "skip" {
+        outcome = "cancel"
+      }
+      event.body.subject.content.outcome = outcome
     }
 
-    # Add severity if present (for finished or skipped events)
-    if (value == "finished" || value == "skipped") && !is_nullish(.body.severity) {
+    # Add severity if present (for finished events)
+    if value == "finished" && !is_nullish(.body.severity) {
       event.body.subject.content.severity = .body.severity
     }
 
-    # Add reason if present (for finished or skipped events)
-    if (value == "finished" || value == "skipped") && !is_nullish(.body.reason) {
+    # Add reason if present (for finished events)
+    if value == "finished" && !is_nullish(.body.reason) {
       event.body.subject.content.reason = .body.reason
     }
 
