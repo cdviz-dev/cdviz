@@ -3,7 +3,7 @@
 
 [tasks."run"]
 description = "Launch cdviz-collector cli with content (data & configuration) of the use_cases folder"
-env = { OTEL_TRACES_SAMPLER = "always_off", OTEL_EXPORTER_OTLP_TRACES_ENDPOINT = "http://127.0.0.1:4317", CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED = "false" }
+env = { OTEL_TRACES_SAMPLER = "always_off", OTEL_EXPORTER_OTLP_TRACES_ENDPOINT = "http://127.0.0.1:4317", CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED = "false" }
 run = [
   "cdviz-collector connect -vv --config ./cdviz-collector.toml",
   # - export UID=$(id -u)

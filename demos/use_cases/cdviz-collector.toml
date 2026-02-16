@@ -24,7 +24,7 @@ parser = "json"
 
 [sources.pipelinerun_x_local_csv]
 enabled = true
-transformer_refs = ["pipelinerun_x", "log"]
+transformer_refs = ["pipelinerun_x"] # ["pipelinerun_x", "log"]
 
 [sources.pipelinerun_x_local_csv.extractor]
 type = "opendal"
@@ -37,7 +37,7 @@ parser = "csv_row"
 
 [sources.taskrun_x_local_csv]
 enabled = true
-transformer_refs = ["taskrun_x", "log"]
+transformer_refs = ["taskrun_x"]
 
 [sources.taskrun_x_local_csv.extractor]
 type = "opendal"
@@ -50,7 +50,7 @@ parser = "csv_row"
 
 [sources.testcaserun_x_local_csv]
 enabled = true
-transformer_refs = ["testcaserun_x", "log"]
+transformer_refs = ["testcaserun_x"]
 
 [sources.testcaserun_x_local_csv.extractor]
 type = "opendal"
@@ -63,7 +63,7 @@ parser = "csv_row"
 
 [sources.testsuiterun_x_local_csv]
 enabled = true
-transformer_refs = ["testsuiterun_x", "log"]
+transformer_refs = ["testsuiterun_x"]
 
 [sources.testsuiterun_x_local_csv.extractor]
 type = "opendal"
