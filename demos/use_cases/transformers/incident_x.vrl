@@ -1,0 +1,56 @@
+output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("6d", unit: "s") ?? 6*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
+for_each(["detected", "reported", "resolved"]) -> |_index, value| {
+  delta_duration = -1.0
+  if value == "detected" && !is_nullish(.body.detected) {
+    delta_duration = parse_duration(.body.detected, unit: "s") ?? -1.0
+  } else if value == "reported" && !is_nullish(.body.reported) {
+    delta_duration = parse_duration(.body.reported, unit: "s") ?? -1.0
+  } else if value == "resolved" && !is_nullish(.body.resolved) {
+    delta_duration = parse_duration(.body.resolved, unit: "s") ?? -1.0
+  }
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+    ts = from_unix_timestamp(t0 + to_int(delta_duration)) ?? now()
+    ts = format_timestamp!(ts, format: "%+")
+    environment_id = to_string!(.body.environment)
+    service_id = to_string!(.body.service)
+    description = to_string!(.body.description)
+    event_type = "dev.cdevents.incident." + to_string!(value) + ".0.2.0"
+    event = {
+      "metadata": .metadata,
+      "headers": .headers,
+      "body": {
+        "context": {
+          "version": "0.4.1",
+          "id": "0",
+          "source": "/demo/use_cases",
+          "type": event_type,
+          "timestamp": ts,
+        },
+        "subject": {
+          "id": .body.id,
+          "type": "incident",
+          "content": {
+            "description": description,
+            "environment": {
+              "id": environment_id,
+            },
+            "service": {
+              "id": service_id,
+            }
+          }
+        }
+      }
+    }
+    # Add ticketURI for reported events only (required by CDEvents spec)
+    if value == "reported" {
+      incident_uri = "https://incidents.example.com/" + to_string!(.body.id)
+      event.body.subject.content.ticketURI = incident_uri
+    }
+    output = push(output, event)
+  }
+}
+output

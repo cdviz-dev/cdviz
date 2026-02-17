@@ -1,0 +1,62 @@
+output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("6d", unit: "s") ?? 6*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
+for_each(["created", "updated", "closed"]) -> |_index, value| {
+  delta_duration = -1.0
+  if value == "created" && !is_nullish(.body.created) {
+    delta_duration = parse_duration(.body.created, unit: "s") ?? -1.0
+  } else if value == "updated" && !is_nullish(.body.updated) {
+    delta_duration = parse_duration(.body.updated, unit: "s") ?? -1.0
+  } else if value == "closed" && !is_nullish(.body.closed) {
+    delta_duration = parse_duration(.body.closed, unit: "s") ?? -1.0
+  }
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.2) ?? 0.0) # +/- 20%
+    ts = from_unix_timestamp(t0 + to_int(delta_duration)) ?? now()
+    ts = format_timestamp!(ts, format: "%+")
+    ticket_type = to_string!(.body.ticketType)
+    priority = to_string!(.body.priority)
+    description = to_string!(.body.description)
+    event_type = "dev.cdevents.ticket." + to_string!(value) + ".0.1.0"
+    ticket_uri = "https://www.example.com/tickets/" + to_string!(.body.id)
+    event = {
+      "metadata": .metadata,
+      "headers": .headers,
+      "body": {
+        "context": {
+          "version": "0.4.1",
+          "id": "0",
+          "source": "/demo/use_cases",
+          "type": event_type,
+          "timestamp": ts,
+        },
+        "subject": {
+          "id": .body.id,
+          "type": "ticket",
+          "content": {
+            "summary": description,
+            "ticketType": ticket_type,
+            "priority": priority,
+            "creator": "demo-user",
+            "uri": ticket_uri,
+          }
+        }
+      }
+    }
+    # Add group if present (as string, not object)
+    if !is_nullish(.body.group) {
+      event.body.subject.content.group = to_string!(.body.group)
+    }
+    # Add milestone if present (as string, not object)
+    if !is_nullish(.body.milestone) {
+      event.body.subject.content.milestone = to_string!(.body.milestone)
+    }
+    # Add resolution for closed events (required field)
+    if value == "closed" {
+      event.body.subject.content.resolution = get(.body, ["resolution"]) ?? "completed"
+    }
+    output = push(output, event)
+  }
+}
+output

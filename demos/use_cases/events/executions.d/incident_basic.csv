@@ -1,0 +1,7 @@
+dts_0,id,environment,service,description,detected,reported,resolved
+1d 10h,inc-1,production,api-gateway,High CPU usage detected,0s,2m,15m
+1d 10h 30min,inc-2,production,database,Database connection timeout,0s,1m,45m
+1d 11h,inc-3,staging,auth-service,Authentication failures,0s,5m,20m
+1d 12h,inc-4,production,payment-service,Payment processing delays,0s,1m,
+1d 13h,inc-5,production,cdn,CDN cache misses,0s,3m,10m
+1d 14h,inc-6,staging,api-gateway,Rate limiting triggered,0s,2m,8m

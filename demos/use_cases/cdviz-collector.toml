@@ -1,3 +1,6 @@
+[pipeline]
+queue_capacity = 2000
+
 [sinks.debug]
 enabled = true
 
@@ -74,9 +77,35 @@ recursive = false
 path_patterns = ["testsuiterun_*.csv"]
 parser = "csv_row"
 
+[sources.incident_x_local_csv]
+enabled = true
+transformer_refs = ["incident_x"]
+
+[sources.incident_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/executions.d" }
+recursive = false
+path_patterns = ["incident_*.csv"]
+parser = "csv_row"
+
+[sources.ticket_x_local_csv]
+enabled = true
+transformer_refs = ["ticket_x"]
+
+[sources.ticket_x_local_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/executions.d" }
+recursive = false
+path_patterns = ["ticket_*.csv"]
+parser = "csv_row"
+
 [sources.artifact_lifecycle_csv]
 enabled = true
-transformer_refs = ["artifact_lifecycle", "log"]
+transformer_refs = ["artifact_lifecycle"]
 
 [sources.artifact_lifecycle_csv.extractor]
 type = "opendal"
@@ -93,3 +122,5 @@ pipelinerun_x = { type = "vrl", template_file = "./transformers/pipelinerun_x.vr
 testsuiterun_x = {type = "vrl", template_file = "./transformers/testsuiterun_x.vrl"}
 testcaserun_x ={ type = "vrl", template_file = "./transformers/testcaserun_x.vrl" }
 taskrun_x = {type = "vrl", template_file = "./transformers/taskrun_x.vrl"}
+incident_x = { type = "vrl", template_file = "./transformers/incident_x.vrl"}
+ticket_x = { type = "vrl", template_file = "./transformers/ticket_x.vrl"}

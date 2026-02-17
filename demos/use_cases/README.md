@@ -30,6 +30,10 @@ Located in [`events/executions.d/`](events/executions.d/):
 - **testsuiterun_variety.csv**: 30+ test suites covering unit, integration, e2e, performance, security, and regression testing
 - **testcaserun_basic.csv**: Basic test case execution examples with links to test suites
 - **testcaserun_variety.csv**: 40+ test cases with realistic scenarios including failures, retries, and various test types
+- **incident_basic.csv**: Basic incident lifecycle examples with detection, reporting, and resolution
+- **incident_variety.csv**: 25+ incidents across production, staging, and development environments with various response times
+- **ticket_basic.csv**: Basic ticket lifecycle examples covering bugs, features, and tasks
+- **ticket_variety.csv**: 35+ tickets with various types (bugs, features, tasks, enhancements), priorities, and resolutions (completed, withdrawn, duplicate)
 
 ### Artifact Lifecycle Events
 

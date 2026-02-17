@@ -1,0 +1,35 @@
+dts_0,id,ticketType,priority,group,milestone,description,created,updated,closed,resolution
+1d 8h,tkt-bug-1,bug,critical,backend,v2.1,Authentication service crash on startup,0s,15m,2h,completed
+1d 8h 30min,tkt-bug-2,bug,high,frontend,v2.1,Shopping cart total calculation error,0s,30m,4h,completed
+1d 9h,tkt-bug-3,bug,critical,database,v2.1,Data corruption in user profiles table,0s,10m,6h,completed
+1d 9h 30min,tkt-bug-4,bug,high,backend,v2.1,Memory leak in payment processor,0s,1h,8h,completed
+1d 10h,tkt-bug-5,bug,medium,frontend,v2.2,Button alignment issues on mobile,0s,2h,1d,completed
+1d 10h 30min,tkt-feat-1,feature,high,frontend,v2.2,Add OAuth social login,0s,1d,5d,completed
+1d 11h,tkt-feat-2,feature,medium,backend,v2.3,Implement rate limiting,0s,2d,7d,completed
+1d 11h 30min,tkt-feat-3,feature,low,frontend,v2.4,Dark mode theme toggle,0s,1d,10d,completed
+1d 12h,tkt-feat-4,feature,medium,analytics,v2.3,User activity dashboard,0s,3d,12d,completed
+1d 12h 30min,tkt-feat-5,feature,high,backend,v2.2,GraphQL API endpoint,0s,2d,,
+1d 13h,tkt-task-1,task,low,devops,v2.1,Update CI/CD pipeline docs,0s,1h,2d,completed
+1d 13h 30min,tkt-task-2,task,medium,devops,v2.2,Migrate to Kubernetes,0s,5d,15d,completed
+1d 14h,tkt-task-3,task,low,documentation,v2.2,API reference update,0s,2h,3d,completed
+1d 14h 30min,tkt-task-4,task,medium,security,v2.1,Security audit and fixes,0s,1d,8d,completed
+1d 15h,tkt-enh-1,enhancement,medium,performance,v2.3,Optimize database queries,0s,1d,6d,completed
+1d 15h 30min,tkt-enh-2,enhancement,low,frontend,v2.3,Improve loading animations,0s,3h,4d,completed
+1d 16h,tkt-enh-3,enhancement,high,backend,v2.2,Add caching layer,0s,2d,9d,completed
+1d 16h 30min,tkt-wrk-1,feature,low,frontend,v2.4,Add notification bell,0s,1d,2d,withdrawn
+1d 17h,tkt-wrk-2,bug,medium,backend,v2.2,API timeout on large requests,0s,2h,1d,withdrawn
+1d 17h 30min,tkt-wrk-3,task,low,documentation,v2.3,Update contribution guide,0s,30m,1d,withdrawn
+1d 18h,tkt-dup-1,bug,high,frontend,v2.1,Login form validation error,0s,15m,30m,duplicate
+1d 18h 30min,tkt-dup-2,feature,medium,backend,v2.2,Add email notifications,0s,1h,2h,duplicate
+1d 19h,tkt-open-1,bug,high,backend,v2.2,Intermittent 500 errors on API,0s,1d,,
+1d 19h 30min,tkt-open-2,feature,medium,frontend,v2.3,Real-time collaboration,0s,2d,,
+1d 20h,tkt-open-3,task,low,devops,v2.3,Setup monitoring alerts,0s,4h,,
+1d 20h 30min,tkt-open-4,enhancement,medium,performance,v2.3,Reduce bundle size,0s,1d,,
+1d 21h,tkt-var-1,bug,medium,backend,v2.2,Cache invalidation not working,0s,30m,5h,completed
+1d 21h 30min,tkt-var-2,feature,low,frontend,v2.4,Add export to CSV feature,0s,4h,2d,completed
+1d 22h,tkt-var-3,task,medium,security,v2.2,Update dependencies to latest,0s,2h,1d,completed
+1d 22h 30min,tkt-quick-1,bug,critical,frontend,v2.1,Broken link on homepage,0s,5m,20m,completed
+1d 23h,tkt-quick-2,task,high,devops,v2.1,Rollback failed deployment,0s,10m,30m,completed
+1d 23h 30min,tkt-quick-3,bug,high,backend,v2.1,Fix typo in error message,0s,2m,15m,completed
+2d,tkt-long-1,feature,medium,backend,v3.0,Microservices architecture migration,0s,7d,30d,completed
+2d 1h,tkt-long-2,enhancement,low,infrastructure,v3.0,Multi-region deployment,0s,10d,45d,completed

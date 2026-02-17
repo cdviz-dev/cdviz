@@ -369,7 +369,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'success' THEN 'success'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass' THEN 'pass'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'failure' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'error' THEN 'error'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip' THEN 'skip'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skipped' THEN 'skip'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'outcome', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
+          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at, queued_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'success' THEN 'success'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'pass' THEN 'pass'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'fail' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'failure' THEN 'fail'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'error' THEN 'error'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skip' THEN 'skip'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'outcome' = 'skipped' THEN 'skip'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'outcome', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.testcaserun\nWHERE\n  ($__timeFilter(queued_at) OR $__timeFilter(finished_at))\n  AND (finished_at IS NOT NULL OR started_at IS NOT NULL OR queued_at IS NOT NULL)\n  AND last_payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -467,7 +467,7 @@
           {
             "matcher": {
               "id": "byRegexp",
-              "options": ".*(pass|success|complet).*"
+              "options": ".*(pass|success|complet|resolved).*"
             },
             "properties": [
               {
@@ -482,7 +482,22 @@
           {
             "matcher": {
               "id": "byRegexp",
-              "options": ".*warn.*"
+              "options": ".*detected.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*(reported|warn|withdrawn).*"
             },
             "properties": [
               {
@@ -497,7 +512,7 @@
           {
             "matcher": {
               "id": "byRegexp",
-              "options": ".*(unknown|other).*"
+              "options": ".*(open|unknown|other).*"
             },
             "properties": [
               {
@@ -505,6 +520,21 @@
                 "value": {
                   "mode": "fixed",
                   "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*duplicate.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
                 }
               }
             ]
@@ -561,6 +591,10 @@
             "x": 0,
             "y": 12
           },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
           "options": {
             "maxHistoryItems": 20,
             "showQueueHistory": true,
@@ -578,5 +612,5 @@
       }
     }
   ],
-  "version": 2026021419
+  "version": 2026021716
 }

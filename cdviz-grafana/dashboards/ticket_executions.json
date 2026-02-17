@@ -27,12 +27,12 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "label": "Task",
+        "label": "Ticket",
         "datasource": {
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' ->> 'taskName' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'taskrun'\nORDER BY __value",
+        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' ->> 'ticketType' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'ticket'\nORDER BY __value",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -55,10 +55,10 @@
     ]
   },
   "annotations": {},
-  "title": "Task: Executions",
-  "uid": "taskrun_executions",
+  "title": "Ticket: Executions",
+  "uid": "ticket_executions",
   "tags": [
-    "taskrun"
+    "ticket"
   ],
   "time": {
     "from": "now-31d",
@@ -70,7 +70,7 @@
       "collapsed": false,
       "id": 0,
       "panels": [],
-      "title": "Task: Overview",
+      "title": "Ticket: Overview",
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -82,7 +82,7 @@
       "type": "stat",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Total Duration",
+      "title": "Total Time to Close",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -90,7 +90,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (finished_at - started_at))), 0) AS total_duration\nFROM cdviz.taskrun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (closed_at - created_at))), 0) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -126,7 +126,7 @@
       "type": "stat",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Avg Runtime",
+      "title": "Avg Time to Close",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -134,7 +134,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (finished_at - started_at))), 0) AS avg_runtime\nFROM cdviz.taskrun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (closed_at - created_at))), 0) AS avg_runtime\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -170,7 +170,7 @@
       "type": "stat",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Failure Rate",
+      "title": "Avg Time to Update",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -178,7 +178,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE outcome IN ('fail', 'failure', 'error')) / NULLIF(COUNT(*), 0),\n    0\n  ) AS failure_rate\nFROM cdviz.taskrun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (updated_at - created_at))), 0) AS avg_time_to_update\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND updated_at IS NOT NULL\n  AND created_at IS NOT NULL",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -196,21 +196,65 @@
       },
       "fieldConfig": {
         "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "purple"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Completion Rate",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (\n      WHERE last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed'\n    ) / NULLIF(COUNT(*) FILTER (WHERE closed_at IS NOT NULL), 0),\n    0\n  ) AS completion_rate\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
           "unit": "percent",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "value": null,
-                "color": "green"
+                "color": "red"
               },
               {
-                "value": 10,
+                "value": 75,
                 "color": "yellow"
               },
               {
-                "value": 25,
-                "color": "red"
+                "value": 90,
+                "color": "green"
               }
             ]
           }
@@ -222,7 +266,7 @@
       "type": "timeseries",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Task Total Duration per Day",
+      "title": "Ticket Total Duration per Day",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -230,7 +274,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  SUM(extract('epoch' from (finished_at - started_at))) AS total_duration\nFROM cdviz.taskrun\nWHERE\n  $__timeFilter(finished_at)\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "rawSql": "SELECT\n  time_bucket('1 day', closed_at) AS time,\n  SUM(extract('epoch' from (closed_at - created_at))) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL\nGROUP BY time\nORDER BY time",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -317,7 +361,7 @@
       "type": "timeseries",
       "transparent": false,
       "repeatDirection": "h",
-      "title": "Task Total Number of Run per Day",
+      "title": "Ticket Total Number of Run per Day",
       "datasource": {
         "type": "grafana-postgresql-datasource",
         "uid": "${datasource}"
@@ -325,7 +369,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(finished_at, started_at)) AS time,\n  CASE\n    WHEN finished_at IS NULL THEN 'cancelled'\n    WHEN outcome = 'success' THEN 'success'\n    WHEN outcome = 'pass' THEN 'pass'\n    WHEN outcome = 'fail' THEN 'fail'\n    WHEN outcome = 'failure' THEN 'fail'\n    WHEN outcome = 'error' THEN 'error'\n    WHEN outcome = 'skip' THEN 'skip'\n    WHEN outcome = 'skipped' THEN 'skip'\n    ELSE COALESCE(outcome, 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.taskrun\nWHERE\n  $__timeFilter(finished_at)\n  AND (finished_at IS NOT NULL OR started_at IS NOT NULL)\n  AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
+          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(closed_at, created_at)) AS time,\n  CASE\n    WHEN closed_at IS NULL THEN 'open'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed' THEN 'completed'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'withdrawn' THEN 'withdrawn'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'duplicate' THEN 'duplicate'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'resolution', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
           "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
@@ -520,7 +564,7 @@
       "id": 0,
       "panels": [
         {
-          "type": "cdviz-executiontable-panel",
+          "type": "table",
           "transparent": false,
           "repeatDirection": "h",
           "title": "$selected_value - Summary",
@@ -531,7 +575,7 @@
           "targets": [
             {
               "format": "table",
-              "rawSql": "WITH\n  -- Get last N executions per name with all details\n  execution_history AS (\n    SELECT\n      last_payload -> 'subject' -> 'content' ->> 'taskName' AS name,\n      subject_id,\n      outcome,\n      extract('epoch' from (finished_at - started_at)) AS run_duration,\n      \n      last_payload -> 'subject' -> 'content' ->> 'url' AS url,\n      started_at,\n      finished_at,\n      \n      row_number() OVER (PARTITION BY last_payload -> 'subject' -> 'content' ->> 'taskName' ORDER BY finished_at DESC) AS rn\n    FROM cdviz.taskrun\n    WHERE\n      $__timeFilter(finished_at)\n      AND last_payload -> 'subject' -> 'content' ->> 'taskName' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n      AND finished_at IS NOT NULL\n  ),\n\n  -- Aggregate statistics per name\n  aggregated_stats AS (\n    SELECT\n      name,\n      COALESCE(PERCENTILE_CONT(0.80) WITHIN GROUP (ORDER BY run_duration), 0) AS p80_duration,\n      COUNT(*) AS total_runs\n    FROM execution_history\n    GROUP BY name\n  ),\n\n  -- Create arrays of historical data for visualization\n  history_arrays AS (\n    SELECT\n      name,\n      COALESCE(array_agg(run_duration ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::numeric[]) AS run_duration_history,\n      \n      COALESCE(array_agg(outcome ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS outcome_history,\n      COALESCE(array_agg(subject_id ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS subject_id_history,\n      COALESCE(array_agg(url ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::text[]) AS url_history,\n      COALESCE(array_agg(started_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS started_times,\n      COALESCE(array_agg(finished_at ORDER BY finished_at ASC) FILTER (WHERE rn <= 20), ARRAY[]::timestamptz[]) AS completion_times\n      \n    FROM execution_history\n    WHERE rn <= 20\n    GROUP BY name\n  ),\n\n  -- Aggregate outcome counts across all runs per name\n  outcome_summary AS (\n    SELECT\n      name,\n      COUNT(*) FILTER (WHERE outcome IN ('pass', 'success')) AS passed,\n      COUNT(*) FILTER (WHERE outcome IN ('fail', 'failure', 'error')) AS failed,\n      COUNT(*) FILTER (WHERE outcome IN ('skip', 'skipped')) AS skipped\n    FROM execution_history\n    GROUP BY name\n  )\n\n-- Main query: 1 row per name\nSELECT\n  s.name AS \"Name\",\n  h.run_duration_history AS \"Run History (s)\",\n  h.outcome_history AS \"Outcome History\",\n  h.subject_id_history AS \"Run IDs\",\n  h.url_history AS \"URLs\",\n  h.started_times AS \"Started Times\",\n  h.completion_times AS \"Completion Times\",\n  \n  s.p80_duration AS \"P80 Duration (s)\",\n  s.total_runs AS \"Total Runs\",\n  COALESCE(o.passed, 0) AS \"Passed\",\n  COALESCE(o.failed, 0) AS \"Failed\",\n  COALESCE(o.skipped, 0) AS \"Skipped\"\nFROM aggregated_stats s\nLEFT JOIN history_arrays h ON s.name = h.name\nLEFT JOIN outcome_summary o ON s.name = o.name\nORDER BY s.name",
+              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' ->> 'ticketType' AS \"Type\",\n  subject_id AS \"ID\",\n  created_at AS \"Started\",\n  closed_at AS \"Completed\",\n  extract('epoch' from (closed_at - created_at)) AS \"Duration\",\n  last_payload -> 'subject' -> 'content' ->> 'resolution' AS \"Status\",\n  last_payload -> 'subject' -> 'content' ->> 'url' AS \"URL\"\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY closed_at DESC NULLS FIRST\nLIMIT ${limit}",
               "refId": "",
               "datasource": {
                 "type": "grafana-postgresql-datasource",
@@ -549,20 +593,27 @@
           },
           "fieldConfig": {
             "defaults": {},
-            "overrides": []
-          },
-          "options": {
-            "maxHistoryItems": 20,
-            "showQueueHistory": false,
-            "barHeight": 20,
-            "barGap": 2
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Duration"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "dtdurations"
+                  }
+                ]
+              }
+            ]
           }
         }
       ],
-      "title": "Task: Latest $limit Executions",
+      "title": "Ticket: Latest $limit Executions",
       "gridPos": {
         "x": 0,
-        "y": 9,
+        "y": 13,
         "h": 1,
         "w": 24
       }
