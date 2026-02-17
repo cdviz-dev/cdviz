@@ -14,19 +14,23 @@ If you're new to CDviz, we recommend reading the [CDviz Platform Overview](/docs
 First, you'll need to get the CDviz demo environment up and running on your local machine.
 
 1. Clone the CDviz repository:
+
    ```bash
    git clone https://github.com/cdviz-dev/cdviz.git
    ```
 
 2. Navigate to the `stack-compose` directory:
+
    ```bash
    cd cdviz/demos/stack-compose
    ```
 
 3. Launch the Docker Compose stack:
+
    ```bash
    docker compose up
    ```
+
    This command will start all the necessary components: a web application for sending events, the CDviz Collector, the CDviz Database, and a pre-configured Grafana instance.
 
 4. Access the demo dashboard in your browser:
@@ -64,56 +68,10 @@ Now that your local environment is running, let's send some events and see them 
 
    ![Incident Metrics View](/quickstart/metrics_with_incident.png)
 
-## 3. Alternative: Using GitHub Actions
-
-If you're using GitHub for your code repositories, you can send CDEvents directly from your GitHub workflows without setting up webhooks. The `send-cdevents` GitHub Action makes it easy to integrate CDviz into your CI/CD pipelines.
-
-### Quick Example
-
-Add this to your `.github/workflows/main.yml`:
-
-```yaml
-name: Notify CDviz
-on:
-  push:
-    branches: [main]
-
-jobs:
-  notify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send deployment event
-        uses: cdviz-dev/send-cdevents@v1
-        with:
-          data: |
-            {
-              "context": {
-                "version": "0.4.1",
-                "source": "github.com/${{ github.repository }}",
-                "type": "dev.cdevents.service.deployed.0.1.4"
-              },
-              "subject": {
-                "id": "myapp/production",
-                "type": "service"
-              }
-            }
-          url: "http://localhost:8080/webhook/github-actions"
-```
-
-For complete setup instructions, see the [GitHub Action Integration Guide](/docs/cdviz-collector/integrations/github-action).
-
-## 4. Exploring Further
+## 3. Exploring Further
 
 Congratulations! You've successfully sent your first CDEvents and visualized them in Grafana. Here are a few things you can do to continue exploring CDviz:
 
 - **Experiment with different events:** Try sending different types of events with different data to see how they are reflected in the dashboards.
 - **Explore the CDEvents Activity dashboard:** This dashboard provides a more detailed view of all the CDEvents that have been collected. You can access it at [http://localhost:3000/d/cdevents-activity/cdevents-activity](http://localhost:3000/d/cdevents-activity/cdevents-activity).
 - **Submit raw JSON events:** For more advanced use cases, you can use the "Raw JSON" form to submit CDEvents in their raw JSON format.
-
-## Next Steps
-
-Now that you have a basic understanding of how to use CDviz, you're ready to start using it in your own environment. Here are some resources to help you get started:
-
-- **[CDviz Collector Documentation](/docs/cdviz-collector/):** Learn how to configure the CDviz Collector to collect events from your own systems.
-- **[CDviz Database Documentation](/docs/cdviz-db/):** Learn how to set up and manage the CDviz Database.
-- **[CDviz Grafana Documentation](/docs/cdviz-grafana/):** Learn how to create your own custom dashboards and alerts in Grafana.

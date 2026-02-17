@@ -13,7 +13,7 @@ A CDEvent is a JSON object with a specific structure. Here is an example of a `s
 ```json
 {
   "context": {
-    "version": "0.4.0-draft",
+    "version": "0.4.1",
     "id": "a2f2b6f0-8e0d-4b4c-9a6d-8f3e5f7e8f5d",
     "source": "/my-app/my-pipeline",
     "type": "dev.cdevents.service.deployed.0.1.1",

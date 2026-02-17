@@ -207,11 +207,3 @@ Header validation affects HTTP response codes:
 | 400 Bad Request  | Malformed headers or content |
 | 401 Unauthorized | Missing required headers     |
 | 403 Forbidden    | Header validation failed     |
-
-## Related
-
-- [Webhook Source](./sources/webhook.md) - HTTP webhook endpoint configuration
-- [Kafka Source](./sources/kafka.md) - Kafka source message validation
-- [SSE Sink](./sinks/sse.md) - Server-Sent Events sink configuration
-- [Header Authentication](./header-authentication.md) - Outgoing request headers
-- [Security Configuration](./configuration.md#security) - Overall security setup

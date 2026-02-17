@@ -9,33 +9,17 @@ Sources collect events from external systems and feed them into the CDviz pipeli
 ```toml
 [sources.my_source]
 enabled = true
-transformer_refs = ["my_transformer"]  # Optional processing
+transformer_refs = ["my_transformer"]
 
 [sources.my_source.extractor]
-type = "webhook"  # or "opendal", "sse", "noop"
+type = "webhook"  # webhook | opendal | sse | kafka | nats | noop
 # ... extractor-specific parameters
 ```
 
-**Common Parameters:**
+The `opendal` extractor supports **parsers** for different file formats (json, jsonl, csv, xml, tap, text, etc.).
+Other extractors parse their native protocol format directly.
 
-- `enabled` - Enable/disable the source
-- `extractor` - How to collect events (required)
-- `transformer_refs` - Optional event processing chain
-
-```toml
-[sources.aaaa]
-enabled = false
-transformer_refs = ["bbbb", "log"]
-
-[sources.aaaa.extractor]
-type = "xzy"
-parser = "json"
-# ... parameters for `xzy` extractor
-
-[transformers.bbbb]
-type = "abc"
-# ... parameters for `abc` transformer
-```
+**[→ Parsers Documentation](../parsers/index.md)**
 
 ## Messages
 
@@ -47,97 +31,20 @@ A Message is composed of:
 
 ### Extractor Metadata Configuration
 
-All extractors support a `metadata` field for injecting static metadata into every event. This is useful for adding context information without creating custom transformers.
+All extractors accept a `metadata` field to inject static key/value pairs into every event — useful for tagging events with environment, team, or region without a custom transformer.
 
-#### Automatic `context.source` Population
-
-If `metadata.context.source` is not explicitly set, it will be automatically populated using the pattern:
-
-```
-{http.root_url}/?source={source_name}
-```
-
-Where:
-
-- `{http.root_url}` is configured in `[http]` section (default: `http://cdviz-collector.example.com`)
-- `{source_name}` is the configuration key for the source (e.g., `github_webhook`, `file_source`)
-
-#### Example: Custom Metadata
+If `metadata.context.source` is not set, it defaults to `{http.root_url}/?source={source_name}`.
 
 ```toml
-[http]
-root_url = "https://cdviz.example.com"
-
-[sources.my_webhook]
-enabled = true
-
-[sources.my_webhook.extractor]
-type = "webhook"
-id = "custom-events"
-
-# Custom metadata injected into all events
-[sources.my_webhook.extractor.metadata]
-environment = "production"
-team = "platform"
-
-[sources.my_webhook.extractor.metadata.context]
-source = "/my-custom-source"  # Override automatic source URL
-```
-
-#### Example: Automatic Source URL
-
-```toml
-[http]
-root_url = "https://cdviz.example.com"
-
-[sources.github_webhook]
-enabled = true
-
-[sources.github_webhook.extractor]
-type = "webhook"
-id = "github"
-
-# No metadata.context.source specified
-# Will automatically be set to: https://cdviz.example.com/?source=github_webhook
-```
-
-#### Use Cases
-
-**Avoid Creating Transformers for Static Metadata**: Instead of creating a VRL transformer just to add static fields, use the `metadata` configuration:
-
-```toml
-# Before: Required a transformer to add static fields
-[sources.my_webhook]
-transformer_refs = ["add_metadata", "my_transform"]
-
-# After: Use extractor metadata directly
-[sources.my_webhook]
-transformer_refs = ["my_transform"]
-
 [sources.my_webhook.extractor]
 type = "webhook"
 id = "events"
-
-[sources.my_webhook.extractor.metadata]
-datacenter = "us-east-1"
-version = "v2"
+metadata.environment = "production"
+metadata.team = "platform"
+# metadata.context.source = "/my-custom-source"  # override auto-generated URL
 ```
 
-**Environment-Specific Configuration**: Tag events with environment information:
-
-```toml
-[sources.production_webhook.extractor]
-type = "webhook"
-id = "prod"
-metadata.environment_id = "/production/eu-1"
-metadata.criticality = "high"
-```
-
-## Extractors
-
-CDviz Collector supports several types of extractors for different event sources. Each extractor type has its own configuration options and use cases.
-
-### Available Extractors
+## Available Extractors
 
 | Type                      | Description                        | Use Cases                                               |
 | ------------------------- | ---------------------------------- | ------------------------------------------------------- |
@@ -145,63 +52,8 @@ CDviz Collector supports several types of extractors for different event sources
 | [`webhook`](./webhook.md) | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations |
 | [`opendal`](./opendal.md) | File system and cloud storage      | Log files, artifact monitoring, batch processing        |
 | [`sse`](./sse.md)         | Server-Sent Events client          | Real-time event streams, SSE endpoints                  |
-
-### Quick Reference
-
-#### Noop/Sleep Extractor
-
-For testing and development:
-
-```toml
-[sources.test.extractor]
-type = "noop"  # or "sleep"
-```
-
-**[→ Full Documentation](./noop.md)**
-
-#### Webhook Extractor
-
-For HTTP-based event ingestion:
-
-```toml
-[sources.github.extractor]
-type = "webhook"
-id = "github-events"
-headers_to_keep = ["X-GitHub-Event"]
-```
-
-**[→ Full Documentation](./webhook.md)**
-
-#### OpenDAL Extractor
-
-For file-based event sources:
-
-```toml
-[sources.files.extractor]
-type = "opendal"
-kind = "fs"  # or "s3", "gcs", etc.
-polling_interval = "30s"
-path_patterns = ["**/*.json"]
-parser = "json"
-
-[sources.files.extractor.parameters]
-root = "/events"
-```
-
-**[→ Full Documentation](./opendal.md)**
-
-#### SSE Extractor
-
-For Server-Sent Events:
-
-```toml
-[sources.events.extractor]
-type = "sse"
-url = "https://events.example.com/stream"
-max_retries = 10
-```
-
-**[→ Full Documentation](./sse.md)**
+| [`kafka`](./kafka.md)     | Apache Kafka consumer              | Event streaming, message queues, Kafka-compatible brokers |
+| [`nats`](./nats.md)       | NATS Core / JetStream consumer     | Cloud-native messaging, lightweight pub/sub, JetStream  |
 
 ## Shared Configuration
 
@@ -217,14 +69,11 @@ Headers are used differently by various components:
 
 ## Loader
 
-No configuration is required.
+No configuration required. The loader converts each Message into a CDEvent:
 
-The loader is responsible for converting the Message into CDEvent. What is done is mainly:
-
-- to compute a `context.id` from the Message's `body` if `context.id` is set to `"0"`.
-  Having a `context.id` based on content allow to identify / filter duplicates later (this filtering is not DONE by the collector).
-- to serialize the Message's body into a CDEvent.
-- to push the CDEvent to the queue to be broadcasted to every [Sinks].
+- Computes a content-based `context.id` (CID) when `context.id` is `"0"` or absent — enables downstream deduplication.
+- Serializes the message body as a CDEvent.
+- Pushes the CDEvent to all configured [Sinks].
 
 ## Examples
 
@@ -281,10 +130,10 @@ type = "vrl"
 template = """
 [{
     "metadata": .metadata,
-    "header": .header,
+    "headers": .headers,
     "body": {
         "context": {
-            "version": "0.4.0-draft",
+            "version": "0.4.1",
             "id": "0",
             "source": "/event/source/123",
             "type": "dev.cdevents.service.deployed.0.1.1",

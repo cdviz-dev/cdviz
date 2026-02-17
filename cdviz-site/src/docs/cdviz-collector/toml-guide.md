@@ -282,10 +282,3 @@ port = 5432
 username = "app_user"
 password = "secret"  # Set via environment variable
 ```
-
-## Related
-
-- [Configuration Reference](./configuration.md) - Complete CDviz Collector configuration options
-- [Header Authentication](./header-authentication.md) - Using the map format for headers
-- [Header Validation](./header-validation.md) - Header validation configuration
-- [TOML Specification](https://toml.io/) - Official TOML language specification

@@ -52,6 +52,7 @@ Complete technical specifications:
 **Components:**
 
 - **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Noop](./sources/noop.md)
+- **[Parsers](./parsers/)** - Multi-format input parsing: [JSON](./parsers/json.md), [XML](./parsers/xml.md), [TAP](./parsers/tap.md), [CSV](./parsers/csv_row.md), [Text](./parsers/text.md), and more
 - **[Transformers](./transformers.md)** - Event processing with VRL
 - **[Sinks](./sinks/)** - Event delivery: [Database](./sinks/db.md), [HTTP](./sinks/http.md), [Files](./sinks/folder.md), [SSE](./sinks/sse.md), [Debug](./sinks/debug.md)
 

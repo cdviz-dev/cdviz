@@ -81,7 +81,7 @@ The VRL transformer processes messages by:
 The input message is available as the variable `.`. The output is an array of messages.
 
 - `.metadata` to read the metadata of the message
-- `.header` to read the metadata of the message
+- `.headers` to read the headers of the message
 - `.body` to read the body of the message
 
 You can specify the VRL template directly in the config:
@@ -104,7 +104,7 @@ type = "vrl"
 template = """
 [{
     "metadata": .metadata,
-    "header": .header,
+    "headers": .headers,
     "body": {
         "context": {
             "version": "0.4.1",

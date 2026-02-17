@@ -232,11 +232,3 @@ cdviz-collector connect --config config.toml --directory /app/config
 CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED="true" \
 cdviz-collector connect --config config.toml -v
 ```
-
-## Next Steps
-
-- **[Quick Start](./quick-start.md)** - Working example in 5 minutes
-- **[Sources](./sources/)** - Configure event collection
-- **[Transformers](./transformers.md)** - Process and transform events
-- **[Sinks](./sinks/)** - Configure event delivery
-- **[Troubleshooting](./troubleshooting.md)** - Debug configuration issues

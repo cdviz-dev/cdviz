@@ -294,11 +294,3 @@ curl -H "Authorization: Bearer $TOKEN" https://api.example.com/permissions
 # Test basic connectivity
 curl -v https://api.example.com/events
 ```
-
-## Related
-
-- [SSE Source](./sources/sse.md) - Server-Sent Events source configuration
-- [HTTP Sink](./sinks/http.md) - HTTP sink configuration
-- [Kafka Sink](./sinks/kafka.md) - Kafka sink header generation
-- [Header Validation](./header-validation.md) - Incoming request headers
-- [Security Configuration](./configuration.md#security) - Overall security setup

@@ -321,11 +321,3 @@ template = '''
 ```
 
 **Use:** Process batch events and add runtime metadata.
-
-## Next Steps
-
-- **[Configuration Guide](./configuration.md)** - Understand configuration structure
-- **[Sources](./sources/)** - Configure specific event sources
-- **[Transformers](./transformers.md)** - Learn VRL transformation language
-- **[Sinks](./sinks/)** - Configure event destinations
-- **[GitHub Integration](./integrations/github.md)** - Ready-made GitHub integration

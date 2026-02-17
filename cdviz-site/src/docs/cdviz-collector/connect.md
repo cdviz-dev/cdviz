@@ -150,12 +150,3 @@ cdviz-collector connect --config config.toml --quiet
 ### OpenTelemetry
 
 By default, OpenTelemetry is enabled for distributed tracing. Disable with `--disable-otel` for testing environments.
-
-## Related
-
-- **[Configuration Guide](./configuration.md)** - Complete configuration reference and examples
-- **[Sources Documentation](./sources/)** - Configure event collection (webhooks, files, SSE)
-- **[Sinks Documentation](./sinks/)** - Configure event delivery (database, HTTP, files)
-- **[Transformers](./transformers.md)** - Configure event processing with VRL
-- **[Quick Start](./quick-start.md)** - Get started with a working setup
-- **[Troubleshooting](./troubleshooting.md)** - Debug common issues

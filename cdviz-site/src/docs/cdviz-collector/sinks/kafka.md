@@ -151,11 +151,3 @@ For advanced Kafka producer configuration, see:
 
 - [Apache Kafka Producer Configuration](https://kafka.apache.org/documentation/#producerconfigs)
 - [librdkafka Configuration Reference](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md)
-
-## Related
-
-- [Sinks Overview](./index.md) - Understanding sink pipelines
-- [Kafka Source](../sources/kafka.md) - For consuming events from Kafka
-- [Header Authentication](../header-authentication.md) - Outgoing message authentication
-- [HTTP Sink](./http.md) - Alternative event delivery method
-- [Database Sink](./db.md) - Persistent storage option
