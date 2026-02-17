@@ -3,11 +3,17 @@
 
 [tasks."up"]
 description = "Launch the docker compose demo (in foreground)"
+usage = '''
+flag "--pull <pull>" {
+  help "Pull image before running, do not pull to be able to use locally build container (like cdviz-db-migration)"
+  choices "always" "missing" "never"
+  default "missing"
+}
+'''
 run = """
   # export MY_UID=$(id -u)
   # export MY_GID=$(id -g)
-  docker compose -f docker-compose.yaml pull
-  docker compose -f docker-compose.yaml up --remove-orphans
+  docker compose -f docker-compose.yaml up --remove-orphans --pull {{ usage.pull }}
   """
 
 [tasks."down"]
