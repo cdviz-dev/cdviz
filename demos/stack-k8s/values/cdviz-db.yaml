@@ -17,10 +17,10 @@ extraObjects:
     type: Opaque
     data:
       DATABASE_URL: |-
-        {{ $.Values.secrets.DATABASE_URL | default (printf "postgres://%s:%s@%s:%s/%s" $.Values.secrets.CDVIZ_SU_POSTGRES_USER $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD $.Values.secrets.POSTGRES_HOST $.Values.secrets.POSTGRES_PORT_NUMBER $.Values.secrets.POSTGRES_DB) | b64enc }}
+        {{ $.Values.secrets.DATABASE_URL | default (printf "postgres://%s:%s@%s:%s/%s?sslmode=disable" $.Values.secrets.CDVIZ_SU_POSTGRES_USER $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD $.Values.secrets.POSTGRES_HOST $.Values.secrets.POSTGRES_PORT_NUMBER $.Values.secrets.POSTGRES_DB) | b64enc }}
       POSTGRES_USER: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_USER | b64enc }}"
       POSTGRES_PASSWORD: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_PASSWORD | b64enc }}"
-      POSTGRES_DB: "{{ $.Values.secrets.CDVIZ_SU_POSTGRES_DB | b64enc }}"
+      POSTGRES_DB: "{{ $.Values.secrets.POSTGRES_DB | b64enc }}"
   # based on https://www.tigerdata.com/docs/self-hosted/latest/install/installation-kubernetes
   cdviz-db-tigerdata-pvc:
     enabled: true
@@ -74,6 +74,12 @@ extraObjects:
                   value: /var/lib/postgresql/data/pgdata
               ports:
                 - containerPort: 5432
+              readinessProbe:
+                exec:
+                  command: ["pg_isready", "-U", "$(POSTGRES_USER)", "-d", "$(POSTGRES_DB)"]
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                failureThreshold: 30
               volumeMounts:
                 - mountPath: /var/lib/postgresql/data
                   name: tigerdata-storage

@@ -1,13 +1,11 @@
 project: cdviz-dev
-version: "0.41.9"
+version: "0.42.2"
 
 registries:
   - host: ghcr.io
   - host: registry-1.docker.io
 
 repositories:
-  - url: https://cloudnative-pg.github.io/charts
-    name: cnpg
   - url: https://grafana.github.io/helm-charts
     name: grafana
   # - name: robusta
@@ -16,9 +14,8 @@ repositories:
 .options: &options
   create_namespace: true
   atomic: true
-  force: true
   # resetValues: true
-  timeout: 1m
+  timeout: 5m
   wait: true
   max_history: 3
 
@@ -34,19 +31,8 @@ releases:
     tags:
       - dashboard
       - pre-req
-  - name: cnpg
-    namespace: cnpg
-    chart:
-      name: cnpg/cloudnative-pg
-      version: 0.23.2
-    <<: *options
-    tags:
-      - db
-      - pre-req
   - name: cdviz-db
     namespace: cdviz-dev
-    # depends_on:
-    #   - name: cnpg@cnpg
     chart: ../../charts/cdviz-db
     # chart:
     #   name: oci://ghcr.io/cdviz-dev/charts/cdviz-db
@@ -65,9 +51,6 @@ releases:
       - cdviz
   - name: cdviz-grafana
     namespace: cdviz-dev
-    depends_on:
-      # - name: grafana@grafana
-      - name: cdviz-db@cdviz-dev
     chart: ../../charts/cdviz-grafana
     # chart:
     #   name: oci://ghcr.io/cdviz-dev/charts/cdviz-grafana

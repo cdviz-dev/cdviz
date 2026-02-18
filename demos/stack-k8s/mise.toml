@@ -20,14 +20,10 @@ run = ["kubectl config use-context kind-local"]
 wait_for = [":create"]
 
 [tasks."deploy_pre-req"]
-description = "Deploy the pre-requirement for cdviz (postgresql, grafana, ...) on a k8s cluster"
+description = "Deploy the pre-requirement for cdviz (grafana, ...) on a k8s cluster"
 depends = [":use-context"]
 run = [
   "helmwave up --build --progress --skip-unchanged -t pre-req",
-  # to avoid a certificate x509 error, we need to restart the deployment (or kill the pod)
-  # cause by wrong order of creation webhooks,..
-  # see https://github.com/cloudnative-pg/cloudnative-pg/issues/3088
-  "kubectl rollout restart deployments/cnpg-cloudnative-pg -n cnpg",
   "# look at the logs to have some instructions to connect to the services, retrieve the passwords,...",
 ]
 
@@ -79,7 +75,7 @@ run = [
 [tasks."port-forward_cdviz-db"]
 description = "Port-forward the PostgreSQL database to localhost:5432"
 depends = [":use-context"]
-run = ["kubectl port-forward svc/cdviz-db-rw -n cdviz-dev 5432:5432"]
+run = ["kubectl port-forward svc/timescaledb -n cdviz-dev 5432:5432"]
 
 [tasks."port-forward_cdviz-collector"]
 description = "Port-forward the cdviz-collector to localhost:8080"
