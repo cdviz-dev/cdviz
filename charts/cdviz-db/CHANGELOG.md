@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-18
+
+### Added
+
+- Allow to run migration job as a post-install hook ([7d95e8f](7d95e8fd41d975630dfa4e40f9301fd5a12060ad))
+
+### Changed
+
+- Update ghcr.io/cdviz-dev/cdviz-db-migration docker tag to v1.2.0 (#357) ([8d42a32](8d42a329cbe1cde89fe7cf95157714fd3c0e5547))
+
 ## [1.1.1] - 2026-01-15
 
 ### Changed
