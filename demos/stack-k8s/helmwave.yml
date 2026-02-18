@@ -6,8 +6,8 @@ registries:
   - host: registry-1.docker.io
 
 repositories:
-  - url: https://grafana.github.io/helm-charts
-    name: grafana
+  - url: https://grafana-community.github.io/helm-charts
+    name: grafana-community
   # - name: robusta
   #   url: https://robusta-charts.storage.googleapis.com
 
@@ -23,8 +23,8 @@ releases:
   - name: grafana
     namespace: grafana
     chart:
-      name: grafana/grafana
-      version: 8.11.2
+      name: grafana-community/grafana
+      version: 11.1.7
     values:
       - ./values/grafana.yaml
     <<: *options
