@@ -5,8 +5,12 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: "1.2.0"
 annotations: {}
-  # "helm.sh/hook": post-install,post-upgrade
-  # "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+
+# Run a migration Job as a Helm post-install/post-upgrade hook so migrations
+# are applied automatically on every `helm install` or `helm upgrade`.
+# The CronJob below still runs on schedule for periodic re-alignment.
+hook:
+  enabled: true
 
 # cronjob's schedule to run the migration (and to keep the schema aligned)
 schedule: "0 0 * * 1,3"
