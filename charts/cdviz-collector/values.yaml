@@ -125,10 +125,6 @@ configFiles:
     [sources.github_webhook.extractor.headers]
     "x-hub-signature-256" = { type = "signature", signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", token = "changeme" }
 
-    [transformers.github_events]
-    type = "vrl"
-    template_rfile = "transformers-community:///github_events/transformer.vrl"
-
     [sources.kubewatch_webhook]
     enabled = {{ $.Values.kubewatch.enabled }}
     # transformer_refs = [ "log", "kubewatch_cloudevents" ]
@@ -147,7 +143,6 @@ configFiles:
     type = "webhook"
     id = "000-argocd"
     metadata.environment_id = "cluster/A-dev"
-    """
 
     [remote.transformers-community]
     type = "github"
