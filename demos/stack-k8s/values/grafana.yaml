@@ -15,15 +15,18 @@ sidecar:
     labelValue: "1"
 
 plugins:
+  # GF_PLUGINS_PREINSTALL_SYNC=
   - marcusolsson-dynamictext-panel
   - volkovlabs-form-panel
   - volkovlabs-table-panel
+  - cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip
 
+# envFromSecret: "cdviz-ro"
 
 # [Override configuration with environment variables](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables)
 env:
   # work as anonymous admin to speed up the dev/demo/local purpose
   GF_AUTH_ANONYMOUS_ENABLED: "true"
   GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-
-# envFromSecret: "cdviz-ro"
+  # Allow loading unsigned plugins (required for custom plugins not in Grafana plugin registry)
+  GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "cdviz-executiontable-panel"
