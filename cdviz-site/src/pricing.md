@@ -1,5 +1,5 @@
 ---
-titleTemplate: Pricing & Plans - CDviz
+title: Pricing & Plans
 description: Transparent pricing for CDviz. Start free with open source, scale with enterprise features.
 layout: home
 markdownStyles: false

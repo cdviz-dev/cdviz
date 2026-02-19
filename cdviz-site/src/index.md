@@ -1,5 +1,5 @@
 ---
-titleTemplate: Monitor Your Software Delivery Pipeline With Confidence - CDviz
+title: Monitor Your Software Delivery Pipeline With Confidence
 description: CDviz is a collection of components designed to provide visibility into deployed service versions, associated environments, testing activities, and related information.
 layout: home
 markdownStyles: false

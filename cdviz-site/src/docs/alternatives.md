@@ -1,3 +1,7 @@
+---
+description: Compare CDviz with Apache DevLake, Datadog CI Visibility, and other SDLC observability tools. Built on the open CDEvents standard.
+---
+
 # Alternatives, tools, ...
 
 ## CDEvents ecosystem

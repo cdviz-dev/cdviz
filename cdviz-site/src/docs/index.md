@@ -1,3 +1,7 @@
+---
+description: CDviz platform documentation — collector, database, and Grafana dashboards. Open-source SDLC observability built on CDEvents.
+---
+
 # CDViz Platform Overview
 
 ## Value Proposition

@@ -8,7 +8,8 @@ import svgLoader from "vite-svg-loader";
 export default defineConfig({
   title: "CDviz",
   titleTemplate: ":title - CDviz",
-  description: "Documentation of CDviz's components",
+  description:
+    "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.",
   head: [
     [
       "meta",
@@ -18,6 +19,9 @@ export default defineConfig({
       },
     ],
     ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:site_name", content: "CDviz" }],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     ["link", { rel: "preconnect", href: "https://eu.i.posthog.com" }],
     [
@@ -388,6 +392,36 @@ export default defineConfig({
   ],
   sitemap: {
     hostname: "https://cdviz.dev",
+  },
+
+  transformHead({ pageData }) {
+    const siteUrl = "https://cdviz.dev";
+    const relativePath = pageData.relativePath
+      .replace(/\.md$/, ".html")
+      .replace(/index\.html$/, "");
+    const canonicalUrl = `${siteUrl}/${relativePath}`;
+    const title =
+      pageData.title ||
+      pageData.frontmatter.title ||
+      "CDviz - Monitor Your Software Delivery Pipeline";
+    const description =
+      pageData.description ||
+      pageData.frontmatter.description ||
+      "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines with Grafana dashboards.";
+    const image =
+      pageData.frontmatter.image ||
+      `${siteUrl}/illustrations/hero-dashboard-01-q60.webp`;
+
+    return [
+      ["link", { rel: "canonical", href: canonicalUrl }],
+      ["meta", { property: "og:url", content: canonicalUrl }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: description }],
+      ["meta", { property: "og:image", content: image }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: description }],
+      ["meta", { name: "twitter:image", content: image }],
+    ];
   },
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
