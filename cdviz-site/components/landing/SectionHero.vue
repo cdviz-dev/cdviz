@@ -33,51 +33,64 @@ onMounted(() => {
       <!-- class="order-last items-center overflow-hidden rounded-xl md:absolute md:relative" -->
       <!-- Help people visualize what we're offering: snapshot/screenshot of the product -->
       <!-- TODO: replace with a screenshot of the product -->
-      <picture>
-        <!-- AVIF format for modern browsers -->
-        <source
-          media="(max-width: 640px)"
-          srcset="/illustrations/hero-dashboard-01-400w.avif"
-          type="image/avif"
-        />
-        <source
-          media="(max-width: 768px)"
-          srcset="/illustrations/hero-dashboard-01-600w.avif"
-          type="image/avif"
-        />
-        <source
-          srcset="/illustrations/hero-dashboard-01.avif"
-          type="image/avif"
-        />
+      <a
+        href="https://demo.cdviz.dev/grafana"
+        target="_blank"
+        rel="noopener"
+        class="group relative block"
+        aria-label="Open live CDviz Grafana demo"
+      >
+        <picture>
+          <!-- AVIF format for modern browsers -->
+          <source
+            media="(max-width: 640px)"
+            srcset="/illustrations/hero-dashboard-01-400w.avif"
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 768px)"
+            srcset="/illustrations/hero-dashboard-01-600w.avif"
+            type="image/avif"
+          />
+          <source
+            srcset="/illustrations/hero-dashboard-01.avif"
+            type="image/avif"
+          />
 
-        <!-- WebP format fallback -->
-        <source
-          media="(max-width: 640px)"
-          srcset="/illustrations/hero-dashboard-01-400w.webp"
-          type="image/webp"
-        />
-        <source
-          media="(max-width: 768px)"
-          srcset="/illustrations/hero-dashboard-01-600w.webp"
-          type="image/webp"
-        />
-        <source
-          srcset="/illustrations/hero-dashboard-01-q60.webp"
-          type="image/webp"
-        />
+          <!-- WebP format fallback -->
+          <source
+            media="(max-width: 640px)"
+            srcset="/illustrations/hero-dashboard-01-400w.webp"
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 768px)"
+            srcset="/illustrations/hero-dashboard-01-600w.webp"
+            type="image/webp"
+          />
+          <source
+            srcset="/illustrations/hero-dashboard-01-q60.webp"
+            type="image/webp"
+          />
 
-        <!-- Original fallback -->
-        <img
-          id="hero-image-img"
-          width="666"
-          height="596"
-          class="w-full h-auto max-h-[500px] md:max-h-[600px] lg:max-h-none rounded-xl object-contain parallax-element"
-          src="/illustrations/hero-dashboard-01-q60.webp"
-          alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
-          fetchpriority="high"
-          loading="eager"
-        />
-      </picture>
+          <!-- Original fallback -->
+          <img
+            id="hero-image-img"
+            width="666"
+            height="596"
+            class="w-full h-auto max-h-[500px] md:max-h-[600px] lg:max-h-none rounded-xl object-contain parallax-element"
+            src="/illustrations/hero-dashboard-01-q60.webp"
+            alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
+            fetchpriority="high"
+            loading="eager"
+          />
+        </picture>
+        <div class="absolute inset-0 rounded-xl flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
+          <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-semibold text-lg px-4 py-2 rounded-lg bg-black/50 backdrop-blur-sm">
+            Open live demo →
+          </span>
+        </div>
+      </a>
     </div>
     <div class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10">
       <h1
@@ -112,6 +125,7 @@ onMounted(() => {
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how">See How It Works</Btn>
+        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener">Try Live Demo</Btn>
       </div>
       <div
         id="hero-social-proof"

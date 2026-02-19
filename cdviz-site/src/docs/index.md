@@ -20,6 +20,10 @@ CDViz enables organizations to answer critical operational questions:
 
 ## Getting Started
 
+> [!TIP] Try it instantly
+> Explore a live read-only instance of the CDviz Grafana dashboards at
+> **[demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana)** — no installation required.
+
 If you're new to CDviz, we recommend starting with our **[Getting Started Guide](./getting-started.md)**. This guide will walk you through setting up a local CDviz environment, sending your first events, and seeing the results in Grafana.
 
 ## CDEvents
