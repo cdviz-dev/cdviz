@@ -32,6 +32,7 @@ Located in [`events/executions.d/`](events/executions.d/):
 - **testcaserun_variety.csv**: 40+ test cases with realistic scenarios including failures, retries, and various test types
 - **incident_basic.csv**: Basic incident lifecycle examples with detection, reporting, and resolution
 - **incident_variety.csv**: 25+ incidents across production, staging, and development environments with various response times
+- **incident_dora.csv**: 14 incidents spread across all 7 days, correlated with the DORA service deployments above, to populate the Time to Restore time-series panel with realistic per-day data
 - **ticket_basic.csv**: Basic ticket lifecycle examples covering bugs, features, and tasks
 - **ticket_variety.csv**: 35+ tickets with various types (bugs, features, tasks, enhancements), priorities, and resolutions (completed, withdrawn, duplicate)
 
@@ -39,9 +40,24 @@ Located in [`events/executions.d/`](events/executions.d/):
 
 Located in [`events/artifact_lifecycle.d/`](events/artifact_lifecycle.d/):
 
-- **app-a.csv**: Artifact deployment lifecycle for app-a across environments
-- **app-b.csv**: Artifact deployment lifecycle for app-b across environments
-- **app-c.csv**: Artifact deployment lifecycle for app-c across environments
+- **app-a.csv**: Artifact deployment lifecycle for app-a across environments (emits `service.upgraded`)
+- **app-b.csv**: Artifact deployment lifecycle for app-b across environments (emits `service.upgraded`)
+- **app-c.csv**: Artifact deployment lifecycle for app-c across environments (emits `service.upgraded`)
+
+### DORA Service Deployment Events
+
+Located in [`events/service_deploys.d/`](events/service_deploys.d/):
+
+Emits the three CDEvents types required by the DORA dashboard: `artifact.published`,
+`service.deployed`, and `service.rolledback`.
+
+- **dora_deploys.csv**: 7-day deployment history for three services (`svc-frontend`, `svc-api`,
+  `svc-worker`) across `dev`, `staging`, and `production` environments.
+  - ~8 production deployments per service per week — **Elite Deployment Frequency** (≥1/day)
+  - Artifact→Deploy lead time 20–35 min to dev, ~1 h to staging, 2–4 h to prod — **Elite/High Lead Time**
+  - 2 rollbacks in 7 days (one in production, one in staging) — **~6% Change Failure Rate** (High)
+  - Demonstrates end-to-end LATERAL JOIN for lead time: each `service.deployed` event carries
+    `artifactId` matching the corresponding `artifact.published` event
 
 ## Usage
 

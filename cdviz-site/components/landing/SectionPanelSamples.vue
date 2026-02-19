@@ -64,6 +64,30 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
             </p>
           </div>
         </a>
+        <!-- DORA Metrics — image left (col-3), text right (col-2) -->
+        <a
+          href="/docs/cdviz-grafana/dora_metrics.html"
+          class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
+        >
+          <div class="md:col-span-3 md:order-1 p-md flex items-center">
+            <img
+              src="/screenshots/grafana_dashboard_dora_metrics-20260222.png"
+              alt="DORA Metrics dashboard showing deployment frequency, lead time, time to restore, and change failure rate"
+              class="w-full h-auto rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
+              DORA Metrics
+            </h3>
+            <p class="text-sm text-text/70">
+              Track the four DORA indicators — deployment frequency, lead time, time to restore, and
+              change failure rate — to benchmark and improve software delivery performance
+            </p>
+          </div>
+        </a>
       </div>
 
       <!-- CTA -->

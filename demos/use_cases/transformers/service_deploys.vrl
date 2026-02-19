@@ -1,0 +1,109 @@
+output = []
+t0 = parse_timestamp!(format_timestamp!(now(), format: "%FT00:00:00+00:00"), format: "%+")
+t0 = to_unix_timestamp(t0) - to_int(parse_duration("7d", unit: "s") ?? 7*24*3600)
+t0 = t0 + to_int(parse_duration(.body.dts_0, unit: "s") ?? -1.0)
+# log(.body)
+
+artifact_id = to_string!(.body.artifact_id)
+service_id   = to_string!(.body.service_id)
+environment  = to_string!(.body.environment)
+
+# --- artifact.published ---
+if !is_nullish(.body.dts_published) {
+  delta_duration = parse_duration(.body.dts_published, unit: "s") ?? -1.0
+  if delta_duration >= 0.0 {
+    ts = from_unix_timestamp!(t0 + to_int(delta_duration))
+    ts = format_timestamp!(ts, format: "%+")
+    event = {
+      "metadata": .metadata,
+      "headers":  .headers,
+      "body": {
+        "context": {
+          "version":   "0.4.1",
+          "id":        "0",
+          "source":    "/demo/use_cases",
+          "type":      "dev.cdevents.artifact.published.0.2.0",
+          "timestamp": ts,
+        },
+        "subject": {
+          "id":   artifact_id,
+          "type": "artifact",
+          "content": {
+            "user": "ci-bot",
+          }
+        }
+      }
+    }
+    output = push(output, event)
+  }
+}
+
+# --- service.deployed ---
+if !is_nullish(.body.dts_deployed) {
+  delta_duration = parse_duration(.body.dts_deployed, unit: "s") ?? -1.0
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.05) ?? 0.0)
+    ts = from_unix_timestamp!(t0 + to_int(delta_duration))
+    ts = format_timestamp!(ts, format: "%+")
+    event = {
+      "metadata": .metadata,
+      "headers":  .headers,
+      "body": {
+        "context": {
+          "version":   "0.4.1",
+          "id":        "0",
+          "source":    "/demo/use_cases",
+          "type":      "dev.cdevents.service.deployed.0.2.0",
+          "timestamp": ts,
+        },
+        "subject": {
+          "id":   service_id,
+          "type": "service",
+          "content": {
+            "environment": {
+              "id": environment,
+            },
+            "artifactId": artifact_id,
+          }
+        }
+      }
+    }
+    output = push(output, event)
+  }
+}
+
+# --- service.rolledback ---
+if !is_nullish(.body.dts_rolledback) {
+  delta_duration = parse_duration(.body.dts_rolledback, unit: "s") ?? -1.0
+  if delta_duration >= 0.0 {
+    delta_duration = delta_duration + (random_float(0.0, delta_duration * 0.05) ?? 0.0)
+    ts = from_unix_timestamp!(t0 + to_int(delta_duration))
+    ts = format_timestamp!(ts, format: "%+")
+    event = {
+      "metadata": .metadata,
+      "headers":  .headers,
+      "body": {
+        "context": {
+          "version":   "0.4.1",
+          "id":        "0",
+          "source":    "/demo/use_cases",
+          "type":      "dev.cdevents.service.rolledback.0.2.0",
+          "timestamp": ts,
+        },
+        "subject": {
+          "id":   service_id,
+          "type": "service",
+          "content": {
+            "environment": {
+              "id": environment,
+            },
+            "artifactId": artifact_id,
+          }
+        }
+      }
+    }
+    output = push(output, event)
+  }
+}
+
+output

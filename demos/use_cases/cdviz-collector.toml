@@ -116,8 +116,22 @@ recursive = false
 path_patterns = ["*.csv"]
 parser = "csv_row"
 
+[sources.service_deploys_csv]
+enabled = true
+transformer_refs = ["service_deploys"]
+
+[sources.service_deploys_csv.extractor]
+type = "opendal"
+kind = "fs"
+polling_interval = "20s"
+parameters = { root = "./events/service_deploys.d" }
+recursive = false
+path_patterns = ["*.csv"]
+parser = "csv_row"
+
 [transformers]
 artifact_lifecycle = { type = "vrl", template_file = "./transformers/artifact_lifecycle.vrl" }
+service_deploys = { type = "vrl", template_file = "./transformers/service_deploys.vrl" }
 pipelinerun_x = { type = "vrl", template_file = "./transformers/pipelinerun_x.vrl"}
 testsuiterun_x = {type = "vrl", template_file = "./transformers/testsuiterun_x.vrl"}
 testcaserun_x ={ type = "vrl", template_file = "./transformers/testcaserun_x.vrl" }

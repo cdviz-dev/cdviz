@@ -333,6 +333,10 @@ export default defineConfig({
               text: "CDEvents Activity",
               link: "/docs/cdviz-grafana/cdevents_activity",
             },
+            {
+              text: "DORA Metrics",
+              link: "/docs/cdviz-grafana/dora_metrics",
+            },
           ],
         },
         {

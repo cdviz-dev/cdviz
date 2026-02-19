@@ -1,0 +1,1006 @@
+{
+  "timezone": "browser",
+  "editable": true,
+  "graphTooltip": 0,
+  "fiscalYearStartMonth": 0,
+  "schemaVersion": 39,
+  "templating": {
+    "list": [
+      {
+        "type": "datasource",
+        "name": "datasource",
+        "skipUrlSync": false,
+        "multi": false,
+        "includeAll": false,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "query": "grafana-postgresql-datasource",
+        "regex": "cdviz.*"
+      },
+      {
+        "type": "query",
+        "name": "environment",
+        "skipUrlSync": false,
+        "multi": true,
+        "includeAll": true,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "label": "Environment",
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${datasource}"
+        },
+        "query": "SELECT DISTINCT\n  payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS __value\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' IS NOT NULL\nORDER BY __value",
+        "sort": 0,
+        "refresh": 2,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      },
+      {
+        "type": "query",
+        "name": "service",
+        "skipUrlSync": false,
+        "multi": true,
+        "includeAll": true,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "label": "Service",
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${datasource}"
+        },
+        "query": "SELECT DISTINCT\n  payload -> 'subject' ->> 'id' AS __value\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nORDER BY __value",
+        "sort": 0,
+        "refresh": 2,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    ]
+  },
+  "annotations": {},
+  "title": "DORA Metrics",
+  "uid": "dora_metrics",
+  "tags": [
+    "dora"
+  ],
+  "time": {
+    "from": "now-31d",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "DORA Summary",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "## What are DORA Metrics?\n\nDORA (DevOps Research and Assessment) metrics are 4 evidence-based indicators of software delivery performance,\nderived from years of industry research.\n\n| Metric | Elite | High | Medium | Low |\n|---|---|---|---|---|\n| **Deployment Frequency** | ≥ 1/day | ≥ 1/week | ≥ 1/month | < 1/month |\n| **Lead Time (Artifact→Deploy)** | < 1 hour | < 1 day | < 1 week | > 1 week |\n| **Time to Restore** | < 1 hour | < 1 day | < 1 week | > 1 week |\n| **Change Failure Rate** | ≤ 5% | ≤ 10% | ≤ 15% | > 15% |\n\n> ℹ️ **Note**: All metrics are powered by [CDEvents](https://cdevents.dev) and require the corresponding lifecycle events to be emitted. Missing event types result in empty panels, not zero values.\n> DORA 2023 renamed \"MTTR\" to **Failed Deployment Recovery Time** (scoped to deployment-induced failures). This dashboard shows all incidents as a proxy.\n>\n> ⚠️ **Approximation notice**: Precise DORA measurement requires an unbroken event chain\n> from commit → CI pipeline → artifact → deployment → environment. CDviz derives values from\n> whatever CDEvents are emitted; missing links fall back to proxies or show no data.\n> Precise cross-tool tracing is an open problem — [CDEvents](https://cdevents.dev) is the\n> community standard to make these links explicit. These formulas will be refined as\n> CDEvents adoption grows."
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Deployment Frequency",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  CASE\n    WHEN COUNT(*) <= 1 THEN NULL\n    ELSE ROUND(\n      COUNT(*)::numeric / NULLIF(\n        EXTRACT('epoch' FROM (MAX(timestamp) - MIN(timestamp))) / 86400.0,\n        0\n      ),\n      2\n    )\n  END AS \"Deploys/Day\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "red"
+              },
+              {
+                "value": 0.033,
+                "color": "orange"
+              },
+              {
+                "value": 0.14,
+                "color": "yellow"
+              },
+              {
+                "value": 1,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "Deployments per day computed over the observed span (first→last event). Returns no data when ≤1 event. DORA: Elite ≥1/day, High ≥1/week, Medium ≥1/month."
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Lead Time: Artifact→Deploy",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (svc.timestamp - art.timestamp))\n    ),\n    0\n  ) AS \"P50 Lead Time (s)\"\nFROM cdviz.cdevents_lake AS svc\nJOIN LATERAL (\n  SELECT timestamp\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'artifact' AND predicate = 'published'\n    AND payload -> 'subject' ->> 'id'\n        = svc.payload -> 'subject' -> 'content' ->> 'artifactId'\n    AND timestamp <= svc.timestamp\n  ORDER BY timestamp DESC\n  LIMIT 1\n) AS art ON true\nWHERE svc.subject = 'service'\n  AND svc.predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(svc.timestamp)\n  AND svc.payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\n  AND svc.payload -> 'subject' -> 'content' ->> 'artifactId' IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 3600,
+                "color": "yellow"
+              },
+              {
+                "value": 86400,
+                "color": "orange"
+              },
+              {
+                "value": 604800,
+                "color": "red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "Median (P50) time from artifact.published to service.deployed. Proxy for DORA Lead Time (commit→production). DORA: Elite <1h, High <1 day, Medium <1 week."
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Time to Restore (All Incidents)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (resolved_at - detected_at))\n    ),\n    0\n  ) AS \"P50 Time to Restore (s)\"\nFROM cdviz.incident\nWHERE $__timeFilter(detected_at)\n  AND resolved_at IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 3600,
+                "color": "yellow"
+              },
+              {
+                "value": 86400,
+                "color": "red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "Median (P50) time from incident.detected to incident.resolved. Covers all incidents (not just deployment-induced). DORA: Elite <1h, High <1 day."
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Change Failure Rate",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE predicate = 'rolledback')\n      / NULLIF(COUNT(*) FILTER (WHERE predicate IN ('deployed', 'upgraded')), 0),\n    0\n  ) AS \"Change Failure Rate (%)\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND predicate IN ('deployed', 'upgraded', 'rolledback')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 5,
+                "color": "yellow"
+              },
+              {
+                "value": 10,
+                "color": "orange"
+              },
+              {
+                "value": 15,
+                "color": "red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "Rollback events / deployed events × 100. DORA: Elite ≤5%, High ≤10%, Medium ≤15%, Low >15%. Only explicit rollback CDEvents count as failures."
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Deployment Frequency",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Formula**: `COUNT(service.deployed | service.upgraded) / observed_span_days`\n**Data source**: `cdviz.cdevents_lake` WHERE subject='service' AND predicate IN ('deployed','upgraded')\n**Time window**: span between the first and last deployment event (not the dashboard selection range).\nReturns no data when ≤1 event exists — a single data point cannot establish a rate.\n**Limitations**: Counts all deployments in selected environments. Does not distinguish\nfeature deployments from hotfixes."
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Deployment Frequency",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', timestamp) AS time,\n  COALESCE(\n    payload -> 'subject' -> 'content' -> 'environment' ->> 'id',\n    'unknown'\n  ) AS environment,\n  COUNT(*) AS deployments\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nGROUP BY time, environment\nORDER BY time, environment",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum",
+            "max"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Lead Time: Artifact → Deployment",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Formula**: `P50(service.deployed.timestamp − artifact.published.timestamp)`\n**Data source**: JOIN of `service.deployed` and `artifact.published` events via `artifactId`\n**DORA definition**: Commit → Production (this is a proxy: Artifact Publish → Deploy)\n**Limitations**: Excludes deployments without an `artifactId` in the payload. If the same\nartifact is published multiple times, only the most recent publication before the deployment is used."
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Lead Time: Artifact → Deployment",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', svc.timestamp) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (svc.timestamp - art.timestamp))\n  ) AS \"P50 Lead Time (s)\"\nFROM cdviz.cdevents_lake AS svc\nJOIN LATERAL (\n  SELECT timestamp\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'artifact' AND predicate = 'published'\n    AND payload -> 'subject' ->> 'id'\n        = svc.payload -> 'subject' -> 'content' ->> 'artifactId'\n    AND timestamp <= svc.timestamp\n  ORDER BY timestamp DESC\n  LIMIT 1\n) AS art ON true\nWHERE svc.subject = 'service'\n  AND svc.predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(svc.timestamp)\n  AND svc.payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\n  AND svc.payload -> 'subject' -> 'content' ->> 'artifactId' IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum",
+            "max"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Lead Time: Pipeline Duration",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Formula**: `P50(pipelinerun.finished_at − pipelinerun.queued_at)`\n**Data source**: `cdviz.pipelinerun` view\n**Note**: Not a standard DORA metric; a proxy for build time (the \"commit → artifact\" leg of lead time).\n**Limitations**: Requires `pipelinerun.queued` and `pipelinerun.finished` CDEvents."
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Pipeline Duration",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (finished_at - queued_at))\n    ),\n    0\n  ) AS \"P50 Pipeline Duration (s)\"\nFROM cdviz.pipelinerun\nWHERE $__timeFilter(finished_at)\n  AND queued_at IS NOT NULL\n  AND finished_at IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 35
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              },
+              {
+                "value": 3600,
+                "color": "yellow"
+              },
+              {
+                "value": 86400,
+                "color": "red"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "Median (P50) pipeline run duration from queued to finished. Not a standard DORA metric; proxy for build time."
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Lead Time: Pipeline Duration",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (finished_at - queued_at))\n  ) AS \"P50 Pipeline Duration (s)\"\nFROM cdviz.pipelinerun\nWHERE $__timeFilter(finished_at)\n  AND queued_at IS NOT NULL\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum",
+            "max"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Time to Restore (All Incidents)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Formula**: `P50(incident.resolved_at − incident.detected_at)` for resolved incidents\n**Data source**: `cdviz.incident` view\n**DORA 2023**: \"Failed Deployment Recovery Time\" (FDRT) covers only deployment-induced failures.\nThis panel covers **all incidents** (not linked to specific deployments) — values may differ from strict DORA FDRT.\n**Limitations**: Unresolved incidents are excluded. Requires `incident.detected` and `incident.resolved` CDEvents."
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Time to Restore (All Incidents)",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 day', detected_at) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (resolved_at - detected_at))\n  ) AS \"P50 Time to Restore (s)\"\nFROM cdviz.incident\nWHERE $__timeFilter(detected_at)\n  AND resolved_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum",
+            "max"
+          ],
+          "width": 300
+        }
+      }
+    },
+    {
+      "type": "row",
+      "collapsed": false,
+      "id": 0,
+      "panels": [],
+      "title": "Change Failure Rate",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 55
+      }
+    },
+    {
+      "type": "text",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Formula**: `COUNT(service.rolledback) / COUNT(service.deployed | service.upgraded) × 100`\n**Data source**: `cdviz.cdevents_lake` WHERE subject='service' AND predicate IN ('deployed','upgraded','rolledback')\n**Limitations**: Uses rollback events as a failure proxy. Hotfixes deployed forward (without an\nexplicit `service.rolledback` event) are not counted as failures. Requires both deployment and rollback CDEvents."
+      }
+    },
+    {
+      "type": "timeseries",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Change Failure Rate",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "rawSql": "SELECT\n  time_bucket('1 week', timestamp) AS time,\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE predicate = 'rolledback')\n      / NULLIF(COUNT(*) FILTER (WHERE predicate IN ('deployed', 'upgraded')), 0),\n    0\n  ) AS \"Change Failure Rate (%)\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND predicate IN ('deployed', 'upgraded', 'rolledback')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nGROUP BY time\nORDER BY time",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "axisWidth": 1,
+            "barAlignment": 0,
+            "barWidthFactor": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            }
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "calcs": [
+            "sum",
+            "max"
+          ],
+          "width": 300
+        }
+      }
+    }
+  ],
+  "version": 2026022218
+}
