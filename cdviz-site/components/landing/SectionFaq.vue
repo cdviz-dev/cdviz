@@ -16,19 +16,6 @@ onMounted(() => {
     observeMultiple(Array.from(faqItems), "slide-up");
   }
 });
-
-// //const { page } = useData()
-// const faq = ref([
-//   {
-//     q: "Is it free to use?",
-//     a: "Yes, you can use the Open Source components for free.</br>ee"
-//     // No, self-hosting is not free, as you have spend time and money on
-//     // configuration, maintenance, and support of your own
-//     // infrastructure.
-//     // <br/>
-//     // No, some components could not be available for free."
-//   }
-// ])
 </script>
 <template>
   <section

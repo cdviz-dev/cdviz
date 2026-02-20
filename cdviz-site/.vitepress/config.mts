@@ -409,10 +409,9 @@ export default defineConfig({
       pageData.frontmatter.description ||
       "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines with Grafana dashboards.";
     const image =
-      pageData.frontmatter.image ||
-      `${siteUrl}/illustrations/hero-dashboard-01-q60.webp`;
+      pageData.frontmatter.image || `${siteUrl}/illustrations/hero-dashboard-01-q60.webp`;
 
-    return [
+    const head: ReturnType<typeof defineConfig>["head"] = [
       ["link", { rel: "canonical", href: canonicalUrl }],
       ["meta", { property: "og:url", content: canonicalUrl }],
       ["meta", { property: "og:title", content: title }],
@@ -422,6 +421,27 @@ export default defineConfig({
       ["meta", { name: "twitter:description", content: description }],
       ["meta", { name: "twitter:image", content: image }],
     ];
+
+    const faqItems = (pageData.frontmatter.faq ?? []).filter(
+      (aq: { q: string; a: string }) => aq.a !== "",
+    );
+    if (faqItems.length > 0) {
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((aq: { q: string; a: string }) => ({
+          "@type": "Question",
+          name: aq.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: aq.a.replace(/<[^>]+>/g, ""),
+          },
+        })),
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(jsonLd)]);
+    }
+
+    return head;
   },
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
