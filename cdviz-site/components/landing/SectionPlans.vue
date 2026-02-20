@@ -136,7 +136,6 @@ const comparisonFeatures = {
       },
     },
     NATS: {
-      comingSoon: true,
       community: {
         value: true,
       },
@@ -401,7 +400,6 @@ const comparisonFeatures = {
       },
     },
     NATS: {
-      comingSoon: true,
       community: {
         value: true,
       },
