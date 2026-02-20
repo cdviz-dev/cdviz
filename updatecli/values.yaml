@@ -1,0 +1,7 @@
+github:
+  owner: cdviz-dev
+  repository: cdviz
+  branch: main
+  # Must match the GitHub App name + "[bot]" — adjust if the App name differs
+  user: "cdviz-intbot[bot]"
+  email: "cdviz-intbot[bot]@users.noreply.github.com"

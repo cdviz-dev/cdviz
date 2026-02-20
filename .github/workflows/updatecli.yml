@@ -1,0 +1,52 @@
+name: updatecli
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "updatecli action to run"
+        required: false
+        default: "apply"
+        type: choice
+        options:
+          - "apply"
+          - "diff"
+  # Weekly on Monday at 04:30 UTC
+  schedule:
+    - cron: "30 4 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency: updatecli
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: get_token
+        with:
+          private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.INTBOT_APP_ID }}
+
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ steps.get_token.outputs.token }}
+          persist-credentials: false
+
+      # Required by npm.yaml shell targets that run `bun install`
+      - uses: jdx/mise-action@v3
+        with:
+          tool_versions: |
+            bun latest
+
+      - name: Run updatecli
+        uses: updatecli/updatecli-action@v2
+        with:
+          action: ${{ inputs.action || 'apply' }}
+          config: updatecli/updatecli.d/
+          values: updatecli/values.yaml
+        env:
+          GITHUB_TOKEN: ${{ steps.get_token.outputs.token }}

@@ -1,0 +1,188 @@
+---
+# Mise tool version pins.
+#
+# Tools left at "latest" in their mise.toml (bun, yq, git-cliff, dprint, biome,
+# golang-migrate, sqruff) are intentionally not pinned here — they resolve at
+# install time.
+#
+# The helmwave entry in demos/stack-k8s/mise.toml uses the inline-table form:
+#   "ubi:helmwave/helmwave" = { version = "0.42.2", matching = "helmwave" }
+# updatecli's toml target addresses it as: "ubi:helmwave/helmwave".version
+# If the colon in the key causes parse issues, use the file target below as fallback.
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  helm:
+    kind: githubrelease
+    spec:
+      owner: helm
+      repository: helm
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+  kubectl:
+    kind: githubrelease
+    spec:
+      owner: kubernetes
+      repository: kubernetes
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+  kind:
+    kind: githubrelease
+    spec:
+      owner: kubernetes-sigs
+      repository: kind
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+  ctlptl:
+    kind: githubrelease
+    spec:
+      owner: tilt-dev
+      repository: ctlptl
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+  helmwave:
+    kind: githubrelease
+    spec:
+      owner: helmwave
+      repository: helmwave
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+targets:
+  # charts/mise.toml
+  helmCharts:
+    kind: toml
+    sourceid: helm
+    scmid: default
+    spec:
+      file: charts/mise.toml
+      key: tools.helm
+
+  # charts/cdviz-collector/mise.toml
+  kubectlCollectorChart:
+    kind: toml
+    sourceid: kubectl
+    scmid: default
+    spec:
+      file: charts/cdviz-collector/mise.toml
+      key: tools.kubectl
+
+  kindCollectorChart:
+    kind: toml
+    sourceid: kind
+    scmid: default
+    spec:
+      file: charts/cdviz-collector/mise.toml
+      key: tools.kind
+
+  # demos/stack-k8s/mise.toml
+  kubectlStackK8s:
+    kind: toml
+    sourceid: kubectl
+    scmid: default
+    spec:
+      file: demos/stack-k8s/mise.toml
+      key: tools.kubectl
+
+  kindStackK8s:
+    kind: toml
+    sourceid: kind
+    scmid: default
+    spec:
+      file: demos/stack-k8s/mise.toml
+      key: tools.kind
+
+  ctlptlStackK8s:
+    kind: toml
+    sourceid: ctlptl
+    scmid: default
+    spec:
+      file: demos/stack-k8s/mise.toml
+      key: tools.ctlptl
+
+  # helmwave uses an inline-table value in TOML:
+  #   "ubi:helmwave/helmwave" = { version = "0.42.2", matching = "helmwave" }
+  # updatecli's toml target addresses nested keys with dot notation.
+  helmwaveStackK8s:
+    kind: toml
+    sourceid: helmwave
+    scmid: default
+    spec:
+      file: demos/stack-k8s/mise.toml
+      key: '"ubi:helmwave/helmwave".version'
+
+pullrequests:
+  helm:
+    title: '[updatecli] Bump helm to {{ source "helm" }}'
+    targets:
+      - helmCharts
+    scmid: default
+    labels:
+      - dependencies
+
+  kubectl:
+    title: '[updatecli] Bump kubectl to {{ source "kubectl" }}'
+    targets:
+      - kubectlCollectorChart
+      - kubectlStackK8s
+    scmid: default
+    labels:
+      - dependencies
+
+  kind:
+    title: '[updatecli] Bump kind to {{ source "kind" }}'
+    targets:
+      - kindCollectorChart
+      - kindStackK8s
+    scmid: default
+    labels:
+      - dependencies
+
+  ctlptl:
+    title: '[updatecli] Bump ctlptl to {{ source "ctlptl" }}'
+    targets:
+      - ctlptlStackK8s
+    scmid: default
+    labels:
+      - dependencies
+
+  helmwave:
+    title: '[updatecli] Bump helmwave to {{ source "helmwave" }}'
+    targets:
+      - helmwaveStackK8s
+    scmid: default
+    labels:
+      - dependencies

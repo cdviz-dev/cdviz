@@ -1,0 +1,177 @@
+---
+# npm packages for cdviz-site (devDependencies).
+# Each matrix entry → separate PR updating package.json + regenerating bun.lock.
+#
+# Excluded (need special versionFilter, manage manually):
+#   - vitepress: alpha track (^2.0.0-alpha.x); re-enable once 2.x is stable.
+matrix:
+  packages:
+    - "@iconify-json/lucide"
+    - "@iconify-json/mdi"
+    - "@iconify-json/simple-icons"
+    - "@iconify/tailwind4"
+    - "@tailwindcss/vite"
+    - gsap
+    - prettier
+    - prettier-plugin-tailwindcss
+    - tailwindcss
+    - vite-svg-loader
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  npm:
+    kind: npm
+    spec:
+      package: '{{ index .matrix "packages" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+
+targets:
+  packageJson:
+    kind: json
+    sourceid: npm
+    scmid: default
+    spec:
+      file: cdviz-site/package.json
+      key: '.devDependencies["{{ index .matrix "packages" }}"]'
+
+  # Regenerate bun.lock in the same commit so the PR is self-contained.
+  bunInstall:
+    kind: shell
+    scmid: default
+    dependson:
+      - packageJson
+    spec:
+      command: bun install --cwd cdviz-site
+
+pullrequests:
+  npm:
+    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-site'
+    targets:
+      - packageJson
+      - bunInstall
+    scmid: default
+    labels:
+      - dependencies
+
+---
+# npm dependencies for cdviz-grafana/dashboards_generator.
+# Excluded: @grafana/grafana-foundation-sdk (non-standard timestamp versioning).
+matrix:
+  packages:
+    - d3
+    - dedent
+    - lodash
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  npm:
+    kind: npm
+    spec:
+      package: '{{ index .matrix "packages" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+
+targets:
+  packageJson:
+    kind: json
+    sourceid: npm
+    scmid: default
+    spec:
+      file: cdviz-grafana/dashboards_generator/package.json
+      key: '.dependencies["{{ index .matrix "packages" }}"]'
+
+  bunInstall:
+    kind: shell
+    scmid: default
+    dependson:
+      - packageJson
+    spec:
+      command: bun install --cwd cdviz-grafana/dashboards_generator
+
+pullrequests:
+  npm:
+    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-grafana'
+    targets:
+      - packageJson
+      - bunInstall
+    scmid: default
+    labels:
+      - dependencies
+
+---
+# npm devDependencies for cdviz-grafana/dashboards_generator.
+matrix:
+  packages:
+    - "@types/bun"
+    - "@types/d3"
+    - "@types/lodash"
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  npm:
+    kind: npm
+    spec:
+      package: '{{ index .matrix "packages" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+
+targets:
+  packageJson:
+    kind: json
+    sourceid: npm
+    scmid: default
+    spec:
+      file: cdviz-grafana/dashboards_generator/package.json
+      key: '.devDependencies["{{ index .matrix "packages" }}"]'
+
+  bunInstall:
+    kind: shell
+    scmid: default
+    dependson:
+      - packageJson
+    spec:
+      command: bun install --cwd cdviz-grafana/dashboards_generator
+
+pullrequests:
+  npm:
+    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-grafana'
+    targets:
+      - packageJson
+      - bunInstall
+    scmid: default
+    labels:
+      - dependencies

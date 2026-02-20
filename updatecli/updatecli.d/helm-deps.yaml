@@ -1,0 +1,40 @@
+---
+# Helm chart dependency: kubewatch (sub-chart of cdviz-collector).
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  kubewatch:
+    kind: helmchart
+    spec:
+      url: https://robusta-charts.storage.googleapis.com
+      name: kubewatch
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+
+targets:
+  kubewatchVersion:
+    kind: yaml
+    sourceid: kubewatch
+    scmid: default
+    spec:
+      file: charts/cdviz-collector/Chart.yaml
+      key: '$.dependencies[0].version'
+
+pullrequests:
+  kubewatch:
+    title: '[updatecli] Bump kubewatch to {{ source "kubewatch" }}'
+    targets:
+      - kubewatchVersion
+    scmid: default
+    labels:
+      - dependencies

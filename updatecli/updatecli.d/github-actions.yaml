@@ -1,0 +1,23 @@
+---
+# Autodiscovery for GitHub Actions: detects all `uses: owner/repo@vX` lines
+# in .github/workflows/*.yml and bumps them to the latest release tag.
+autodiscovery:
+  scms:
+    default:
+      kind: github
+      spec:
+        user: '{{ .github.user }}'
+        email: '{{ .github.email }}'
+        owner: '{{ .github.owner }}'
+        repository: '{{ .github.repository }}'
+        token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+        branch: '{{ .github.branch }}'
+  crawlers:
+    - kind: githubaction
+      scmid: default
+      spec:
+        rootdir: "."
+      pullrequests:
+        - title: "[updatecli] Bump GitHub Actions"
+          labels:
+            - dependencies
