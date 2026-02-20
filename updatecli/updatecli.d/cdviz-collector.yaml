@@ -5,7 +5,7 @@
 # updates all version references in a single PR:
 #   - charts/cdviz-collector/values.yaml  (image.tag)
 #   - charts/cdviz-collector/Chart.yaml   (appVersion)
-#   - cdviz-site/src/docs/cdviz-collector/install.md   (frontmatter version)
+#   - cdviz-site/src/docs/cdviz-collector/install.md   (frontmatter version field)
 #   - cdviz-site/src/docs/cdviz-collector/quick-start.md  (installer URL)
 scms:
   default:
@@ -29,11 +29,11 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
 targets:
-  # Helm chart: image tag in values.yaml
   valuesTag:
+    name: "charts/cdviz-collector/values.yaml image.tag"
     kind: yaml
     sourceid: collectorVersion
     scmid: default
@@ -41,10 +41,8 @@ targets:
       file: charts/cdviz-collector/values.yaml
       key: $.image.tag
 
-  # Helm chart: appVersion in Chart.yaml
-  # Note: the inline comment "# version set during release" is preserved by
-  # updatecli's yaml target because it uses goyaml which keeps comments.
   chartAppVersion:
+    name: "charts/cdviz-collector/Chart.yaml appVersion"
     kind: yaml
     sourceid: collectorVersion
     scmid: default
@@ -52,34 +50,36 @@ targets:
       file: charts/cdviz-collector/Chart.yaml
       key: $.appVersion
 
-  # Docs: frontmatter `version:` field in install.md (used by {{ $params.version }})
   docsInstallVersion:
+    name: "docs install.md frontmatter version"
     kind: file
     sourceid: collectorVersion
     scmid: default
     spec:
       file: cdviz-site/src/docs/cdviz-collector/install.md
-      matchPattern: '^version: [0-9]+\.[0-9]+\.[0-9]+'
+      matchPattern: 'version: [0-9]+\.[0-9]+\.[0-9]+'
       replacePattern: 'version: {{ source "collectorVersion" }}'
 
-  # Docs: installer URL version in quick-start.md
   docsQuickStartUrl:
+    name: "docs quick-start.md installer URL"
     kind: file
     sourceid: collectorVersion
     scmid: default
     spec:
       file: cdviz-site/src/docs/cdviz-collector/quick-start.md
-      matchPattern: 'releases/download/[0-9]+\.[0-9]+\.[0-9]+/'
+      matchPattern: 'releases/download/v?[0-9]+\.[0-9]+\.[0-9]+/'
       replacePattern: 'releases/download/{{ source "collectorVersion" }}/'
 
-pullrequests:
+actions:
   collectorVersion:
-    title: '[updatecli] Bump cdviz-collector to {{ source "collectorVersion" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - valuesTag
       - chartAppVersion
       - docsInstallVersion
       - docsQuickStartUrl
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump cdviz-collector to {{ source "collectorVersion" }}'
+      labels:
+        - dependencies

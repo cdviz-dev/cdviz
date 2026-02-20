@@ -13,11 +13,15 @@ autodiscovery:
         token: '{{ requiredEnv "GITHUB_TOKEN" }}'
         branch: '{{ .github.branch }}'
   crawlers:
-    - kind: githubaction
+    githubactions:
       scmid: default
       spec:
         rootdir: "."
-      pullrequests:
-        - title: "[updatecli] Bump GitHub Actions"
-          labels:
-            - dependencies
+      actions:
+        default:
+          kind: github/pullrequest
+          scmid: default
+          spec:
+            title: "[updatecli] Bump GitHub Actions"
+            labels:
+              - dependencies

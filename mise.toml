@@ -28,8 +28,8 @@ updatecli = "latest"
 
 [tasks."updatecli:diff"]
 description = "Show what updatecli would update (dry run, no changes)"
-run = "updatecli diff --config updatecli/updatecli.d/ --values updatecli/values.yaml"
+run = "GITHUB_TOKEN=$(gh auth token) updatecli diff --config updatecli/updatecli.d/ --values updatecli/values.yaml"
 
 [tasks."updatecli:apply"]
 description = "Apply all pending dependency updates via updatecli (creates PRs)"
-run = "updatecli apply --config updatecli/updatecli.d/ --values updatecli/values.yaml"
+run = "GITHUB_TOKEN=$(gh auth token) updatecli apply --config updatecli/updatecli.d/ --values updatecli/values.yaml"

@@ -5,3 +5,7 @@ github:
   # Must match the GitHub App name + "[bot]" — adjust if the App name differs
   user: "cdviz-intbot[bot]"
   email: "cdviz-intbot[bot]@users.noreply.github.com"
+  # user: "GitHub Actions Bot"
+  # email: "bots@udpatecli.io"
+  # username: "github-actions"
+  # token: "UPDATECLI_GITHUB_TOKEN"

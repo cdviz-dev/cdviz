@@ -2,7 +2,7 @@
 # npm packages for cdviz-site (devDependencies).
 # Each matrix entry → separate PR updating package.json + regenerating bun.lock.
 #
-# Excluded (need special versionFilter, manage manually):
+# Excluded (manage manually):
 #   - vitepress: alpha track (^2.0.0-alpha.x); re-enable once 2.x is stable.
 matrix:
   packages:
@@ -32,22 +32,22 @@ sources:
   npm:
     kind: npm
     spec:
-      package: '{{ index .matrix "packages" }}'
+      package: '{{ .matrix.packages }}'
       versionFilter:
-        kind: semver
-        pattern: ">= 0"
+        kind: latest
 
 targets:
   packageJson:
+    name: 'cdviz-site package.json {{ .matrix.packages }}'
     kind: json
     sourceid: npm
     scmid: default
     spec:
       file: cdviz-site/package.json
-      key: '.devDependencies["{{ index .matrix "packages" }}"]'
+      key: '.devDependencies["{{ .matrix.packages }}"]'
 
-  # Regenerate bun.lock in the same commit so the PR is self-contained.
   bunInstall:
+    name: 'cdviz-site bun.lock regeneration'
     kind: shell
     scmid: default
     dependson:
@@ -55,15 +55,17 @@ targets:
     spec:
       command: bun install --cwd cdviz-site
 
-pullrequests:
+actions:
   npm:
-    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-site'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - packageJson
       - bunInstall
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-site'
+      labels:
+        - dependencies
 
 ---
 # npm dependencies for cdviz-grafana/dashboards_generator.
@@ -89,21 +91,22 @@ sources:
   npm:
     kind: npm
     spec:
-      package: '{{ index .matrix "packages" }}'
+      package: '{{ .matrix.packages }}'
       versionFilter:
-        kind: semver
-        pattern: ">= 0"
+        kind: latest
 
 targets:
   packageJson:
+    name: 'cdviz-grafana package.json {{ .matrix.packages }}'
     kind: json
     sourceid: npm
     scmid: default
     spec:
       file: cdviz-grafana/dashboards_generator/package.json
-      key: '.dependencies["{{ index .matrix "packages" }}"]'
+      key: '.dependencies["{{ .matrix.packages }}"]'
 
   bunInstall:
+    name: 'cdviz-grafana bun.lock regeneration'
     kind: shell
     scmid: default
     dependson:
@@ -111,15 +114,17 @@ targets:
     spec:
       command: bun install --cwd cdviz-grafana/dashboards_generator
 
-pullrequests:
+actions:
   npm:
-    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-grafana'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - packageJson
       - bunInstall
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana'
+      labels:
+        - dependencies
 
 ---
 # npm devDependencies for cdviz-grafana/dashboards_generator.
@@ -144,21 +149,22 @@ sources:
   npm:
     kind: npm
     spec:
-      package: '{{ index .matrix "packages" }}'
+      package: '{{ .matrix.packages }}'
       versionFilter:
-        kind: semver
-        pattern: ">= 0"
+        kind: latest
 
 targets:
   packageJson:
+    name: 'cdviz-grafana package.json {{ .matrix.packages }} (dev)'
     kind: json
     sourceid: npm
     scmid: default
     spec:
       file: cdviz-grafana/dashboards_generator/package.json
-      key: '.devDependencies["{{ index .matrix "packages" }}"]'
+      key: '.devDependencies["{{ .matrix.packages }}"]'
 
   bunInstall:
+    name: 'cdviz-grafana bun.lock regeneration (dev)'
     kind: shell
     scmid: default
     dependson:
@@ -166,12 +172,14 @@ targets:
     spec:
       command: bun install --cwd cdviz-grafana/dashboards_generator
 
-pullrequests:
+actions:
   npm:
-    title: '[updatecli] Bump {{ index .matrix "packages" }} in cdviz-grafana'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - packageJson
       - bunInstall
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana'
+      labels:
+        - dependencies

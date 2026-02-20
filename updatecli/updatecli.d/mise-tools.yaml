@@ -1,14 +1,8 @@
 ---
 # Mise tool version pins.
 #
-# Tools left at "latest" in their mise.toml (bun, yq, git-cliff, dprint, biome,
-# golang-migrate, sqruff) are intentionally not pinned here — they resolve at
-# install time.
-#
-# The helmwave entry in demos/stack-k8s/mise.toml uses the inline-table form:
-#   "ubi:helmwave/helmwave" = { version = "0.42.2", matching = "helmwave" }
-# updatecli's toml target addresses it as: "ubi:helmwave/helmwave".version
-# If the colon in the key causes parse issues, use the file target below as fallback.
+# Tools left at "latest" (bun, yq, git-cliff, dprint, biome, golang-migrate,
+# sqruff) are intentionally not pinned — they resolve at install time.
 scms:
   default:
     kind: github
@@ -31,7 +25,7 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
   kubectl:
     kind: githubrelease
@@ -43,7 +37,7 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
   kind:
     kind: githubrelease
@@ -55,7 +49,7 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
   ctlptl:
     kind: githubrelease
@@ -67,7 +61,7 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
   helmwave:
     kind: githubrelease
@@ -79,11 +73,11 @@ sources:
         kind: semver
         pattern: ">= 0"
     transformers:
-      - trimPrefix: "v"
+      - trimprefix: "v"
 
 targets:
-  # charts/mise.toml
   helmCharts:
+    name: "charts/mise.toml helm version"
     kind: toml
     sourceid: helm
     scmid: default
@@ -91,8 +85,8 @@ targets:
       file: charts/mise.toml
       key: tools.helm
 
-  # charts/cdviz-collector/mise.toml
   kubectlCollectorChart:
+    name: "charts/cdviz-collector/mise.toml kubectl version"
     kind: toml
     sourceid: kubectl
     scmid: default
@@ -101,6 +95,7 @@ targets:
       key: tools.kubectl
 
   kindCollectorChart:
+    name: "charts/cdviz-collector/mise.toml kind version"
     kind: toml
     sourceid: kind
     scmid: default
@@ -108,8 +103,8 @@ targets:
       file: charts/cdviz-collector/mise.toml
       key: tools.kind
 
-  # demos/stack-k8s/mise.toml
   kubectlStackK8s:
+    name: "demos/stack-k8s/mise.toml kubectl version"
     kind: toml
     sourceid: kubectl
     scmid: default
@@ -118,6 +113,7 @@ targets:
       key: tools.kubectl
 
   kindStackK8s:
+    name: "demos/stack-k8s/mise.toml kind version"
     kind: toml
     sourceid: kind
     scmid: default
@@ -126,6 +122,7 @@ targets:
       key: tools.kind
 
   ctlptlStackK8s:
+    name: "demos/stack-k8s/mise.toml ctlptl version"
     kind: toml
     sourceid: ctlptl
     scmid: default
@@ -133,56 +130,65 @@ targets:
       file: demos/stack-k8s/mise.toml
       key: tools.ctlptl
 
-  # helmwave uses an inline-table value in TOML:
-  #   "ubi:helmwave/helmwave" = { version = "0.42.2", matching = "helmwave" }
-  # updatecli's toml target addresses nested keys with dot notation.
   helmwaveStackK8s:
-    kind: toml
+    name: "demos/stack-k8s/mise.toml helmwave version"
+    kind: file
     sourceid: helmwave
     scmid: default
     spec:
       file: demos/stack-k8s/mise.toml
-      key: '"ubi:helmwave/helmwave".version'
+      matchPattern: '"ubi:helmwave/helmwave" = \{ version = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacePattern: '"ubi:helmwave/helmwave" = { version = "{{ source "helmwave" }}"'
 
-pullrequests:
+actions:
   helm:
-    title: '[updatecli] Bump helm to {{ source "helm" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - helmCharts
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump helm to {{ source "helm" }}'
+      labels:
+        - dependencies
 
   kubectl:
-    title: '[updatecli] Bump kubectl to {{ source "kubectl" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - kubectlCollectorChart
       - kubectlStackK8s
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump kubectl to {{ source "kubectl" }}'
+      labels:
+        - dependencies
 
   kind:
-    title: '[updatecli] Bump kind to {{ source "kind" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - kindCollectorChart
       - kindStackK8s
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump kind to {{ source "kind" }}'
+      labels:
+        - dependencies
 
   ctlptl:
-    title: '[updatecli] Bump ctlptl to {{ source "ctlptl" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - ctlptlStackK8s
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump ctlptl to {{ source "ctlptl" }}'
+      labels:
+        - dependencies
 
   helmwave:
-    title: '[updatecli] Bump helmwave to {{ source "helmwave" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - helmwaveStackK8s
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump helmwave to {{ source "helmwave" }}'
+      labels:
+        - dependencies
