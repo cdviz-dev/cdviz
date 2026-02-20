@@ -1,0 +1,49 @@
+---
+# Update the cdviz-executiontable-panel Grafana plugin in docker-compose.
+#
+# The plugin is referenced in three places in the GF_PLUGINS_PREINSTALL_SYNC
+# environment variable:
+#   cdviz-executiontable-panel@<version>@https://.../v<version>/cdviz-executiontable-panel-<version>.zip
+scms:
+  default:
+    kind: github
+    spec:
+      user: '{{ .github.user }}'
+      email: '{{ .github.email }}'
+      owner: '{{ .github.owner }}'
+      repository: '{{ .github.repository }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      branch: '{{ .github.branch }}'
+
+sources:
+  pluginVersion:
+    kind: githubrelease
+    spec:
+      owner: cdviz-dev
+      repository: cdviz-executiontable-panel
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimPrefix: "v"
+
+targets:
+  dockerCompose:
+    kind: file
+    sourceid: pluginVersion
+    scmid: default
+    spec:
+      file: demos/stack-compose/docker-compose.yaml
+      # Matches: cdviz-executiontable-panel@1.1.0@https://.../v1.1.0/cdviz-executiontable-panel-1.1.0.zip
+      matchPattern: 'cdviz-executiontable-panel@[0-9]+\.[0-9]+\.[0-9]+@https://github\.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/cdviz-executiontable-panel-[0-9]+\.[0-9]+\.[0-9]+\.zip'
+      replacePattern: 'cdviz-executiontable-panel@{{ source "pluginVersion" }}@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v{{ source "pluginVersion" }}/cdviz-executiontable-panel-{{ source "pluginVersion" }}.zip'
+
+pullrequests:
+  plugin:
+    title: '[updatecli] Bump cdviz-executiontable-panel to {{ source "pluginVersion" }}'
+    targets:
+      - dockerCompose
+    scmid: default
+    labels:
+      - dependencies
