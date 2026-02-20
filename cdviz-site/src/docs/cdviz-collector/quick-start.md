@@ -16,7 +16,7 @@ Webhook Endpoint → Transform to CDEvent → Save to Files
 
 ```bash
 # Install
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/v0.6.4/cdviz-collector-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/0.23.0/cdviz-collector-installer.sh | sh
 
 # Create config file
 cat > quick-start.toml << 'EOF'
@@ -35,19 +35,17 @@ id = "api"
 [transformers.to_cdevents]
 type = "vrl"
 template = '''
+# let context.source, context.id, context.timestamp undef, to be generated automatically
 [{
     "metadata": .metadata,
     "headers": .headers,
     "body": {
         "context": {
             "version": "0.4.1",
-            "id": "0",
-            "source": "/cdviz/api",
             "type": "dev.cdevents.service.deployed.0.2.0",
-            "timestamp": now()
         },
         "subject": {
-            "id": (.body.service // "unknown"),
+            "id": (.body.service || "unknown"),
             "type": "service"
         }
     }
@@ -106,10 +104,7 @@ You should see:
 
 ### Real Integrations
 
-- **[GitHub](./integrations/github.md)** - Repository events with proper signatures
-- **[GitHub Action](./integrations/github-action.md)** - Send events directly from workflows
-- **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
-- **GitLab** and **Jenkins** - CI/CD events (coming soon)
+Look at the Integrations on the left menu.
 
 ### Other Sources & Sinks
 

@@ -13,12 +13,12 @@ url = "https://example.com/webhook"
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | string | — | Must be `"http"` |
-| `url` | string | — | Destination endpoint URL |
-| `enabled` | boolean | `true` | Enable/disable this sink |
-| `headers` | array | `[]` | Outgoing request headers (auth, signatures, etc.) |
+| Parameter | Type    | Default | Description                                       |
+| --------- | ------- | ------- | ------------------------------------------------- |
+| `type`    | string  | —       | Must be `"http"`                                  |
+| `url`     | string  | —       | Destination endpoint URL                          |
+| `enabled` | boolean | `true`  | Enable/disable this sink                          |
+| `headers` | array   | `[]`    | Outgoing request headers (auth, signatures, etc.) |
 
 ## Request Format
 

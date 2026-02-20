@@ -11,15 +11,15 @@ parser = "auto"
 
 ## Detection Rules
 
-| Extension | Parser Used | Notes |
-| --- | --- | --- |
-| `.json` | `json` | Single JSON object |
-| `.jsonl`, `.ndjson` | `jsonl` | JSON Lines |
-| `.csv` | `csv_row` | CSV with header row |
-| `.xml` | `xml` | Requires `parser_xml` feature |
-| `.tap` | `tap` | Requires `parser_tap` feature |
-| `.txt`, `.log` | `text_line` | Line-by-line |
-| Other / none | `text_line` | Default fallback |
+| Extension           | Parser Used | Notes                         |
+| ------------------- | ----------- | ----------------------------- |
+| `.json`             | `json`      | Single JSON object            |
+| `.jsonl`, `.ndjson` | `jsonl`     | JSON Lines                    |
+| `.csv`              | `csv_row`   | CSV with header row           |
+| `.xml`              | `xml`       | Requires `parser_xml` feature |
+| `.tap`              | `tap`       | Requires `parser_tap` feature |
+| `.txt`, `.log`      | `text_line` | Line-by-line                  |
+| Other / none        | `text_line` | Default fallback              |
 
 ## Use Cases
 

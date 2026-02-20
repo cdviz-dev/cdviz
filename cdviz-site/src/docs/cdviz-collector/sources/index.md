@@ -46,14 +46,14 @@ metadata.team = "platform"
 
 ## Available Extractors
 
-| Type                      | Description                        | Use Cases                                               |
-| ------------------------- | ---------------------------------- | ------------------------------------------------------- |
-| [`noop`](./noop.md)       | No-operation extractor for testing | Configuration testing, pipeline validation              |
-| [`webhook`](./webhook.md) | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations |
-| [`opendal`](./opendal.md) | File system and cloud storage      | Log files, artifact monitoring, batch processing        |
-| [`sse`](./sse.md)         | Server-Sent Events client          | Real-time event streams, SSE endpoints                  |
+| Type                      | Description                        | Use Cases                                                 |
+| ------------------------- | ---------------------------------- | --------------------------------------------------------- |
+| [`noop`](./noop.md)       | No-operation extractor for testing | Configuration testing, pipeline validation                |
+| [`webhook`](./webhook.md) | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations   |
+| [`opendal`](./opendal.md) | File system and cloud storage      | Log files, artifact monitoring, batch processing          |
+| [`sse`](./sse.md)         | Server-Sent Events client          | Real-time event streams, SSE endpoints                    |
 | [`kafka`](./kafka.md)     | Apache Kafka consumer              | Event streaming, message queues, Kafka-compatible brokers |
-| [`nats`](./nats.md)       | NATS Core / JetStream consumer     | Cloud-native messaging, lightweight pub/sub, JetStream  |
+| [`nats`](./nats.md)       | NATS Core / JetStream consumer     | Cloud-native messaging, lightweight pub/sub, JetStream    |
 
 ## Shared Configuration
 
@@ -134,14 +134,11 @@ template = """
     "body": {
         "context": {
             "version": "0.4.1",
-            "id": "0",
-            "source": "/event/source/123",
             "type": "dev.cdevents.service.deployed.0.1.1",
             "timestamp": .body.timestamp,
         },
         "subject": {
             "id": .body.id,
-            "source": "/event/source/123",
             "type": "service",
             "content": {
                 "environment": {

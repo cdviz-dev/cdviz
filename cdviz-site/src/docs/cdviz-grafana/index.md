@@ -1,4 +1,4 @@
-# CDViz Grafana
+# CDviz Grafana
 
 > [!TIP] Online Demo
 > Explore a live read-only instance of the CDviz Grafana dashboards at
@@ -9,10 +9,10 @@
 
 ## Overview
 
-CDViz Grafana provides a comprehensive visualization layer for continuous delivery metrics and events:
+CDviz Grafana provides a comprehensive visualization layer for continuous delivery metrics and events:
 
 - Delivers real-time visualization and monitoring of SDLC data through customized Grafana dashboards and alerts
-- Functions as the primary visualization interface for events (CDEvents) stored in CDViz Database
+- Functions as the primary visualization interface for events (CDEvents) stored in CDviz Database
 - Enables creation of tailored dashboards for specific monitoring requirements
 - Enhances runtime metrics with deployment context (such as component versions)
 
@@ -27,16 +27,16 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
   - **marcusolsson-dynamictext-panel** (requires HTML sanitization to be disabled in Grafana)
   - **volkovlabs-form-panel**
   - **volkovlabs-table-panel**
-- Database credentials with read access to a CDViz Database instance
+- Database credentials with read access to a CDviz Database instance
 
 ### Manual Installation
 
 1. Configure Grafana according to the requirements above (plugins and settings)
-2. Create a PostgreSQL datasource in Grafana to connect to the CDViz Database:
+2. Create a PostgreSQL datasource in Grafana to connect to the CDviz Database:
    - Type: `grafana-postgresql-datasource`
    - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
    - TimescaleDB: `enabled`
-3. Import dashboards by copying JSON definitions from the [CDViz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)
+3. Import dashboards by copying JSON definitions from the [CDviz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)
 
 ### Kubernetes Deployment with Helm
 
@@ -44,6 +44,7 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
 2. Enable dashboard and datasource provisioning via sidecars:
 
    ::: details Grafana Helm Chart Configuration
+
    ```yaml
    # https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
    #
@@ -71,9 +72,10 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
        label: grafana_datasource
        labelValue: "1"
    ```
+
    :::
 
-3. Configure the datasource either manually or by creating a values.yaml file for the CDViz Grafana chart:
+3. Configure the datasource either manually or by creating a values.yaml file for the CDviz Grafana chart:
 
    ```yaml
    datasources:
@@ -111,7 +113,7 @@ CDViz Grafana provides a comprehensive visualization layer for continuous delive
 
 ## Contributing
 
-Contributions to CDViz Grafana dashboards are welcomed. For new dashboard ideas, panel enhancements, or other improvements, please submit an issue or pull request to our [GitHub repository](https://github.com/cdviz-dev/cdviz).
+Contributions to CDviz Grafana dashboards are welcomed. For new dashboard ideas, panel enhancements, or other improvements, please submit an issue or pull request to our [GitHub repository](https://github.com/cdviz-dev/cdviz).
 
 ### Dashboard Design Guidelines
 

@@ -18,13 +18,13 @@ parser = "json"
 Input `event.json`:
 
 ```json
-{"event_type": "deployment", "service": "api", "version": "1.2.3"}
+{ "event_type": "deployment", "service": "api", "version": "1.2.3" }
 ```
 
 Output body:
 
 ```json
-{"event_type": "deployment", "service": "api", "version": "1.2.3"}
+{ "event_type": "deployment", "service": "api", "version": "1.2.3" }
 ```
 
 ## Example

@@ -12,10 +12,10 @@ type = "debug"
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | string | — | Must be `"debug"` |
-| `enabled` | boolean | `true` | Enable/disable this sink |
+| Parameter | Type    | Default | Description              |
+| --------- | ------- | ------- | ------------------------ |
+| `type`    | string  | —       | Must be `"debug"`        |
+| `enabled` | boolean | `true`  | Enable/disable this sink |
 
 ## Log Output
 

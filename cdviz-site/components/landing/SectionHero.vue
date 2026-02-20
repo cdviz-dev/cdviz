@@ -86,7 +86,9 @@ onMounted(() => {
           />
         </picture>
         <div class="absolute inset-0 rounded-xl flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
-          <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-semibold text-lg px-4 py-2 rounded-lg bg-black/50 backdrop-blur-sm">
+          <span
+            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-semibold text-lg px-4 py-2 rounded-lg bg-black/50 backdrop-blur-sm"
+          >
             Open live demo →
           </span>
         </div>
@@ -125,7 +127,8 @@ onMounted(() => {
         <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
         <Btn href="/docs" primary>Get Started</Btn>
         <Btn href="#how">See How It Works</Btn>
-        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener">Try Live Demo</Btn>
+        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener"
+        >Try Live Demo</Btn>
       </div>
       <div
         id="hero-social-proof"

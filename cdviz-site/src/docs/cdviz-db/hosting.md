@@ -2,7 +2,7 @@
 
 ## Kubernetes Deployments
 
-CDViz database can be deployed on Kubernetes using several mature operators:
+CDviz database can be deployed on Kubernetes using several mature operators:
 
 - **Cloud Native Postgres (CNPG)** - The officially recommended solution, also used in our demonstration cluster. [Documentation](https://cloudnative-pg.io/) | [Reference configuration](https://github.com/cdviz-dev/cdviz/blob/main/demos/stack-k8s/values/cdviz-db.yaml)
 - **Postgres Operator by Zalando** - A production-grade Postgres operator with high availability features. [Documentation](https://github.com/zalando/postgres-operator)
@@ -10,7 +10,7 @@ CDViz database can be deployed on Kubernetes using several mature operators:
 
 ## Managed Database Services
 
-The following managed database services have been evaluated for compatibility with CDViz requirements, particularly regarding support for the required PostgreSQL extensions.
+The following managed database services have been evaluated for compatibility with CDviz requirements, particularly regarding support for the required PostgreSQL extensions.
 
 ### Specialized PostgreSQL Providers
 
@@ -32,7 +32,7 @@ Compatibility status with major cloud providers:
 
 ## Container Deployments
 
-For development, testing, and demonstration purposes, the CDViz database can be deployed using Docker or other OCI-compatible container runtimes.
+For development, testing, and demonstration purposes, the CDviz database can be deployed using Docker or other OCI-compatible container runtimes.
 
 A reference docker-compose configuration is available in the repository:
 

@@ -25,6 +25,9 @@ Practical solutions for specific tasks:
 **Integrations:**
 
 - **[GitHub](./integrations/github.md)** - Repository events with signatures
+- **[GitHub Actions](./integrations/github-action.md)** - CI/CD workflow events
+- **[GitLab](./integrations/gitlab.md)** - Repository and pipeline events
+- **[ArgoCD](./integrations/argocd.md)** - GitOps deployment events
 - **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
 
 **Common Tasks:**
@@ -51,10 +54,10 @@ Complete technical specifications:
 
 **Components:**
 
-- **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Noop](./sources/noop.md)
+- **[Sources](./sources/)** - Event collection: [Webhook](./sources/webhook.md), [Files](./sources/opendal.md), [SSE](./sources/sse.md), [Kafka](./sources/kafka.md), [NATS](./sources/nats.md), [Noop](./sources/noop.md)
 - **[Parsers](./parsers/)** - Multi-format input parsing: [JSON](./parsers/json.md), [XML](./parsers/xml.md), [TAP](./parsers/tap.md), [CSV](./parsers/csv_row.md), [Text](./parsers/text.md), and more
 - **[Transformers](./transformers.md)** - Event processing with VRL
-- **[Sinks](./sinks/)** - Event delivery: [Database](./sinks/db.md), [HTTP](./sinks/http.md), [Files](./sinks/folder.md), [SSE](./sinks/sse.md), [Debug](./sinks/debug.md)
+- **[Sinks](./sinks/)** - Event delivery: [Database](./sinks/db.md), [HTTP](./sinks/http.md), [Files](./sinks/folder.md), [SSE](./sinks/sse.md), [Kafka](./sinks/kafka.md), [NATS](./sinks/nats.md), [Debug](./sinks/debug.md)
 
 ### 🧠 Explanation (Understanding-Oriented)
 

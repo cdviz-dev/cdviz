@@ -26,7 +26,7 @@ Error: Failed to compile src/main.rs
 Output:
 
 ```json
-{"text": "Build failed at 2024-01-15 14:30:22\nError: Failed to compile src/main.rs"}
+{ "text": "Build failed at 2024-01-15 14:30:22\nError: Failed to compile src/main.rs" }
 ```
 
 ## Primary Use Case

@@ -15,12 +15,12 @@ Endpoint accessible at: `http://{host}:{port}/sse/{id}`
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | string | — | Must be `"sse"` |
-| `id` | string | — | URL path identifier |
-| `enabled` | boolean | `true` | Enable/disable this sink |
-| `headers` | array | `[]` | Header validation rules for incoming connections |
+| Parameter | Type    | Default | Description                                      |
+| --------- | ------- | ------- | ------------------------------------------------ |
+| `type`    | string  | —       | Must be `"sse"`                                  |
+| `id`      | string  | —       | URL path identifier                              |
+| `enabled` | boolean | `true`  | Enable/disable this sink                         |
+| `headers` | array   | `[]`    | Header validation rules for incoming connections |
 
 ## Authentication
 
@@ -66,12 +66,12 @@ data: lagged: {N} messages skipped
 
 ## HTTP Response Codes
 
-| Status | Cause |
-| --- | --- |
-| `200 OK` | Valid connection |
+| Status             | Cause                   |
+| ------------------ | ----------------------- |
+| `200 OK`           | Valid connection        |
 | `401 Unauthorized` | Required header missing |
-| `403 Forbidden` | Header value invalid |
-| `404 Not Found` | Unknown SSE `id` |
+| `403 Forbidden`    | Header value invalid    |
+| `404 Not Found`    | Unknown SSE `id`        |
 
 ## Examples
 

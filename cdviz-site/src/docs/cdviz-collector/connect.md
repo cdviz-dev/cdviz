@@ -47,42 +47,8 @@ Options:
           Print help (see a summary with '-h')
 ```
 
-## Configuration
-
-The connect command requires a configuration file that defines the pipeline components:
-
-```bash
-cdviz-collector connect --config cdviz-collector.toml
-```
-
 > [!TIP]
 > See [Configuration Guide](./configuration.md) for complete configuration reference and examples.
-
-### Basic Configuration Example
-
-```toml
-[http]
-port = 8080
-
-[sources.my_source]
-enabled = true
-[sources.my_source.extractor]
-type = "webhook"
-id = "api"
-
-[sinks.files]
-enabled = true
-type = "folder"
-kind = "fs"
-parameters = { root = "./events" }
-```
-
-### Configuration Components
-
-- **`[http]`** - Server host and port settings
-- **`[sources.*]`** - Event collection → [Sources Documentation](./sources/)
-- **`[transformers.*]`** - Event processing → [Transformers Guide](./transformers.md)
-- **`[sinks.*]`** - Event delivery → [Sinks Documentation](./sinks/)
 
 ## Server Features
 
@@ -93,22 +59,6 @@ When running, the server provides HTTP endpoints for:
 - **Health Checks** - Monitoring and load balancer integration
 
 The exact endpoints depend on your configuration.
-
-## Environment Variables
-
-Override configuration values using environment variables:
-
-```bash
-# Pattern: CDVIZ_COLLECTOR__<PATH_TO_KEY>
-export CDVIZ_COLLECTOR__HTTP__PORT="9090"
-export CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://prod:pass@host:5432/cdviz"
-
-# Start server
-cdviz-collector connect --config config.toml
-```
-
-> [!TIP]
-> See [Environment Overrides](./configuration.md#environment-overrides) for detailed patterns and examples.
 
 ## Common Usage
 

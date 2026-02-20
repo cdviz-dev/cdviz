@@ -13,12 +13,12 @@ headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | string | — | Unique identifier used in the URL path (`/webhook/{id}`) |
-| `headers_to_keep` | array | `[]` | HTTP header names to preserve through the pipeline |
-| `headers` | array | `[]` | Header validation rules for incoming requests |
-| `metadata` | object | — | Static metadata for all events; `context.source` is auto-populated if unset |
+| Parameter         | Type   | Default | Description                                                                 |
+| ----------------- | ------ | ------- | --------------------------------------------------------------------------- |
+| `id`              | string | —       | Unique identifier used in the URL path (`/webhook/{id}`)                    |
+| `headers_to_keep` | array  | `[]`    | HTTP header names to preserve through the pipeline                          |
+| `headers`         | array  | `[]`    | Header validation rules for incoming requests                               |
+| `metadata`        | object | —       | Static metadata for all events; `context.source` is auto-populated if unset |
 
 ## URL Structure
 
@@ -28,12 +28,12 @@ POST /webhook/{id}
 
 ## Response Codes
 
-| Code | Condition |
-| --- | --- |
-| 201 Created | Event successfully received |
-| 400 Bad Request | Invalid JSON body |
+| Code             | Condition                     |
+| ---------------- | ----------------------------- |
+| 201 Created      | Event successfully received   |
+| 400 Bad Request  | Invalid JSON body             |
 | 401 Unauthorized | Missing authentication header |
-| 403 Forbidden | Header validation failed |
+| 403 Forbidden    | Header validation failed      |
 
 ## Security
 

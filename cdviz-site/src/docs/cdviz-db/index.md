@@ -1,15 +1,15 @@
-# CDViz Database
+# CDviz Database
 
 ## Overview
 
-The CDViz database provides the foundational data storage layer for the CDViz platform, enabling efficient capture and retrieval of continuous delivery events and metrics.
+The CDviz database provides the foundational data storage layer for the CDviz platform, enabling efficient capture and retrieval of continuous delivery events and metrics.
 This database is also mentioned as **Evidence store** in the CDEvents literature, as it serves as a repository for all events and metrics collected from various sources.
 
 The database is built on PostgreSQL with TimescaleDB extensions, optimized for time-series data management and analytics.
 
-The conceptual architecture of the CDViz database is as follows:
+The conceptual architecture of the CDviz database is as follows:
 
-![CDViz Database Architecture](/architectures/cdviz_db_conceptual.excalidraw.svg)
+![CDviz Database Architecture](/architectures/cdviz_db_conceptual.excalidraw.svg)
 
 - a schema for CDEvents storage and analytics: `cdviz`
 - a stored procedure for event ingestion (used by the collector service or other event sources): `cdviz.store_cdevent`

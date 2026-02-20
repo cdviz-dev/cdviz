@@ -36,11 +36,11 @@ Output:
 ```json
 {
   "version": 13,
-  "plan": {"start": 1, "end": 3},
+  "plan": { "start": 1, "end": 3 },
   "tests": [
-    {"ok": true, "id": 1, "description": "User authentication works"},
-    {"ok": false, "id": 2, "description": "Database connection", "diagnostic": {"message": "Connection timeout"}},
-    {"ok": true, "id": 3, "description": "Cleanup completed"}
+    { "ok": true, "id": 1, "description": "User authentication works" },
+    { "ok": false, "id": 2, "description": "Database connection", "diagnostic": { "message": "Connection timeout" } },
+    { "ok": true, "id": 3, "description": "Cleanup completed" }
   ]
 }
 ```

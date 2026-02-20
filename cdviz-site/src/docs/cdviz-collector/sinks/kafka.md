@@ -38,7 +38,7 @@ CDEvents are serialized to JSON and published to Kafka:
 {
   "context": {
     "version": "0.4.0",
-    "id": "dev.cdevents.build.started.0.1.0-12345",
+    "id": "xxxxxxxxxxxx",
     "source": "github.com/myorg/myrepo",
     "type": "dev.cdevents.build.started.0.1.0",
     "timestamp": "2024-01-15T10:30:00Z"

@@ -14,12 +14,12 @@ parameters = { root = "./events" }
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | string | — | Must be `"folder"` |
-| `kind` | string | — | Storage backend: `fs`, `s3`, `gcs`, `azblob`, … |
-| `parameters` | object | — | Backend-specific settings (see below) |
-| `enabled` | boolean | `true` | Enable/disable this sink |
+| Parameter    | Type    | Default | Description                                     |
+| ------------ | ------- | ------- | ----------------------------------------------- |
+| `type`       | string  | —       | Must be `"folder"`                              |
+| `kind`       | string  | —       | Storage backend: `fs`, `s3`, `gcs`, `azblob`, … |
+| `parameters` | object  | —       | Backend-specific settings (see below)           |
+| `enabled`    | boolean | `true`  | Enable/disable this sink                        |
 
 ## Storage Backends
 

@@ -13,8 +13,8 @@ type = "folder"  # db | http | folder | sse | kafka | nats | debug
 
 ## Available Sinks
 
-| Type                    | Description                            | Use Cases                                         |
-| ----------------------- | -------------------------------------- | ------------------------------------------------- |
+| Type                    | Description                            | Use Cases                                               |
+| ----------------------- | -------------------------------------- | ------------------------------------------------------- |
 | [`debug`](./debug.md)   | Log events for development and testing | Development, troubleshooting, pipeline validation       |
 | [`db`](./db.md)         | Store events in PostgreSQL database    | Primary storage, dashboards, analytics                  |
 | [`http`](./http.md)     | Forward events to HTTP endpoints       | Webhooks, external APIs, integrations                   |

@@ -69,7 +69,8 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
       <!-- CTA -->
       <div class="flex gap-4 justify-center mt-lg">
         <Btn href="/docs/cdviz-grafana/">Explore all dashboards</Btn>
-        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener">Try Live Demo</Btn>
+        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener"
+        >Try Live Demo</Btn>
       </div>
     </div>
   </section>

@@ -2,7 +2,7 @@
 description: CDviz platform documentation — collector, database, and Grafana dashboards. Open-source SDLC observability built on CDEvents.
 ---
 
-# CDViz Platform Overview
+# CDviz Platform Overview
 
 ## Value Proposition
 
@@ -10,11 +10,11 @@ Effective improvement of Software Development Life Cycle (SDLC), Continuous Inte
 
 Organizations face significant challenges when attempting to establish an integrated view across their development ecosystem. While individual components provide localized measurements, a consolidated perspective remains elusive without proper tooling.
 
-CDViz addresses this need by offering a suite of components designed to visualize, analyze, and enhance understanding of your SDLC, CI/CD, and DevOps infrastructure. The platform facilitates improved interoperability between disparate elements of your software development stack.
+CDviz addresses this need by offering a suite of components designed to visualize, analyze, and enhance understanding of your SDLC, CI/CD, and DevOps infrastructure. The platform facilitates improved interoperability between disparate elements of your software development stack.
 
 ## Key Capabilities
 
-CDViz enables organizations to answer critical operational questions:
+CDviz enables organizations to answer critical operational questions:
 
 - Current application version deployment status across environments
 - Version correlation between deployed applications and observable runtime metrics

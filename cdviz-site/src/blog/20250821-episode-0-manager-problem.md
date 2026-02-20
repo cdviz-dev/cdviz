@@ -1,14 +1,15 @@
 ---
 title: "CDEvents in Action #0: Monitor Your Software Factory"
 description: "Engineering teams waste time correlating data across CI/CD tools. CDviz provides unified CDEvents-based event collection and visualization for deployment tracking."
-tags: [
-  "devops",
-  "cicd",
-  "observability",
-  "cdevents",
-  "engineering management",
-  "platformengineering",
-]
+tags:
+  [
+    "devops",
+    "cicd",
+    "observability",
+    "cdevents",
+    "engineering management",
+    "platformengineering",
+  ]
 target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
 series: "CDEvents in Action"
@@ -69,7 +70,6 @@ curl -i -X POST http://localhost:8080/webhook/000-cdevents \
   -d '{
     "context": {
       "version": "0.4.1",
-      "id": "0",
       "source": "demo",
       "type": "dev.cdevents.service.deployed.0.2.0",
       "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"

@@ -108,8 +108,6 @@ template = """
     "body": {
         "context": {
             "version": "0.4.1",
-            "id": "0",
-            "source": "/event/source/123",
             "type": "dev.cdevents.service.deployed.0.1.1",
             "timestamp": .body.timestamp,
         },

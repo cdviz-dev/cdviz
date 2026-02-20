@@ -10,17 +10,17 @@ Parsers convert file contents into JSON messages for the CDviz pipeline.
 
 ## Quick Reference
 
-| Parser | Format | Output | Use Case |
-| --- | --- | --- | --- |
-| [`auto`](./auto.md) | Auto-detect | Varies | Default — detects format by file extension |
-| [`json`](./json.md) | JSON | 1 message | Single JSON object per file |
-| [`jsonl`](./jsonl.md) | JSON Lines | N messages | One message per line |
-| [`csv_row`](./csv_row.md) | CSV | N messages | One message per row (header as keys) |
-| [`text`](./text.md) | Plain text | 1 message | Entire file as `{"text": "..."}` |
-| [`text_line`](./text_line.md) | Plain text | N messages | One message per non-empty line |
-| [`xml`](./xml.md) | XML | 1 message | XML converted to JSON structure |
-| [`tap`](./tap.md) | TAP format | 1 message | Test Anything Protocol results |
-| [`metadata`](./metadata.md) | Any | 1 message | File metadata only (no content) |
+| Parser                        | Format      | Output     | Use Case                                   |
+| ----------------------------- | ----------- | ---------- | ------------------------------------------ |
+| [`auto`](./auto.md)           | Auto-detect | Varies     | Default — detects format by file extension |
+| [`json`](./json.md)           | JSON        | 1 message  | Single JSON object per file                |
+| [`jsonl`](./jsonl.md)         | JSON Lines  | N messages | One message per line                       |
+| [`csv_row`](./csv_row.md)     | CSV         | N messages | One message per row (header as keys)       |
+| [`text`](./text.md)           | Plain text  | 1 message  | Entire file as `{"text": "..."}`           |
+| [`text_line`](./text_line.md) | Plain text  | N messages | One message per non-empty line             |
+| [`xml`](./xml.md)             | XML         | 1 message  | XML converted to JSON structure            |
+| [`tap`](./tap.md)             | TAP format  | 1 message  | Test Anything Protocol results             |
+| [`metadata`](./metadata.md)   | Any         | 1 message  | File metadata only (no content)            |
 
 ## Feature Flags
 

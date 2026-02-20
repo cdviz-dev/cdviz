@@ -133,7 +133,7 @@ cdviz-collector connect --config config.toml
 
 ### External Files
 
-Load large content from files instead of inline:
+Load large content from files instead of inline: **add the suffix `_file`**
 
 ```toml
 [transformers.github]
@@ -179,12 +179,11 @@ type = "webhook"
 id = "github"
 
 # Headers with signature validation
-[[sources.github.extractor.headers]]
-header = "X-Hub-Signature-256"
-[sources.github.extractor.headers.rule]
-type = "signature"
-token = "github-webhook-secret"  # Set actual value or use env overrides
+[sources.github.extractor.headers]
+"X-Hub-Signature-256" = { type = "signature" token = "github-webhook-secret"  } # Set actual value or use env overrides
 ```
+
+see [Header Authentication](./header-authentication) & [Header Validation](./header-validation).
 
 ### Kubernetes ConfigMap + Secrets
 

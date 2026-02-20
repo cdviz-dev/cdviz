@@ -15,13 +15,13 @@ pool_connections_max = 10
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | string | — | Must be `"db"` |
-| `url` | string | — | PostgreSQL connection URL |
-| `enabled` | boolean | `true` | Enable/disable this sink |
-| `pool_connections_min` | integer | `1` | Minimum idle connections |
-| `pool_connections_max` | integer | `10` | Maximum concurrent connections |
+| Parameter              | Type    | Default | Description                    |
+| ---------------------- | ------- | ------- | ------------------------------ |
+| `type`                 | string  | —       | Must be `"db"`                 |
+| `url`                  | string  | —       | PostgreSQL connection URL      |
+| `enabled`              | boolean | `true`  | Enable/disable this sink       |
+| `pool_connections_min` | integer | `1`     | Minimum idle connections       |
+| `pool_connections_max` | integer | `10`    | Maximum concurrent connections |
 
 ## Database Requirements
 

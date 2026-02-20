@@ -36,7 +36,7 @@ Output:
     "@name": "Unit Tests",
     "@tests": "5",
     "@failures": "1",
-    "testcase": [{"@name": "test_auth", "@time": "0.12"}]
+    "testcase": [{ "@name": "test_auth", "@time": "0.12" }]
   }
 }
 ```

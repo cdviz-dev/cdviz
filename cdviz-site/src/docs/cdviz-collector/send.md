@@ -8,16 +8,84 @@ Send CDEvent JSON directly to configured sinks for testing and scripting, withou
 cdviz-collector send [OPTIONS] --data <DATA>
 ```
 
-| Option | Description |
-| --- | --- |
-| `-d, --data <DATA>` | JSON data: inline string, `@file.json`, or `@-` for stdin |
-| `-u, --url <URL>` | HTTP endpoint — enables HTTP sink, disables debug sink |
-| `-H, --header <HEADER>` | HTTP header for the request (`-H "Name: value"`, repeatable) |
-| `--input-parser <PARSER>` | Parser for non-CDEvent input formats (see [Parsers](#parsers)) |
-| `--config <CONFIG>` | TOML config file for advanced sink settings |
-| `-C, --directory <DIR>` | Working directory for relative paths |
-| `-v` / `-q` | Increase / decrease log verbosity |
-| `--disable-otel` | Skip OpenTelemetry initialization |
+```text
+Send JSON data directly to a sink for testing and scripting.
+
+This command allows sending JSON data directly to configured sinks without running a full server. Useful for testing transformations, debugging sink configurations, or scripting event dispatch.
+
+Usage: cdviz-collector send [OPTIONS] --data <DATA>
+
+Options:
+  -d, --data <DATA>
+          Data to send to the sink.
+
+          Can be specified as: - Direct string: '{"test": "value"}' or raw text/XML/YAML content - File path: @data.json (format auto-detected from extension) - Stdin: @-
+
+          The data will be parsed according to `--input-parser` and processed through the configured pipeline before being sent to the specified sink.
+
+  -v, --verbose...
+          Increase logging verbosity
+
+  -q, --quiet...
+          Decrease logging verbosity
+
+  -u, --url <URL>
+          HTTP URL to send the data to.
+
+          When specified, automatically enables the HTTP sink and disables the debug sink. The data will be sent as `CloudEvents` format to the specified endpoint.
+
+          Example: `--url <https://api.example.com/webhook>`
+
+      --disable-otel
+          Disable OpenTelemetry initialization and use minimal tracing setup.
+
+          This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
+
+      --total-duration-of-retries <TOTAL_DURATION_OF_RETRIES>
+          Total duration of retries on failed http request. (default 30s)
+
+          Example: `--total-duration-of-retries 1m`
+
+      --config <CONFIG>
+          Configuration file for advanced sink settings.
+
+          Optional TOML configuration file for advanced sink configuration such as authentication, headers generation, or custom sink types. Command line arguments will override configuration file settings.
+
+          [env: CDVIZ_COLLECTOR_CONFIG=]
+
+  -C, --directory <DIRECTORY>
+          Working directory for relative paths.
+
+          Changes the working directory before processing. This affects relative paths in configuration files and data file references.
+
+  -H, --header <HEADERS>
+          Additional HTTP headers for the request.
+
+          Specify custom headers for HTTP sink requests. Can be used multiple times to add several headers. Format: "Header-Name: value"
+
+          Example: `--header "X-API-Key: secret" --header "Content-Type: application/json"`
+
+      --input-parser <PARSER>
+          Input data format parser selection.
+
+          Determines how input data is parsed. Use 'auto' for automatic format detection based on file extension (when using @file), or specify an explicit format.
+
+          Supported formats: - auto: Auto-detect format based on file extension (default) - json: Parse as JSON - xml: Parse as XML (requires `parser_xml` feature) - yaml: Parse as YAML (requires `parser_yaml` feature) - tap: Parse as TAP format (requires `parser_tap` feature) - text: Entire input as a single event with body `{"text": "..."}` - text-line: Each non-empty line as a separate event with body `{"text": "..."}`
+
+          Possible values:
+          - auto:      Auto-detect format based on file extension
+          - json:      Parse as JSON
+          - xml:       Parse as XML
+          - yaml:      Parse as YAML
+          - tap:       Parse as TAP (Test Anything Protocol)
+          - text:      Entire input as raw text
+          - text-line: Each line as a separate raw text event
+
+          [default: auto]
+
+  -h, --help
+          Print help (see a summary with '-h')
+```
 
 ## Input Data
 
@@ -43,7 +111,7 @@ cdviz-collector send [OPTIONS] --data <DATA>
     "source": "/my-app",
     "type": "service",
     "content": {
-      "environment": {"id": "production"},
+      "environment": { "id": "production" },
       "artifactId": "pkg:oci/my-service@sha256:abc123"
     }
   }
@@ -54,16 +122,16 @@ cdviz-collector send [OPTIONS] --data <DATA>
 
 Use `--input-parser` to send test results, logs, and other non-CDEvent formats. Requires transformers to convert the parsed data into CDEvents.
 
-| Parser | Format | Use Case |
-| --- | --- | --- |
-| `auto` | Auto-detect | By file extension |
-| `json` | JSON | Single JSON object |
-| `jsonl` | JSON Lines | One JSON per line |
-| `csv_row` | CSV | One message per row |
-| `xml` | XML | JUnit reports, Maven/Gradle output |
-| `tap` | TAP | Test Anything Protocol |
-| `text` | Plain text | Full file as one message |
-| `text_line` | Plain text | One message per line (linters, logs) |
+| Parser      | Format      | Use Case                             |
+| ----------- | ----------- | ------------------------------------ |
+| `auto`      | Auto-detect | By file extension                    |
+| `json`      | JSON        | Single JSON object                   |
+| `jsonl`     | JSON Lines  | One JSON per line                    |
+| `csv_row`   | CSV         | One message per row                  |
+| `xml`       | XML         | JUnit reports, Maven/Gradle output   |
+| `tap`       | TAP         | Test Anything Protocol               |
+| `text`      | Plain text  | Full file as one message             |
+| `text_line` | Plain text  | One message per line (linters, logs) |
 
 **[→ Parsers Documentation](./parsers/index.md)**
 

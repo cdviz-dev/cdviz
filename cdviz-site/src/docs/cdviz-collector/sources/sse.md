@@ -13,12 +13,12 @@ max_retries = 10
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `url` | string | — | SSE endpoint URL |
-| `max_retries` | integer | `10` | Maximum reconnection attempts |
-| `headers` | array | `[]` | Outgoing request headers (auth, etc.) |
-| `metadata` | object | — | Static metadata for all events; `context.source` is auto-populated if unset |
+| Parameter     | Type    | Default | Description                                                                 |
+| ------------- | ------- | ------- | --------------------------------------------------------------------------- |
+| `url`         | string  | —       | SSE endpoint URL                                                            |
+| `max_retries` | integer | `10`    | Maximum reconnection attempts                                               |
+| `headers`     | array   | `[]`    | Outgoing request headers (auth, etc.)                                       |
+| `metadata`    | object  | —       | Static metadata for all events; `context.source` is auto-populated if unset |
 
 ## Authentication
 
