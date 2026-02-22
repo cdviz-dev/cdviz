@@ -39,6 +39,42 @@ import Why from "./landing/SectionWhy.vue";
       <!-- End & Last CTA -->
       <a id="end"></a>
       <div class="text-center italic text-lg">Thank you!</div>
+      <div class="flex items-center justify-center gap-6 mt-6">
+        <a
+          href="https://github.com/cdviz-dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="CDviz on GitHub"
+          class="text-text/60 hover:text-primary transition-colors duration-200"
+        >
+          <span class="icon-[simple-icons--github] h-6 w-6 block" aria-hidden="true"></span>
+        </a>
+        <a
+          href="https://www.youtube.com/@CDviz"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="CDviz on YouTube"
+          class="text-text/60 hover:text-primary transition-colors duration-200"
+        >
+          <span class="icon-[simple-icons--youtube] h-6 w-6 block" aria-hidden="true"></span>
+        </a>
+        <a
+          href="https://dev.to/davidb31"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="CDviz on dev.to"
+          class="text-text/60 hover:text-primary transition-colors duration-200"
+        >
+          <span class="icon-[simple-icons--devdotto] h-6 w-6 block" aria-hidden="true"></span>
+        </a>
+        <a
+          href="mailto:contact@cdviz.dev"
+          aria-label="Email CDviz"
+          class="text-text/60 hover:text-primary transition-colors duration-200"
+        >
+          <span class="icon-[lucide--mail] h-6 w-6 block" aria-hidden="true"></span>
+        </a>
+      </div>
     </section>
   </main>
 </template>

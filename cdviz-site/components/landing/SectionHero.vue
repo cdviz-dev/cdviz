@@ -139,7 +139,7 @@ onMounted(() => {
           <div class="text-sm text-text/80">
             <div class="font-medium">CDEvents Compatible</div>
             <div class="opacity-75">
-              Cloud Native standard for delivery events
+              CD Foundation standard for delivery events
             </div>
           </div>
         </div>
