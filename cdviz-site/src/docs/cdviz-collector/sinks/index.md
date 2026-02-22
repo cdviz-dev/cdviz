@@ -7,21 +7,22 @@ Sinks deliver CDEvents to their final destinations.
 ```toml
 [sinks.my_sink]
 enabled = true
-type = "folder"  # db | http | folder | sse | kafka | nats | debug
+type = "folder"  # db | clickhouse | http | folder | sse | kafka | nats | debug
 # ... type-specific parameters
 ```
 
 ## Available Sinks
 
-| Type                    | Description                            | Use Cases                                               |
-| ----------------------- | -------------------------------------- | ------------------------------------------------------- |
-| [`debug`](./debug.md)   | Log events for development and testing | Development, troubleshooting, pipeline validation       |
-| [`db`](./db.md)         | Store events in PostgreSQL database    | Primary storage, dashboards, analytics                  |
-| [`http`](./http.md)     | Forward events to HTTP endpoints       | Webhooks, external APIs, integrations                   |
-| [`folder`](./folder.md) | Write events as files to storage       | Archival, backup, batch processing                      |
-| [`sse`](./sse.md)       | Stream events via Server-Sent Events   | Real-time dashboards, monitoring                        |
-| [`kafka`](./kafka.md)   | Publish events to Kafka topics         | Event streaming, Kafka-compatible brokers               |
-| [`nats`](./nats.md)     | Publish events to NATS subjects        | Cloud-native messaging, JetStream persistent publishing |
+| Type                            | Description                            | Use Cases                                               |
+| ------------------------------- | -------------------------------------- | ------------------------------------------------------- |
+| [`debug`](./debug.md)           | Log events for development and testing | Development, troubleshooting, pipeline validation       |
+| [`db`](./db.md)                 | Store events in PostgreSQL database    | Primary storage, dashboards, analytics                  |
+| [`clickhouse`](./clickhouse.md) | Store events in ClickHouse             | High-throughput analytics, columnar queries             |
+| [`http`](./http.md)             | Forward events to HTTP endpoints       | Webhooks, external APIs, integrations                   |
+| [`folder`](./folder.md)         | Write events as files to storage       | Archival, backup, batch processing                      |
+| [`sse`](./sse.md)               | Stream events via Server-Sent Events   | Real-time dashboards, monitoring                        |
+| [`kafka`](./kafka.md)           | Publish events to Kafka topics         | Event streaming, Kafka-compatible brokers               |
+| [`nats`](./nats.md)             | Publish events to NATS subjects        | Cloud-native messaging, JetStream persistent publishing |
 
 ## Shared Configuration
 

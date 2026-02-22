@@ -39,6 +39,7 @@ const processSteps = [
     tools: [
       { icon: "icon-[simple-icons--postgresql]", title: "PostgreSQL" },
       { text: "TimescaleDB" },
+      { icon: "icon-[simple-icons--clickhouse]", title: "ClickHouse" },
     ],
   },
   {
@@ -293,40 +294,40 @@ const selectComponent = async (componentName) => {
             <div class="flex items-center gap-3 mb-4">
               <span class="icon-[lucide--database] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
-                PostgreSQL + TimescaleDB
+                Flexible Event Storage
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              High-performance time-series database optimized for storing and querying CDEvents with
-              efficient time-based operations. Provides reliable storage and fast analytics for
-              delivery pipeline data.
+              Store CDEvents in the datastore that fits your scale and stack. PostgreSQL +
+              TimescaleDB is the default for time-series analytics; ClickHouse is available for
+              high-throughput columnar workloads.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>
-                <div class="font-medium text-primary mb-2">Features</div>
+                <div class="font-medium text-primary mb-2">PostgreSQL + TimescaleDB</div>
                 <div class="text-text/80 space-y-1">
-                  <div>• Time-series optimization</div>
+                  <div>• Time-series optimized</div>
                   <div>• Automatic partitioning</div>
-                  <div>• Compression</div>
                   <div>• Continuous aggregates</div>
-                </div>
-              </div>
-              <div>
-                <div class="font-medium text-primary mb-2">Performance</div>
-                <div class="text-text/80 space-y-1">
-                  <div>• Millions of events</div>
-                  <div>• Sub-second queries</div>
-                  <div>• Horizontal scaling</div>
-                  <div>• High availability</div>
-                </div>
-              </div>
-              <div>
-                <div class="font-medium text-primary mb-2">Schema</div>
-                <div class="text-text/80 space-y-1">
-                  <div>• CDEvents compliant</div>
-                  <div>• Versioned migrations</div>
-                  <div>• Extensible structure</div>
                   <div>• ACID compliance</div>
+                </div>
+              </div>
+              <div>
+                <div class="font-medium text-primary mb-2">ClickHouse</div>
+                <div class="text-text/80 space-y-1">
+                  <div>• Columnar analytics</div>
+                  <div>• High insert throughput</div>
+                  <div>• Custom INSERT queries</div>
+                  <div>• Flexible schema</div>
+                </div>
+              </div>
+              <div>
+                <div class="font-medium text-primary mb-2">Other sinks</div>
+                <div class="text-text/80 space-y-1">
+                  <div>• HTTP / webhooks</div>
+                  <div>• Kafka, NATS</div>
+                  <div>• Folder / archival</div>
+                  <div>• SSE streaming</div>
                 </div>
               </div>
             </div>
@@ -350,9 +351,9 @@ const selectComponent = async (componentName) => {
                 <div class="font-medium text-primary mb-2">Dashboards</div>
                 <div class="text-text/80 space-y-1">
                   <div>• DORA metrics</div>
-                  <div>• Lead time analysis</div>
-                  <div>• Deployment frequency</div>
-                  <div>• Failure recovery</div>
+                  <div>• Incidents &amp; tickets</div>
+                  <div>• Artifact timeline</div>
+                  <div>• Execution performance</div>
                 </div>
               </div>
               <div>

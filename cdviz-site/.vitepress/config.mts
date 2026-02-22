@@ -214,6 +214,10 @@ export default defineConfig({
                   link: "/docs/cdviz-collector/sinks/db",
                 },
                 {
+                  text: "ClickHouse",
+                  link: "/docs/cdviz-collector/sinks/clickhouse",
+                },
+                {
                   text: "HTTP",
                   link: "/docs/cdviz-collector/sinks/http",
                 },
@@ -482,9 +486,8 @@ export default defineConfig({
         screenshot: "https://cdviz.dev/illustrations/hero-dashboard-01-q60.webp",
         featureList: [
           "CDEvents collection from GitHub, GitLab, ArgoCD, Kubernetes",
+          "Event storage in PostgreSQL + TimescaleDB or ClickHouse",
           "Grafana dashboards for DORA metrics, incidents & tickets, deployment tracking, artifact timelines",
-          "Real-time event streaming and storage in PostgreSQL + TimescaleDB",
-          "Grafana dashboards for DORA metrics, deployment tracking, artifact timelines",
           "Webhook-based passive monitoring without pipeline changes",
           "Event-driven workflow automation via NATS, Kafka, HTTP sinks",
         ],
