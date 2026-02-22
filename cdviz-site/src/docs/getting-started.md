@@ -79,3 +79,21 @@ Congratulations! You've successfully sent your first CDEvents and visualized the
 - **Explore the CDEvents Activity dashboard:** This dashboard provides a more detailed view of all the CDEvents that have been collected. You can access it at [http://localhost:3000/d/cdevents-activity/cdevents-activity](http://localhost:3000/d/cdevents-activity/cdevents-activity).
 - **Submit raw JSON events:** For more advanced use cases, you can use the "Raw JSON" form to submit CDEvents in their raw JSON format.
 - **Explore other dashboards:** and look at `cdviz/demos/uses_cases` to see how data was injected (`csv -> cdviz-collector (transformers) -> database`)
+
+## Frequently Asked Questions
+
+### How long does CDviz take to set up?
+
+CDviz can be running locally in under 5 minutes using Docker Compose. The demo stack (`cdviz/demos/stack-compose`) includes a pre-configured PostgreSQL database, CDviz Collector, and Grafana instance. You send your first CDEvent via a form in the browser and see it appear in the dashboard immediately.
+
+### Does CDviz require modifying my existing pipelines?
+
+No. CDviz supports passive monitoring via webhook transformers for GitHub, GitLab, and ArgoCD. Configure a webhook at the organization or group level once, and all repositories send events automatically — with zero pipeline changes. Active integration (for custom metadata) is optional and additive.
+
+### What DORA metrics does CDviz track?
+
+CDviz collects the raw event data needed to calculate all four DORA metrics: Deployment Frequency (from `service.deployed` events), Lead Time for Changes (from pipeline and deployment events), Change Failure Rate (from incident events), and Mean Time to Recovery (from `incident.detected` and `incident.resolved` events).
+
+### What is the difference between CDviz and CDEvents?
+
+CDEvents is a Continuous Delivery Foundation (CDF) specification — a standardized JSON schema for describing software delivery events. CDviz is a platform that implements CDEvents: it collects events, stores them in a database, and visualizes them in dashboards. CDviz uses CDEvents as its data model; you can also send CDEvents to other CDEvents-compatible systems.

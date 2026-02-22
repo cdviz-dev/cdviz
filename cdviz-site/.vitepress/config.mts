@@ -15,7 +15,8 @@ export default defineConfig({
       "meta",
       {
         name: "keywords",
-        content: "CD,SDLC,pipeline,CD dashboard,CD metrics,DevOps,DevSecOps",
+        content:
+          "CDEvents,SDLC observability,DORA metrics,deployment tracking,pipeline observability,CI/CD visibility,software delivery events,Grafana DORA metrics,DevOps,DevSecOps",
       },
     ],
     ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
@@ -450,6 +451,16 @@ export default defineConfig({
     }
 
     if (pageData.relativePath === "index.md") {
+      head.push([
+        "link",
+        {
+          rel: "preload",
+          as: "image",
+          href: "/illustrations/hero-dashboard-01-q60.webp",
+          type: "image/webp",
+        },
+      ]);
+
       const softwareAppSchema = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",

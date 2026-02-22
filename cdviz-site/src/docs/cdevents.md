@@ -1,10 +1,18 @@
 # [![cdevents logo](/logos/cdevents.svg)](https://cdevents.dev/)
 
-CDEvents are the fundamental building blocks of CDviz. They are structured data that represent actions that occur in your software development lifecycle. CDviz uses the [CDEvents](https://cdevents.dev/) specification for its event format.
-
 ## What are CDEvents?
 
-CDEvents (Continuous Delivery Events) are a standardized way to represent events in the continuous delivery process. They provide a common format for describing events that occur in software development, such as deployments, builds, and tests. This standardization allows different tools and systems to communicate effectively about the state of software delivery.
+CDEvents (Continuous Delivery Events) is an open specification initiated by the Continuous Delivery Foundation (CDF). CDEvents defines a standardized JSON format for describing events in software delivery pipelines — deployments, builds, tests, incidents, and environment changes. The specification enables different CI/CD tools to communicate using a common event language, eliminating proprietary data silos.
+
+CDviz is built natively on CDEvents: all data stored and visualized by CDviz conforms to the CDEvents specification. Events are structured JSON objects with a `context` block (event type, timestamp, source, version) and a `subject` block (what the event describes and its content).
+
+## CDviz vs CDEvents
+
+**CDEvents** is a specification — an open standard for describing events in software delivery pipelines, initiated by the Continuous Delivery Foundation (CDF). It defines a JSON schema for event types like `dev.cdevents.service.deployed`, `dev.cdevents.build.finished`, etc.
+
+**CDviz** is a platform that implements the CDEvents specification. CDviz collects CDEvents from your CI/CD tools, stores them in PostgreSQL with TimescaleDB, and visualizes them in Grafana dashboards. Think of CDEvents as the language and CDviz as the system that speaks it.
+
+Other tools can also produce or consume CDEvents — CDviz is one implementation, not the only one. The CDEvents ecosystem includes CLIs, SDKs, and integrations for GitHub Actions, Jenkins, Tekton, and more.
 
 ## CDEvent Structure
 

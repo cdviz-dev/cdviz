@@ -30,6 +30,7 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [Episode 0: Monitor Your Software Factory](https://cdviz.dev/blog/20250821-episode-0-manager-problem): Problem statement and CDviz overview
 - [Episode 1: Simulate a Consumer](https://cdviz.dev/blog/20250916-episode-1-simulate-consumer): Test CDEvents integration before building
 - [Episode 2: Send Your First CDEvent](https://cdviz.dev/blog/20251001-episode-2-send-first-cdevent): Three approaches to send CDEvents from pipelines
+- [Episode 3: Direct CI/CD Pipeline Integration](https://cdviz.dev/blog/20251007-episode-3-cicd-integration): Universal patterns to send CDEvents from any CI/CD system
 - [Episode 4: Webhook Transformers](https://cdviz.dev/blog/20251020-episode-4-webhook-transformers): Passive monitoring with GitHub, GitLab, ArgoCD
 
 ## Optional

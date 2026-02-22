@@ -6,19 +6,19 @@
 1. **Visualization Layer** - [CDviz Grafana](./cdviz-grafana/)
 
    A comprehensive dashboard solution for visualizing, analyzing, and generating alerts by combining existing runtime and business metrics with SDLC metrics. While built on Grafana, the implementation can be adapted to alternative visualization platforms.
-   ![Visualization Layer](/architectures/overview_01.excalidraw.svg)
+   ![CDviz Visualization Layer: Grafana dashboards displaying DORA metrics, deployment frequency, artifact timelines, and CDEvents activity feeds](/architectures/overview_01.excalidraw.svg)
 
 2. **Data Persistence** - [CDviz Database](./cdviz-db/)
 
    An optimized data storage solution for metrics and events, built on PostgreSQL with specialized extensions for time-series analytics.
-   ![Data Persistence](/architectures/overview_02.excalidraw.svg)
+   ![CDviz Data Persistence Layer: CDviz Collector sends normalized CDEvents to PostgreSQL database with TimescaleDB extension for time-series storage and analytics](/architectures/overview_02.excalidraw.svg)
 
 3. **Data Acquisition** - [CDviz Collector](./cdviz-collector/)
 
    A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources into the database, event processor,...
-   ![Data Acquisition](/architectures/overview_03.excalidraw.svg)
+   ![CDviz Data Acquisition Layer: CDviz Collector ingesting events from GitHub, GitLab, ArgoCD, Kubernetes webhooks, Kafka, and NATS sources, then normalizing them to CDEvents format](/architectures/overview_03.excalidraw.svg)
 
 4. **Event Processing**
 
    An event-driven architecture for triggering downstream actions in external systems based on collected events.
-   ![Event Processing](/architectures/overview_04.excalidraw.svg)
+   ![CDviz Event Processing Layer: CDEvents flowing from the database to downstream automation systems via NATS, Kafka, and HTTP sinks for workflow triggering](/architectures/overview_04.excalidraw.svg)
