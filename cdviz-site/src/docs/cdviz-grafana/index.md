@@ -38,6 +38,16 @@ CDviz Grafana provides a comprehensive visualization layer for continuous delive
    - TimescaleDB: `enabled`
 3. Import dashboards by copying JSON definitions from the [CDviz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)
 
+Available dashboards:
+
+| Dashboard                                          | Description                                                           |
+| -------------------------------------------------- | --------------------------------------------------------------------- |
+| [Artifact Timeline](./artifact_timeline.md)        | Deployment and version tracking across environments                   |
+| [Execution Performance](./execution_dashboards.md) | Pipeline runs, task executions, and test results                      |
+| [DORA Metrics](./dora_metrics.md)                  | Deployment frequency, lead time, time to restore, change failure rate |
+| [Incidents & Tickets](./incidents_tickets.md)      | Open incidents, MTTR, and change cycle time                           |
+| [CDEvents Activity](./cdevents_activity.md)        | Raw CDEvent stream and activity overview                              |
+
 ### Kubernetes Deployment with Helm
 
 1. Configure Grafana according to the requirements specified above

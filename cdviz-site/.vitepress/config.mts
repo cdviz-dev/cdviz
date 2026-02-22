@@ -337,6 +337,10 @@ export default defineConfig({
               text: "DORA Metrics",
               link: "/docs/cdviz-grafana/dora_metrics",
             },
+            {
+              text: "Incidents & Tickets",
+              link: "/docs/cdviz-grafana/incidents_tickets",
+            },
           ],
         },
         {
@@ -478,6 +482,7 @@ export default defineConfig({
         screenshot: "https://cdviz.dev/illustrations/hero-dashboard-01-q60.webp",
         featureList: [
           "CDEvents collection from GitHub, GitLab, ArgoCD, Kubernetes",
+          "Grafana dashboards for DORA metrics, incidents & tickets, deployment tracking, artifact timelines",
           "Real-time event streaming and storage in PostgreSQL + TimescaleDB",
           "Grafana dashboards for DORA metrics, deployment tracking, artifact timelines",
           "Webhook-based passive monitoring without pipeline changes",

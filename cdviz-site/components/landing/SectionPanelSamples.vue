@@ -88,6 +88,31 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
             </p>
           </div>
         </a>
+
+        <!-- Incidents & Tickets — text left (col-2), icon right (col-3) -->
+        <a
+          href="/docs/cdviz-grafana/incidents_tickets.html"
+          class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
+        >
+          <div class="md:col-span-2 p-lg flex flex-col justify-center">
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
+              Incidents &amp; Tickets
+            </h3>
+            <p class="text-sm text-text/70">
+              Track open incidents, median time-to-restore, and change cycle times — from incident
+              management and ticketing tools via CDEvents
+            </p>
+          </div>
+          <div class="md:col-span-3 p-md flex items-center">
+            <img
+              src="/screenshots/grafana_dashboard_incidents_tickets-20260222.png"
+              alt="Incidents and tickets dashboard showing open incidents, time to restore, and change cycle time"
+              class="w-full h-auto rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </a>
       </div>
 
       <!-- CTA -->
