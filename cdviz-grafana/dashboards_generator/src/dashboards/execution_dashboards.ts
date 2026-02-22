@@ -19,7 +19,6 @@ import {
   createResolutionRateStatPanel,
   createTotalDurationStatPanel,
   type LifecycleConfig,
-  type LifecycleType,
   SELECTED_FIELD_NAME,
 } from "./execution_panels";
 import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";

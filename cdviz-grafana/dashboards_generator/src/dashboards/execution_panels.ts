@@ -147,8 +147,8 @@ export function createTotalDurationStatPanel(
       AND ${endCol} IS NOT NULL
   `;
 
-  // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
   return createStatPanel(title, query, 0, "s", [
+    // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
     { value: null as any, color: "green" },
   ]);
 }
@@ -182,8 +182,8 @@ export function createAvgRuntimeStatPanel(
       AND ${endCol} IS NOT NULL
   `;
 
-  // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
   return createStatPanel(title, query, 6, "s", [
+    // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
     { value: null as any, color: "blue" },
   ]);
 }
@@ -204,8 +204,8 @@ export function createAvgQueueTimeStatPanel(
       AND queued_at IS NOT NULL
   `;
 
-  // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
   return createStatPanel("Avg Queue Time", query, 12, "s", [
+    // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
     { value: null as any, color: "purple" },
   ]);
 }
@@ -226,8 +226,8 @@ export function createAvgTimeToReportStatPanel(
       AND detected_at IS NOT NULL
   `;
 
-  // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
   return createStatPanel("Avg Time to Report", query, 12, "s", [
+    // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
     { value: null as any, color: "purple" },
   ]);
 }
@@ -248,8 +248,8 @@ export function createAvgTimeToUpdateStatPanel(
       AND created_at IS NOT NULL
   `;
 
-  // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
   return createStatPanel("Avg Time to Update", query, 12, "s", [
+    // biome-ignore lint/suspicious/noExplicitAny: Grafana SDK requires null for default threshold
     { value: null as any, color: "purple" },
   ]);
 }
