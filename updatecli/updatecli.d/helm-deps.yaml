@@ -23,6 +23,7 @@ sources:
 
 targets:
   kubewatchVersion:
+    name: "charts/cdviz-collector/Chart.yaml kubewatch dependency version"
     kind: yaml
     sourceid: kubewatch
     scmid: default
@@ -30,11 +31,13 @@ targets:
       file: charts/cdviz-collector/Chart.yaml
       key: '$.dependencies[0].version'
 
-pullrequests:
+actions:
   kubewatch:
-    title: '[updatecli] Bump kubewatch to {{ source "kubewatch" }}'
+    kind: github/pullrequest
+    scmid: default
     targets:
       - kubewatchVersion
-    scmid: default
-    labels:
-      - dependencies
+    spec:
+      title: '[updatecli] Bump kubewatch to {{ source "kubewatch" }}'
+      labels:
+        - dependencies
