@@ -334,7 +334,15 @@ export default defineConfig({
             },
           ],
         },
-        { text: "Alternatives, tools, ...", link: "/docs/alternatives" },
+        {
+          text: "Alternatives, tools, ...",
+          link: "/docs/alternatives",
+          items: [
+            { text: "CDviz vs Apache DevLake", link: "/docs/vs-apache-devlake" },
+            { text: "CDviz vs Datadog CI", link: "/docs/vs-datadog-ci" },
+            { text: "CDviz vs Powerpipe", link: "/docs/vs-powerpipe" },
+          ],
+        },
       ],
       "/pro/": [
         { text: "Terms & Conditions", link: "/pro/terms" },

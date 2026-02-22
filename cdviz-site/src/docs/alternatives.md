@@ -20,19 +20,23 @@ This JReleaser extension provides integration with CDEvents. It registers a Work
 
 ### [Apache DevLake](https://devlake.apache.org/)
 
-Debug engineering processes and discover opportunities with DORA, Community Growth, Engineering Throughput and more DevLake dashboards...
+Open-source engineering metrics platform (Apache Incubating). Ingests data from 50+ tools (Jira, GitHub, Jenkins…) via polling. Uses a proprietary domain model, not CDEvents.
 
-Apache DevLake™ (Incubating) ingests, analyzes, and visualizes the fragmented data from DevOps tools to distill insights for engineering excellence.
+→ [CDviz vs Apache DevLake](./vs-apache-devlake)
 
 ### [CI Pipeline Visibility | Datadog](https://www.datadoghq.com/product/ci-cd-monitoring/)
 
-Monitor & improve the performance of your business-critical builds & deployments in any CI/CD tool
+Fully-managed SaaS pipeline and test observability. Best when already using Datadog for APM/infra. Proprietary, vendor-hosted data model.
+
+→ [CDviz vs Datadog CI Visibility](./vs-datadog-ci)
 
 ### Turbot tools
 
 #### [powerpipe](https://powerpipe.io/): Dashboards for DevOps
 
 Visualize cloud configurations. Assess security posture against a massive library of benchmarks. Build custom dashboards with code.
+
+→ [CDviz vs Powerpipe](./vs-powerpipe)
 
 #### [steampipe](https://steampipe.io/): select \* from cloud;
 
