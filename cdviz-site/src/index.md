@@ -1,6 +1,6 @@
 ---
 title: Monitor Your Software Delivery Pipeline With Confidence
-description: CDviz is a collection of components designed to provide visibility into deployed service versions, associated environments, testing activities, and related information.
+description: Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.
 layout: home
 markdownStyles: false
 

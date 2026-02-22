@@ -449,6 +449,113 @@ export default defineConfig({
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(jsonLd)]);
     }
 
+    if (pageData.relativePath === "index.md") {
+      const softwareAppSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "CDviz",
+        description:
+          "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.",
+        url: "https://cdviz.dev",
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Linux, macOS, Windows (via Docker)",
+        license: "https://www.apache.org/licenses/LICENSE-2.0",
+        screenshot: "https://cdviz.dev/illustrations/hero-dashboard-01-q60.webp",
+        featureList: [
+          "CDEvents collection from GitHub, GitLab, ArgoCD, Kubernetes",
+          "Real-time event streaming and storage in PostgreSQL + TimescaleDB",
+          "Grafana dashboards for DORA metrics, deployment tracking, artifact timelines",
+          "Webhook-based passive monitoring without pipeline changes",
+          "Event-driven workflow automation via NATS, Kafka, HTTP sinks",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "CDviz",
+          url: "https://cdviz.dev",
+          sameAs: ["https://github.com/cdviz-dev"],
+        },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          description: "Open-source, free to self-host",
+        },
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(softwareAppSchema)]);
+
+      const orgSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "CDviz",
+        url: "https://cdviz.dev",
+        logo: "https://cdviz.dev/favicon.svg",
+        sameAs: ["https://github.com/cdviz-dev"],
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(orgSchema)]);
+    }
+
+    if (pageData.relativePath.startsWith("blog/")) {
+      const dateMatch = pageData.relativePath.match(/(\d{8})/);
+      const dateStr = dateMatch ? dateMatch[1] : null;
+      const datePublished = dateStr
+        ? `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`
+        : null;
+
+      if (datePublished) {
+        const articleSchema = {
+          "@context": "https://schema.org",
+          "@type": "TechArticle",
+          headline: pageData.title,
+          description: pageData.description || pageData.frontmatter.description,
+          datePublished: datePublished,
+          dateModified: pageData.lastUpdated
+            ? new Date(pageData.lastUpdated).toISOString().split("T")[0]
+            : datePublished,
+          author: {
+            "@type": "Person",
+            name: pageData.frontmatter.author || "CDviz Team",
+            url: pageData.frontmatter.author_github
+              ? `https://github.com/${pageData.frontmatter.author_github}`
+              : "https://github.com/cdviz-dev",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "CDviz",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://cdviz.dev/favicon.svg",
+            },
+          },
+          url: `https://cdviz.dev/${pageData.relativePath.replace(/\.md$/, "").replace(/\/index$/, "")}`,
+          image:
+            pageData.frontmatter.image ||
+            "https://cdviz.dev/illustrations/hero-dashboard-01-q60.webp",
+        };
+        head.push(["script", { type: "application/ld+json" }, JSON.stringify(articleSchema)]);
+      }
+    }
+
+    if (pageData.relativePath.startsWith("docs/")) {
+      const parts = pageData.relativePath
+        .replace(/\.md$/, "")
+        .replace(/\/index$/, "")
+        .split("/");
+      const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "CDviz", item: "https://cdviz.dev" },
+          ...parts.map((part, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: part.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()),
+            item: `https://cdviz.dev/${parts.slice(0, index + 1).join("/")}`,
+          })),
+        ],
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(breadcrumbSchema)]);
+    }
+
     return head;
   },
 

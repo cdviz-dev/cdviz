@@ -12,6 +12,9 @@ tags:
     "transformers",
     "passive-monitoring",
   ]
+author: "David B."
+author_github: "davidb31"
+date: "2025-10-20"
 target_audience: "Platform Engineers, DevOps Architects"
 reading_time: "12 minutes"
 series: "CDEvents in Action"

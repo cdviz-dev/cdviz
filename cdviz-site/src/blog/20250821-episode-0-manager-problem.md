@@ -10,6 +10,9 @@ tags:
     "engineering management",
     "platformengineering",
   ]
+author: "David B."
+author_github: "davidb31"
+date: "2025-08-21"
 target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
 series: "CDEvents in Action"

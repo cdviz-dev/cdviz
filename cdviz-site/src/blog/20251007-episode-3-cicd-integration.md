@@ -12,6 +12,9 @@ tags:
     "circleci",
     "automation",
   ]
+author: "David B."
+author_github: "davidb31"
+date: "2025-10-07"
 target_audience: "CI/CD Practitioners, DevOps Engineers"
 reading_time: "8 minutes"
 series: "CDEvents in Action"

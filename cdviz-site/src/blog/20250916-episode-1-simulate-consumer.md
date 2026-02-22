@@ -2,6 +2,9 @@
 title: "CDEvents in Action #1: Simulate a Consumer"
 description: "Test your CDEvents integration strategy before building with webhook.site, CDviz docker compose, and cdviz-collector debug. Choose the right approach for your needs."
 tags: ["cdevents", "devops", "cicd", "testing", "integration", "webhooks"]
+author: "David B."
+author_github: "davidb31"
+date: "2025-09-16"
 target_audience: "Developers, DevOps Engineers"
 reading_time: "8 minutes"
 series: "CDEvents in Action"
