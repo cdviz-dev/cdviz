@@ -1,24 +1,24 @@
 dts_0,id,environment,service,description,detected,reported,resolved
-1d 8h,inc-prod-1,production,api-gateway,High CPU usage on gateway nodes,0s,2m,15m
-1d 8h 20min,inc-prod-2,production,database,Database connection pool exhausted,0s,1m,45m
-1d 8h 45min,inc-prod-3,production,auth-service,OAuth token validation failures,0s,5m,30m
-1d 9h,inc-prod-4,production,payment-service,Payment processing timeout errors,0s,1m,1h 20m
-1d 9h 30min,inc-prod-5,production,cdn,CDN cache invalidation issues,0s,3m,12m
-1d 10h,inc-prod-6,production,search-service,Elasticsearch cluster health red,0s,2m,1h 5m
-1d 10h 30min,inc-prod-7,production,notification-service,Email delivery delays,0s,10m,25m
-1d 11h,inc-prod-8,production,storage-service,S3 bucket latency spike,0s,4m,18m
-1d 11h 30min,inc-stg-1,staging,api-gateway,API rate limiting triggered,0s,2m,8m
-1d 12h,inc-stg-2,staging,database,Database migration lock timeout,0s,5m,15m
-1d 12h 30min,inc-stg-3,staging,auth-service,LDAP connection failures,0s,3m,20m
-1d 13h,inc-stg-4,staging,payment-service,Test payment gateway unreachable,0s,1m,10m
-1d 13h 30min,inc-dev-1,development,api-gateway,Local dev server crashed,0s,1m,5m
-1d 14h,inc-dev-2,development,database,Container out of memory,0s,2m,7m
-1d 14h 30min,inc-prod-9,production,analytics-service,Data pipeline processing lag,0s,3m,
-1d 15h,inc-prod-10,production,api-gateway,Increased 5xx error rate,0s,1m,
-1d 15h 30min,inc-prod-11,production,cache-service,Redis cluster failover,0s,30s,10m
-1d 16h,inc-prod-12,production,queue-service,Message queue backlog growing,0s,15m,1h
-1d 16h 30min,inc-prod-13,production,web-frontend,Static asset 404 errors,0s,5m,12m
-1d 17h,inc-prod-14,production,monitoring-service,Metrics collection delayed,0s,20m,35m
-1d 17h 30min,inc-qa-1,qa,database,Query performance degradation,0s,10m,40m
-1d 18h,inc-qa-2,qa,auth-service,Session management issues,0s,3m,15m
-1d 18h 30min,inc-prod-15,production,logging-service,Log aggregation service down,0s,1m,2h
+32h,inc-prod-1,production,api-gateway,High CPU usage on gateway nodes,0s,2m,15m
+32h20m,inc-prod-2,production,database,Database connection pool exhausted,0s,1m,45m
+32h45m,inc-prod-3,production,auth-service,OAuth token validation failures,0s,5m,30m
+33h,inc-prod-4,production,payment-service,Payment processing timeout errors,0s,1m,1h20m
+33h30m,inc-prod-5,production,cdn,CDN cache invalidation issues,0s,3m,12m
+34h,inc-prod-6,production,search-service,Elasticsearch cluster health red,0s,2m,1h5m
+34h30m,inc-prod-7,production,notification-service,Email delivery delays,0s,10m,25m
+35h,inc-prod-8,production,storage-service,S3 bucket latency spike,0s,4m,18m
+35h30m,inc-stg-1,staging,api-gateway,API rate limiting triggered,0s,2m,8m
+36h,inc-stg-2,staging,database,Database migration lock timeout,0s,5m,15m
+36h30m,inc-stg-3,staging,auth-service,LDAP connection failures,0s,3m,20m
+37h,inc-stg-4,staging,payment-service,Test payment gateway unreachable,0s,1m,10m
+37h30m,inc-dev-1,development,api-gateway,Local dev server crashed,0s,1m,5m
+38h,inc-dev-2,development,database,Container out of memory,0s,2m,7m
+38h30m,inc-prod-9,production,analytics-service,Data pipeline processing lag,0s,3m,
+39h,inc-prod-10,production,api-gateway,Increased 5xx error rate,0s,1m,
+39h30m,inc-prod-11,production,cache-service,Redis cluster failover,0s,30s,10m
+40h,inc-prod-12,production,queue-service,Message queue backlog growing,0s,15m,1h
+40h30m,inc-prod-13,production,web-frontend,Static asset 404 errors,0s,5m,12m
+41h,inc-prod-14,production,monitoring-service,Metrics collection delayed,0s,20m,35m
+41h30m,inc-qa-1,qa,database,Query performance degradation,0s,10m,40m
+42h,inc-qa-2,qa,auth-service,Session management issues,0s,3m,15m
+42h30m,inc-prod-15,production,logging-service,Log aggregation service down,0s,1m,2h

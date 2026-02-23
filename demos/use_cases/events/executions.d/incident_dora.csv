@@ -1,15 +1,15 @@
 dts_0,id,environment,service,description,detected,reported,resolved
-0d 4h,inc-dora-1,production,svc-api,Elevated error rate shortly after first deploy,0s,3m,52m
-0d 15h,inc-dora-2,staging,svc-frontend,CSS rendering regression in staging,0s,2m,18m
-1d 5h,inc-dora-3,production,svc-frontend,Crash loop detected after 1.1.0 rollout,0s,5m,38m
-1d 16h,inc-dora-4,production,svc-frontend,Residual flash-of-unstyled-content after hotfix 1.1.1,0s,4m,25m
-2d 7h,inc-dora-5,production,svc-worker,Worker job queue backlog growing,0s,12m,1h 45m
-2d 14h,inc-dora-6,staging,svc-api,Timeout on /health endpoint during load test,0s,2m,10m
-3d 10h,inc-dora-7,production,svc-api,High p99 latency on payments endpoint,0s,1m,1h 20m
-3d 17h,inc-dora-8,production,svc-worker,Worker memory leak triggers OOMKilled,0s,8m,2h 10m
-4d 6h,inc-dora-9,staging,svc-frontend,Rollback artefact missing CSS bundle,0s,5m,22m
-4d 11h,inc-dora-10,production,svc-api,Connection pool exhaustion under spike load,0s,2m,45m
-5d 9h,inc-dora-11,production,svc-frontend,Intermittent 502s from upstream after deploy,0s,3m,30m
-5d 16h,inc-dora-12,production,svc-worker,Batch job stuck after 3.2.0 deploy,0s,10m,1h 5m
-6d 8h,inc-dora-13,production,svc-api,Certificate near-expiry alert triggered,0s,1m,20m
-6d 13h,inc-dora-14,production,svc-frontend,Search feature degraded after 1.6.0 canary,0s,4m,
+4h,inc-dora-1,production,svc-api,Elevated error rate shortly after first deploy,0s,3m,52m
+15h,inc-dora-2,staging,svc-frontend,CSS rendering regression in staging,0s,2m,18m
+29h,inc-dora-3,production,svc-frontend,Crash loop detected after 1.1.0 rollout,0s,5m,38m
+40h,inc-dora-4,production,svc-frontend,Residual flash-of-unstyled-content after hotfix 1.1.1,0s,4m,25m
+55h,inc-dora-5,production,svc-worker,Worker job queue backlog growing,0s,12m,1h45m
+62h,inc-dora-6,staging,svc-api,Timeout on /health endpoint during load test,0s,2m,10m
+82h,inc-dora-7,production,svc-api,High p99 latency on payments endpoint,0s,1m,1h20m
+89h,inc-dora-8,production,svc-worker,Worker memory leak triggers OOMKilled,0s,8m,2h10m
+102h,inc-dora-9,staging,svc-frontend,Rollback artefact missing CSS bundle,0s,5m,22m
+107h,inc-dora-10,production,svc-api,Connection pool exhaustion under spike load,0s,2m,45m
+129h,inc-dora-11,production,svc-frontend,Intermittent 502s from upstream after deploy,0s,3m,30m
+136h,inc-dora-12,production,svc-worker,Batch job stuck after 3.2.0 deploy,0s,10m,1h5m
+152h,inc-dora-13,production,svc-api,Certificate near-expiry alert triggered,0s,1m,20m
+157h,inc-dora-14,production,svc-frontend,Search feature degraded after 1.6.0 canary,0s,4m,

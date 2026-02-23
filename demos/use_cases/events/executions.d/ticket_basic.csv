@@ -1,7 +1,7 @@
 dts_0,id,ticketType,priority,group,milestone,description,created,updated,closed,resolution
-1d 9h,tkt-1,bug,high,backend,v2.1,Fix login authentication bug,0s,1h,2d,completed
-1d 9h 30min,tkt-2,feature,medium,frontend,v2.2,Add dark mode toggle,0s,30m,3d,completed
-1d 10h,tkt-3,task,low,devops,v2.1,Update deployment docs,0s,2h,1d,completed
-1d 10h 30min,tkt-4,bug,critical,backend,v2.1,Database connection leak,0s,15m,4h,completed
-1d 11h,tkt-5,feature,medium,frontend,v2.3,Implement search filters,0s,1d,,
-1d 12h,tkt-6,task,low,documentation,v2.2,API reference update,0s,3h,2d,withdrawn
+33h,tkt-1,bug,high,backend,v2.1,Fix login authentication bug,0s,1h,2d,completed
+33h30m,tkt-2,feature,medium,frontend,v2.2,Add dark mode toggle,0s,30m,3d,completed
+34h,tkt-3,task,low,devops,v2.1,Update deployment docs,0s,2h,1d,completed
+34h30m,tkt-4,bug,critical,backend,v2.1,Database connection leak,0s,15m,4h,completed
+35h,tkt-5,feature,medium,frontend,v2.3,Implement search filters,0s,1d,,
+36h,tkt-6,task,low,documentation,v2.2,API reference update,0s,3h,2d,withdrawn
