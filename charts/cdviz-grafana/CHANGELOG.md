@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-02-22
+
+### Added
+
+- Add a simple dora dashboard ([1d7e1e1](1d7e1e1cbd44888b800c833958d3c7883f6fe08c))
+
+### Changed
+
+- Add info about the live grafana demo ([0fb451a](0fb451a75b012ccd9aa7508d25430242fec5b8e1))
+- Format, fix typo, update some samples,... ([40a4044](40a40446eb9ec1ce3cc86f36c154ee5e7ba32743))
+- Add info about tickets & incidents dashboard ([98e6638](98e663826bd52e0cde9282051391316eeca7fe35))
+
+### Fixed
+
+- Relocate lint ignore ([758a8f9](758a8f962cf698bda692e85cbceb3ae70eb7770d))
+
 ## [1.3.0] - 2026-02-17
 
 ### Added
