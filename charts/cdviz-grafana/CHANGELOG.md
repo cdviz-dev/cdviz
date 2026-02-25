@@ -6,7 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.0] - 2026-02-22
+## [1.5.0] - 2026-02-25
+
+### Added
+
+- Migrate D3 panels to volkovlabs-echarts-panel ([6795d73](6795d737c2b0bca6b54c44495076423d3df2a3d7))
+- Allow to select time window by drag&drop for artifact timeline ([207a62a](207a62a417444c313f5d5c928db13bc07e65216c))
+
+### Changed
+
+- Update screenshot ([e7e21f0](e7e21f01230317a86b05068d81c49173ed0522a6))
+
+## [1.4.0] - 2026-02-23
 
 ### Added
 
