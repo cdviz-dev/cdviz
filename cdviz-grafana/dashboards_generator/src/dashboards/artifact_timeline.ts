@@ -7,12 +7,15 @@ import {
   DashboardBuilder,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 import dedent from "dedent";
-import { buildjsForD3Panel, D3PanelBuilder } from "../panels/d3_panel";
+import {
+  buildjsForEChartsPanel,
+  EChartsPanelBuilder,
+} from "../panels/echarts_panel";
 import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 export async function buildDashboard(): Promise<Dashboard> {
-  const script = await buildjsForD3Panel([
-    "./src/panels/browser_scripts/draw_timeline_version_on_stage.ts",
+  const script = await buildjsForEChartsPanel([
+    "./src/panels/browser_scripts/draw_timeline_echarts.ts",
   ]);
 
   const datasource = {
@@ -26,7 +29,7 @@ export async function buildDashboard(): Promise<Dashboard> {
     .tags(["cd", "artifact", "service"].concat(DEFAULT_TAGS))
     .withVariable(newVariable4ArtifactFname())
     .withPanel(
-      new D3PanelBuilder()
+      new EChartsPanelBuilder()
         .title("$artifact_fnames")
         .repeat("artifact_fnames")
         .repeatDirection("h")

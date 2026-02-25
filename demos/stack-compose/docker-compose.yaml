@@ -51,23 +51,22 @@ services:
       # To override an option, use a predefined pattern GF_<SectionName>_<KeyName>.
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
       # - GF_SERVER_ROOT_URL=http://my.grafana.server/
-      # NOTE: Volkovlabs plugins discontinued (Sept 2025), but still distributed by Grafana Labs, migrating to custom plugin
-      # Still needed for: artifact_timeline, cdevents_activity (until migrated)
+      # NOTE: Volkovlabs plugins discontinued (Sept 2025), but still distributed by Grafana Labs
       # cdviz-executiontable-panel is mounted as local plugin (see volumes below)
       # GF_PLUGINS_INSTALL (Deprecated since v12.1.0)
       # Format: <plugin ID>@[<plugin version>]@<url to plugin zip>
-      - GF_PLUGINS_PREINSTALL_SYNC=marcusolsson-dynamictext-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip
+      - GF_PLUGINS_PREINSTALL_SYNC=volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip
       # Allow loading unsigned plugins (required for custom plugins not in Grafana plugin registry)
       - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=cdviz-executiontable-panel
       # - GF_SECURITY_ADMIN_USER=admin
       # - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin #Viewer
       - GF_AUTH_BASIC_ENABLED=false
       - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_AUTH_DISABLE_SIGNOUT_MENU=true
       # - GF_SECURITY_ALLOW_EMBEDDING=true #Allow IFRAME Calls
-      - GF_PANELS_DISABLE_SANITIZE_HTML=true # Allow html, svg, ... into business text,...
+      # - GF_PANELS_DISABLE_SANITIZE_HTML no longer needed: all panels migrated from marcusolsson-dynamictext-panel to volkovlabs-echarts-panel
       - GF_ENABLE_GZIP=true
       - GF_LOG_LEVEL=warn # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#log
       - CDVIZ_RO_POSTGRES_HOST=postgres

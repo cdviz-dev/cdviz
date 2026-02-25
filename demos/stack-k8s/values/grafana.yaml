@@ -16,7 +16,7 @@ sidecar:
 
 plugins:
   # GF_PLUGINS_PREINSTALL_SYNC=
-  - marcusolsson-dynamictext-panel
+  - volkovlabs-echarts-panel
   - volkovlabs-form-panel
   - volkovlabs-table-panel
   - cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip

@@ -12,13 +12,16 @@ import {
   VariableHide,
 } from "@grafana/grafana-foundation-sdk/dashboard";
 import dedent from "dedent";
-import { buildjsForD3Panel, D3PanelBuilder } from "../panels/d3_panel";
+import {
+  buildjsForEChartsPanel,
+  EChartsPanelBuilder,
+} from "../panels/echarts_panel";
 import { VolkovlabsTablePanelBuilder } from "../panels/volkovlabs_table_panel";
 import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 export async function buildDashboard(): Promise<Dashboard> {
-  const script_sunburst = await buildjsForD3Panel([
-    "./src/panels/browser_scripts/draw_sunburst_count_per_path.ts",
+  const script_sunburst = await buildjsForEChartsPanel([
+    "./src/panels/browser_scripts/draw_sunburst_count_per_path_echarts.ts",
   ]);
   const datasource = {
     type: "grafana-postgresql-datasource",
@@ -52,7 +55,7 @@ export async function buildDashboard(): Promise<Dashboard> {
         }),
     )
     .withPanel(
-      new D3PanelBuilder()
+      new EChartsPanelBuilder()
         .title("How many events?")
         .description("Count by Subject & Predicate over the time window")
         .gridPos({
@@ -194,7 +197,7 @@ export async function buildDashboard(): Promise<Dashboard> {
         }),
     )
     .withPanel(
-      new D3PanelBuilder()
+      new EChartsPanelBuilder()
         .title("How many sources?")
         .description("Count by Context'source over the time window")
         .gridPos({
