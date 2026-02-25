@@ -61,6 +61,14 @@ export type EChartsRenderItemApi = {
   getHeight(): number;
 };
 
+// ECharts instance injected into the script scope by volkovlabs-echarts-panel.
+// Not a parameter of getOption — accessed as a script-scope variable.
+export type EChartsInstance = {
+  on(event: string, handler: (params: unknown) => void): void;
+  off(event: string): void;
+  dispatchAction(payload: object): void;
+};
+
 // Time range shape shared across context locations
 export type EChartsTimeRange = {
   from: { valueOf(): number } | number;
@@ -70,8 +78,10 @@ export type EChartsTimeRange = {
 // Context shape for ECharts panel (volkovlabs-echarts-panel v7+).
 // The time range is on context.panel.data.timeRange (standard Grafana PanelData).
 // context.grafana.timeRange is absent in v7.2.2 and should not be relied upon.
+// context.panel.chart is the ECharts instance (replaces the old echartsInstance global).
 export type EChartsContext = {
   panel: {
+    chart?: EChartsInstance;
     data: {
       series: Array<{
         fields: Array<{ name: string; values: unknown[] }>;
@@ -81,5 +91,8 @@ export type EChartsContext = {
   };
   grafana?: {
     timeRange?: EChartsTimeRange;
+    locationService?: {
+      partial(query: Record<string, string | null>, replace?: boolean): void;
+    };
   };
 };

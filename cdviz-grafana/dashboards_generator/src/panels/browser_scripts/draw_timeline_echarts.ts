@@ -22,6 +22,7 @@ import type {
   EChartsRenderItemApi,
   EChartsRenderItemParams,
 } from "../echarts_panel";
+
 import {
   type Datum,
   type DatumExt,
@@ -144,7 +145,7 @@ export function getOption(context: EChartsContext) {
   const COL_X = [0, 115, 175, 265, 375];
   const HEADERS = ["Stage", "Freq", "Transition", "Latest", "Latest Version"];
 
-  return {
+  const option = {
     backgroundColor: "transparent",
     animation: false,
     grid: {
@@ -360,5 +361,55 @@ export function getOption(context: EChartsContext) {
         return params.data?.tooltipText ?? "";
       },
     },
+    // Brush component for drag-select time range.
+    // toolbox: [] hides the brush's built-in icon row (rect/lineX/keep/clear buttons).
+    brush: {
+      xAxisIndex: 0,
+      brushType: "lineX",
+      brushMode: "single",
+      toolbox: [],
+    },
+    toolbox: {
+      show: false,
+    },
   };
+
+  // Register brushEnd → update Grafana time range.
+  // Use context.panel.chart (volkovlabs-echarts-panel v7+ API).
+  // .off() before .on() prevents duplicate handlers across re-renders.
+  const instance = context.panel.chart;
+  if (instance && context.grafana?.locationService) {
+    const locationService = context.grafana.locationService;
+    instance.off("brushEnd");
+    instance.on("brushEnd", (params) => {
+      const p = params as {
+        areas?: Array<{ coordRange?: [number, number] }>;
+      };
+      const coordRange = p.areas?.[0]?.coordRange;
+      if (!coordRange || coordRange[1] <= coordRange[0]) {
+        // No valid selection — clear and re-arm brush
+        instance.dispatchAction({ type: "brush", areas: [] });
+        return;
+      }
+      const [from, to] = coordRange;
+      locationService.partial(
+        { from: String(Math.round(from)), to: String(Math.round(to)) },
+        true,
+      );
+      // Clear the brush selection after applying
+      instance.dispatchAction({ type: "brush", areas: [] });
+    });
+    // Pre-activate lineX brush so drag works immediately (like Grafana time series panel),
+    // without requiring the user to click a toolbox icon first.
+    // Deferred so the panel can call setOption() before we dispatch.
+    setTimeout(() => {
+      instance.dispatchAction({
+        type: "takeGlobalCursor",
+        key: "brush",
+        brushOption: { brushType: "lineX", brushMode: "single" },
+      });
+    }, 0);
+  }
+
+  return option;
 }
