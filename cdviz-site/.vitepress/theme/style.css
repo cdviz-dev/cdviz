@@ -122,7 +122,7 @@
   font-display: swap;
   src:
     local("Excalifont"),
-    url("fonts/Excalifont-Regular.woff2") format("woff2");
+    url("/fonts/Excalifont-Regular.woff2") format("woff2");
 }
 
 /* Typography rendering optimizations */

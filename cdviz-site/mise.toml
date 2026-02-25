@@ -27,15 +27,27 @@ outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 [tasks."build_hero-images"]
 description = "rebuild optimized hero images from hero-dashboard-01.webp"
 dir = "assets/illustrations"
+# to create the image effect in GIMP
+# - Scale to have height > 700px
+# - Make the perspective
+#   - Tools>Transform Tools>Perpective
+#   - define the form, apply
+# - Blurring the edge (https://graphicdesign.stackexchange.com/questions/120420/blurring-the-edges-of-a-layer-on-gimp)
+#   - Layer>Transparency>Add alpha channel (if grayed the alpha channel is already there)
+#   - Layer>Transparency>Alpha to selection
+#   - Select>Shrink by N/2 pixels (N being the span of the feathering) N = 20
+#   - Select>Feather by N pixels
+#   - Select>Invert
+#   - Edit>Clear or [delete]
+# - Image>Crop to Content
+# - File>Export
 run = [
   # Create optimized WebP versions with different quality levels
   "magick hero-dashboard-01.webp -quality 75 -define webp:method=6 hero-dashboard-01-q75.webp",
   "magick hero-dashboard-01.webp -quality 60 -define webp:method=6 hero-dashboard-01-q60.webp",
-
   # Create responsive sizes with WebP format
   "magick hero-dashboard-01.webp -resize 600x537 -quality 80 -define webp:method=6 hero-dashboard-01-600w.webp",
   "magick hero-dashboard-01.webp -resize 400x358 -quality 85 -define webp:method=6 hero-dashboard-01-400w.webp",
-
   # Create AVIF versions for modern browsers (better compression)
   "magick hero-dashboard-01.webp -quality 75 hero-dashboard-01.avif",
   "magick hero-dashboard-01-600w.webp -quality 75 hero-dashboard-01-600w.avif",
@@ -65,7 +77,7 @@ run = [
 [tasks.format]
 alias = "fmt"
 description = "format with dprint (includes biome plugin)"
-#depends = [":trim_trailing-space"]
+# depends = [":trim_trailing-space"]
 run = ["dprint fmt"]
 
 [tasks."trim_trailing-space"]
