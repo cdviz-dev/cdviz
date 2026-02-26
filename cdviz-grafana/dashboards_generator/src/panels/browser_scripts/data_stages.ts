@@ -240,6 +240,7 @@ function topologicalSort(graph: Graph): string[] {
 class StageSummary {
   private stage: string;
   private countTimestamp: number; // how many times this stage was seen,
+  private firstTimestamp: number | null; // oldest time this stage was seen
   private lastTimestamp: number | null; // last time this stage was seen,
   private lastVersion: string | null; // last version seen for this stage
   private countInterval: number;
@@ -248,6 +249,7 @@ class StageSummary {
   constructor(stage: string) {
     this.stage = stage;
     this.countTimestamp = 0;
+    this.firstTimestamp = null;
     this.lastTimestamp = null;
     this.lastVersion = null;
     this.countInterval = 0;
@@ -260,6 +262,9 @@ class StageSummary {
     fromTimestamp: number | null,
   ) {
     this.countTimestamp += 1;
+    if (this.firstTimestamp === null || timestamp < this.firstTimestamp) {
+      this.firstTimestamp = timestamp;
+    }
     if (this.lastTimestamp === null || timestamp > this.lastTimestamp) {
       this.lastTimestamp = timestamp;
       this.lastVersion = version;
@@ -277,6 +282,7 @@ class StageSummary {
   getSummary(): {
     stage: string;
     countTimestamp: number;
+    firstTimestamp: number | null;
     lastTimestamp: number | null;
     lastVersion: string | null;
     intervalAverage: number;
@@ -284,6 +290,7 @@ class StageSummary {
     return {
       stage: this.stage,
       countTimestamp: this.countTimestamp,
+      firstTimestamp: this.firstTimestamp,
       lastTimestamp: this.lastTimestamp,
       lastVersion: this.lastVersion,
       intervalAverage: this.getIntervalAverage(),

@@ -115,11 +115,6 @@ export function getOption(context: EChartsContext) {
   const trFrom = toNum(timeRange?.from) ?? domains.timestampMin;
   const trTo = toNum(timeRange?.to) ?? domains.timestampMax;
 
-  const timeWindow =
-    Math.max(trTo, domains.timestampMax) -
-    Math.min(trFrom, domains.timestampMin);
-  const weeks = timeWindow / (7 * 24 * 60 * 60 * 1000);
-
   let domainMax = Math.max(domains.timestampMax, trTo);
   let domainMin = Math.min(domains.timestampMin, trFrom);
   const domainMargin = (domainMax - domainMin) * 0.05;
@@ -128,13 +123,26 @@ export function getOption(context: EChartsContext) {
   // Mid-point used to get Y coordinates via api.coord() without side effects on axis
   const xMid = (domainMin + domainMax) / 2;
 
+  const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
   const summaries = summarizeSortedStages(series, stages);
   const tableRows = summaries.map((s) => {
     const sum = s.getSummary();
-    const frequency = weeks > 0 ? sum.countTimestamp / weeks : 0;
+    let freq: string;
+    if (
+      sum.countTimestamp <= 1 ||
+      sum.firstTimestamp === null ||
+      sum.lastTimestamp === null
+    ) {
+      freq = "-";
+    } else {
+      const windowMs = sum.lastTimestamp - sum.firstTimestamp;
+      const weeks = windowMs / MS_PER_WEEK;
+      freq =
+        weeks > 0 ? `${((sum.countTimestamp - 1) / weeks).toFixed(2)}/w` : "-";
+    }
     return {
       stage: sum.stage,
-      freq: `${frequency.toFixed(2)}/w`,
+      freq,
       transition: durationFormat(sum.intervalAverage),
       latest: sum.lastTimestamp ? formatDatetime(sum.lastTimestamp) : "N/A",
       latestVersion: sum.lastVersion ?? "",

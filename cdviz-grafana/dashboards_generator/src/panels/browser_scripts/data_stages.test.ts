@@ -147,6 +147,7 @@ test("On dataset single point", () => {
   expect(summaries[0].getSummary()).toEqual({
     stage: dataset_1point[0].stage,
     countTimestamp: 1,
+    firstTimestamp: dataset_1point[0].timestamp,
     lastTimestamp: dataset_1point[0].timestamp,
     lastVersion:
       "sha256:b77f901a2c84ebb3aa9c4558e6c5f27c3363ac4922696b89a979b58a0ef64de8",
