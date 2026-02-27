@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "$id": "https://www.updatecli.io/schema/latest/policy/metadata/policy-spec",
+    "properties": {
+        "authors": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array",
+            "description": "Authors is a list of authors of the policy"
+        },
+        "changelog": {
+            "type": "string",
+            "description": "Changelog is the URL of the policy changelog"
+        },
+        "description": {
+            "type": "string",
+            "description": "Description is the policy description"
+        },
+        "documentation": {
+            "type": "string",
+            "description": "Documentation is the URL of the policy documentation"
+        },
+        "licenses": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array",
+            "description": "Licenses is the policy license"
+        },
+        "source": {
+            "type": "string",
+            "description": "Source is the URL of the policy source code"
+        },
+        "vendor": {
+            "type": "string",
+            "description": "Vendor is the policy vendor"
+        },
+        "version": {
+            "type": "string",
+            "description": "Version is the policy version, it must be semantic versioning compliant without the leading v"
+        },
+        "url": {
+            "type": "string",
+            "description": "URL is the URL of the policy source code"
+        }
+    },
+    "additionalProperties": false,
+    "type": "object"
+}

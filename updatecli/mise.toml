@@ -1,0 +1,67 @@
+[tools]
+updatecli = "latest"
+"ubi:chris48s/v8r" = "latest"
+
+[tasks."diff"]
+description = "Show what updatecli would update (dry run, no changes)"
+run = '''
+  export UPDATECLI_GITHUB_TOKEN=$(gh auth token)
+  # export UPDATECLI_GITHUB_USERNAME=
+  updatecli diff --config updatecli.d/ --values values.yaml
+  '''
+
+[tasks."apply"]
+description = "Apply all pending dependency updates via updatecli (creates PRs)"
+run = '''
+  export UPDATECLI_GITHUB_TOKEN=$(gh auth token)
+  # export UPDATECLI_GITHUB_USERNAME=
+  updatecli apply --config updatecli.d/ --values values.yaml
+  '''
+
+[tasks."schema:update"]
+description = "Regenerate the local JSON Schema from the installed updatecli binary (run after updatecli version bump)"
+run = '''
+  updatecli --experimental jsonschema --directory schema/
+  python3 - <<'EOF'
+import json
+
+# Patch the generated schema to add features that updatecli supports but
+# are missing from the auto-generated schema.
+with open("schema/policy/manifest/config.json", "r") as f:
+    schema = json.load(f)
+
+# Add 'matrix' root property (parameterized manifests)
+schema["properties"]["matrix"] = {
+    "type": "object",
+    "description": "matrix defines a map of lists used to parameterize the manifest. Each combination of values generates a separate pipeline run.",
+    "additionalProperties": {"type": "array", "items": {"type": "string"}},
+}
+
+# Add 'labels' root property (present in schemastore version)
+schema["properties"]["labels"] = {
+    "type": "object",
+    "description": "labels defines metadata labels for the manifest",
+    "additionalProperties": {"type": "string"},
+}
+
+# Add 'targets' to each action variant (list of target IDs for this action's PR)
+for variant in schema["properties"]["actions"]["additionalProperties"]["oneOf"]:
+    variant["properties"]["targets"] = {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "targets specifies which target IDs are associated with this action.",
+    }
+
+with open("schema/policy/manifest/config.json", "w") as f:
+    json.dump(schema, f, indent=4)
+    f.write("\n")
+EOF
+  '''
+
+[tasks."lint"]
+description = "Lint all YAML files"
+run = '''
+  export UPDATECLI_GITHUB_TOKEN=$(gh auth token)
+  updatecli manifest show --config updatecli.d/ --values values.yaml
+  v8r 'updatecli.d/*.yaml'
+  '''

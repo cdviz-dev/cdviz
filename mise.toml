@@ -1,17 +1,18 @@
 # CDviz Monorepo Configuration
-min_version = "2025.10.6" # "2025.9.7"
+min_version = "2025.10.6"  # "2025.9.7"
 experimental_monorepo_root = true
 
 [monorepo]
 config_roots = [
-    "cdviz-db",
-    "cdviz-grafana",
-    "cdviz-grafana/dashboards_generator",
-    "cdviz-site",
-    "charts",
-    "charts/*",         # Individual chart directories
-    "demos",
-    "demos/*",          # Single-level glob pattern
+  "cdviz-db",
+  "cdviz-grafana",
+  "cdviz-grafana/dashboards_generator",
+  "cdviz-site",
+  "charts",
+  "charts/*",  # Individual chart directories
+  "demos",
+  "demos/*",  # Single-level glob pattern
+  "updatecli",
 ]
 
 [settings]
@@ -22,7 +23,7 @@ experimental = true
 CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
 
 [tools]
-yq = "latest" # used by build to update / normalize dashboards / release
+yq = "latest"  # used by build to update / normalize dashboards / release
 git-cliff = "latest"
 updatecli = "latest"
 

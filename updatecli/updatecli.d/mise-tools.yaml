@@ -3,73 +3,75 @@
 #
 # Tools left at "latest" (bun, yq, git-cliff, dprint, biome, golang-migrate,
 # sqruff) are intentionally not pinned — they resolve at install time.
+name: "bump mise tool versions"
+
 scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   helm:
+    name: "Get latest helm release"
     kind: githubrelease
     spec:
       owner: helm
       repository: helm
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
       - trimprefix: "v"
 
   kubectl:
+    name: "Get latest kubectl release"
     kind: githubrelease
     spec:
       owner: kubernetes
       repository: kubernetes
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
       - trimprefix: "v"
 
   kind:
+    name: "Get latest kind release"
     kind: githubrelease
     spec:
       owner: kubernetes-sigs
       repository: kind
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
       - trimprefix: "v"
 
   ctlptl:
+    name: "Get latest ctlptl release"
     kind: githubrelease
     spec:
       owner: tilt-dev
       repository: ctlptl
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
       - trimprefix: "v"
 
   helmwave:
+    name: "Get latest helmwave release"
     kind: githubrelease
     spec:
       owner: helmwave
       repository: helmwave
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
@@ -137,8 +139,8 @@ targets:
     scmid: default
     spec:
       file: demos/stack-k8s/mise.toml
-      matchPattern: '"ubi:helmwave/helmwave" = \{ version = "[0-9]+\.[0-9]+\.[0-9]+"'
-      replacePattern: '"ubi:helmwave/helmwave" = { version = "{{ source "helmwave" }}"'
+      matchpattern: '"ubi:helmwave/helmwave" = \{ version = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"ubi:helmwave/helmwave" = { version = "{{ source "helmwave" }}"'
 
 actions:
   helm:

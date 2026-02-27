@@ -1,0 +1,71 @@
+# see https://www.updatecli.io/docs/automate/github_action/
+name: update-deps
+on:
+  # # Trigger Updatecli if a new commit land on the main branch
+  # push:
+  #   branches: [main]
+  # # Trigger Updatecli if a pullrequest is open targeting the main branch.
+  # # This is useful to test Updatecli manifest change
+  # pull_request:
+  #   branches: [main]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "update dependencies action to run"
+        required: false
+        default: "apply"
+        type: choice
+        options:
+          - "apply"
+          - "diff"
+  # Weekly on Monday at 04:30 UTC
+  schedule:
+    - cron: "30 4 * * 1"
+
+permissions:
+  # Required by Updatecli to create Git Commit(s)
+  contents: "write"
+  # Required by Updatecli to open GitHub pull request
+  pull-requests: "write"
+  # Required by Updatecli to update GitHub action workflows
+  actions: "write"
+
+concurrency: updatecli
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: actions/create-github-app-token@v2
+      #   id: app-token
+      #   with:
+      #     private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
+      #     app-id: ${{ secrets.INTBOT_APP_ID }}
+      #     # owner: ${{ github.repository_owner }}
+      #     # repositories: ${{ github.repository }}
+      # - run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+      #   id: get-user-id
+      #   env:
+      #     GH_TOKEN: ${{ steps.app-token.outputs.token }}
+      # - run: |
+      #     git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+      #     git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+      - uses: actions/checkout@v6
+        # with:
+        #   token: ${{ steps.app-token.outputs.token }}
+        #   persist-credentials: false
+      # Required by npm.yaml shell targets that run `bun install`
+      - uses: jdx/mise-action@v3
+        with:
+          tool_versions: |
+            bun latest
+            updatecli latest
+
+      - run: updatecli ${{ inputs.action || 'apply' }} --config updatecli/updatecli.d/ --values updatecli/values.yaml
+        env:
+          # see https://www.updatecli.io/docs/plugins/scm/github/#_authentication
+          # UPDATECLI_GITHUB_USERNAME: "${{ steps.app-token.outputs.app-slug }}[bot]"
+          # UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          UPDATECLI_GITHUB_APP_CLIENT_ID: ${{ secrets.INTBOT_CLIENT_ID }}
+          UPDATECLI_GITHUB_APP_PRIVATE_KEY: ${{ secrets.INTBOT_PRIVATE_KEY }}
+          UPDATECLI_GITHUB_APP_INSTALLATION_ID: ${{ secrets.INTBOT_INSTALLATION_ID }}

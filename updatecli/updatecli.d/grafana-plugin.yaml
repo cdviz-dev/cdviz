@@ -3,25 +3,27 @@
 #
 # The plugin is referenced in the GF_PLUGINS_PREINSTALL_SYNC env var as:
 #   cdviz-executiontable-panel@<ver>@https://.../v<ver>/cdviz-executiontable-panel-<ver>.zip
+name: "bump cdviz-executiontable-panel version"
+
 scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   pluginVersion:
+    name: "Get latest cdviz-executiontable-panel release"
     kind: githubrelease
     spec:
       owner: cdviz-dev
       repository: cdviz-executiontable-panel
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
     transformers:
@@ -35,8 +37,8 @@ targets:
     scmid: default
     spec:
       file: demos/stack-compose/docker-compose.yaml
-      matchPattern: 'cdviz-executiontable-panel@[0-9]+\.[0-9]+\.[0-9]+@https://github\.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/cdviz-executiontable-panel-[0-9]+\.[0-9]+\.[0-9]+\.zip'
-      replacePattern: 'cdviz-executiontable-panel@{{ source "pluginVersion" }}@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v{{ source "pluginVersion" }}/cdviz-executiontable-panel-{{ source "pluginVersion" }}.zip'
+      matchpattern: 'cdviz-executiontable-panel@[0-9]+\.[0-9]+\.[0-9]+@https://github\.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/cdviz-executiontable-panel-[0-9]+\.[0-9]+\.[0-9]+\.zip'
+      replacepattern: 'cdviz-executiontable-panel@{{ source "pluginVersion" }}@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v{{ source "pluginVersion" }}/cdviz-executiontable-panel-{{ source "pluginVersion" }}.zip'
 
 actions:
   plugin:

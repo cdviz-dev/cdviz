@@ -1,23 +1,26 @@
 ---
 # Helm chart dependency: kubewatch (sub-chart of cdviz-collector).
+name: "bump Helm chart dependencies"
+
 scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   kubewatch:
+    name: "Get latest kubewatch chart version"
     kind: helmchart
     spec:
       url: https://robusta-charts.storage.googleapis.com
       name: kubewatch
-      versionFilter:
+      versionfilter:
         kind: semver
         pattern: ">= 0"
 
@@ -29,7 +32,7 @@ targets:
     scmid: default
     spec:
       file: charts/cdviz-collector/Chart.yaml
-      key: '$.dependencies[0].version'
+      key: "$.dependencies[0].version"
 
 actions:
   kubewatch:

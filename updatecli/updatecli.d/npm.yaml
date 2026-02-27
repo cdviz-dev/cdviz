@@ -4,6 +4,8 @@
 #
 # Excluded (manage manually):
 #   - vitepress: alpha track (^2.0.0-alpha.x); re-enable once 2.x is stable.
+name: "bump cdviz-site npm dependencies"
+
 matrix:
   packages:
     - "@iconify-json/lucide"
@@ -21,24 +23,25 @@ scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   npm:
+    name: "Get latest {{ .matrix.packages }} version"
     kind: npm
     spec:
-      package: '{{ .matrix.packages }}'
-      versionFilter:
+      name: "{{ .matrix.packages }}"
+      versionfilter:
         kind: latest
 
 targets:
   packageJson:
-    name: 'cdviz-site package.json {{ .matrix.packages }}'
+    name: "cdviz-site package.json {{ .matrix.packages }}"
     kind: json
     sourceid: npm
     scmid: default
@@ -47,7 +50,7 @@ targets:
       key: '.devDependencies["{{ .matrix.packages }}"]'
 
   bunInstall:
-    name: 'cdviz-site bun.lock regeneration'
+    name: "cdviz-site bun.lock regeneration"
     kind: shell
     scmid: default
     dependson:
@@ -63,13 +66,15 @@ actions:
       - packageJson
       - bunInstall
     spec:
-      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-site'
+      title: "[updatecli] Bump {{ .matrix.packages }} in cdviz-site"
       labels:
         - dependencies
 
 ---
 # npm dependencies for cdviz-grafana/dashboards_generator.
 # Excluded: @grafana/grafana-foundation-sdk (non-standard timestamp versioning).
+name: "bump cdviz-grafana npm dependencies"
+
 matrix:
   packages:
     - d3
@@ -80,24 +85,24 @@ scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   npm:
+    name: "Get latest {{ .matrix.packages }} version"
     kind: npm
     spec:
-      package: '{{ .matrix.packages }}'
-      versionFilter:
+      name: "{{ .matrix.packages }}"
+      versionfilter:
         kind: latest
 
 targets:
   packageJson:
-    name: 'cdviz-grafana package.json {{ .matrix.packages }}'
+    name: "cdviz-grafana package.json {{ .matrix.packages }}"
     kind: json
     sourceid: npm
     scmid: default
@@ -106,7 +111,7 @@ targets:
       key: '.dependencies["{{ .matrix.packages }}"]'
 
   bunInstall:
-    name: 'cdviz-grafana bun.lock regeneration'
+    name: "cdviz-grafana bun.lock regeneration"
     kind: shell
     scmid: default
     dependson:
@@ -122,12 +127,14 @@ actions:
       - packageJson
       - bunInstall
     spec:
-      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana'
+      title: "[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana"
       labels:
         - dependencies
 
 ---
 # npm devDependencies for cdviz-grafana/dashboards_generator.
+name: "bump cdviz-grafana npm devDependencies"
+
 matrix:
   packages:
     - "@types/bun"
@@ -138,24 +145,24 @@ scms:
   default:
     kind: github
     spec:
-      user: '{{ .github.user }}'
-      email: '{{ .github.email }}'
-      owner: '{{ .github.owner }}'
-      repository: '{{ .github.repository }}'
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      branch: '{{ .github.branch }}'
+      user: "{{ .github.user }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
 
 sources:
   npm:
+    name: "Get latest {{ .matrix.packages }} version"
     kind: npm
     spec:
-      package: '{{ .matrix.packages }}'
-      versionFilter:
+      name: "{{ .matrix.packages }}"
+      versionfilter:
         kind: latest
 
 targets:
   packageJson:
-    name: 'cdviz-grafana package.json {{ .matrix.packages }} (dev)'
+    name: "cdviz-grafana package.json {{ .matrix.packages }} (dev)"
     kind: json
     sourceid: npm
     scmid: default
@@ -164,7 +171,7 @@ targets:
       key: '.devDependencies["{{ .matrix.packages }}"]'
 
   bunInstall:
-    name: 'cdviz-grafana bun.lock regeneration (dev)'
+    name: "cdviz-grafana bun.lock regeneration (dev)"
     kind: shell
     scmid: default
     dependson:
@@ -180,6 +187,6 @@ actions:
       - packageJson
       - bunInstall
     spec:
-      title: '[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana'
+      title: "[updatecli] Bump {{ .matrix.packages }} in cdviz-grafana"
       labels:
         - dependencies
