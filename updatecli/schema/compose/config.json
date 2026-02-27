@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "$id": "https://www.updatecli.io/schema/latest/compose/spec",
+    "properties": {
+        "policies": {
+            "items": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name contains the policy name"
+                    },
+                    "policy": {
+                        "type": "string",
+                        "description": "Policy contains the policy OCI name"
+                    },
+                    "config": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "description": "Config contains a list of Updatecli config file path"
+                    },
+                    "values": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "description": "Values contains a list of Updatecli config file path"
+                    },
+                    "secrets": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "description": "Secrets contains a list of Updatecli secret file path"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object"
+            },
+            "type": "array",
+            "description": "Policies contains a list of policies"
+        },
+        "environments": {
+            "additionalProperties": {
+                "type": "string"
+            },
+            "type": "object",
+            "description": "Environment contains a list of environment variables"
+        },
+        "env_files": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array",
+            "description": "Env_files contains a list of environment files"
+        }
+    },
+    "additionalProperties": false,
+    "type": "object"
+}

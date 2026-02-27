@@ -1,0 +1,8 @@
+customCatalog:
+  schemas:
+    - name: Updatecli Policy Manifest
+      description: Updatecli Policy Manifest (generated from local updatecli binary)
+      fileMatch:
+        - "**/*.yaml"
+        - "**/*.yml"
+      location: ./schema/policy/manifest/config.json

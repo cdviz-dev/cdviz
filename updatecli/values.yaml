@@ -1,11 +1,16 @@
+# https://www.updatecli.io/docs/plugins/scm/github/#_authentication
+# Precedence and Fallback
+# Updatecli will use the first valid authentication method it finds, in the following order:
+# 1. Personal Access Token via environment variable
+# 2. GitHub App via environment variables
+# 3. Personal Access Token via manifest
+# 4. GitHub App via manifest
 github:
   owner: cdviz-dev
   repository: cdviz
   branch: main
   # Must match the GitHub App name + "[bot]" — adjust if the App name differs
   user: "cdviz-intbot[bot]"
+  username: "cdviz-intbot[bot]"
   email: "cdviz-intbot[bot]@users.noreply.github.com"
-  # user: "GitHub Actions Bot"
-  # email: "bots@udpatecli.io"
   # username: "github-actions"
-  # token: "UPDATECLI_GITHUB_TOKEN"
