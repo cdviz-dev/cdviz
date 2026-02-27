@@ -1,0 +1,428 @@
+{
+  "timezone": "browser",
+  "editable": true,
+  "graphTooltip": 0,
+  "fiscalYearStartMonth": 0,
+  "schemaVersion": 39,
+  "templating": {
+    "list": [
+      {
+        "type": "datasource",
+        "name": "datasource",
+        "skipUrlSync": false,
+        "multi": false,
+        "includeAll": false,
+        "auto": false,
+        "auto_min": "10s",
+        "auto_count": 30,
+        "query": "grafana-postgresql-datasource",
+        "regex": "cdviz.*"
+      }
+    ]
+  },
+  "annotations": {},
+  "title": "SDLC Stack: Size",
+  "uid": "sdlc_stack_size",
+  "tags": [
+    "sdlc-stack"
+  ],
+  "time": {
+    "from": "now-31d",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Environments",
+      "description": "Distinct environments observed in the selected time window (from environment and service events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT env_id) AS count\nFROM (\n  SELECT payload -> 'subject' ->> 'id' AS env_id\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'environment' AND $__timeFilter(timestamp)\n  UNION\n  SELECT payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS env_id\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'service' AND $__timeFilter(timestamp)\n    AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' IS NOT NULL\n) AS envs",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Services",
+      "description": "Distinct service IDs observed in the selected time window (from service events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' ->> 'id') AS count\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND $__timeFilter(timestamp)",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Artifacts",
+      "description": "Distinct artifact base names (PURL before version/qualifier) observed in the selected time window (from artifact and service events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT\n  SUBSTRING(purl FROM 'pkg:([^@\\\\?]+)') ||\n  COALESCE('?repository_url=' || (regexp_match(purl, 'repository_url=([^&]+)'))[1], '')\n) AS count\nFROM (\n  SELECT payload -> 'subject' ->> 'id' AS purl\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'artifact' AND $__timeFilter(timestamp)\n    AND payload -> 'subject' ->> 'id' LIKE 'pkg:%'\n  UNION\n  SELECT payload -> 'subject' -> 'content' ->> 'artifactId' AS purl\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'service' AND $__timeFilter(timestamp)\n    AND payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:%'\n) AS purls\nWHERE SUBSTRING(purl FROM 'pkg:([^@\\\\?]+)') IS NOT NULL",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Repositories",
+      "description": "Distinct repositories observed in the selected time window (from repository and change events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT repo_id) AS count\nFROM (\n  SELECT payload -> 'subject' ->> 'id' AS repo_id\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'repository' AND $__timeFilter(timestamp)\n  UNION\n  SELECT payload -> 'subject' -> 'content' -> 'repository' ->> 'id' AS repo_id\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'change' AND $__timeFilter(timestamp)\n    AND payload -> 'subject' -> 'content' -> 'repository' ->> 'id' IS NOT NULL\n) AS repos",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Pipelines",
+      "description": "Distinct pipeline names observed in the selected time window (from pipelinerun events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' ->> 'pipelineName') AS count\nFROM cdviz.cdevents_lake\nWHERE subject = 'pipelinerun'\n  AND payload -> 'subject' -> 'content' ->> 'pipelineName' IS NOT NULL\n  AND $__timeFilter(timestamp)",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Tasks",
+      "description": "Distinct task names observed in the selected time window (from taskrun events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' ->> 'taskName') AS count\nFROM cdviz.cdevents_lake\nWHERE subject = 'taskrun'\n  AND payload -> 'subject' -> 'content' ->> 'taskName' IS NOT NULL\n  AND $__timeFilter(timestamp)",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Test Suites",
+      "description": "Distinct test suite names observed in the selected time window (from testsuiterun events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name') AS count\nFROM cdviz.cdevents_lake\nWHERE subject = 'testsuiterun'\n  AND payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name' IS NOT NULL\n  AND $__timeFilter(timestamp)",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "transparent": false,
+      "repeatDirection": "h",
+      "title": "Tests",
+      "description": "Distinct test case names observed in the selected time window (from testcaserun events).",
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${datasource}"
+      },
+      "targets": [
+        {
+          "format": "table",
+          "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' -> 'testCase' ->> 'name') AS count\nFROM cdviz.cdevents_lake\nWHERE subject = 'testcaserun'\n  AND payload -> 'subject' -> 'content' -> 'testCase' ->> 'name' IS NOT NULL\n  AND $__timeFilter(timestamp)",
+          "refId": "",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "rawQuery": true
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "value": null,
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    }
+  ],
+  "version": 2026022711
+}

@@ -4,6 +4,7 @@ import { buildDashboard as artifactTimelineDashboard } from "./dashboards/artifa
 import { buildDashboard as cdeventsActivityDashboard } from "./dashboards/cdevents_activity";
 import { buildDashboard as doraMetricsDashboard } from "./dashboards/dora_metrics";
 import { buildDashboards as executionDashboards } from "./dashboards/execution_dashboards";
+import { buildDashboard as sdlcStackSizeDashboard } from "./dashboards/sdlc_stack_size";
 import { saveDashboard } from "./tools";
 
 //console.log(JSON.stringify(basicDashboard(), null, 2));
@@ -26,3 +27,4 @@ const { values } = parseArgs({
 saveDashboard(await artifactTimelineDashboard(), values.output);
 saveDashboard(await cdeventsActivityDashboard(), values.output);
 saveDashboard(await doraMetricsDashboard(), values.output);
+saveDashboard(await sdlcStackSizeDashboard(), values.output);
