@@ -1,37 +1,21 @@
+
+[tasks]
+
+  [tasks.ci]
+    depends = ["//charts/...:ci"]
+    description = "set of tasks run by CI"
+
+  [tasks.release_prepare]
+    depends = ["//charts/...:release_prepare"]
+    description = "Prepare releases for all charts (update versions & changelogs)"
+
+  [tasks.release_publish]
+    depends = ["//charts/...:release_publish"]
+    description = "Publish all charts to OCI registry"
+
+  [tasks.release_status]
+    description = "Show release status for all charts"
+    run = "echo \"=== Chart Release Status ===\"\nfor chart in charts/cdviz-*/; do\n  if [[ ! -f \"$chart/Chart.yaml\" ]]; then continue; fi\n  name=$(basename \"$chart\")\n  version=$(yq .version \"$chart/Chart.yaml\" 2>/dev/null || echo \"N/A\")\n  if helm show chart \"$CHARTS_OCI_REGISTRY/$name\" --version \"$version\" &>/dev/null; then\n    status=\"✅ published\"\n  else\n    status=\"❌ not published\"\n  fi\n  echo \"  $name: $version $status\"\ndone\n"
+
 [tools]
-# docker = "latest"     # to build, to run containers, should be available for some of thoses tools
-# dive = "latest"       # to explore content of image container
-helm = "4.1.0"         # to check helm chart
-
-# TODO upgrade version only if change in the context of the Dockerfile
-# TODO sign container (see <https://www.sigstore.dev/how-it-works>)
-# TODO sign chart (see <https://www.sigstore.dev/how-it-works>)
-
-[tasks."release_prepare"]
-description = "Prepare releases for all charts (update versions & changelogs)"
-depends = ["//charts/...:release_prepare"]
-
-[tasks."release_publish"]
-description = "Publish all charts to OCI registry"
-depends = ["//charts/...:release_publish"]
-
-[tasks."release_status"]
-description = "Show release status for all charts"
-run = """
-echo "=== Chart Release Status ==="
-for chart in charts/cdviz-*/; do
-  if [[ ! -f "$chart/Chart.yaml" ]]; then continue; fi
-  name=$(basename "$chart")
-  version=$(yq .version "$chart/Chart.yaml" 2>/dev/null || echo "N/A")
-  if helm show chart "$CHARTS_OCI_REGISTRY/$name" --version "$version" &>/dev/null; then
-    status="✅ published"
-  else
-    status="❌ not published"
-  fi
-  echo "  $name: $version $status"
-done
-"""
-
-[tasks.ci]
-description = "set of tasks run by CI"
-depends = ["//charts/...:ci"]
+  helm = "4.1.1"
