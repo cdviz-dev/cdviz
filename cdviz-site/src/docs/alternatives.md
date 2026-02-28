@@ -24,6 +24,12 @@ Open-source engineering metrics platform (Apache Incubating). Ingests data from 
 
 → [CDviz vs Apache DevLake](./vs-apache-devlake)
 
+### [DevStats](https://www.devstats.com/)
+
+Commercial SaaS platform for engineering metrics. Pulls data from GitHub, GitLab, and Bitbucket via API polling. Focused on git and PR-centric metrics (cycle time, DORA, PR review time) with built-in dashboards for engineering leadership.
+
+→ [CDviz vs DevStats](./vs-devstats)
+
 ### [CI Pipeline Visibility | Datadog](https://www.datadoghq.com/product/ci-cd-monitoring/)
 
 Fully-managed SaaS pipeline and test observability. Best when already using Datadog for APM/infra. Proprietary, vendor-hosted data model.
