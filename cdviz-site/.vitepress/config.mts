@@ -353,6 +353,7 @@ export default defineConfig({
           items: [
             { text: "CDviz vs Apache DevLake", link: "/docs/vs-apache-devlake" },
             { text: "CDviz vs Datadog CI", link: "/docs/vs-datadog-ci" },
+            { text: "CDviz vs DevStats", link: "/docs/vs-devstats" },
             { text: "CDviz vs Powerpipe", link: "/docs/vs-powerpipe" },
           ],
         },
