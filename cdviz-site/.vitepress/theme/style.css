@@ -1596,6 +1596,20 @@ summary:focus-visible {
   padding-inline: var(--spacing-2xl);
 }
 
+/* Get Started nav CTA button */
+.VPNavBarMenu .VPNavBarMenuLink[href="/docs/getting-started"] {
+  background-color: var(--vp-c-brand-1);
+  color: var(--vp-c-neutral-inverse) !important;
+  border-radius: 6px;
+  padding: 4px 14px !important;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.VPNavBarMenu .VPNavBarMenuLink[href="/docs/getting-started"]:hover {
+  background-color: var(--vp-c-brand-2);
+  color: var(--vp-c-neutral-inverse) !important;
+}
+
 /* FAQ Details Element Fix */
 details {
   /* Ensure details work properly */

@@ -1,5 +1,6 @@
 <script setup>
 import End from "./landing/SectionEnd.vue";
+import Faq from "./landing/SectionFaq.vue";
 import Hero from "./landing/SectionHero.vue";
 import How from "./landing/SectionHow.vue";
 import PanelSamples from "./landing/SectionPanelSamples.vue";
@@ -28,6 +29,7 @@ import Why from "./landing/SectionWhy.vue";
     <PanelSamples />
     <Why />
     <How />
+    <Faq />
     <End />
   </main>
 </template>

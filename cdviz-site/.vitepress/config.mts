@@ -88,9 +88,10 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: "/favicon.svg",
     nav: [
-      { text: "Documentation", link: "/docs/" },
+      { text: "Get Started", link: "/docs/getting-started" },
+      { text: "Docs", link: "/docs/" },
+      { text: "Blog", link: "/blog/" },
       { text: "Pricing", link: "/pricing" },
-      { text: "Blog", link: "/blog/20251020-episode-4-webhook-transformers" },
     ],
     sidebar: {
       "/docs/": [
