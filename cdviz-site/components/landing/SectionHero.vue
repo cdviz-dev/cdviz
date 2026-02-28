@@ -3,9 +3,55 @@ import { gsap } from "gsap";
 import { onMounted } from "vue";
 import Btn from "./Btn.vue";
 
-// const randomInt = Math.floor(Math.random() * 8);
-// const heroImageSrc = `illustrations/hero-${randomInt}.webp`;
-// const heroImageSrc = "illustrations/hero-dashboard-01.webp";
+const headlines = [
+  {
+    line1: "Your Pipelines Are Slowing You Down.",
+    line2: "Now You Can See Exactly Why.",
+  },
+  {
+    line1: "DORA Metrics. SDLC Visibility.",
+    line2: "Open-Source. No Lock-In.",
+  },
+  {
+    line1: "Stop Flying Blind on Your SDLC.",
+    line2: "Ship Faster, Break Less, Know More.",
+  },
+];
+
+let headlineIndex = 0;
+
+function cycleHeadline() {
+  const items = Array.from(document.querySelectorAll(".hero-headline"));
+  if (items.length < 2) return;
+
+  const current = items[headlineIndex];
+  const nextIndex = (headlineIndex + 1) % headlines.length;
+  const next = items[nextIndex];
+  headlineIndex = nextIndex;
+
+  // 1. Slide + fade out current
+  gsap.to(current, {
+    opacity: 0,
+    y: -20,
+    duration: 0.45,
+    ease: "power2.in",
+    onComplete() {
+      // 2. Snap current to absolute overlay, prep next below viewport
+      gsap.set(current, { position: "absolute", top: 0, left: 0, right: 0 });
+      gsap.set(next, { position: "relative", y: 20, opacity: 0 });
+      // 3. Slide + fade in next
+      gsap.to(next, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        onComplete() {
+          gsap.delayedCall(4, cycleHeadline);
+        },
+      });
+    },
+  });
+}
 
 onMounted(() => {
   // Subtle breathing pulse effect on hero dashboard to suggest "live monitoring"
@@ -16,6 +62,9 @@ onMounted(() => {
     yoyo: true,
     ease: "sine.inOut",
   });
+
+  // Start cycling — reduced to 3s so it's noticeable quickly
+  gsap.delayedCall(3, cycleHeadline);
 });
 </script>
 <template>
@@ -97,18 +146,25 @@ onMounted(() => {
     <div class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10">
       <h1
         id="hero-title"
-        class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"
+        class="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"
       >
-        <!-- Explain the value we provide -->
+        <!-- All variants rendered in DOM for crawlers; inactive ones hidden via inline style from SSR -->
         <span
-          class="text-text animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out block"
+          v-for="(h, i) in headlines"
+          :key="i"
+          class="hero-headline block w-full"
+          :style='i !== 0 ? { position: "absolute", top: 0, left: 0, right: 0, opacity: 0 } : {}'
         >
-          Monitor Your Software Delivery Pipeline
-        </span>
-        <span
-          class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-2 sm:mt-3 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300 bg-[length:200%_auto] animate-gradient hero-glow-text"
-        >
-          With Confidence
+          <span
+            class="text-text block"
+            :class='i === 0 ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out" : ""'
+          >{{ h.line1 }}</span>
+          <span
+            class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-2 sm:mt-3 bg-[length:200%_auto] animate-gradient hero-glow-text"
+            :class='i === 0
+            ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300"
+            : ""'
+          >{{ h.line2 }}</span>
         </span>
       </h1>
       <div
