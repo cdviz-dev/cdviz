@@ -6,7 +6,7 @@ import SkeletonLoader from "./SkeletonLoader.vue";
 import CdvizArchitecture from "../diagrams/CdvizArchitecture.vue";
 
 // Interactive diagram state
-const activeComponent = ref(null);
+const activeComponent = ref("collector");
 const isLoadingComponent = ref(false);
 
 // CDviz process steps data structure
@@ -16,7 +16,7 @@ const processSteps = [
     title: "Event Collection",
     icon: "icon-[lucide--workflow]",
     description:
-      "Pull or receive events from multiple sources and convert them to standardized CDEvents.",
+      "Collect events from GitHub, GitLab, Kubernetes, and 20+ sources. CDviz normalizes everything to the open CDEvents standard automatically.",
     tools: [
       { icon: "icon-[simple-icons--github]", title: "GitHub" },
       { icon: "icon-[simple-icons--gitlab]", title: "GitLab" },
@@ -35,7 +35,7 @@ const processSteps = [
     title: "Store Events",
     icon: "icon-[lucide--database]",
     description:
-      "Keep events in a database for later analysis and pre-process them for efficient querying.",
+      "Events land in PostgreSQL + TimescaleDB or ClickHouse. Indexed for speed. Retained for history. Query with plain SQL.",
     tools: [
       { icon: "icon-[simple-icons--postgresql]", title: "PostgreSQL" },
       { text: "TimescaleDB" },
@@ -47,7 +47,7 @@ const processSteps = [
     title: "Event Monitoring",
     icon: "icon-[lucide--bar-chart-3]",
     description:
-      "Observe the activity of your software factory with dashboards, alerts, and build your own analytics.",
+      "Pre-built Grafana dashboards surface DORA metrics, deployment timelines, and incident data. Extend and customize them to fit your team's workflow.",
     tools: [{ icon: "icon-[simple-icons--grafana]", title: "Grafana" }, { text: "+more" }],
   },
   {
@@ -55,7 +55,7 @@ const processSteps = [
     title: "Event Reaction",
     icon: "icon-[lucide--zap]",
     description:
-      "Trigger automated reactions and workflows based on CDEvents for continuous delivery automation.",
+      "CDEvents can trigger n8n workflows, ArgoCD deployments, or custom webhooks. Observe and act — in the same pipeline.",
     tools: [
       { icon: "icon-[simple-icons--n8n]", title: "n8n" },
       { icon: "icon-[simple-icons--make]", title: "Make" },
@@ -94,7 +94,7 @@ const selectComponent = async (componentName) => {
 <template>
   <section class="space-section bg-gradient-to-br from-background to-secondary/4 rounded-2xl shadow-sm border border-secondary/10">
     <a id="how"></a>
-    <H2>How CDviz Works</H2>
+    <H2>From Events to Insight in 4 Steps</H2>
 
     <!-- Process Flow Steps -->
     <div class="grid space-content lg:grid-cols-2 lg:grid-rows-2 max-w-7xl mx-auto">
@@ -150,9 +150,6 @@ const selectComponent = async (componentName) => {
         <h3 class="text-xl sm:text-2xl font-bold text-primary mb-2">
           Complete Architecture Overview
         </h3>
-        <p class="text-sm sm:text-base text-text/80">
-          Click on components below to learn more
-        </p>
       </div>
 
       <!-- Diagram Container -->
@@ -167,6 +164,9 @@ const selectComponent = async (componentName) => {
 
       <!-- Interactive Component Explorer -->
       <div class="mt-6 space-y-6 max-w-5xl mx-auto">
+        <p class="text-sm sm:text-base text-text/80 text-center">
+          Click on a component to learn more
+        </p>
         <!-- Component Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <button
@@ -342,9 +342,9 @@ const selectComponent = async (componentName) => {
               </h4>
             </div>
             <p class="text-sm sm:text-base text-text/90 mb-4 leading-relaxed">
-              Pre-built dashboards and custom D3.js panels for visualizing SDLC metrics, deployment
-              trends, and delivery performance. TypeScript-generated dashboards ensure consistency
-              and maintainability.
+              Pre-built dashboards and custom ECharts panels for visualizing SDLC metrics,
+              deployment trends, and delivery performance. TypeScript-generated dashboards ensure
+              consistency and maintainability.
             </p>
             <div class="grid sm:grid-cols-3 gap-4 text-sm">
               <div>
@@ -368,10 +368,10 @@ const selectComponent = async (componentName) => {
               <div>
                 <div class="font-medium text-primary mb-2">Custom Panels</div>
                 <div class="text-text/80 space-y-1">
-                  <div>• D3.js visualizations</div>
+                  <div>• ECharts visualizations</div>
+                  <div>• Table with embedded charts</div>
                   <div>• Interactive charts</div>
                   <div>• Real-time updates</div>
-                  <div>• Export capabilities</div>
                 </div>
               </div>
             </div>

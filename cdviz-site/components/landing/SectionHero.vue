@@ -171,32 +171,57 @@ onMounted(() => {
         id="hero-subtitle"
         class="my-lg text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed text-text/90 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-500"
       >
-        <!-- Explain how we'll create the value -->
-        Get complete visibility into your CI/CD pipelines and SDLC with powerful analytics,
-        deployment tracking, and real-time monitoring - all in one place.
+        CDviz is an open-source SDLC observability platform built on the CDEvents standard. Connect
+        GitHub, GitLab, Kubernetes, and more — then get DORA metrics, deployment timelines, and
+        incident tracking in Grafana. In minutes, not months.
       </div>
 
       <div
         id="hero-actions"
         class="my-lg flex flex-col sm:flex-row gap-3 sm:gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700"
       >
-        <!-- CTA: what should viewer do next : Get Started, Learn More, Book a call, Subscribe to Waitlist, ...-->
-        <Btn href="/docs" primary>Get Started</Btn>
-        <Btn href="#how">See How It Works</Btn>
-        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener"
+        <!-- CTA: lowest friction first — let skeptical engineers see the product immediately -->
+        <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener" primary
         >Try Live Demo</Btn>
+        <Btn href="/docs">Get Started Free</Btn>
+        <Btn href="#how">See How It Works</Btn>
       </div>
       <div
         id="hero-social-proof"
         class="mt-12 py-4 border-t border-secondary/20"
       >
-        <div class="flex items-center gap-4">
-          <span class="svg-mask svg-cdevents w-24 h-12 opacity-70 cdevents-badge-glow"></span>
-          <div class="text-sm text-text/80">
-            <div class="font-medium">CDEvents Compatible</div>
-            <div class="opacity-75">
-              CD Foundation standard for delivery events
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <!-- CDEvents badge -->
+          <div class="flex items-center gap-3">
+            <span class="svg-mask svg-cdevents w-20 h-10 opacity-70 cdevents-badge-glow"></span>
+            <div class="text-xs text-text/80">
+              <div class="font-medium">CDEvents Compatible</div>
+              <div class="opacity-75">CD Foundation standard</div>
             </div>
+          </div>
+          <span class="hidden sm:block text-secondary/40 text-lg">|</span>
+          <!-- GitHub stars -->
+          <a
+            href="https://github.com/cdviz-dev/cdviz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-text/70 hover:text-primary transition-colors duration-200"
+            aria-label="Star CDviz on GitHub"
+          >
+            <span class="icon-[simple-icons--github] h-4 w-4"></span>
+            <img
+              src="https://img.shields.io/github/stars/cdviz-dev/cdviz?style=social"
+              alt="GitHub stars"
+              loading="lazy"
+              height="20"
+              width="80"
+            />
+          </a>
+          <span class="hidden sm:block text-secondary/40 text-lg">|</span>
+          <!-- License -->
+          <div class="flex items-center gap-2 text-xs text-text/70">
+            <span class="icon-[lucide--shield-check] h-4 w-4 text-primary/70"></span>
+            <span>Apache 2.0 · Free Forever</span>
           </div>
         </div>
       </div>

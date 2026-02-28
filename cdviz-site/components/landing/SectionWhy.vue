@@ -25,7 +25,7 @@ onMounted(() => {
     aria-labelledby="why-heading"
   >
     <a id="why"></a>
-    <H2 id="why-heading">Transform Your Software Delivery</H2>
+    <H2 id="why-heading">Why Teams Choose CDviz</H2>
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6 max-w-6xl mx-auto">
       <!-- First card - smaller, 2 columns -->
       <div
@@ -36,11 +36,11 @@ onMounted(() => {
           <div class="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center animate-float">
             <span class="icon-[lucide--eye] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
           </div>
-          <H3>Complete Pipeline Visibility</H3>
+          <H3>See Every Deploy, Across Every Team</H3>
         </div>
         <p class="leading-relaxed text-sm sm:text-base text-text/90">
-          Track deployments, monitor performance, and identify bottlenecks across your entire CI/CD
-          pipeline with real-time dashboards and analytics.
+          Know which version is deployed where, and when it arrived. Dashboards across your entire
+          CI/CD pipeline — no more hunting across systems to understand your current state.
         </p>
       </div>
       <!-- Second card - larger, emphasized, 3 columns -->
@@ -57,11 +57,11 @@ onMounted(() => {
           >
             <span class="icon-[lucide--plug-zap] h-6 sm:h-7 w-6 sm:w-7 text-primary"></span>
           </div>
-          <H3 class="text-lg sm:text-xl">Zero-Friction Integration</H3>
+          <H3 class="text-lg sm:text-xl">Works With What You Already Have</H3>
         </div>
         <p class="leading-relaxed text-base sm:text-lg text-text/90 relative z-10">
-          Connect with your existing tools—GitHub, GitLab, Jenkins, Kubernetes— without changing
-          workflows or disrupting development teams.
+          GitHub, GitLab, Jenkins, Kubernetes, Tekton, Harbor — plug in without changing a single
+          workflow. Your team keeps shipping; CDviz starts watching.
         </p>
       </div>
       <!-- Third card - full width on mobile, spans all columns -->
@@ -76,11 +76,11 @@ onMounted(() => {
           >
             <span class="icon-[lucide--users-round] h-5 sm:h-6 w-5 sm:w-6 text-primary"></span>
           </div>
-          <H3>Unified Tool Collaboration</H3>
+          <H3>One Truth for Dev, Ops, and QA</H3>
         </div>
         <p class="leading-relaxed text-sm sm:text-base text-text/90">
-          Break down silos between development, operations, and quality teams by providing a single
-          source of truth for all delivery events and metrics.
+          Eliminate the "which version is in prod?" conversations. Shared dashboards mean shared
+          accountability — and faster incident response.
         </p>
       </div>
     </div>

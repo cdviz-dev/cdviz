@@ -7,13 +7,12 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
   <section class="space-section">
     <div class="max-w-7xl mx-auto">
       <!-- Section Header -->
-      <H2>Dashboard &amp; Panel Starters</H2>
+      <H2>Your SDLC — Finally Visible</H2>
       <p
         class="text-base sm:text-lg text-text/80 text-center mb-lg"
         style="max-width: 48rem; margin-inline: auto"
       >
-        Ready-to-use Grafana dashboards and panels as starting points —
-        customize them to match your needs
+        Production-ready Grafana dashboards. Customize for your workflow in minutes.
       </p>
 
       <!-- Dashboard Gallery — stacked full-width cards -->
@@ -24,14 +23,12 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div class="md:col-span-2 p-lg flex flex-col justify-center">
-            <h3
-              class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors"
-            >
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
               Artifact Timeline
             </h3>
             <p class="text-sm text-text/70">
-              Start with timeline tracking of deployments and versions across
-              environments — adapt it to your delivery workflow
+              Track which version landed in which environment — at a glance and historically. A
+              starting point you can adapt to your own deployment workflow.
             </p>
           </div>
           <div class="md:col-span-3 p-md flex items-center">
@@ -56,17 +53,13 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
               decoding="async"
             />
           </div>
-          <div
-            class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center"
-          >
-            <h3
-              class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors"
-            >
+          <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
               Execution Performance
             </h3>
             <p class="text-sm text-text/70">
-              Monitor pipeline runs, task executions, and test results —
-              customize metrics and thresholds to fit your team's goals
+              Monitor pipeline runs, task executions, and test results — and spot trends over time.
+              Customize the metrics and thresholds that matter to your team.
             </p>
           </div>
         </a>
@@ -76,14 +69,12 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-linear-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div class="md:col-span-2 p-lg flex flex-col justify-center">
-            <h3
-              class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors"
-            >
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
               Incidents &amp; Tickets
             </h3>
             <p class="text-sm text-text/70">
-              Track open incidents, median time-to-restore, and change cycle
-              times — from incident management and ticketing tools via CDEvents
+              Track open incidents, time-to-restore, and change cycle times — fed from your incident
+              management and ticketing tools via CDEvents.
             </p>
           </div>
           <div class="md:col-span-3 p-md flex items-center">
@@ -110,18 +101,14 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
               decoding="async"
             />
           </div>
-          <div
-            class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center"
-          >
-            <h3
-              class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors"
-            >
+          <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
+            <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
               DORA Metrics
             </h3>
             <p class="text-sm text-text/70">
-              Track the four DORA indicators — deployment frequency, lead time,
-              time to restore, and change failure rate — to benchmark and
-              improve software delivery performance
+              The four DORA indicators — deployment frequency, lead time, time to restore, and
+              change failure rate — computed from your existing CDEvents. A baseline to benchmark
+              and improve your delivery performance.
             </p>
           </div>
         </a>
@@ -129,14 +116,25 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
 
       <!-- CTA -->
       <div class="flex gap-4 justify-center mt-lg">
-        <Btn href="/docs/cdviz-grafana/">Explore all dashboards</Btn>
+        <Btn href="/docs/cdviz-grafana/">Explore All Dashboards</Btn>
         <Btn
           href="https://demo.cdviz.dev/grafana"
           target="_blank"
           rel="noopener"
-          >Try Live Demo</Btn
-        >
+          primary
+        >Try the Live Demo →</Btn>
       </div>
+
+      <!-- Feedback invite -->
+      <p class="text-center text-sm text-text/60 mt-md">
+        Missing a dashboard you need?
+        <a
+          href="https://github.com/cdviz-dev/cdviz/discussions"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary hover:underline"
+        >Open a discussion →</a>
+      </p>
     </div>
   </section>
 </template>
