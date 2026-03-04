@@ -278,7 +278,7 @@ export function newVariable4Subject() {
     dedent`
       SELECT DISTINCT "subject"
       FROM cdviz."cdevents_lake"
-      WHERE $__timeFilter(imported_at)
+      WHERE $__timeFilter(timestamp)
         AND "subject" LIKE '$__searchFilter'
     `,
     "subjects",
@@ -291,7 +291,7 @@ export function newVariable4Predicate() {
     dedent`
       SELECT DISTINCT "predicate"
       FROM cdviz."cdevents_lake"
-      WHERE $__timeFilter(imported_at)
+      WHERE $__timeFilter(timestamp)
         AND "predicate" LIKE '$__searchFilter'
         AND "subject" = ANY(ARRAY[\${subjects:sqlstring}]::text[])
     `,
