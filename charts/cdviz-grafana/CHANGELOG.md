@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-03-04
+
+### Added
+
+- Add dashboard "SDLC stack: size" with various metrics/counter about the SDLC stack ([ebc1616](ebc161610483946cfbe94a117d50629a6d480082))
+
+### Fixed
+
+- Compute frequency of event (deploy) in a stage between at least 2 events (more accurate and stable) ([4dac2fa](4dac2fab30a2afd751c55f4f8074a301c3293277))
+- Cdevents_activity's variables should be filtered on `timestamp` like panels ([0ae80f7](0ae80f78fd7949a073be47cce78ea4d40df2928c))
+
 ## [1.5.0] - 2026-02-25
 
 ### Added
