@@ -66,39 +66,45 @@ import IntegrationCard from '../../../../components/IntegrationCard.vue'
 Configure `cdviz-collector.toml` to receive GitLab webhook events:
 
 ```toml
-# Remote transformers repository configuration
-[remote.transformers-pro]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-pro"
-
 [sources.gitlab_webhook]
 enabled = true
 transformer_refs = ["gitlab_events"]
 
 [sources.gitlab_webhook.extractor]
 type = "webhook"
-id = "000-gitlab"
+id = "000-gitlab" # used as part of the webhook's url
 headers_to_keep = ["X-Gitlab-Event"]
 
-# Optional: Verify webhook authenticity with token
-[[sources.gitlab_webhook.extractor.headers]]
-header = "X-Gitlab-Token"
-
-[sources.gitlab_webhook.extractor.headers.rule]
-type = "equals"
-value = "token-changeme"
-case_sensitive = true
+[sources.gitlab_webhook.extractor.headers]
+# value set by env CDVIZ_COLLECTOR__SOURCES__GITLAB_WEBHOOK__EXTRACTOR__HEADERS__X-GITLAB-TOKEN__VALUE
+"x-gitlab-token" = { type = "equals", value = "xxx", case_sensitive = true }
 
 # Transformer from transformers-pro repository
-[transformers.gitlab_events]
-type = "vrl"
-template_rfile = "transformers-pro:///gitlab_events/transformer.vrl"
+[remote.transformers-pro]
+type = "github"
+owner = "cdviz-dev"
+repo = "transformers-pro"
+# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO'
+
+[transformers]
+gitlab_events = { type = "vrl", template_rfile = "transformers-pro:///gitlab_events/transformer.vrl" }
 ```
 
 Replace `"token-changeme"` with your actual secret token configured in GitLab webhook settings.
 
 The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro). For more details on remote transformers, see the [Transformers documentation](../transformers.md#using-remote-transformers).
+
+### Testing the access to the webhook
+
+Make an empty POST to the endpoint, it should be rejected with HTTP status 400.
+
+```
+❯ curl -i -X POST https://demo.cdviz.dev/webhook/000-gitlab -H 'X-Gitlab-Token: xxxxxxx'
+
+HTTP/2 400
+...
+Failed to parse the request body as JSON
+```
 
 ### Setting Up GitLab Webhook
 
@@ -109,31 +115,25 @@ Configure a webhook in your GitLab project or group:
    - For groups: `https://gitlab.com/groups/<group>/-/hooks`
 2. Click **Add new webhook**
 3. **URL**: `http://your-collector-url/webhook/000-gitlab`
-4. **Secret token**: Enter the token from your collector configuration (e.g., `token-changeme`)
+4. **Secret token**: Enter the token from your collector configuration (the same as `value` for header `x-gitlab-token` defined in the configuration)
 5. Select **Trigger** events:
    - ✅ Push events
    - ✅ Tag push events
    - ✅ Issues events
+   - ✅ Confidential issues events
    - ✅ Merge request events
-   - ✅ Pipeline events
    - ✅ Job events
+   - ✅ Pipeline events
+   - ✅ Deployment events
    - ✅ Release events
+   - ✅ Vulnerability events
 6. Enable **SSL verification** (recommended for production)
 7. Ensure **Enable webhook** is checked
 8. Click **Add webhook**
 
 ### Testing the Integration
 
-Test webhook delivery:
-
-```bash
-# Trigger a pipeline
-git push origin main
-
-# Create a tag
-git tag v1.0.0
-git push origin v1.0.0
-```
+Test webhook delivery: use the **Test** button
 
 Check webhook delivery logs in GitLab: **Settings > Webhooks > Edit > Recent events**
 
