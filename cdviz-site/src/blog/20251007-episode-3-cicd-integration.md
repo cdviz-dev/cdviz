@@ -19,7 +19,10 @@ target_audience: "CI/CD Practitioners, DevOps Engineers"
 reading_time: "8 minutes"
 series: "CDEvents in Action"
 series_part: 3
-published: false
+status: published
+publications:
+  - at: "2025-10-07"
+    url: "https://dev.to/davidb31/cdevents-in-action-3-direct-cicd-pipeline-integration-564a"
 ---
 
 # CDEvents in Action #3: Direct CI/CD Pipeline Integration

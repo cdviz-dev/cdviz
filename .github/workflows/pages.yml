@@ -46,6 +46,8 @@ jobs:
           mise run :install
           mise run :build
         working-directory: ./cdviz-site
+        env:
+          NODE_ENV: "production"
 
       # - uses: actions/configure-pages@v4
       # - uses: actions/upload-pages-artifact@v3

@@ -17,7 +17,7 @@ target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
 series: "CDEvents in Action"
 series_part: 0
-published: true
+status: published
 publications:
   - at: "2025-08-21"
     url: "https://dev.to/davidb31/pipeline-visibility-crisis-when-your-tools-dont-talk-3ch"

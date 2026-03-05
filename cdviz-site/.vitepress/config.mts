@@ -3,6 +3,25 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vitepress";
 import svgLoader from "vite-svg-loader";
 // import { configureDiagramsPlugin } from "vitepress-plugin-diagrams";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { getBlogPosts } from "./blog-utils.ts";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const blogDir = join(__dirname, "../src/blog");
+const isDev = process.env.NODE_ENV !== "production";
+
+function getDraftExcludes(): string[] {
+  if (isDev) return [];
+  return getBlogPosts(blogDir, false).map((p) => `blog/${p.file}`);
+}
+
+function buildBlogSidebar() {
+  return getBlogPosts(blogDir, isDev).map((p) => ({
+    text: p.title,
+    link: p.url,
+  }));
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -74,6 +93,7 @@ export default defineConfig({
   ],
   // base: "/docs/",
   srcDir: "./src",
+  srcExclude: getDraftExcludes(),
   // markdown: {
   //   config: (md) => {
   //     configureDiagramsPlugin(md, {
@@ -364,28 +384,7 @@ export default defineConfig({
         { text: "Privacy Policy", link: "/pro/privacy" },
         { text: "Legal Information", link: "/pro/legal" },
       ],
-      "/blog/": [
-        {
-          text: "CDEvents in Action #4: Webhook Transformers and Passive Monitoring",
-          link: "/blog/20251020-episode-4-webhook-transformers",
-        },
-        {
-          text: "CDEvents in Action #3: Direct CI/CD Pipeline Integration",
-          link: "/blog/20251007-episode-3-cicd-integration",
-        },
-        {
-          text: "CDEvents in Action #2: Send Your First CDEvent",
-          link: "/blog/20251001-episode-2-send-first-cdevent",
-        },
-        {
-          text: "CDEvents in Action #1: Simulate a Consumer",
-          link: "/blog/20250916-episode-1-simulate-consumer",
-        },
-        {
-          text: "CDEvents in Action #0: Monitor Your Software Factory",
-          link: "/blog/20250821-episode-0-manager-problem",
-        },
-      ],
+      "/blog/": buildBlogSidebar(),
     },
     aside: true,
     outline: {

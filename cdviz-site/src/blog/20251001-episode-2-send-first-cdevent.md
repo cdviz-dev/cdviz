@@ -9,7 +9,10 @@ target_audience: "DevOps Engineers, CI/CD Practitioners"
 reading_time: "10 minutes"
 series: "CDEvents in Action"
 series_part: 2
-published: true
+status: published
+publications:
+  - at: "2025-10-01"
+    url: "https://dev.to/davidb31/cdevents-in-action-2-send-your-first-cdevent-57hm"
 ---
 
 # CDEvents in Action #2: Send Your First CDEvent

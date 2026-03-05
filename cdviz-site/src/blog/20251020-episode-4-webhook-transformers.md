@@ -19,7 +19,10 @@ target_audience: "Platform Engineers, DevOps Architects"
 reading_time: "12 minutes"
 series: "CDEvents in Action"
 series_part: 4
-published: false
+status: published
+publications:
+  - at: "2025-10-25"
+    url: "https://dev.to/davidb31/cdevents-in-action-4-webhook-transformers-and-passive-monitoring-ha0"
 ---
 
 # CDEvents in Action #4: Webhook Transformers and Passive Monitoring

@@ -9,7 +9,10 @@ target_audience: "Developers, DevOps Engineers"
 reading_time: "8 minutes"
 series: "CDEvents in Action"
 series_part: 1
-published: true
+status: published
+publications:
+  - at: "2025-09-16"
+    url: "https://dev.to/davidb31/cdevents-in-action-1-simulate-a-consumer-aip"
 ---
 
 # CDEvents in Action #1: Simulate a Consumer
