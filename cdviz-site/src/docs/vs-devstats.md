@@ -10,22 +10,22 @@ CDviz is an open-source, event-driven SDLC observability platform. DevStats is a
 
 ## At a glance
 
-|                                           |                  **CDviz**                   |           **DevStats**            |
-| ----------------------------------------- | :------------------------------------------: | :-------------------------------: |
-| License                                   |                  Apache 2.0                  |            Proprietary            |
-| Self-hosted                               |                      ✅                      |               ❌                  |
-| SaaS option                               |               ⏳ waitlist                    |               ✅                  |
-| Commercial support                        |                      ✅                      |         ✅ (included)             |
-| Data ownership                            |                  ✅ full                     |        ❌ vendor-hosted           |
-| [CDEvents](https://cdevents.dev) standard |                      ✅                      |               ❌                  |
-| Data model                                |           Event-driven (push)                |       Pull-based (polling)        |
-| Beyond monitoring: trigger workflows      |                      ✅                      |               ❌                  |
-| DORA metrics                              |                      ✅                      |               ✅                  |
-| PR / cycle time analytics                 |                      ✅                      |               ✅                  |
-| Scope                                     | Full SDLC event stream (git, CI, CD, deploy…) | Git / PR-centric metrics          |
-| Customizable storage backends             |         ✅ (PostgreSQL, ClickHouse…)          |               ❌                  |
-| Visualization                             |    Grafana, BI, AI agents, MCP, IDP tools    |        built-in dashboards        |
-| Cost                                      |       Infra + optional support               |   Per-seat / subscription        |
+|                                           |                   **CDviz**                   |       **DevStats**       |
+| ----------------------------------------- | :-------------------------------------------: | :----------------------: |
+| License                                   |                  Apache 2.0                   |       Proprietary        |
+| Self-hosted                               |                      ✅                       |            ❌            |
+| SaaS option                               |                  ⏳ waitlist                  |            ✅            |
+| Commercial support                        |                      ✅                       |      ✅ (included)       |
+| Data ownership                            |                    ✅ full                    |     ❌ vendor-hosted     |
+| [CDEvents](https://cdevents.dev) standard |                      ✅                       |            ❌            |
+| Data model                                |              Event-driven (push)              |   Pull-based (polling)   |
+| Beyond monitoring: trigger workflows      |                      ✅                       |            ❌            |
+| DORA metrics                              |                      ✅                       |            ✅            |
+| PR / cycle time analytics                 |                      ✅                       |            ✅            |
+| Scope                                     | Full SDLC event stream (git, CI, CD, deploy…) | Git / PR-centric metrics |
+| Customizable storage backends             |         ✅ (PostgreSQL, ClickHouse…)          |            ❌            |
+| Visualization                             |    Grafana, BI, AI agents, MCP, IDP tools     |   built-in dashboards    |
+| Cost                                      |           Infra + optional support            | Per-seat / subscription  |
 
 ## Key differences
 
