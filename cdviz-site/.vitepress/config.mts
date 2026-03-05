@@ -107,6 +107,9 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/favicon.svg",
+    search: {
+      provider: "local",
+    },
     nav: [
       { text: "Get Started", link: "/docs/getting-started" },
       { text: "Docs", link: "/docs/" },
