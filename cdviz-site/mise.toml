@@ -2,14 +2,34 @@
 "bun" = "latest"
 "dprint" = "latest"
 # "magick" = "latest" # imagemagick
+"ubi:cdviz-dev/cdviz-collector" = "latest"
 
 [tasks]
 install = "bun install"
 dev = "bun run docs:dev"
-build = "bun run docs:build"
 preview = "bun run docs:preview"
 
-[tasks."build_favicon"]
+[tasks."build"]
+run = "bun run docs:build"
+wait_for = [":build:images", ":build:markdown", ":build:help"]
+
+[tasks."build:all"]
+depends = [":build:images", ":build:markdown", ":build:help", "build"]
+
+[tasks."build:help"]
+description = "build help snippet from cdviz-collector, to be imported into docs"
+run = [
+  "cdviz-collector --help > src/docs/cdviz-collector/help.txt",
+  "cdviz-collector connect --help > src/docs/cdviz-collector/connect-help.txt",
+  "cdviz-collector send --help > src/docs/cdviz-collector/send-help.txt",
+  "cdviz-collector transform --help > src/docs/cdviz-collector/transform-help.txt",
+  "cdviz-collector config --help > src/docs/cdviz-collector/config-help.txt",
+]
+
+sources = ["favicon.svg"]
+outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+
+[tasks."build:favicon"]
 description = "rebuild favicon.{ico,png,webp} from favicon.svg"
 dir = "assets"
 run = [
@@ -24,7 +44,7 @@ run = [
 sources = ["favicon.svg"]
 outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 
-[tasks."build_hero-images"]
+[tasks."build:hero-images"]
 description = "rebuild optimized hero images from hero-dashboard-01.webp"
 dir = "assets/illustrations"
 # to create the image effect in GIMP
@@ -64,11 +84,11 @@ outputs = [
   "hero-dashboard-01-400w.avif",
 ]
 
-[tasks."build_images"]
+[tasks."build:images"]
 description = "rebuild all optimized images (favicon + hero images)"
-depends = [":build_favicon", ":build_hero-images"]
+depends = [":build:favicon", ":build:hero-images"]
 
-[tasks."build_markdown"]
+[tasks."build:markdown"]
 description = "generate, import some markdown"
 run = [
   "curl -sfL 'https://github.com/cdviz-dev/transformers-community/raw/refs/heads/main/RULES.md' -o src/docs/cdviz-collector/transformers-rules.md",

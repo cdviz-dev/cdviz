@@ -10,42 +10,7 @@ The `connect` command runs the collector in server mode, enabling configured sou
 cdviz-collector connect [OPTIONS]
 ```
 
-```text
-Launch collector as a server to connect sources to sinks.
-
-Runs the collector in server mode, enabling configured sources to collect events and dispatch them to configured sinks through the pipeline. The server provides HTTP endpoints for webhook sources and SSE sinks.
-
-Usage: cdviz-collector connect [OPTIONS]
-
-Options:
-      --config <CONFIG>
-          Configuration file path for sources, sinks, and transformers.
-
-          Specifies the TOML configuration file that defines the pipeline behavior. If not provided, the collector will use the base configuration with default settings. The configuration can also be specified via the `CDVIZ_COLLECTOR_CONFIG` environment variable.
-
-          Example: `--config cdviz-collector.toml`
-
-          [env: CDVIZ_COLLECTOR_CONFIG=]
-
-  -v, --verbose...
-          Increase logging verbosity
-
-  -q, --quiet...
-          Decrease logging verbosity
-
-      --disable-otel
-          Disable OpenTelemetry initialization and use minimal tracing setup.
-
-          This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
-
-  -C, --directory <DIRECTORY>
-          Change working directory before executing the command.
-
-          This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
-
-  -h, --help
-          Print help (see a summary with '-h')
-```
+<<< @/docs/cdviz-collector/connect-help.txt
 
 > [!TIP]
 > See [Configuration Guide](./configuration.md) for complete configuration reference and examples.

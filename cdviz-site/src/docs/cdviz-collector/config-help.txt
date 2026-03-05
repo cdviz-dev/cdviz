@@ -1,0 +1,39 @@
+Inspect or validate the resolved configuration.
+
+Merges the base configuration, user configuration file, and environment variables, then prints the result (--print) and/or validates it against the typed Config structure (--check).
+
+Usage: cdviz-collector config [OPTIONS]
+
+Options:
+      --config <CONFIG>
+          Configuration file path
+          
+          [env: CDVIZ_COLLECTOR_CONFIG=]
+
+  -v, --verbose...
+          Increase logging verbosity
+
+      --print
+          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
+
+  -q, --quiet...
+          Decrease logging verbosity
+
+      --disable-otel
+          Disable OpenTelemetry initialization and use minimal tracing setup.
+          
+          This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
+
+      --print-raw
+          Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files
+
+  -C, --directory <DIRECTORY>
+          Change working directory before executing the command.
+          
+          This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
+
+      --check
+          Validate the configuration by parsing it into the typed Config structure
+
+  -h, --help
+          Print help (see a summary with '-h')
