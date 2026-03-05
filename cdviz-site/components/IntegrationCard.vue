@@ -1,10 +1,9 @@
-<script setup>
-</script>
+<script setup></script>
 <template>
   <h1>{{ $frontmatter.title }}</h1>
   <div>
     <p v-html="$frontmatter.description"></p>
-    <table>
+    <table v-if="$frontmatter.integration.events">
       <thead>
         <tr>
           <th>CDEvents</th>

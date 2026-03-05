@@ -334,6 +334,10 @@ export default defineConfig({
                   text: "Kubernetes (via Kubewatch)",
                   link: "/docs/cdviz-collector/integrations/kubewatch",
                 },
+                {
+                  text: "Custom",
+                  link: "/docs/cdviz-collector/integrations/custom",
+                },
               ],
             },
           ],
