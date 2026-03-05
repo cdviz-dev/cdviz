@@ -414,10 +414,10 @@ export default defineConfig({
     /^https?:\/\/localhost/,
     // ignore all links include "/repl/""
     // /\/repl\//,
-    // custom function, ignore all links include "ignore"
-    // (url) => {
-    //   return url.toLowerCase().includes('ignore')
-    // }
+    // ignore links to excluded (draft) blog posts
+    ...getDraftExcludes().map(
+      (p) => new RegExp(`^/${p.replace(/\.md$/, "").replace(/\./g, "\\.")}$`),
+    ),
   ],
   sitemap: {
     hostname: "https://cdviz.dev",
