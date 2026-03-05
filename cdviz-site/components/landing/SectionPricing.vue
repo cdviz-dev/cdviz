@@ -75,14 +75,15 @@ const pricingPlans = [
       { icon: "icon-[lucide--cloud]", text: "Collector on our infrastructure" },
     ],
     button: {
-      text: "Join Waitlist",
+      text: "Express Interest", // was "Join Waitlist"
       href: "/contact",
       primary: false,
     },
     colorScheme: "secondary",
     highlighted: false,
     disabled: true,
-    badge: "Coming Soon",
+    //badge: "Coming Soon",
+    note: "Interested? Let us know — your feedback directly shapes when this ships.",
   },
 ];
 
@@ -167,7 +168,7 @@ onMounted(() => {
     class="space-section bg-gradient-to-br from-secondary/2 to-secondary/6 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
-    <H2>Pricing & Editions</H2>
+    <H2>Pricing & Plans</H2>
     <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
       Start free with open source, scale with enterprise features. Built for teams that value
       transparency and control.
@@ -288,6 +289,10 @@ onMounted(() => {
             </li>
           </ul>
         </div>
+        <!-- Interest note for future plans -->
+        <p v-if="plan.note" class="mt-4 text-xs text-current/60 italic">
+          {{ plan.note }}
+        </p>
 
         <!-- Button -->
         <Btn
@@ -302,7 +307,7 @@ onMounted(() => {
     <div class="text-center mt-12 text-current/90">
       <p>
         All prices are in Euro (€) and exclude VAT. The Community edition is free forever, while the
-        Enterprise and SaaS editions offer additional features and support. For more information or
+        Enterprise and SaaS plans offer additional features and support. For more information or
         custom request, please
         <a href="/contact" class="text-primary hover:underline">contact us</a>.
       </p>

@@ -541,21 +541,21 @@ const comparisonFeatures = {
         tooltip: "Professional services available, contact us",
       },
     },
-    "Multi-tenant Support": {
-      url: "/docs/multi-tenant",
-      tooltip: "Support multiple teams or organizations",
-      comingSoon: true,
-      community: {
-        value: false,
-      },
-      enterprise: {
-        value: false,
-      },
-      saas: {
-        value: true,
-        tooltip: "Native multi-tenant architecture",
-      },
-    },
+    // "Multi-tenant Support": {
+    //   url: "/docs/multi-tenant",
+    //   tooltip: "Support multiple teams or organizations",
+    //   comingSoon: true,
+    //   community: {
+    //     value: false,
+    //   },
+    //   enterprise: {
+    //     value: false,
+    //   },
+    //   saas: {
+    //     value: true,
+    //     tooltip: "Native multi-tenant architecture",
+    //   },
+    // },
   },
 };
 
@@ -603,12 +603,12 @@ const isComingSoon = (feature) => {
                 <span class="text-lg">Enterprise</span>
               </div>
             </th>
-            <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">
+            <!-- <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">
               <div class="flex flex-col items-center">
                 <span class="text-lg">SaaS</span>
                 <span class="text-xs bg-accent/20 text-accent px-2 py-1 rounded mt-1">Preview</span>
               </div>
-            </th>
+            </th> -->
           </tr>
         </thead>
         <tbody>
@@ -644,7 +644,7 @@ const isComingSoon = (feature) => {
                   <div v-if="isComingSoon(feature)" class="ml-2">
                     <span
                       class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium shadow-sm"
-                    >Coming Soon</span>
+                    >Future</span>
                   </div>
                   <div v-if="feature.tooltip" class="ml-2 relative">
                     <span
@@ -660,7 +660,7 @@ const isComingSoon = (feature) => {
                 </div>
               </td>
               <td
-                v-for='tier in ["community", "enterprise", "saas"]'
+                v-for='tier in ["community", "enterprise" /*, &quot;saas&quot;*/]'
                 :key="featureName"
                 class="p-4 text-center border-l border-gray-200"
                 :class="getFeatureClass(feature, tier)"
@@ -696,8 +696,9 @@ const isComingSoon = (feature) => {
         </div>
         <div class="flex items-center">
           <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium mr-2"
-          >Coming Soon</span>
-          <span>On our roadmap</span>
+          >Future</span>
+          <span>On our roadmap — <a href="/contact">signal your interest</a> to help prioritize
+            it</span>
         </div>
       </div>
     </div>
