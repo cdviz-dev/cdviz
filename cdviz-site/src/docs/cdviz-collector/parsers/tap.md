@@ -20,7 +20,7 @@ parser = "tap"
 
 Input `test-results.tap`:
 
-```tap
+```txt
 TAP version 13
 1..3
 ok 1 - User authentication works
@@ -39,7 +39,12 @@ Output:
   "plan": { "start": 1, "end": 3 },
   "tests": [
     { "ok": true, "id": 1, "description": "User authentication works" },
-    { "ok": false, "id": 2, "description": "Database connection", "diagnostic": { "message": "Connection timeout" } },
+    {
+      "ok": false,
+      "id": 2,
+      "description": "Database connection",
+      "diagnostic": { "message": "Connection timeout" }
+    },
     { "ok": true, "id": 3, "description": "Cleanup completed" }
   ]
 }

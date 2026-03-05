@@ -487,7 +487,7 @@ figcaption {
   margin-top: var(--spacing-xs);
   line-height: 1.4;
   font-size: 0.875rem;
-  color: var(--color-text / 70);
+  color: color-mix(in oklch, var(--color-text) 70%, transparent);
 }
 
 /* Enhanced blockquote with rhythm - documentation only */
@@ -504,7 +504,7 @@ figcaption {
 blockquote::before {
   content: "\"";
   font-size: 2rem;
-  color: var(--color-primary / 30);
+  color: color-mix(in oklch, var(--color-primary) 30%, transparent);
   position: absolute;
   left: var(--spacing-xs);
   top: 0;
@@ -527,8 +527,8 @@ blockquote::before {
   padding: var(--spacing-lg);
   overflow-x: auto;
   border-radius: 12px; /* Material Design uses larger border radius */
-  background: var(--color-secondary / 5);
-  border: 1px solid var(--color-secondary / 20);
+  background: color-mix(in oklch, var(--color-secondary) 5%, transparent);
+  border: 1px solid color-mix(in oklch, var(--color-secondary) 20%, transparent);
 }
 
 /* Inline code styling */
@@ -537,7 +537,7 @@ blockquote::before {
   font-size: var(--md-body-medium);
   padding: 0.125rem 0.25rem;
   border-radius: 4px;
-  background: var(--color-secondary / 8);
+  background: color-mix(in oklch, var(--color-secondary) 8%, transparent);
 }
 
 /* Table spacing */
@@ -551,12 +551,12 @@ th,
 td {
   padding: var(--spacing-sm) var(--spacing-md);
   line-height: 1.4;
-  border-bottom: 1px solid var(--color-secondary / 20);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-secondary) 20%, transparent);
 }
 
 th {
   font-weight: 600;
-  background: var(--color-secondary / 5);
+  background: color-mix(in oklch, var(--color-secondary) 5%, transparent);
 }
 
 /* HR spacing */
@@ -567,7 +567,7 @@ hr {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--color-secondary / 30),
+    color-mix(in oklch, var(--color-secondary) 30%, transparent),
     transparent
   );
 }
@@ -708,9 +708,9 @@ img[loading="lazy"] {
 img[loading="lazy"]:not([src]) {
   background: linear-gradient(
     90deg,
-    var(--color-secondary / 10) 25%,
-    var(--color-secondary / 20) 50%,
-    var(--color-secondary / 10) 75%
+    color-mix(in oklch, var(--color-secondary) 10%, transparent) 25%,
+    color-mix(in oklch, var(--color-secondary) 20%, transparent) 50%,
+    color-mix(in oklch, var(--color-secondary) 10%, transparent) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
@@ -815,9 +815,9 @@ img[src$=".svg"] {
 .skeleton {
   background: linear-gradient(
     90deg,
-    var(--color-secondary / 10) 25%,
-    var(--color-secondary / 20) 50%,
-    var(--color-secondary / 10) 75%
+    color-mix(in oklch, var(--color-secondary) 10%, transparent) 25%,
+    color-mix(in oklch, var(--color-secondary) 20%, transparent) 50%,
+    color-mix(in oklch, var(--color-secondary) 10%, transparent) 75%
   );
   background-size: 200px 100%;
   animation: skeleton-loading 1.5s infinite;
@@ -844,7 +844,9 @@ img[src$=".svg"] {
 
 .focus-ring:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px var(--color-primary / 20);
+  box-shadow:
+    0 0 0 2px var(--color-primary),
+    0 0 0 4px color-mix(in oklch, var(--color-primary) 20%, transparent);
 }
 
 /* Loading spinner optimization */
@@ -963,7 +965,7 @@ img[src$=".svg"] {
   /* Subtle shadow enhancement only - no movement that breaks interaction */
   box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -5px rgba(0, 0, 0, 0.08);
   /* Subtle border glow */
-  border-color: var(--color-primary / 40);
+  border-color: color-mix(in oklch, var(--color-primary) 40%, transparent);
 }
 
 /* Floating animation for icons */
@@ -1263,15 +1265,15 @@ summary:focus-visible {
   0%,
   100% {
     box-shadow:
-      0 0 5px var(--color-primary / 30),
-      0 0 10px var(--color-primary / 20),
-      0 0 15px var(--color-primary / 10);
+      0 0 5px color-mix(in oklch, var(--color-primary) 30%, transparent),
+      0 0 10px color-mix(in oklch, var(--color-primary) 20%, transparent),
+      0 0 15px color-mix(in oklch, var(--color-primary) 10%, transparent);
   }
   50% {
     box-shadow:
-      0 0 10px var(--color-primary / 50),
-      0 0 20px var(--color-primary / 30),
-      0 0 30px var(--color-primary / 20);
+      0 0 10px color-mix(in oklch, var(--color-primary) 50%, transparent),
+      0 0 20px color-mix(in oklch, var(--color-primary) 30%, transparent),
+      0 0 30px color-mix(in oklch, var(--color-primary) 20%, transparent);
   }
 }
 
@@ -1354,15 +1356,15 @@ summary:focus-visible {
   0%,
   100% {
     text-shadow:
-      0 0 5px var(--color-primary / 50),
-      0 0 10px var(--color-primary / 30),
-      0 0 15px var(--color-primary / 20);
+      0 0 5px color-mix(in oklch, var(--color-primary) 50%, transparent),
+      0 0 10px color-mix(in oklch, var(--color-primary) 30%, transparent),
+      0 0 15px color-mix(in oklch, var(--color-primary) 20%, transparent);
   }
   50% {
     text-shadow:
-      0 0 10px var(--color-primary / 70),
-      0 0 20px var(--color-primary / 50),
-      0 0 30px var(--color-primary / 30);
+      0 0 10px color-mix(in oklch, var(--color-primary) 70%, transparent),
+      0 0 20px color-mix(in oklch, var(--color-primary) 50%, transparent),
+      0 0 30px color-mix(in oklch, var(--color-primary) 30%, transparent);
   }
 }
 
@@ -1388,7 +1390,7 @@ summary:focus-visible {
     transform: scale(1);
   }
   50% {
-    background: var(--color-primary / 10);
+    background: color-mix(in oklch, var(--color-primary) 10%, transparent);
     transform: scale(1.05);
   }
   100% {
@@ -1645,8 +1647,16 @@ details > *:not(summary) {
 /* Data visualization grid pattern background */
 .data-grid-bg {
   background-image:
-    linear-gradient(to right, var(--primary / 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--primary / 0.03) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in oklch, var(--primary) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--primary) 3%, transparent) 1px,
+    transparent 1px
+  );
   background-size: 40px 40px;
   position: relative;
 }
@@ -1657,7 +1667,7 @@ details > *:not(summary) {
   inset: 0;
   background: radial-gradient(
     circle at 30% 20%,
-    var(--primary / 0.05) 0%,
+    color-mix(in oklch, var(--primary) 5%, transparent) 0%,
     transparent 50%
   );
   pointer-events: none;
@@ -1667,7 +1677,7 @@ details > *:not(summary) {
 .data-dots-bg {
   background-image: radial-gradient(
     circle,
-    var(--primary / 0.08) 1px,
+    color-mix(in oklch, var(--primary) 8%, transparent) 1px,
     transparent 1px
   );
   background-size: 24px 24px;
