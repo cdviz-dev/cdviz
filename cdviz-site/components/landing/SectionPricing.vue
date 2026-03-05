@@ -214,6 +214,25 @@ onMounted(() => {
         </span>
       </div>
     </div>
+
+    <!-- Early Adopter Offer Banner -->
+    <div class="max-w-5xl mx-auto mb-8 bg-primary/8 border border-primary/20 rounded-xl p-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="flex-1">
+          <p class="text-base font-semibold text-primary mb-1">
+            Early Adopter Offer — Getting started with CDviz?
+          </p>
+          <p class="text-sm text-current/80">
+            We offer a free onboarding call + async support (Discord/email) to help you set up and
+            tune CDviz for your stack — available to Community and Enterprise early adopters.
+          </p>
+        </div>
+        <Btn href="/contact" :primary="false" class="shrink-0">
+          Get free setup support →
+        </Btn>
+      </div>
+    </div>
+
     <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
       <div
         v-for="plan in pricingPlans"
