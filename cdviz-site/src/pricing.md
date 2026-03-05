@@ -95,5 +95,5 @@ faq_off:
 <script setup>
 import PricingPage from '../components/PricingPage.vue'
 </script>
-
+<h1 style="opacity:0; margin:0; padding:0">Pricing, plans, features</h1>
 <PricingPage />
