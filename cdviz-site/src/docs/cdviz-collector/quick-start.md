@@ -16,7 +16,7 @@ Webhook Endpoint → Transform to CDEvent → Save to Files
 
 ```bash
 # Install
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/0.26.0/cdviz-collector-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/0.28.0/cdviz-collector-installer.sh | sh
 
 # Create config file
 cat > quick-start.toml << 'EOF'
