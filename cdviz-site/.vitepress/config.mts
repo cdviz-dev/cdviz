@@ -429,7 +429,7 @@ export default defineConfig({
   transformHead({ pageData }) {
     const siteUrl = "https://cdviz.dev";
     const relativePath = pageData.relativePath
-      .replace(/\.md$/, ".html")
+      .replace(/\.md$/, "")
       .replace(/index\.html$/, "");
     const canonicalUrl = `${siteUrl}/${relativePath}`;
     const title =
