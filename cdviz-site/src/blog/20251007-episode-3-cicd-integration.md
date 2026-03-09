@@ -197,22 +197,22 @@ deploy:
 
     # Send deployment event (minimal format - collector generates ID/timestamp)
     - |
-        cdviz-collector send --data '{
-          "context": {
-            "version": "0.4.1",
-            "source": "'"${CI_PIPELINE_URL}"'",
-            "type": "dev.cdevents.service.deployed.0.2.0"
-          },
-          "subject": {
-            "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
-            "type": "service",
-            "content": {
-              "environment": {"id": "production"},
-              "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
-            }
+      cdviz-collector send --data '{
+        "context": {
+          "version": "0.4.1",
+          "source": "'"${CI_PIPELINE_URL}"'",
+          "type": "dev.cdevents.service.deployed.0.2.0"
+        },
+        "subject": {
+          "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
+          "type": "service",
+          "content": {
+            "environment": {"id": "production"},
+            "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
           }
-        }' --url "${CDEVENTS_ENDPOINT_URL}" \
-           --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
+        }
+      }' --url "${CDEVENTS_ENDPOINT_URL}" \
+         --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
 ```
 
 **What this does**:
@@ -225,7 +225,7 @@ deploy:
 
 **Adaptation for other platforms**: Install `cdviz-collector` binary, replace GitLab variables (`$CI_PIPELINE_URL`, `$CI_COMMIT_SHA`) with your platform's equivalents.
 
-**[→ cdviz-collector send documentation](https://cdviz.dev/docs/cdviz-collector/send.html)**
+**[→ cdviz-collector send documentation](/docs/cdviz-collector/send)**
 
 ### Pattern C: Platform Plugin (GitHub Actions) - Easiest
 
@@ -282,7 +282,7 @@ jobs:
 
 **Adaptation for other platforms**: Check if your platform has a native CDEvents plugin (see Platform Compatibility Matrix). If not, use Pattern A or B.
 
-**[→ send-cdevents action documentation](https://cdviz.dev/docs/cdviz-collector/integrations/github-action.html)**
+**[→ send-cdevents action documentation](/docs/cdviz-collector/integrations/github-action)**
 
 ## Complete Multi-Event Workflow Example
 
@@ -438,9 +438,9 @@ deploy:
   script:
     # ... (existing deployment steps)
     - |
-        cdviz-collector send --data '{...}' \
-          --url "${CDEVENTS_ENDPOINT_URL}" \
-          --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
+      cdviz-collector send --data '{...}' \
+        --url "${CDEVENTS_ENDPOINT_URL}" \
+        --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
 ```
 
 **Pattern C (GitHub Actions)** - Add HMAC signature via config:
@@ -633,7 +633,7 @@ Direct CI/CD integration gives you full control over CDEvents generation. These 
 
 ## Resources
 
-- [send-cdevents GitHub Action](https://cdviz.dev/docs/cdviz-collector/integrations/github-action.html) - Complete action reference
-- [cdviz-collector send documentation](https://cdviz.dev/docs/cdviz-collector/send.html) - CLI command reference
+- [send-cdevents GitHub Action](/docs/cdviz-collector/integrations/github-action) - Complete action reference
+- [cdviz-collector send documentation](/docs/cdviz-collector/send) - CLI command reference
 - [Episode #2: Send Your First CDEvent](./20251001-episode-2-send-first-cdevent) - Foundation for these patterns
 - [CDEvents Specification](https://cdevents.dev) - Complete event standard reference

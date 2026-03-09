@@ -302,7 +302,7 @@ export API_TOKEN="wrong-token"
 **Perfect for**: Teams wanting production features without custom scripting
 
 > [!NOTE]
-> You already installed `cdviz-collector` for the test consumer setup. If you need to install it on a different machine, see the **[complete installation guide](https://cdviz.dev/docs/cdviz-collector/install.html)**.
+> You already installed `cdviz-collector` for the test consumer setup. If you need to install it on a different machine, see the **[complete installation guide](/docs/cdviz-collector/install)**.
 
 ### Step 1: Send Your First Event (Simple)
 
@@ -414,7 +414,7 @@ cdviz-collector send \
 ```
 
 > [!TIP]
-> Configuration values can be overridden using environment variables with the pattern `CDVIZ_COLLECTOR__SECTION__SUBSECTION__KEY`. This allows keeping secrets out of configuration files. See **[Environment Overrides documentation](https://cdviz.dev/docs/cdviz-collector/configuration.html#environment-overrides)** for complete details.
+> Configuration values can be overridden using environment variables with the pattern `CDVIZ_COLLECTOR__SECTION__SUBSECTION__KEY`. This allows keeping secrets out of configuration files. See **[Environment Overrides documentation](/docs/cdviz-collector/configuration#environment-overrides)** for complete details.
 
 ### What You Learn
 
@@ -431,7 +431,7 @@ cdviz-collector send \
 **Best practice**: Use `cdviz-collector send` for all production deployments. It's simpler, more secure, and more flexible than custom scripts.
 
 > [!NOTE]
-> **Beyond HTTP**: `cdviz-collector send` can send to any sink type - just Kafka, just Database, just S3, or any combination of multiple destinations simultaneously. One command can target HTTP + Database, multiple Kafka topics, or any mix of available sinks. See the **[complete sinks documentation](https://cdviz.dev/docs/cdviz-collector/sinks/)** for all sink types and configuration examples.
+> **Beyond HTTP**: `cdviz-collector send` can send to any sink type - just Kafka, just Database, just S3, or any combination of multiple destinations simultaneously. One command can target HTTP + Database, multiple Kafka topics, or any mix of available sinks. See the **[complete sinks documentation](/docs/cdviz-collector/sinks/)** for all sink types and configuration examples.
 > Let us know if you'd like to see examples in future episodes!
 
 ## Choosing Your Sending Approach
@@ -497,9 +497,9 @@ In the next episode, we'll explore **GitHub Actions integration** - how to autom
 
 ### CDviz Documentation
 
-- [cdviz-collector send documentation](https://cdviz.dev/docs/cdviz-collector/send.html) - Complete command reference
-- [HTTP Sink documentation](https://cdviz.dev/docs/cdviz-collector/sinks/http.html) - Authentication patterns
-- [Episode #1: Simulate a Consumer](./20250916-episode-1-simulate-consumer.md) - Learn to test event reception
+- [cdviz-collector send documentation](/docs/cdviz-collector/send) - Complete command reference
+- [HTTP Sink documentation](/docs/cdviz-collector/sinks/http) - Authentication patterns
+- [Episode #1: Simulate a Consumer](./20250916-episode-1-simulate-consumer) - Learn to test event reception
 
 ### Alternative Tools
 

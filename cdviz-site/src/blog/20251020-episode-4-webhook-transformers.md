@@ -95,7 +95,7 @@ GitHub webhooks automatically notify cdviz-collector about repository activity:
 - **Issues** → `ticket.*` events
 - **Branches** → `branch.created/deleted` events
 
-**🔗 [Complete event mapping and setup guide](https://cdviz.dev/docs/cdviz-collector/integrations/github.html)**
+**🔗 [Complete event mapping and setup guide](/docs/cdviz-collector/integrations/github)**
 
 ### Minimal Configuration
 
@@ -134,7 +134,7 @@ template_rfile = "transformers-community:///github_events/transformer.vrl"
 - **Secret**: Same token as collector configuration
 - **Events**: Workflow runs, jobs, releases, PRs, issues
 
-**🔗 [Detailed GitHub webhook setup instructions](https://cdviz.dev/docs/cdviz-collector/integrations/github.html#setting-up-github-webhook)**
+**🔗 [Detailed GitHub webhook setup instructions](/docs/cdviz-collector/integrations/github#setting-up-github-webhook)**
 
 ### What You Get
 
@@ -143,7 +143,7 @@ template_rfile = "transformers-community:///github_events/transformer.vrl"
 - ✅ **Complete lifecycle**: Queued → started → finished events
 - ✅ **Secure**: HMAC-SHA256 signature verification
 
-**💡 Tip**: For custom deployment context, combine with [GitHub Action integration](https://cdviz.dev/docs/cdviz-collector/integrations/github-action.html) from Episode #3.
+**💡 Tip**: For custom deployment context, combine with [GitHub Action integration](/docs/cdviz-collector/integrations/github-action) from Episode #3.
 
 ## Pattern 2: GitLab Webhook Integration
 
@@ -159,7 +159,7 @@ GitLab webhooks automatically notify cdviz-collector about project activity:
 - **Issues** → `ticket.*` events
 - **Branches** → `branch.created/deleted` events
 
-**🔗 [Complete event mapping and setup guide](https://cdviz.dev/docs/cdviz-collector/integrations/gitlab.html)**
+**🔗 [Complete event mapping and setup guide](/docs/cdviz-collector/integrations/gitlab)**
 
 ### Minimal Configuration
 
@@ -203,7 +203,7 @@ template_rfile = "transformers-pro:///gitlab_events/transformer.vrl"
 - **Secret token**: Same token as collector configuration
 - **Trigger events**: Pipeline, job, release, MR, issue events
 
-**🔗 [Detailed GitLab webhook setup instructions](https://cdviz.dev/docs/cdviz-collector/integrations/gitlab.html#setting-up-gitlab-webhook)**
+**🔗 [Detailed GitLab webhook setup instructions](/docs/cdviz-collector/integrations/gitlab#setting-up-gitlab-webhook)**
 
 ### What You Get
 
@@ -227,7 +227,7 @@ ArgoCD notifications webhook can send:
 - **Health degraded** → `incident.detected`
 - **App deleted** → `service.removed`
 
-**Complete mapping**: See [ArgoCD Integration documentation](https://cdviz.dev/docs/cdviz-collector/integrations/argocd.html)
+**Complete mapping**: See [ArgoCD Integration documentation](/docs/cdviz-collector/integrations/argocd)
 
 ### Configuration: cdviz-collector Side
 
@@ -647,9 +647,9 @@ Webhook transformers make CDEvents observability achievable at scale. Configure 
 
 ## Resources
 
-- [GitHub Webhook Integration](https://cdviz.dev/docs/cdviz-collector/integrations/github.html) - Complete configuration guide
-- [GitLab Webhook Integration](https://cdviz.dev/docs/cdviz-collector/integrations/gitlab.html) - Complete configuration guide
-- [ArgoCD Notifications Integration](https://cdviz.dev/docs/cdviz-collector/integrations/argocd.html) - Complete configuration guide
-- [Transformers Documentation](https://cdviz.dev/docs/cdviz-collector/transformers.html) - VRL transformer reference
+- [GitHub Webhook Integration](/docs/cdviz-collector/integrations/github) - Complete configuration guide
+- [GitLab Webhook Integration](/docs/cdviz-collector/integrations/gitlab) - Complete configuration guide
+- [ArgoCD Notifications Integration](/docs/cdviz-collector/integrations/argocd) - Complete configuration guide
+- [Transformers Documentation](/docs/cdviz-collector/transformers) - VRL transformer reference
 - [Episode #3: Direct CI/CD Integration](./20251007-episode-3-cicd-integration) - Active integration patterns
-- [GitHub Actions Integration](https://cdviz.dev/docs/cdviz-collector/integrations/github-action.html) - Custom events in workflows
+- [GitHub Actions Integration](/docs/cdviz-collector/integrations/github-action) - Custom events in workflows

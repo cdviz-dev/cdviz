@@ -190,7 +190,7 @@ Browse different Grafana dashboards to understand:
 
 ### Step 1: Install cdviz-collector CLI
 
-All installation options are documented at [CDviz Collector Installation Guide](https://cdviz.dev/docs/cdviz-collector/install.html)
+All installation options are documented at [CDviz Collector Installation Guide](/docs/cdviz-collector/install)
 
 ```bash
 brew install cdviz-dev/tap/cdviz-collector
