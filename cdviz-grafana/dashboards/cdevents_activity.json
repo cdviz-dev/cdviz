@@ -32,7 +32,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"subject\" LIKE '$__searchFilter'",
+        "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"subject\" LIKE '$__searchFilter'",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -54,7 +54,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(imported_at)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
+        "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
         "sort": 0,
         "refresh": 2,
         "current": {
@@ -853,5 +853,5 @@
       ]
     }
   ],
-  "version": 2026022514
+  "version": 2026030921
 }
