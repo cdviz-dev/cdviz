@@ -30,11 +30,23 @@ Commercial SaaS platform for engineering metrics. Pulls data from GitHub, GitLab
 
 → [CDviz vs DevStats](./vs-devstats)
 
+### [LinearB](https://linearb.io/)
+
+Commercial SaaS platform for engineering metrics. Focuses on git and PR-centric metrics — cycle time, PR review depth, merge frequency, DORA — by polling GitHub, GitLab, and Jira. Offers AI-powered PR review routing and automation. No self-hosted option.
+
+→ [CDviz vs LinearB](./vs-linearb)
+
 ### [CI Pipeline Visibility | Datadog](https://www.datadoghq.com/product/ci-cd-monitoring/)
 
 Fully-managed SaaS pipeline and test observability. Best when already using Datadog for APM/infra. Proprietary, vendor-hosted data model.
 
 → [CDviz vs Datadog CI Visibility](./vs-datadog-ci)
+
+### [Splunk](https://www.splunk.com/)
+
+General-purpose data platform for log aggregation, SIEM, and operational monitoring. Can be configured for CI/CD pipeline visibility and DORA metrics, but requires significant setup. Available as self-hosted (Splunk Enterprise) or SaaS (Splunk Cloud). Volume-based pricing (GB/day).
+
+→ [CDviz vs Splunk](./vs-splunk)
 
 ### Turbot tools
 
