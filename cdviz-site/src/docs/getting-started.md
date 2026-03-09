@@ -35,11 +35,15 @@ First, you'll need to get the CDviz demo environment up and running on your loca
    This command will start all the necessary components: a web application for sending events, the CDviz Collector, the CDviz Database, and a pre-configured Grafana instance.
 
 4. Access the demo dashboard in your browser:
-   [http://localhost:3000/d/demo-service-deployed/demo-service-deployed](http://localhost:3000/d/demo-service-deployed/demo-service-deployed)
+   <http://localhost:3000/d/demo_service_deployed/service3a-demo>
 
    You should see a dashboard with some initial sample data.
 
-   ![Initial Dashboard View](/quickstart/metrics_empty.png)
+   ![Initial Filled Dashboard View](/quickstart/metrics_filled.png)
+
+5. Filter by service `my_app` (not listed, as it didn't exist yet) to have like the Empty Dashboard
+
+   ![Initial Empty Dashboard View](/quickstart/metrics_empty.png)
 
 ## 2. Sending Your First Events
 
@@ -51,7 +55,14 @@ We send events to simulate your ticket system, CI tools, registries,... reportin
 
 1. On the dashboard page, scroll down to the "Services Deployed" form. This form allows you to simulate service deployment events.
 
-2. Fill out the form with some sample data. For the artifact, you can use the [Package URL (PURL) format](https://github.com/package-url/purl-spec). For example: `pkg:oci/my-app@sha256:1234567890abcdef`
+2. Fill out the form with some sample data. For the artifact, you can use the [Package URL (PURL) format](https://github.com/package-url/purl-spec). For example:
+
+   ```yaml
+   service: my_app
+   action: deployed
+   artifact: pkg:oci/my-app@sha256:1234567890abcdef?tag=0.1.0
+   environment: cluster/dev-01
+   ```
 
    ![Service Deployment Form Example](/quickstart/form_services_deployed_sample.png)
 
@@ -64,6 +75,16 @@ We send events to simulate your ticket system, CI tools, registries,... reportin
 1. Scroll down to the "Incidents Reported" form. This form allows you to simulate incident events.
 
 2. Fill out the form with some sample data.
+
+   ```yaml
+   incident: incident-01
+   action: reported
+   description: It doesn't work...
+   environment: cluster/dev-01
+   service: my_app
+   artifact: pkg:oci/my-app@sha256:1234567890abcdef?tag=0.1.0
+   ticketURI: http://ticket-system.example.com/PRJ-01
+   ```
 
    ![Incident Reporting Form](/quickstart/form_incidents_reported_sample.png)
 
@@ -79,6 +100,7 @@ Congratulations! You've successfully sent your first CDEvents and visualized the
 - **Explore the CDEvents Activity dashboard:** This dashboard provides a more detailed view of all the CDEvents that have been collected. You can access it at [http://localhost:3000/d/cdevents-activity/cdevents-activity](http://localhost:3000/d/cdevents-activity/cdevents-activity).
 - **Submit raw JSON events:** For more advanced use cases, you can use the "Raw JSON" form to submit CDEvents in their raw JSON format.
 - **Explore other dashboards:** and look at `cdviz/demos/uses_cases` to see how data was injected (`csv -> cdviz-collector (transformers) -> database`)
+<!--
 
 ## Frequently Asked Questions
 
@@ -97,3 +119,4 @@ CDviz collects the raw event data needed to calculate all four DORA metrics: Dep
 ### What is the difference between CDviz and CDEvents?
 
 CDEvents is a Continuous Delivery Foundation (CDF) specification — a standardized JSON schema for describing software delivery events. CDviz is a platform that implements CDEvents: it collects events, stores them in a database, and visualizes them in dashboards. CDviz uses CDEvents as its data model; you can also send CDEvents to other CDEvents-compatible systems.
+-->
