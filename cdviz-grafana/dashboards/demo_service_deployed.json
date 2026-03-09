@@ -138,7 +138,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
     {
@@ -159,10 +158,10 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "# Playground & Demo\n\n1. Use the forms to send event to the collector\n2. The database is updated\n3. The dashboard should reflect the event\n\nThis dashboard focus on **service** artifact (and **incident**) and show how to\ncompute some metrics and how to annotate (eg to enhance runtime metrics)\n\n## Notes\n\n- RAW form can be used to send any cdevent in json like in [cdevents'example](https://github.com/cdevents/spec/tree/spec-v0.4/conformance)\n- You can edit and customize the dashboard to explore visualization of data\n- The database is the same used in other dashboard\n- The timeserie is a random, used to show annotation",
+        "content": "# Playground & Demo\n\n1. Use the forms to send event to the collector\n2. The database is updated\n3. The dashboard should reflect the event\n\nThis dashboard focus on **service** artifact (and **incident**) and show how to\ncompute some metrics and how to annotate (eg to enhance runtime metrics)\n\n## Notes\n\n- RAW form can be used to send any cdevent in json like in [cdevents'example](https://github.com/cdevents/spec/tree/spec-v0.5/conformance)\n- You can edit and customize the dashboard to explore visualization of data\n- The database is the same used in other dashboard\n- The timeserie is a random, used to show annotation",
         "mode": "markdown"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.4.0",
       "title": "",
       "type": "text"
     },
@@ -185,7 +184,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-red"
+                "color": "dark-red",
+                "value": 0
               },
               {
                 "color": "dark-orange",
@@ -227,7 +227,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -277,7 +277,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
+                "color": "dark-green",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -316,7 +317,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -385,6 +386,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -399,7 +401,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -430,7 +433,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "refId": "A"
@@ -630,7 +633,7 @@
         },
         "updateEnabled": "auto"
       },
-      "pluginVersion": "5.1.0",
+      "pluginVersion": "6.3.1",
       "targets": [
         {
           "datasource": {
@@ -731,6 +734,7 @@
           },
           {
             "id": "description",
+            "isEscaping": true,
             "labelWidth": 10,
             "rows": 10,
             "section": "",
@@ -862,7 +866,7 @@
         },
         "updateEnabled": "auto"
       },
-      "pluginVersion": "5.1.0",
+      "pluginVersion": "6.3.1",
       "targets": [
         {
           "datasource": {
@@ -919,6 +923,7 @@
           {
             "height": 200,
             "id": "payload",
+            "isEscaping": true,
             "labelWidth": 10,
             "language": "json",
             "section": "",
@@ -1000,7 +1005,7 @@
         },
         "sync": false,
         "update": {
-          "code": "/**\n * Set body / payload\n */\ntry {\n  let payload = {};\n\n  context.panel.elements.forEach((element) => {\n    if (element.id == 'payload') {\n      payload = JSON.parse(element.value);\n    }\n  });\n\n  // override should run after payload read\n  context.panel.elements.forEach((element) => {\n    if (element.id == 'override') {\n      console.log(element);\n      if (element.value.includes('context_timestamp')) {\n        const ts = new Date();\n        payload.context.timestamp = ts.toISOString();\n      }\n      if (element.value.includes('context_id')) {\n        // let the cdviz-collector generate the id\n        payload.context.id = \"0\"\n      }\n    }\n  });\n\n  //TODO manage error\n  //console.log(context.panel.response);\n\n\n  /**\n  * Set URL\n  */\n  const url = context.grafana.templateService.getVariables().find((x) => x.name == 'collectorUrl').query;\n\n  /**\n  * Fetch\n  */\n  const resp = fetch(url, {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\",\n      // \"PRIVATE-TOKEN\": \"$token\",\n    },\n    body: JSON.stringify(payload),\n  })\n    .catch((error) => {\n      //console.error(error);\n      context.grafana.notifyError(['Error on Update', error]);\n      //context.grafana.refresh();\n    })\n    .then((resp) => {\n      //console.log(resp);\n      if (resp && resp.ok) {\n        context.grafana.notifySuccess(['Update', 'Event sent successfully.']);\n        context.grafana.refresh();\n      } else {\n        context.grafana.notifyError(['Update', 'An error occurred sending event.']);\n        //context.grafana.refresh();\n      }\n    });\n} catch (error) {\n  // console.error(error);\n  context.grafana.notifyError(['Error on Update', error]);\n}\n",
+          "code": "/**\n * Set body / payload\n */\ntry {\n  let payload = {};\n\n  context.panel.elements.forEach((element) => {\n    console.log(element)\n    if (element.id == 'payload') {\n      payload = JSON.parse(element.value.replaceAll('\\\\n', '\\n'));\n    }\n  });\n\n  // override should run after payload read\n  context.panel.elements.forEach((element) => {\n    if (element.id == 'override') {\n      console.log(element);\n      if (element.value.includes('context_timestamp')) {\n        const ts = new Date();\n        payload.context.timestamp = ts.toISOString();\n      }\n      if (element.value.includes('context_id')) {\n        // let the cdviz-collector generate the id\n        payload.context.id = \"0\"\n      }\n    }\n  });\n\n  //TODO manage error\n  //console.log(context.panel.response);\n\n\n  /**\n  * Set URL\n  */\n  const url = context.grafana.templateService.getVariables().find((x) => x.name == 'collectorUrl').query;\n\n  /**\n  * Fetch\n  */\n  const resp = fetch(url, {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\",\n      // \"PRIVATE-TOKEN\": \"$token\",\n    },\n    body: JSON.stringify(payload),\n  })\n    .catch((error) => {\n      //console.error(error);\n      context.grafana.notifyError(['Error on Update', error]);\n      //context.grafana.refresh();\n    })\n    .then((resp) => {\n      //console.log(resp);\n      if (resp && resp.ok) {\n        context.grafana.notifySuccess(['Update', 'Event sent successfully.']);\n        context.grafana.refresh();\n      } else {\n        context.grafana.notifyError(['Update', 'An error occurred sending event.']);\n        //context.grafana.refresh();\n      }\n    });\n} catch (error) {\n  // console.error(error);\n  context.grafana.notifyError(['Error on Update', error]);\n}\n",
           "confirm": false,
           "contentType": "application/json",
           "getPayload": "",
@@ -1012,13 +1017,17 @@
         },
         "updateEnabled": "auto"
       },
-      "pluginVersion": "5.1.0",
+      "pluginVersion": "6.3.1",
       "targets": [
         {
+          "dataset": "cdviz",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "cdviz-db"
           },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "",
           "refId": "A"
         }
       ],
@@ -1027,7 +1036,7 @@
     }
   ],
   "preload": false,
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [
     "cdevents",
     "service",
@@ -1067,6 +1076,7 @@
         "query": "SELECT DISTINCT payload -> 'subject' ->> 'id' as service\nFROM cdevents_lake\nWHERE subject = 'service'\nAND  $__timeFilter(timestamp)\nUNION\nSELECT DISTINCT payload -> 'subject' -> 'content' -> 'service' ->> 'id' as service\nFROM cdevents_lake\nWHERE subject = 'incident'\nAND  $__timeFilter(timestamp)\n",
         "refresh": 2,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
@@ -1088,6 +1098,7 @@
         "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'environment' ->> 'id' as environment\nFROM cdevents_lake\nWHERE (subject = 'service' OR subject = 'incident')\nAND  $__timeFilter(timestamp)\n",
         "refresh": 2,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
@@ -1118,5 +1129,6 @@
   "timezone": "browser",
   "title": "Service: Demo",
   "uid": "demo_service_deployed",
-  "version": 2025052016
+  "version": 2026030921,
+  "weekStart": ""
 }
