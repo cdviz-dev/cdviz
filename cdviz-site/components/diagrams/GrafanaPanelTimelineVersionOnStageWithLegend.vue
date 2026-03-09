@@ -1,7 +1,7 @@
 <script setup>
 import { gsap } from "gsap";
 import { onUnmounted, onMounted, useTemplateRef } from "vue";
-import PanelSvg from "./GrafanaPanelTimelineVersionOnStageWithLegend.svg";
+import PanelSvg from "./GrafanaPanelTimelineVersionOnStageWithLegend.svg?skipsvgo";
 
 const componentRoot = useTemplateRef("componentRoot");
 const selector_prefix = "GrafanaPanelTimelineVersionOnStageWithLegend_svg__";
