@@ -29,6 +29,7 @@ export default defineConfig({
   titleTemplate: ":title - CDviz",
   description:
     "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.",
+  cleanUrls: true, // supported by Cloudflare, and when false google search console warns about page with redirect
   head: [
     [
       "meta",
