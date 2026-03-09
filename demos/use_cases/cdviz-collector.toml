@@ -12,7 +12,6 @@ pool_connections_min = 1
 pool_connections_max = 10
 
 [sources]
-
 [sources.cdevents_local_json]
 enabled = true
 
@@ -27,7 +26,7 @@ parser = "json"
 
 [sources.pipelinerun_x_local_csv]
 enabled = true
-transformer_refs = ["pipelinerun_x"] # ["pipelinerun_x", "log"]
+transformer_refs = ["pipelinerun_x"]  # ["pipelinerun_x", "log"]
 
 [sources.pipelinerun_x_local_csv.extractor]
 type = "opendal"
@@ -129,12 +128,22 @@ recursive = false
 path_patterns = ["*.csv"]
 parser = "csv_row"
 
+[remote.transformers-community]
+type = "github"
+owner = "cdviz-dev"
+repo = "transformers-community"
+
 [transformers]
 artifact_lifecycle = { type = "vrl", template_file = "./transformers/artifact_lifecycle.vrl" }
 service_deploys = { type = "vrl", template_file = "./transformers/service_deploys.vrl" }
-pipelinerun_x = { type = "vrl", template_file = "./transformers/pipelinerun_x.vrl"}
-testsuiterun_x = {type = "vrl", template_file = "./transformers/testsuiterun_x.vrl"}
-testcaserun_x ={ type = "vrl", template_file = "./transformers/testcaserun_x.vrl" }
-taskrun_x = {type = "vrl", template_file = "./transformers/taskrun_x.vrl"}
-incident_x = { type = "vrl", template_file = "./transformers/incident_x.vrl"}
-ticket_x = { type = "vrl", template_file = "./transformers/ticket_x.vrl"}
+pipelinerun_x = { type = "vrl", template_file = "./transformers/pipelinerun_x.vrl" }
+testsuiterun_x = { type = "vrl", template_file = "./transformers/testsuiterun_x.vrl" }
+testcaserun_x = { type = "vrl", template_file = "./transformers/testcaserun_x.vrl" }
+taskrun_x = { type = "vrl", template_file = "./transformers/taskrun_x.vrl" }
+incident_x = { type = "vrl", template_file = "./transformers/incident_x.vrl" }
+ticket_x = { type = "vrl", template_file = "./transformers/ticket_x.vrl" }
+# github_events = { type = "vrl", template_rfile = "transformers-community:///github_events/to_v0_4.vrl" }
+# kubewatch_cloudevents = { type = "vrl", template_rfile = "transformers-community:///kubewatch_cloudevents/to_v0_4.vrl" }
+# argocd_notifications = { type = "vrl", template_rfile = "transformers-community:///argocd_notifications/to_v0_4.vrl" }
+# cdevents_v0_3_to_v0_4 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_3/to_v0_4.vrl" }
+cdevents_v0_4_to_v0_5 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_4/to_v0_5.vrl" }
