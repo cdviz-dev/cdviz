@@ -15,4 +15,4 @@ dependencies:
     version: 3.5.0
     repository: https://robusta-charts.storage.googleapis.com
     condition: kubewatch.enabled
-appVersion: 0.28.0
+appVersion: 0.29.0
