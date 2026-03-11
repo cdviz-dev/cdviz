@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-03-11
+
+### Fixed
+
+- Dashboard demo_service has issue to parse & send formatted json ([799885c](799885ca09101ae60d191e6b0ed08b04464e8d6d))
+- Forgot to rebuild cdevents_activity with fix on time window ([b396d3b](b396d3baa9cf1019db6edd042a044dd3534496eb))
+
 ## [1.6.0] - 2026-03-04
 
 ### Added
