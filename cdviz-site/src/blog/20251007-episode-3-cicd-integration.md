@@ -197,22 +197,22 @@ deploy:
 
     # Send deployment event (minimal format - collector generates ID/timestamp)
     - |
-      cdviz-collector send --data '{
-        "context": {
-          "version": "0.4.1",
-          "source": "'"${CI_PIPELINE_URL}"'",
-          "type": "dev.cdevents.service.deployed.0.2.0"
-        },
-        "subject": {
-          "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
-          "type": "service",
-          "content": {
-            "environment": {"id": "production"},
-            "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
+        cdviz-collector send --data '{
+          "context": {
+            "version": "0.4.1",
+            "source": "'"${CI_PIPELINE_URL}"'",
+            "type": "dev.cdevents.service.deployed.0.2.0"
+          },
+          "subject": {
+            "id": "/my-namespace/'"${CI_PROJECT_NAME}"'",
+            "type": "service",
+            "content": {
+              "environment": {"id": "production"},
+              "artifactId": "pkg:oci/'"${CI_PROJECT_NAME}"'@sha256:{digest}?repository_url=registry.example.com/'"${CI_PROJECT_NAME}"'&tag='"${CI_COMMIT_SHORT_SHA}"'"
+            }
           }
-        }
-      }' --url "${CDEVENTS_ENDPOINT_URL}" \
-         --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
+        }' --url "${CDEVENTS_ENDPOINT_URL}" \
+           --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"
 ```
 
 **What this does**:
@@ -438,9 +438,9 @@ deploy:
   script:
     # ... (existing deployment steps)
     - |
-      cdviz-collector send --data '{...}' \
-        --url "${CDEVENTS_ENDPOINT_URL}" \
-        --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
+        cdviz-collector send --data '{...}' \
+          --url "${CDEVENTS_ENDPOINT_URL}" \
+          --header "Authorization: Bearer ${CDEVENTS_AUTH_TOKEN}"  # ← Add this
 ```
 
 **Pattern C (GitHub Actions)** - Add HMAC signature via config:
