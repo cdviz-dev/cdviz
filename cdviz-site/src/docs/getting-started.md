@@ -100,6 +100,7 @@ Congratulations! You've successfully sent your first CDEvents and visualized the
 - **Explore the CDEvents Activity dashboard:** This dashboard provides a more detailed view of all the CDEvents that have been collected. You can access it at [http://localhost:3000/d/cdevents-activity/cdevents-activity](http://localhost:3000/d/cdevents-activity/cdevents-activity).
 - **Submit raw JSON events:** For more advanced use cases, you can use the "Raw JSON" form to submit CDEvents in their raw JSON format.
 - **Explore other dashboards:** and look at `cdviz/demos/uses_cases` to see how data was injected (`csv -> cdviz-collector (transformers) -> database`)
+
 <!--
 
 ## Frequently Asked Questions
