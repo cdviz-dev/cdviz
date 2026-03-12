@@ -80,8 +80,8 @@ actions:
     scmid: default
     targets:
       - valuesTag
-      - chartAppVersion
-      - docsInstallVersion
+      # - chartAppVersion
+      # - docsInstallVersion
       - docsQuickStartUrl
     spec:
       title: 'fix(deps): Bump cdviz-collector to {{ source "collectorVersion" }}'
