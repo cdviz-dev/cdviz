@@ -12,7 +12,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.1",
     "vite-svg-loader": "^5.1.1",
-    "vitepress": "^2.0.0-alpha.16"
+    "vitepress": "2.0.0-alpha.16"
   },
   "scripts": {
     "docs:build": "vitepress build",
