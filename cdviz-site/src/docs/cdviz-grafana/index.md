@@ -132,7 +132,6 @@ Contributions to CDviz Grafana dashboards are welcomed. For new dashboard ideas,
 - Set appropriate default time ranges (e.g., `Last 7 days` or `Last 30 days`)
 - Utilize the Grafana Foundation SDK with TypeScript for dashboard generation (see [dashboard generator code](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards_generator))
 - Prioritize standard Grafana panels and officially supported plugins listed in the requirements section
-  - Note: The **marcusolsson-dynamictext-panel** plugin offers significant flexibility for custom visualizations (e.g., D3.js charts) without requiring additional plugins. See [Business Text documentation](https://volkovlabs.io/plugins/business-text/)
 
 ## License
 

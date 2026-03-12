@@ -246,14 +246,6 @@ scms:
       branch: "{{ .github.branch }}"
 
 sources:
-  d3:
-    name: "Get latest d3 version"
-    kind: npm
-    spec:
-      name: d3
-      versionfilter:
-        kind: latest
-
   dedent:
     name: "Get latest dedent version"
     kind: npm
@@ -262,24 +254,7 @@ sources:
       versionfilter:
         kind: latest
 
-  lodash:
-    name: "Get latest lodash version"
-    kind: npm
-    spec:
-      name: lodash
-      versionfilter:
-        kind: latest
-
 targets:
-  d3:
-    name: "cdviz-grafana package.json d3"
-    kind: json
-    sourceid: d3
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.dependencies["d3"]'
-
   dedent:
     name: "cdviz-grafana package.json dedent"
     kind: json
@@ -289,24 +264,13 @@ targets:
       file: cdviz-grafana/dashboards_generator/package.json
       key: '.dependencies["dedent"]'
 
-  lodash:
-    name: "cdviz-grafana package.json lodash"
-    kind: json
-    sourceid: lodash
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.dependencies["lodash"]'
-
   bunInstall:
     name: "cdviz-grafana bun.lock regeneration"
     kind: shell
     scmid: default
     disablesourceinput: true
     dependson:
-      - d3
       - dedent
-      - lodash
     spec:
       command: bun install --cwd cdviz-grafana/dashboards_generator
 
@@ -315,9 +279,7 @@ actions:
     kind: github/pullrequest
     scmid: default
     targets:
-      - d3
       - dedent
-      - lodash
       - bunInstall
     spec:
       title: "fix(deps): Bump npm dependencies in cdviz-grafana"
@@ -347,22 +309,6 @@ sources:
       versionfilter:
         kind: latest
 
-  types-d3:
-    name: "Get latest @types/d3 version"
-    kind: npm
-    spec:
-      name: "@types/d3"
-      versionfilter:
-        kind: latest
-
-  types-lodash:
-    name: "Get latest @types/lodash version"
-    kind: npm
-    spec:
-      name: "@types/lodash"
-      versionfilter:
-        kind: latest
-
 targets:
   types-bun:
     name: "cdviz-grafana package.json @types/bun"
@@ -373,24 +319,6 @@ targets:
       file: cdviz-grafana/dashboards_generator/package.json
       key: '.devDependencies["@types/bun"]'
 
-  types-d3:
-    name: "cdviz-grafana package.json @types/d3"
-    kind: json
-    sourceid: types-d3
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.devDependencies["@types/d3"]'
-
-  types-lodash:
-    name: "cdviz-grafana package.json @types/lodash"
-    kind: json
-    sourceid: types-lodash
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.devDependencies["@types/lodash"]'
-
   bunInstall:
     name: "cdviz-grafana bun.lock regeneration (dev)"
     kind: shell
@@ -398,8 +326,6 @@ targets:
     disablesourceinput: true
     dependson:
       - types-bun
-      - types-d3
-      - types-lodash
     spec:
       command: bun install --cwd cdviz-grafana/dashboards_generator
 
@@ -409,8 +335,6 @@ actions:
     scmid: default
     targets:
       - types-bun
-      - types-d3
-      - types-lodash
       - bunInstall
     spec:
       title: "fix(deps): Bump npm devDependencies in cdviz-grafana"

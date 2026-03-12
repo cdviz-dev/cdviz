@@ -1,5 +1,3 @@
-// the d3 panel does not exist (yet)
-// So we used the [marcusolsson-dynamictext-panel](https://volkovlabs.io/plugins/business-text/) from volkovlabs
 import * as dashboard from "@grafana/grafana-foundation-sdk/dashboard";
 
 // TODO improve type constraint with enums,...

@@ -22,14 +22,7 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
-
-    // allow d3 to be used (in panels,...) without `import`
-    // So when build panel (via Bun.build), no workaround like:
-    // - define `d3` as external
-    // - remove all import of d3
-    // - rename all alias assigned from multiple import of d3
-    "allowUmdGlobalAccess": true
+    "noPropertyAccessFromIndexSignature": false
   },
   // "files": ["global.d.ts"]
   "exclude": ["build/**"]
