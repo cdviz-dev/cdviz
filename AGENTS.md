@@ -37,13 +37,6 @@ mise run //cdviz-db:migrate:create    # Run nested task
 mise run '//...:ci'                   # Run :ci task in all components
 ```
 
-Or navigate to component directory:
-
-```bash
-cd cdviz-db
-mise tasks          # List component-local tasks
-mise run :ci        # Run CI pipeline for this component
-```
 
 ## AI-Specific Guidance
 
@@ -52,7 +45,7 @@ mise run :ci        # Run CI pipeline for this component
 Each component has detailed AGENTS.md with specialized guidance:
 
 - **[cdviz-db/AGENTS.md](cdviz-db/AGENTS.md)**: Database schema, golang-migrate migrations, TimescaleDB patterns
-- **[cdviz-grafana/AGENTS.md](cdviz-grafana/AGENTS.md)**: TypeScript dashboard generation, D3.js panels, query patterns
+- **[cdviz-grafana/AGENTS.md](cdviz-grafana/AGENTS.md)**: TypeScript dashboard generation, ECharts panels, query patterns
 - **[cdviz-site/AGENTS.md](cdviz-site/AGENTS.md)**: VitePress documentation, Vue components, content guidelines
 
 **When to use component-specific files**: If working primarily in one component (e.g., writing dashboards, updating docs, modifying schema), read that component's AGENTS.md for detailed patterns and workflows.
@@ -98,48 +91,42 @@ This adds `Signed-off-by: Your Name <email@example.com>` to comply with [Contrib
 #### Database Schema Changes
 
 ```bash
-cd cdviz-db
-mise run migrate:create add_new_column      # Create migration files
+mise run //cdviz-db:migrate:create add_new_column   # Create migration files
 # Edit generated .up.sql and .down.sql files
-mise run lint                               # Lint SQL with sqruff
-mise run db-local:start                     # Test migration locally
-mise run migrate:version                    # Verify migration applied
+mise run //cdviz-db:lint                            # Lint SQL with sqruff
+mise run //cdviz-db:db-local:start                  # Test migration locally
+mise run //cdviz-db:migrate:version                 # Verify migration applied
 ```
 
 #### Dashboard Development
 
 ```bash
-cd cdviz-grafana/dashboards_generator
-# Edit TypeScript in src/dashboards/
-cd ..
-mise run build                              # Generate JSON dashboards
+# Edit TypeScript in cdviz-grafana/dashboards_generator/src/dashboards/
+mise run //cdviz-grafana:build                      # Generate JSON dashboards
 # Import generated JSON into Grafana for testing
-git add dashboards_generator/src dashboards/*.json  # Commit both source and output
+git add cdviz-grafana/dashboards_generator/src cdviz-grafana/dashboards/*.json  # Commit both source and output
 ```
 
 #### Documentation Updates
 
 ```bash
-cd cdviz-site
-mise run dev                                # Start dev server at http://localhost:5173
-# Edit markdown in src/ or Vue components in components/
-mise run build                              # Verify production build
+mise run //cdviz-site:dev                           # Start dev server at http://localhost:5173
+# Edit markdown in cdviz-site/src/ or Vue components in cdviz-site/components/
+mise run //cdviz-site:build                         # Verify production build
 ```
 
 #### Full Stack Integration Testing
 
 ```bash
-cd demos/stack-compose
-mise run up                                 # Start PostgreSQL + Grafana + collector via Docker Compose
+mise run //demos/stack-compose:up                   # Start PostgreSQL + Grafana + collector via Docker Compose
 # Test event ingestion and dashboard queries
-mise run down                               # Clean up
+mise run //demos/stack-compose:down                 # Clean up
 ```
 
 Or for Kubernetes testing:
 
 ```bash
-cd demos/stack-k8s
-mise run up                                 # Deploy via Helmwave
+mise run //demos/stack-k8s:up                       # Deploy via Helmwave
 ```
 
 ### Technology-Specific Patterns
@@ -155,7 +142,7 @@ mise run up                                 # Deploy via Helmwave
 
 - **Runtime**: Bun (NOT Node.js)
 - **Framework**: Grafana Foundation SDK for type-safe dashboard generation
-- **Custom Panels**: D3.js browser scripts in `src/panels/browser_scripts/`
+- **Custom Panels**: Apache ECharts scripts via volkovlabs-echarts-panel in `src/panels/browser_scripts/`
 - **Versioning**: Auto-generated from git history or timestamp for dirty files
 
 #### Documentation Site (VitePress)

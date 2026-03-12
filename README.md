@@ -26,7 +26,7 @@ Documentation: <https://cdviz.dev/>
 
 ## Architecture Overview
 
-![cdviz architecture](cdviz-site/assets/architectures/overview_04.excalidraw.svg)
+![cdviz architecture](cdviz-site/components/diagrams/CdvizArchitecture.svg)
 
 ### Event Flow Architecture
 
@@ -45,10 +45,21 @@ Documentation: <https://cdviz.dev/>
 
 ### Dashboard System
 
-- Custom D3.js panels for complex visualizations in `cdviz-grafana/dashboards_generator/src/panels/browser_scripts/`
 - TypeScript code generation for Grafana dashboards using Grafana Foundation SDK
+- Custom Apache ECharts panels via volkovlabs-echarts-panel plugin in `cdviz-grafana/dashboards_generator/src/panels/browser_scripts/`
 - Generated dashboards output to `cdviz-grafana/dashboards/*.json`
-- Timeline, execution tracking, and event activity dashboards
+- Available dashboards:
+  - `artifact_timeline` — artifact version deployments across stages over time
+  - `cdevents_activity` — event activity and volume overview
+  - `demo_service_deployed` — demo: service deployment tracking
+  - `dora_metrics` — DORA metrics (deployment frequency, lead time, etc.)
+  - `incident_executions` — incident lifecycle tracking
+  - `pipelinerun_executions` — CI/CD pipeline run history
+  - `sdlc_stack_size` — SDLC stack composition and size
+  - `taskrun_executions` — individual task run tracking
+  - `testcaserun_executions` — test case run results
+  - `testsuiterun_executions` — test suite run results
+  - `ticket_executions` — ticket/issue lifecycle tracking
 
 ### Deployment Options
 
