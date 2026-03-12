@@ -1,5 +1,5 @@
 ---
-version: 0.29.0
+version: 0.30.0
 ---
 
 # Installation of cdviz-collector
@@ -87,7 +87,7 @@ releases:
     namespace: cdviz-dev
     chart:
       name: oci://ghcr.io/cdviz-dev/charts/cdviz-collector
-      version: 0.29.0-4-g62e72d1
+      version: 0.30.0-4-g62e72d1
     <<: *options
     create_namespace: false
     values:
