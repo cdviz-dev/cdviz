@@ -1,6 +1,6 @@
 ---
-# npm devDependencies for cdviz-site.
-# One PR bundles all package updates + regenerates bun.lock.
+# npm dependencies for cdviz-site.
+# One PR bundles all package updates.
 #
 # Excluded (managed manually):
 #   - vitepress: alpha track (^2.0.0-alpha.x); re-enable once 2.x is stable.
@@ -17,220 +17,32 @@ scms:
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
 
-sources:
-  iconify-lucide:
-    name: "Get latest @iconify-json/lucide version"
-    kind: npm
-    spec:
-      name: "@iconify-json/lucide"
-      versionfilter:
-        kind: latest
-
-  iconify-mdi:
-    name: "Get latest @iconify-json/mdi version"
-    kind: npm
-    spec:
-      name: "@iconify-json/mdi"
-      versionfilter:
-        kind: latest
-
-  iconify-simple-icons:
-    name: "Get latest @iconify-json/simple-icons version"
-    kind: npm
-    spec:
-      name: "@iconify-json/simple-icons"
-      versionfilter:
-        kind: latest
-
-  iconify-tailwind4:
-    name: "Get latest @iconify/tailwind4 version"
-    kind: npm
-    spec:
-      name: "@iconify/tailwind4"
-      versionfilter:
-        kind: latest
-
-  tailwindcss-vite:
-    name: "Get latest @tailwindcss/vite version"
-    kind: npm
-    spec:
-      name: "@tailwindcss/vite"
-      versionfilter:
-        kind: latest
-
-  gsap:
-    name: "Get latest gsap version"
-    kind: npm
-    spec:
-      name: gsap
-      versionfilter:
-        kind: latest
-
-  prettier:
-    name: "Get latest prettier version"
-    kind: npm
-    spec:
-      name: prettier
-      versionfilter:
-        kind: latest
-
-  prettier-plugin-tailwindcss:
-    name: "Get latest prettier-plugin-tailwindcss version"
-    kind: npm
-    spec:
-      name: prettier-plugin-tailwindcss
-      versionfilter:
-        kind: latest
-
-  tailwindcss:
-    name: "Get latest tailwindcss version"
-    kind: npm
-    spec:
-      name: tailwindcss
-      versionfilter:
-        kind: latest
-
-  vite-svg-loader:
-    name: "Get latest vite-svg-loader version"
-    kind: npm
-    spec:
-      name: vite-svg-loader
-      versionfilter:
-        kind: latest
-
-targets:
-  iconify-lucide:
-    name: "cdviz-site package.json @iconify-json/lucide"
-    kind: json
-    sourceid: iconify-lucide
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["@iconify-json/lucide"]'
-
-  iconify-mdi:
-    name: "cdviz-site package.json @iconify-json/mdi"
-    kind: json
-    sourceid: iconify-mdi
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["@iconify-json/mdi"]'
-
-  iconify-simple-icons:
-    name: "cdviz-site package.json @iconify-json/simple-icons"
-    kind: json
-    sourceid: iconify-simple-icons
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["@iconify-json/simple-icons"]'
-
-  iconify-tailwind4:
-    name: "cdviz-site package.json @iconify/tailwind4"
-    kind: json
-    sourceid: iconify-tailwind4
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["@iconify/tailwind4"]'
-
-  tailwindcss-vite:
-    name: "cdviz-site package.json @tailwindcss/vite"
-    kind: json
-    sourceid: tailwindcss-vite
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["@tailwindcss/vite"]'
-
-  gsap:
-    name: "cdviz-site package.json gsap"
-    kind: json
-    sourceid: gsap
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["gsap"]'
-
-  prettier:
-    name: "cdviz-site package.json prettier"
-    kind: json
-    sourceid: prettier
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["prettier"]'
-
-  prettier-plugin-tailwindcss:
-    name: "cdviz-site package.json prettier-plugin-tailwindcss"
-    kind: json
-    sourceid: prettier-plugin-tailwindcss
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["prettier-plugin-tailwindcss"]'
-
-  tailwindcss:
-    name: "cdviz-site package.json tailwindcss"
-    kind: json
-    sourceid: tailwindcss
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["tailwindcss"]'
-
-  vite-svg-loader:
-    name: "cdviz-site package.json vite-svg-loader"
-    kind: json
-    sourceid: vite-svg-loader
-    scmid: default
-    spec:
-      file: cdviz-site/package.json
-      key: '.devDependencies["vite-svg-loader"]'
-
-  bunInstall:
-    name: "cdviz-site bun.lock regeneration"
-    kind: shell
-    scmid: default
-    disablesourceinput: true
-    dependson:
-      - iconify-lucide
-      - iconify-mdi
-      - iconify-simple-icons
-      - iconify-tailwind4
-      - tailwindcss-vite
-      - gsap
-      - prettier
-      - prettier-plugin-tailwindcss
-      - tailwindcss
-      - vite-svg-loader
-    spec:
-      command: bun install --cwd cdviz-site
-
 actions:
-  npm:
+  default:
     kind: github/pullrequest
     scmid: default
-    targets:
-      - iconify-lucide
-      - iconify-mdi
-      - iconify-simple-icons
-      - iconify-tailwind4
-      - tailwindcss-vite
-      - gsap
-      - prettier
-      - prettier-plugin-tailwindcss
-      - tailwindcss
-      - vite-svg-loader
-      - bunInstall
     spec:
       title: "fix(deps): Bump npm devDependencies in cdviz-site"
       labels:
         - dependencies
 
+autodiscovery:
+  scmid: default
+  actionid: default
+  groupby: all
+  crawlers:
+    npm:
+      rootdir: cdviz-site
+      versionfilter:
+        kind: latest
+      ignore:
+        - packages:
+            vitepress: ".*"
+
 ---
 # npm dependencies for cdviz-grafana/dashboards_generator.
+# One PR bundles all package updates.
+#
 # Excluded (managed manually):
 #   - @grafana/grafana-foundation-sdk: non-standard timestamp versioning.
 name: "bump cdviz-grafana npm dependencies"
@@ -240,103 +52,30 @@ scms:
     kind: github
     spec:
       user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
       email: "{{ .github.email }}"
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
 
-sources:
-  dedent:
-    name: "Get latest dedent version"
-    kind: npm
-    spec:
-      name: dedent
-      versionfilter:
-        kind: latest
-
-targets:
-  dedent:
-    name: "cdviz-grafana package.json dedent"
-    kind: json
-    sourceid: dedent
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.dependencies["dedent"]'
-
-  bunInstall:
-    name: "cdviz-grafana bun.lock regeneration"
-    kind: shell
-    scmid: default
-    disablesourceinput: true
-    dependson:
-      - dedent
-    spec:
-      command: bun install --cwd cdviz-grafana/dashboards_generator
-
 actions:
-  npm:
+  default:
     kind: github/pullrequest
     scmid: default
-    targets:
-      - dedent
-      - bunInstall
     spec:
       title: "fix(deps): Bump npm dependencies in cdviz-grafana"
       labels:
         - dependencies
 
----
-# npm devDependencies for cdviz-grafana/dashboards_generator.
-name: "bump cdviz-grafana npm devDependencies"
-
-scms:
-  default:
-    kind: github
-    spec:
-      user: "{{ .github.user }}"
-      email: "{{ .github.email }}"
-      owner: "{{ .github.owner }}"
-      repository: "{{ .github.repository }}"
-      branch: "{{ .github.branch }}"
-
-sources:
-  types-bun:
-    name: "Get latest @types/bun version"
-    kind: npm
-    spec:
-      name: "@types/bun"
+autodiscovery:
+  scmid: default
+  actionid: default
+  groupby: all
+  crawlers:
+    npm:
+      rootdir: cdviz-grafana/dashboards_generator
       versionfilter:
         kind: latest
-
-targets:
-  types-bun:
-    name: "cdviz-grafana package.json @types/bun"
-    kind: json
-    sourceid: types-bun
-    scmid: default
-    spec:
-      file: cdviz-grafana/dashboards_generator/package.json
-      key: '.devDependencies["@types/bun"]'
-
-  bunInstall:
-    name: "cdviz-grafana bun.lock regeneration (dev)"
-    kind: shell
-    scmid: default
-    disablesourceinput: true
-    dependson:
-      - types-bun
-    spec:
-      command: bun install --cwd cdviz-grafana/dashboards_generator
-
-actions:
-  npm:
-    kind: github/pullrequest
-    scmid: default
-    targets:
-      - types-bun
-      - bunInstall
-    spec:
-      title: "fix(deps): Bump npm devDependencies in cdviz-grafana"
-      labels:
-        - dependencies
+      ignore:
+        - packages:
+            "@grafana/grafana-foundation-sdk": ".*"
