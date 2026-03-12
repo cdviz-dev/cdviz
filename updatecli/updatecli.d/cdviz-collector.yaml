@@ -43,24 +43,26 @@ targets:
       file: charts/cdviz-collector/values.yaml
       key: $.image.tag
 
-  chartAppVersion:
-    name: "charts/cdviz-collector/Chart.yaml appVersion"
-    kind: yaml
-    sourceid: collectorVersion
-    scmid: default
-    spec:
-      file: charts/cdviz-collector/Chart.yaml
-      key: $.appVersion
+  # FIXME: useless to update the version of the app in the chart as is it override by the "prepare-publish script" used for chart, So first update the script
+  # chartAppVersion:
+  #   name: "charts/cdviz-collector/Chart.yaml appVersion"
+  #   kind: yaml
+  #   sourceid: collectorVersion
+  #   scmid: default
+  #   spec:
+  #     file: charts/cdviz-collector/Chart.yaml
+  #     key: $.appVersion
 
-  docsInstallVersion:
-    name: "docs install.md frontmatter version"
-    kind: file
-    sourceid: collectorVersion
-    scmid: default
-    spec:
-      file: cdviz-site/src/docs/cdviz-collector/install.md
-      matchpattern: 'version: [0-9]+\.[0-9]+\.[0-9]+'
-      replacepattern: 'version: {{ source "collectorVersion" }}'
+  # TODO update the version of the chart (not with the version of the app or container)
+  # docsInstallVersion:
+  #   name: "docs install.md frontmatter version"
+  #   kind: file
+  #   sourceid: collectorVersion
+  #   scmid: default
+  #   spec:
+  #     file: cdviz-site/src/docs/cdviz-collector/install.md
+  #     matchpattern: 'version: [0-9]+\.[0-9]+\.[0-9]+'
+  #     replacepattern: 'version: {{ source "collectorVersion" }}'
 
   docsQuickStartUrl:
     name: "docs quick-start.md installer URL"
