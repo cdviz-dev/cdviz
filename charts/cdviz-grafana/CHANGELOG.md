@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-03-13
+
+### Added
+
+- Hide the datasource selector behind the context menu ([41a6b55](41a6b550bebac8245093bce4f9f5a50c333e31d3))
+
+### Fixed
+
+- Upgrade grafana-sdk to 0.0.12 ([7699209](7699209d2ff0bef63f649d01f66ac3ca05651ae5))
+- Disable buggy filter in cdevents activity dashboard ([3a9a819](3a9a819e0662dff603c3e9cf725b62f7321456fd))
+
 ## [1.6.2] - 2026-03-12
 
 ### Fixed
