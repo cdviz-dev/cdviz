@@ -3,7 +3,7 @@
   "editable": true,
   "graphTooltip": 0,
   "fiscalYearStartMonth": 0,
-  "schemaVersion": 39,
+  "schemaVersion": 42,
   "templating": {
     "list": [
       {
@@ -11,6 +11,7 @@
         "name": "datasource",
         "skipUrlSync": false,
         "multi": false,
+        "allowCustomValue": true,
         "includeAll": false,
         "auto": false,
         "auto_min": "10s",
@@ -23,6 +24,7 @@
         "name": "environment",
         "skipUrlSync": false,
         "multi": true,
+        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -45,6 +47,7 @@
         "name": "service",
         "skipUrlSync": false,
         "multi": true,
+        "allowCustomValue": true,
         "includeAll": true,
         "auto": false,
         "auto_min": "10s",
@@ -117,7 +120,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  CASE\n    WHEN COUNT(*) <= 1 THEN NULL\n    ELSE ROUND(\n      COUNT(*)::numeric / NULLIF(\n        EXTRACT('epoch' FROM (MAX(timestamp) - MIN(timestamp))) / 86400.0,\n        0\n      ),\n      2\n    )\n  END AS \"Deploys/Day\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -174,7 +176,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (svc.timestamp - art.timestamp))\n    ),\n    0\n  ) AS \"P50 Lead Time (s)\"\nFROM cdviz.cdevents_lake AS svc\nJOIN LATERAL (\n  SELECT timestamp\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'artifact' AND predicate = 'published'\n    AND payload -> 'subject' ->> 'id'\n        = svc.payload -> 'subject' -> 'content' ->> 'artifactId'\n    AND timestamp <= svc.timestamp\n  ORDER BY timestamp DESC\n  LIMIT 1\n) AS art ON true\nWHERE svc.subject = 'service'\n  AND svc.predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(svc.timestamp)\n  AND svc.payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\n  AND svc.payload -> 'subject' -> 'content' ->> 'artifactId' IS NOT NULL",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -231,7 +232,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (resolved_at - detected_at))\n    ),\n    0\n  ) AS \"P50 Time to Restore (s)\"\nFROM cdviz.incident\nWHERE $__timeFilter(detected_at)\n  AND resolved_at IS NOT NULL",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -284,7 +284,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE predicate = 'rolledback')\n      / NULLIF(COUNT(*) FILTER (WHERE predicate IN ('deployed', 'upgraded')), 0),\n    0\n  ) AS \"Change Failure Rate (%)\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND predicate IN ('deployed', 'upgraded', 'rolledback')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -370,7 +369,6 @@
         {
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', timestamp) AS time,\n  COALESCE(\n    payload -> 'subject' -> 'content' -> 'environment' ->> 'id',\n    'unknown'\n  ) AS environment,\n  COUNT(*) AS deployments\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nGROUP BY time, environment\nORDER BY time, environment",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -494,7 +492,6 @@
         {
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', svc.timestamp) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (svc.timestamp - art.timestamp))\n  ) AS \"P50 Lead Time (s)\"\nFROM cdviz.cdevents_lake AS svc\nJOIN LATERAL (\n  SELECT timestamp\n  FROM cdviz.cdevents_lake\n  WHERE subject = 'artifact' AND predicate = 'published'\n    AND payload -> 'subject' ->> 'id'\n        = svc.payload -> 'subject' -> 'content' ->> 'artifactId'\n    AND timestamp <= svc.timestamp\n  ORDER BY timestamp DESC\n  LIMIT 1\n) AS art ON true\nWHERE svc.subject = 'service'\n  AND svc.predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(svc.timestamp)\n  AND svc.payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\n  AND svc.payload -> 'subject' -> 'content' ->> 'artifactId' IS NOT NULL\nGROUP BY time\nORDER BY time",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -618,7 +615,6 @@
         {
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(\n    PERCENTILE_CONT(0.5) WITHIN GROUP (\n      ORDER BY EXTRACT('epoch' FROM (finished_at - queued_at))\n    ),\n    0\n  ) AS \"P50 Pipeline Duration (s)\"\nFROM cdviz.pipelinerun\nWHERE $__timeFilter(finished_at)\n  AND queued_at IS NOT NULL\n  AND finished_at IS NOT NULL",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -671,7 +667,6 @@
         {
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', finished_at) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (finished_at - queued_at))\n  ) AS \"P50 Pipeline Duration (s)\"\nFROM cdviz.pipelinerun\nWHERE $__timeFilter(finished_at)\n  AND queued_at IS NOT NULL\n  AND finished_at IS NOT NULL\nGROUP BY time\nORDER BY time",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -795,7 +790,6 @@
         {
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', detected_at) AS time,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (\n    ORDER BY EXTRACT('epoch' FROM (resolved_at - detected_at))\n  ) AS \"P50 Time to Restore (s)\"\nFROM cdviz.incident\nWHERE $__timeFilter(detected_at)\n  AND resolved_at IS NOT NULL\nGROUP BY time\nORDER BY time",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -919,7 +913,6 @@
         {
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 week', timestamp) AS time,\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE predicate = 'rolledback')\n      / NULLIF(COUNT(*) FILTER (WHERE predicate IN ('deployed', 'upgraded')), 0),\n    0\n  ) AS \"Change Failure Rate (%)\"\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND predicate IN ('deployed', 'upgraded', 'rolledback')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nGROUP BY time\nORDER BY time",
-          "refId": "",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -1002,5 +995,5 @@
       }
     }
   ],
-  "version": 2026022218
+  "version": 2026031314
 }

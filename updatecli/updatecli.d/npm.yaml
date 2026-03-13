@@ -76,6 +76,6 @@ autodiscovery:
       rootdir: cdviz-grafana/dashboards_generator
       versionfilter:
         kind: latest
-      ignore:
-        - packages:
-            "@grafana/grafana-foundation-sdk": ".*"
+      # ignore:
+      #   - packages:
+      #       "@grafana/grafana-foundation-sdk": ".*"
