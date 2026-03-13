@@ -5,6 +5,7 @@ import { buildDashboard as cdeventsActivityDashboard } from "./dashboards/cdeven
 import { buildDashboard as doraMetricsDashboard } from "./dashboards/dora_metrics";
 import { buildDashboards as executionDashboards } from "./dashboards/execution_dashboards";
 import { buildDashboard as sdlcStackSizeDashboard } from "./dashboards/sdlc_stack_size";
+import { buildDashboard as serviceDeploymentsDashboard } from "./dashboards/service_deployments";
 import { saveDashboard } from "./tools";
 
 //console.log(JSON.stringify(basicDashboard(), null, 2));
@@ -28,3 +29,4 @@ saveDashboard(await artifactTimelineDashboard(), values.output);
 saveDashboard(await cdeventsActivityDashboard(), values.output);
 saveDashboard(await doraMetricsDashboard(), values.output);
 saveDashboard(await sdlcStackSizeDashboard(), values.output);
+saveDashboard(await serviceDeploymentsDashboard(), values.output);
