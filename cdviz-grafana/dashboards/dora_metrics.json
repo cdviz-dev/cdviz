@@ -36,7 +36,7 @@
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT\n  payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS __value\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' IS NOT NULL\nORDER BY __value",
-        "sort": 0,
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -59,7 +59,7 @@
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT\n  payload -> 'subject' ->> 'id' AS __value\nFROM cdviz.cdevents_lake\nWHERE subject = 'service' AND predicate IN ('deployed', 'upgraded')\n  AND $__timeFilter(timestamp)\n  AND payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\n      = ANY(ARRAY[${environment:sqlstring}]::text[])\nORDER BY __value",
-        "sort": 0,
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -996,5 +996,5 @@
       }
     }
   ],
-  "version": 2026031314
+  "version": 2026031316
 }

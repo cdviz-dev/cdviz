@@ -35,8 +35,8 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"subject\" LIKE '$__searchFilter'",
-        "sort": 0,
+        "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)",
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -58,8 +58,8 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"predicate\" LIKE '$__searchFilter'\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
-        "sort": 0,
+        "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -844,7 +844,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  \"payload\" -> 'subject' as \"payload_subject\",\n  \"payload\" -> 'context' as \"payload_context\",\n  \"payload\" -> 'customData' as \"payload_custom\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
+          "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  (\"payload\" -> 'subject')::text as \"payload_subject\",\n  (\"payload\" -> 'context')::text as \"payload_context\",\n  (\"payload\" -> 'customData')::text as \"payload_custom\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -855,5 +855,5 @@
       ]
     }
   ],
-  "version": 2026031314
+  "version": 2026031316
 }

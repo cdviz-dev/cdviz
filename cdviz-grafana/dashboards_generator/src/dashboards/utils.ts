@@ -47,7 +47,7 @@ export function newVariableOnDatasource(
         uid: "${datasource}",
       })
       .query(querySql.trim())
-      .sort(VariableSort.Disabled)
+      .sort(VariableSort.AlphabeticalCaseInsensitiveAsc)
       //.refresh(VariableRefresh.OnDashboardLoad)
       .refresh(VariableRefresh.OnTimeRangeChanged)
       .multi(true)

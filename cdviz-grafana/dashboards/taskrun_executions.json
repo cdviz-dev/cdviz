@@ -36,7 +36,7 @@
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT payload -> 'subject' -> 'content' ->> 'taskName' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'taskrun'\nORDER BY __value",
-        "sort": 0,
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -566,5 +566,5 @@
       }
     }
   ],
-  "version": 2026031314
+  "version": 2026031316
 }

@@ -36,7 +36,7 @@
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT\n  SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\\\?]+)') ||\n  '\n' ||\n  COALESCE((regexp_match(payload -> 'subject' ->> 'id', 'repository_url=([^&]+)'))[1], '') as __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'artifact'\n  AND predicate = ANY(ARRAY['published', 'signed'])\n  AND SUBSTRING(payload -> 'subject' ->> 'id' FROM 'pkg:([^@\\\\?]+)') <> ''\n\nUNION\n\nSELECT DISTINCT\n  SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\\\?]+)') ||\n  '\n' ||\n  COALESCE((regexp_match(payload -> 'subject' -> 'content' ->> 'artifactId', 'repository_url=([^&]+)'))[1], '') as __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = 'service'\n  AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])\n  AND SUBSTRING(payload -> 'subject' -> 'content' ->> 'artifactId' FROM 'pkg:([^@\\\\?]+)') <> ''",
-        "sort": 0,
+        "sort": 5,
         "refresh": 2,
         "current": {
           "text": "All",
@@ -97,5 +97,5 @@
       }
     }
   ],
-  "version": 2026031314
+  "version": 2026031316
 }

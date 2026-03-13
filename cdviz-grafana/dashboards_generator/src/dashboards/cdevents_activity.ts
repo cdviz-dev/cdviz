@@ -251,9 +251,9 @@ export async function buildDashboard(): Promise<Dashboard> {
             "timestamp",
             "subject",
             "predicate",
-            "payload" -> 'subject' as "payload_subject",
-            "payload" -> 'context' as "payload_context",
-            "payload" -> 'customData' as "payload_custom",
+            ("payload" -> 'subject')::text as "payload_subject",
+            ("payload" -> 'context')::text as "payload_context",
+            ("payload" -> 'customData')::text as "payload_custom",
             "imported_at"
           FROM
             cdviz.cdevents_lake
@@ -275,11 +275,14 @@ export async function buildDashboard(): Promise<Dashboard> {
 
 export function newVariable4Subject() {
   return newVariableOnDatasource(
+    // disable the $__searchFilter as
+    // - it generates a error on dashboard (vs https://grafana.com/docs/grafana/latest/datasources/postgres/template-variables/#filter-results-with-__searchfilter)
+    // - could be used for SQL injection?
+    // AND "subject" LIKE '$__searchFilter'
     dedent`
       SELECT DISTINCT "subject"
       FROM cdviz."cdevents_lake"
       WHERE $__timeFilter(timestamp)
-        AND "subject" LIKE '$__searchFilter'
     `,
     "subjects",
     "Subjects",
@@ -288,11 +291,14 @@ export function newVariable4Subject() {
 
 export function newVariable4Predicate() {
   return newVariableOnDatasource(
+    // disable the $__searchFilter as
+    // - it generates a error on dashboard (vs https://grafana.com/docs/grafana/latest/datasources/postgres/template-variables/#filter-results-with-__searchfilter)
+    // - could be used for SQL injection?
+    // AND "predicate" LIKE '$__searchFilter'
     dedent`
       SELECT DISTINCT "predicate"
       FROM cdviz."cdevents_lake"
       WHERE $__timeFilter(timestamp)
-        AND "predicate" LIKE '$__searchFilter'
         AND "subject" = ANY(ARRAY[\${subjects:sqlstring}]::text[])
     `,
     "predicates",
