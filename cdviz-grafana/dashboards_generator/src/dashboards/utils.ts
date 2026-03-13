@@ -2,6 +2,7 @@ import {
   type DashboardBuilder,
   DatasourceVariableBuilder,
   QueryVariableBuilder,
+  VariableHide,
   VariableRefresh,
   VariableSort,
 } from "@grafana/grafana-foundation-sdk/dashboard";
@@ -28,7 +29,8 @@ export function newVariable4datasource() {
     .type("grafana-postgresql-datasource")
     .regex("cdviz.*")
     .multi(false)
-    .includeAll(false);
+    .includeAll(false)
+    .hide(VariableHide.InControlsMenu);
 }
 
 export function newVariableOnDatasource(
