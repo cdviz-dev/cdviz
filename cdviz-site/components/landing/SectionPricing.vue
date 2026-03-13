@@ -39,10 +39,11 @@ const pricingPlans = [
   {
     id: "enterprise",
     title: "Enterprise",
-    subtitle: "",
+    subtitle: "Free during beta",
+    badge: "Beta",
     pricing: {
-      monthly: 109,
-      yearly: 1100,
+      monthly: 0,
+      yearly: 0,
     },
     features: [
       { icon: "icon-[lucide--building]", text: "On-premise" },
@@ -51,13 +52,14 @@ const pricingPlans = [
       { icon: "icon-[lucide--headphones]", text: "Professional support" },
     ],
     button: {
-      text: "Subscribe Now",
-      href: "",
+      text: "Join Beta",
+      href: "/contact",
       primary: true,
     },
     colorScheme: "primary",
     highlighted: true,
     disabled: false,
+    note: "Beta is free. Regular price: €109/month (or €1,100/year) when beta ends.",
   },
   {
     id: "saas",
@@ -87,15 +89,15 @@ const pricingPlans = [
   },
 ];
 
-const getSubscriptionUrl = (tier) => {
-  if (tier === "enterprise") {
-    if (isYearly.value) {
-      return "https://www.creem.io/payment/prod_1OwS2VDgI2cwcPSB7xiJpA";
-    }
-    return "https://www.creem.io/payment/prod_1PYPUFjff96gSIKvovlkKk";
-  }
-  return "";
-};
+// const getSubscriptionUrl = (tier) => {
+//   if (tier === "enterprise") {
+//     if (isYearly.value) {
+//       return "https://www.creem.io/payment/prod_1OwS2VDgI2cwcPSB7xiJpA";
+//     }
+//     return "https://www.creem.io/payment/prod_1PYPUFjff96gSIKvovlkKk";
+//   }
+//   return "";
+// };
 
 const getPrice = (plan) => {
   if (isYearly.value) {
@@ -105,8 +107,8 @@ const getPrice = (plan) => {
 };
 
 const getDiscount = (plan) => {
-  if (plan.id === "community") return 0;
   const monthly = plan.pricing.monthly * 12;
+  if (monthly === 0) return 0;
   const yearly = plan.pricing.yearly;
   return Math.round(((monthly - yearly) / monthly) * 100);
 };
@@ -119,9 +121,9 @@ const getDiscountMax = () => {
 };
 
 const getButtonHref = (plan) => {
-  if (plan.id === "enterprise") {
-    return getSubscriptionUrl("enterprise");
-  }
+  // if (plan.id === "enterprise") {
+  //   return getSubscriptionUrl("enterprise");
+  // }
   return plan.button.href;
 };
 
@@ -132,7 +134,9 @@ const getCardClasses = (plan) => {
     plan.colorScheme === "primary"
       ? "border-2 border-primary/30 bg-primary/5"
       : "border-2 border-secondary/20 bg-secondary/5";
-  const highlightClasses = plan.highlighted ? "transform md:scale-105 md:shadow-xl md:z-10" : "";
+  const highlightClasses = plan.highlighted
+    ? "transform md:scale-105 md:shadow-xl md:z-10"
+    : "";
 
   return `${baseClasses} ${colorClasses} ${highlightClasses}`;
 };
@@ -156,7 +160,9 @@ const { observeMultiple } = useScrollAnimation({
 
 onMounted(() => {
   if (sectionRef.value) {
-    const pricingCards = sectionRef.value.querySelectorAll("[data-animate-pricing]");
+    const pricingCards = sectionRef.value.querySelectorAll(
+      "[data-animate-pricing]",
+    );
     observeMultiple(Array.from(pricingCards), "scale-in");
   }
 });
@@ -169,39 +175,45 @@ onMounted(() => {
   >
     <a id="pricing"></a>
     <H2>Pricing & Plans</H2>
-    <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
-      Start free with open source, scale with enterprise features. Built for teams that value
-      transparency and control.
+    <div
+      class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90"
+    >
+      Start free with open source, scale with enterprise features. Built for
+      teams that value transparency and control.
     </div>
 
     <!-- Pricing Toggle -->
-    <div class="flex flex-col sm:flex-row items-center justify-center my-xl gap-4 sm:gap-0">
+    <div
+      class="flex flex-col sm:flex-row items-center justify-center my-xl gap-4 sm:gap-0"
+    >
       <div class="flex items-center gap-3 sm:gap-4">
         <span
           class="text-base sm:text-lg font-medium transition-colors duration-200"
-          :class='{ "text-current": !isYearly, "text-current/60": isYearly }'
+          :class="{ 'text-current': !isYearly, 'text-current/60': isYearly }"
         >
           Monthly
         </span>
         <button
           @click="togglePricing"
           class="relative inline-flex h-7 w-12 sm:h-8 sm:w-14 items-center rounded-full transition-all duration-300 focus:outline-none ring-2 ring-primary shadow-md hover:shadow-lg transform hover:scale-105"
-          :class='isYearly ? "bg-primary" : "bg-gray-300"'
-          :aria-label='`Switch to ${isYearly ? "monthly" : "yearly"} billing`'
+          :class="isYearly ? 'bg-primary' : 'bg-gray-300'"
+          :aria-label="`Switch to ${isYearly ? 'monthly' : 'yearly'} billing`"
           role="switch"
           :aria-checked="isYearly.toString()"
         >
           <span
             class="inline-block h-5 w-5 sm:h-6 sm:w-6 transform rounded-full transition-all duration-300 shadow-sm"
-            :class='[
-              isYearly ? "translate-x-6 sm:translate-x-7 bg-white" : "translate-x-1 bg-primary",
-              isToggling ? "scale-110" : "scale-100",
-            ]'
+            :class="[
+              isYearly
+                ? 'translate-x-6 sm:translate-x-7 bg-white'
+                : 'translate-x-1 bg-primary',
+              isToggling ? 'scale-110' : 'scale-100',
+            ]"
           />
         </button>
         <span
           class="text-base sm:text-lg font-medium transition-colors duration-200"
-          :class='{ "text-current": isYearly, "text-current/60": !isYearly }'
+          :class="{ 'text-current': isYearly, 'text-current/60': !isYearly }"
         >
           Annual
         </span>
@@ -216,15 +228,18 @@ onMounted(() => {
     </div>
 
     <!-- Early Adopter Offer Banner -->
-    <div class="max-w-5xl mx-auto mb-8 bg-primary/8 border border-primary/20 rounded-xl p-6">
+    <div
+      class="max-w-5xl mx-auto mb-8 bg-primary/8 border border-primary/20 rounded-xl p-6"
+    >
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div class="flex-1">
           <p class="text-base font-semibold text-primary mb-1">
             Early Adopter Offer — Getting started with CDviz?
           </p>
           <p class="text-sm text-current/80">
-            We offer a free onboarding call + async support (Discord/email) to help you set up and
-            tune CDviz for your stack — available to Community and Enterprise early adopters.
+            We offer a free onboarding call + async support (Discord/email) to
+            help you set up and tune CDviz for your stack — available to
+            Community and Enterprise early adopters.
           </p>
         </div>
         <Btn href="/contact" :primary="false" class="shrink-0">
@@ -258,22 +273,27 @@ onMounted(() => {
           <!-- Price -->
           <div
             class="text-4xl font-bold mx-auto mb-4 relative overflow-hidden"
-            :class='[`text-${plan.colorScheme}`, plan.highlighted ? "sm:text-5xl" : ""]'
+            :class="[
+              `text-${plan.colorScheme}`,
+              plan.highlighted ? 'sm:text-5xl' : '',
+            ]"
           >
             <div
               :key="getPrice(plan)"
               class="transition-all duration-300 transform"
-              :class='isToggling ? "scale-110 opacity-0" : "scale-100 opacity-100"'
+              :class="
+                isToggling ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
+              "
             >
               <AnimatedCounter
                 :end="getPrice(plan)"
                 prefix="€"
-                :suffix='plan.pricing.monthly > 0 ? "/month" : ""'
+                :suffix="plan.pricing.monthly > 0 ? '/month' : ''"
                 class="font-bold"
-                :class='[
+                :class="[
                   `text-${plan.colorScheme}`,
-                  plan.highlighted ? "text-4xl sm:text-5xl" : "text-4xl",
-                ]'
+                  plan.highlighted ? 'text-4xl sm:text-5xl' : 'text-4xl',
+                ]"
               />
             </div>
           </div>
@@ -302,7 +322,11 @@ onMounted(() => {
               class="flex items-center gap-3"
             >
               <span
-                :class='[feature.icon, "h-5 w-5 flex-shrink-0", `text-${plan.colorScheme}`]'
+                :class="[
+                  feature.icon,
+                  'h-5 w-5 flex-shrink-0',
+                  `text-${plan.colorScheme}`,
+                ]"
               ></span>
               <span>{{ feature.text }}</span>
             </li>
@@ -325,9 +349,10 @@ onMounted(() => {
     </div>
     <div class="text-center mt-12 text-current/90">
       <p>
-        All prices are in Euro (€) and exclude VAT. The Community edition is free forever, while the
-        Enterprise and SaaS plans offer additional features and support. For more information or
-        custom request, please
+        All prices are in Euro (€) and exclude VAT. The Community edition is
+        free forever. The Enterprise plan is currently in free beta — pricing
+        will apply when the beta period ends. For more information or custom
+        requests, please
         <a href="/contact" class="text-primary hover:underline">contact us</a>.
       </p>
     </div>

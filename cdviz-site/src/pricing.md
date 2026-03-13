@@ -65,6 +65,11 @@ faq:
 
   - q: "Pricing & Plans"
     a: ""
+  - q: What will Enterprise cost after the beta?
+    a: |
+      The Enterprise plan is priced at €109/month (or €1,100/year, billed in advance) —
+      per organization, not per seat. During the beta, it is completely free.
+      You'll be notified before billing begins.
   - q: What is the roadmap for SaaS?
     a: |
       We are developing a SaaS plan but don't have final details on features
