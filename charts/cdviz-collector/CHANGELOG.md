@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-03-13
+
+### Added
+
+- Enable support to send cdevents v0.5 ([ec729b5](ec729b5640dceb34ebf3a7bf7f798a33ba6f58e8))
+
 ## [1.1.6] - 2026-03-12
 
 ### Fixed
