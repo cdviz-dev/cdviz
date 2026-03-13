@@ -573,7 +573,7 @@
           "targets": [
             {
               "format": "table",
-              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' ->> 'ticketType' AS \"Type\",\n  subject_id AS \"ID\",\n  created_at AS \"Started\",\n  closed_at AS \"Completed\",\n  extract('epoch' from (closed_at - created_at)) AS \"Duration\",\n  last_payload -> 'subject' -> 'content' ->> 'resolution' AS \"Status\",\n  last_payload -> 'subject' -> 'content' ->> 'url' AS \"URL\"\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY closed_at DESC NULLS FIRST\nLIMIT ${limit}",
+              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' ->> 'ticketType' AS \"Type\",\n  subject_id AS \"ID\",\n  created_at AS \"Started\",\n  closed_at AS \"Completed\",\n  extract('epoch' from (closed_at - created_at)) AS \"Duration\",\n  last_payload -> 'subject' -> 'content' ->> 'resolution' AS \"Status\",\n  COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS \"URL\"\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY closed_at DESC NULLS FIRST\nLIMIT ${limit}",
               "datasource": {
                 "type": "grafana-postgresql-datasource",
                 "uid": "${datasource}"
@@ -616,5 +616,5 @@
       }
     }
   ],
-  "version": 2026031316
+  "version": 2026031317
 }

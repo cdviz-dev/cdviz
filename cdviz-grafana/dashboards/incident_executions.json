@@ -573,7 +573,7 @@
           "targets": [
             {
               "format": "table",
-              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS \"Environment\",\n  subject_id AS \"ID\",\n  detected_at AS \"Started\",\n  resolved_at AS \"Completed\",\n  extract('epoch' from (resolved_at - detected_at)) AS \"Duration\",\n  CASE WHEN resolved_at IS NOT NULL THEN 'resolved' ELSE 'open' END AS \"Status\",\n  last_payload -> 'subject' -> 'content' ->> 'url' AS \"URL\"\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY resolved_at DESC NULLS FIRST\nLIMIT ${limit}",
+              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS \"Environment\",\n  subject_id AS \"ID\",\n  detected_at AS \"Started\",\n  resolved_at AS \"Completed\",\n  extract('epoch' from (resolved_at - detected_at)) AS \"Duration\",\n  CASE WHEN resolved_at IS NOT NULL THEN 'resolved' ELSE 'open' END AS \"Status\",\n  COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS \"URL\"\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY resolved_at DESC NULLS FIRST\nLIMIT ${limit}",
               "datasource": {
                 "type": "grafana-postgresql-datasource",
                 "uid": "${datasource}"
@@ -616,5 +616,5 @@
       }
     }
   ],
-  "version": 2026031316
+  "version": 2026031317
 }

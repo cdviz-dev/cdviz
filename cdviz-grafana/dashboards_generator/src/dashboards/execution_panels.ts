@@ -558,7 +558,7 @@ function buildOperationalTableQuery(lifecycle: LifecycleConfig): string {
       ${endCol} AS "Completed",
       extract('epoch' from (${endCol} - ${startCol})) AS "Duration",
       ${statusField} AS "Status",
-      last_payload -> 'subject' -> 'content' ->> 'url' AS "URL"
+      COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS "URL"
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
@@ -583,7 +583,7 @@ function buildTraditionalTableQuery(lifecycle: LifecycleConfig): string {
           ${needsOutcomeFromPayload ? "last_payload -> 'subject' -> 'content' ->> 'outcome' AS outcome," : "outcome,"}
           extract('epoch' from (finished_at - started_at)) AS run_duration,
           ${withQueuedAt ? "extract('epoch' from (started_at - queued_at)) AS queue_duration," : ""}
-          last_payload -> 'subject' -> 'content' ->> 'url' AS url,
+          COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS url,
           started_at,
           finished_at,
           ${withQueuedAt ? "queued_at," : ""}
