@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-03-13
+
+### Added
+
+- Make dashboards compatible with CDEvents 0.4 & 0.5 ([026b73f](026b73f1457244932f55c4b34b9894f9dceb21f8))
+
 ## [1.7.0] - 2026-03-13
 
 ### Added
