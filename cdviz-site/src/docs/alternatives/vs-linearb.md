@@ -1,12 +1,14 @@
 ---
-description: CDviz vs LinearB — open-source event-driven SDLC observability vs SaaS engineering metrics platform. Understand which fits your engineering team.
+description: "Self-hosted LinearB alternative for engineering metrics. CDviz vs LinearB: open-source, CDEvents-native, no per-seat pricing."
 ---
 
 # CDviz vs LinearB
 
+Evaluating LinearB alternatives for engineering metrics? This page compares CDviz and LinearB for teams who want self-hosted, open-source, or vendor-neutral options.
+
 Both platforms surface engineering metrics for software delivery teams. They solve different problems with fundamentally different approaches.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/vs-linearb.md)._
+> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-linearb.md)._
 
 ## At a glance
 

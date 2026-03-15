@@ -1,12 +1,14 @@
 ---
-description: CDviz vs Datadog CI Visibility — open-source self-hosted vs fully-managed SaaS for SDLC and pipeline observability.
+description: "Self-hosted Datadog CI Visibility alternative. CDviz vs Datadog CI: open-source, data ownership, cost comparison. No vendor lock-in."
 ---
 
 # CDviz vs Datadog CI Visibility
 
+Looking for a self-hosted or open-source Datadog CI Visibility alternative? This page compares CDviz and Datadog CI Visibility for teams evaluating cost, data ownership, and vendor lock-in.
+
 CDviz is an open-source platform with self-hosted and SaaS options. Datadog CI Visibility is a fully-managed commercial service. They target different constraints.
 
-> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/vs-datadog-ci.md)._
+> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-datadog-ci.md)._
 
 ## At a glance
 
@@ -21,7 +23,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Datadog CI V
 | DORA metrics                              |                ✅                |               ✅                |
 | Pipeline visibility                       |                ✅                |               ✅                |
 | Beyond monitoring: trigger workflows      |                ✅                |               ❌                |
-| Test analytics                            |           ❌ (planned)           |               ✅                |
+| Test analytics                            |          ⏳ in progress          |               ✅                |
 | APM / infra correlation                   |                ❌                |           ✅ (native)           |
 | Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |               ❌                |
 | Visualization                             | Grafana, BI, AI agents, MCP, IDP |       built-in dashboards       |
