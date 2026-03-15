@@ -2,7 +2,7 @@
 
 > CDviz is an open-source SDLC observability platform built on the CDEvents standard. It collects continuous delivery events from CI/CD tools, stores them in PostgreSQL with TimescaleDB, and visualizes them in Grafana dashboards. Unlike polling-based tools, CDviz uses a push/event-driven model enabling both real-time observability and automated workflow triggers from the same event stream.
 
-CDviz is developed by Alchim312. The platform is licensed under Apache License v2. A commercial SaaS option is on the waitlist.
+CDviz is developed by Alchim312. The platform is licensed under Apache License v2. A SaaS option is planned — currently accepting waitlist signups at <https://cdviz.dev/pricing>. Development will be prioritized based on interest.
 
 ## Core Components
 
@@ -12,14 +12,22 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 
 ## Key Concepts
 
-- CDEvents is a Continuous Delivery Foundation (CDF) initiative defining a standard event format for continuous delivery pipelines. CDviz is built natively on CDEvents.
+- CDEvents is a CD Foundation (CDF) initiative defining a standard event format for continuous delivery pipelines. CDviz is built natively on CDEvents.
 - CDviz differs from Apache DevLake (polling-based, proprietary model) by using real-time event push and the open CDEvents standard.
 - CDviz differs from Datadog CI Visibility by being self-hosted, open-source, and owning your data.
 - CDviz supports both passive monitoring (via webhook transformers for GitHub, GitLab, ArgoCD) and active integration (send-cdevents GitHub Action).
 
+## Use Cases
+
+- Track DORA metrics (deployment frequency, lead time, change failure rate, time to restore) without a commercial tool
+- Monitor CI/CD pipeline performance and test flakiness across environments
+- Replace homegrown internal dashboards built on GitLab or GitHub data
+- Visualize CDEvents across a multi-tool software delivery pipeline
+- Trigger automated workflows from deployment or test events via CDEvents
+
 ## Documentation
 
-- [Getting Started](https://cdviz.dev/docs/getting-started): Local setup in 5 minutes with Docker Compose
+- [Getting Started](https://cdviz.dev/docs/getting-started): Local demo setup with Docker Compose
 - [Architecture](https://cdviz.dev/docs/architecture): Collector → Database → Grafana → Event Reactions pipeline
 - [CDEvents Standard](https://cdviz.dev/docs/cdevents): CDEvent JSON structure and field reference
 - [Alternatives Comparison](https://cdviz.dev/docs/alternatives): CDviz vs Apache DevLake, Datadog CI Visibility, Powerpipe
@@ -32,6 +40,8 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [Episode 2: Send Your First CDEvent](https://cdviz.dev/blog/20251001-episode-2-send-first-cdevent): Three approaches to send CDEvents from pipelines
 - [Episode 3: Direct CI/CD Pipeline Integration](https://cdviz.dev/blog/20251007-episode-3-cicd-integration): Universal patterns to send CDEvents from any CI/CD system
 - [Episode 4: Webhook Transformers](https://cdviz.dev/blog/20251020-episode-4-webhook-transformers): Passive monitoring with GitHub, GitLab, ArgoCD
+- [Episode 5: The Kubernetes Deployment Blind Spot](https://cdviz.dev/blog/20260311-episode-5-k8s-blind-spot)
+- [Episode 6: Monitor Every Kubernetes Deployment with One Helm Command](https://cdviz.dev/blog/20260318-episode-6-kubewatch-helm-recipe): Passive monitoring with Kubernetes
 
 ## Optional
 

@@ -18,7 +18,7 @@ target_audience: "Platform Engineers, DevOps Engineers"
 reading_time: "3 minutes"
 series: "CDEvents in Action"
 series_part: 5
-status: draft
+status: published
 publications:
   - at: "2026-03-11"
     url: "https://dev.to/davidb31/cdevents-in-action-5-the-kubernetes-deployment-blind-spot-1c3a"
