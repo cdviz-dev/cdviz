@@ -3,11 +3,11 @@
     <a id="end"></a>
     <div class="w-full max-w-6xl mx-auto text-center">
       <h2 id="end-heading" class="text-2xl sm:text-3xl font-bold mb-4">
-        Be Part of What CDviz Becomes
+        Ready to See Your Pipeline?
       </h2>
       <p class="text-base sm:text-lg text-text/80 mb-lg leading-relaxed">
-        CDviz is open-source and actively developed.<br />
-        Your feedback shapes what we build next.
+        Self-host free — Pro features included during beta.<br />
+        Open-source, no lock-in, actively developed.
       </p>
 
       <!-- Primary CTA row -->
@@ -54,11 +54,14 @@
       <p class="text-sm text-text/60">
         Have a use case, questions, or ideas? →
         <a href="mailto:contact@cdviz.dev" class="text-primary hover:underline"
-        >contact@cdviz.dev</a>
+          >contact@cdviz.dev</a
+        >
       </p>
 
       <!-- Social links -->
-      <div class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-secondary/20">
+      <div
+        class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-secondary/20"
+      >
         <a
           href="https://github.com/cdviz-dev"
           target="_blank"

@@ -22,18 +22,18 @@ CDviz is built specifically for SDLC observability using the CDEvents standard. 
 | Data ownership                            |             ✅ full              |        ✅ (self-hosted only)        |
 | [CDEvents](https://cdevents.dev) standard |            ✅ native             |                 ❌                  |
 | Data model                                |       Event-driven (push)        |     Log/metric ingestion (push)     |
-| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup      |
+| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup     |
 | Beyond monitoring: trigger workflows      |                ✅                |    ✅ (via Splunk SOAR / alerts)    |
-| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup      |
+| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup     |
 | Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |  ✅ (Splunk indexes / SmartStore)   |
 | Visualization                             | Grafana, BI, AI agents, MCP, IDP |   Splunk dashboards / Grafana OSS   |
 | Pricing model                             |     Infra + optional support     |  Volume (GB/day) or workload-based  |
-| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high                |
+| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high               |
 
 ## Key differences
 
 - **Purpose-built vs general platform**: CDviz is designed from the ground up for SDLC observability — every concept (sources, transformers, sinks, dashboards) maps to the software delivery lifecycle. Splunk is a powerful general-purpose platform that can ingest CI/CD logs and metrics, but SDLC dashboards must be built and maintained from scratch.
-- **Open standard**: CDviz is built on [CDEvents](https://cdevents.dev/), an open CNCF specification for software delivery events. Your data is portable and vendor-neutral. Splunk stores events in its proprietary index format and query language (SPL).
+- **Open standard**: CDviz is built on [CDEvents](https://cdevents.dev/), an open CD foundation specification for software delivery events. Your data is portable and vendor-neutral. Splunk stores events in its proprietary index format and query language (SPL).
 - **Time to value**: CDviz ships DORA metrics, deployment tracking, artifact timeline, and incident dashboards ready to use. Getting equivalent dashboards from Splunk requires significant SPL query development, data normalization, and dashboard authoring.
 - **Cost model**: Splunk pricing scales with data volume (GB/day ingested), which can become expensive as CI/CD pipelines generate high log volumes. CDviz is infrastructure-cost based, not volume-based.
 - **Event-driven automation**: CDviz routes events to downstream systems (NATS, Kafka, HTTP, ClickHouse…) natively as part of its pipeline. Splunk can trigger actions via SOAR or alert actions, but this is primarily an operational/security use case, not an SDLC workflow.

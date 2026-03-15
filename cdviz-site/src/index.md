@@ -7,17 +7,20 @@ markdownStyles: false
 faq:
   - q: What is CDviz and how does it work?
     a: |
-      CDviz is a collection of components designed to provide visibility into deployed
-      service versions, associated environments, testing activities, and related information.
-      It collects events from your CI/CD pipeline, stores them in a database, and provides
-      dashboards and analytics to help you understand your software delivery process.
+      CDviz is an open-source CI/CD observability platform built on CDEvents,
+      the CD Foundation-backed standard for software delivery. It collects events
+      from your pipelines (GitHub, GitLab, Kubernetes, and more), stores them in
+      PostgreSQL or ClickHouse, and surfaces DORA metrics, deployment timelines,
+      and test results in Grafana dashboards. The same event stream can then
+      trigger automated workflows — observe first, automate when you're ready.
   - q: Is it free to use?
     a: |
-      Yes, the open-source components can be used at no cost, except your time.
-      Self-hosting involves expenses for configuration, maintenance, and infrastructure support.
+      Yes. CDviz is open-source (Apache 2.0) and free to self-host.
+      Pro and Enterprise features are also free during the current beta.
       <br/>
-      Some enterprise features may require a commercial subscription, and subscriptions help
-      support the ongoing development of all CDviz components.
+      A commercial support plan is available for teams that want help with
+      setup, maintenance, or custom integrations. Subscriptions help fund
+      ongoing development. <a href="/pricing">See pricing details →</a>
   - q: What is CDviz's commitment to Open Source?
     a: |
       At CDviz, we firmly believe in Open Source and collaborative development.
