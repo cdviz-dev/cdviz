@@ -1,12 +1,14 @@
 ---
-description: CDviz vs Apache DevLake — side-by-side comparison of two open-source SDLC observability platforms. Understand which fits your engineering team.
+description: "Open-source Apache DevLake alternative. CDviz vs DevLake: architecture, integrations, DORA metrics. Self-hosted, CDEvents-native."
 ---
 
 # CDviz vs Apache DevLake
 
+Looking for an open-source Apache DevLake alternative? This page compares CDviz and DevLake across architecture, integrations, and use cases.
+
 Both are open-source platforms for engineering metrics and SDLC visibility. They take different approaches.
 
-> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/vs-apache-devlake.md)._
+> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-apache-devlake.md)._
 
 ## At a glance
 

@@ -1,12 +1,14 @@
 ---
-description: CDviz vs Splunk — purpose-built open-source SDLC observability vs a general-purpose log aggregation and monitoring platform for CI/CD visibility.
+description: "Open-source Splunk alternative for CI/CD observability. CDviz vs Splunk: self-hosted, data ownership, cost comparison."
 ---
 
 # CDviz vs Splunk
 
+Looking for a Splunk alternative for CI/CD observability? This page compares CDviz and Splunk for teams evaluating cost, data ownership, and open-source options.
+
 CDviz is built specifically for SDLC observability using the CDEvents standard. Splunk is a general-purpose data platform used for log aggregation, SIEM, and operational monitoring that can be configured for CI/CD pipeline visibility. They are different tools solving different primary problems.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/vs-splunk.md)._
+> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-splunk.md)._
 
 ## At a glance
 
@@ -20,13 +22,13 @@ CDviz is built specifically for SDLC observability using the CDEvents standard. 
 | Data ownership                            |             ✅ full              |        ✅ (self-hosted only)        |
 | [CDEvents](https://cdevents.dev) standard |            ✅ native             |                 ❌                  |
 | Data model                                |       Event-driven (push)        |     Log/metric ingestion (push)     |
-| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup      |
+| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup     |
 | Beyond monitoring: trigger workflows      |                ✅                |    ✅ (via Splunk SOAR / alerts)    |
-| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup      |
+| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup     |
 | Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |  ✅ (Splunk indexes / SmartStore)   |
 | Visualization                             | Grafana, BI, AI agents, MCP, IDP |   Splunk dashboards / Grafana OSS   |
 | Pricing model                             |     Infra + optional support     |  Volume (GB/day) or workload-based  |
-| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high                |
+| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high               |
 
 ## Key differences
 

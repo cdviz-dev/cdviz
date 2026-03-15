@@ -1,12 +1,14 @@
 ---
-description: CDviz vs Powerpipe — event-driven SDLC observability vs SQL-driven DevOps dashboards. Compare open-source approaches to engineering visibility.
+description: "Open-source Powerpipe alternative for pipeline observability. CDviz vs Powerpipe: data model, deployment, and integration approach."
 ---
 
 # CDviz vs Powerpipe
 
+Looking for Powerpipe alternatives for pipeline observability? This page compares CDviz and Powerpipe across data model, deployment, and integration approach.
+
 Both are open-source, self-hosted tools for engineering visibility — but they solve different problems with different data models.
 
-> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/vs-powerpipe.md)._
+> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-powerpipe.md)._
 
 ## At a glance
 

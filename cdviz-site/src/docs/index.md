@@ -46,4 +46,4 @@ CDviz is a modular platform with three main components:
 
 ## Other Resources
 
-- **[Alternatives](./alternatives.md):** A list of alternative tools to CDviz.
+- **[Alternatives](./alternatives/index.md):** A list of alternative tools to CDviz.
