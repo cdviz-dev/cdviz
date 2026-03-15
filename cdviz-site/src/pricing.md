@@ -15,20 +15,21 @@ faq:
       dashboards and analytics to help you understand your software delivery process.
   - q: What is the relationship between CDviz and CDEvents?
     a: |
-      CDviz is built upon CDEvents, the Cloud Native standard for delivery events.
+      CDviz is built upon CDEvents, the CD foundation standard for delivery events.
       The CDviz team is an active member of the CDEvents community, ensuring
       compatibility with the industry standard for continuous delivery event data.
   - q: Is it free to use?
     a: |
-      Yes, the open-source components can be used at no cost, except your time.
-      Self-hosting involves expenses for configuration, maintenance, and infrastructure support.
+      Yes. The open-source components (collector, database schemas, Grafana dashboards)
+      are free forever under Apache 2.0.
       <br/>
-      However, open source projects need community support and sustainable funding to thrive.
-      Without contributions—whether through paid subscriptions, community involvement, or donations—
-      continuous improvement and long-term maintenance wouldn't be possible.
+      The Enterprise plan is also <strong>free during the current beta</strong> — including
+      professional support and additional integrations. You'll be notified before
+      any billing begins. <a href="#pricing-plans">See what's included →</a>
       <br/>
-      Some enterprise features may require a commercial subscription, and subscriptions help
-      support the ongoing development of all CDviz components.
+      Self-hosting involves your own infrastructure costs. A commercial support plan
+      is available for teams that want help with setup or custom integrations —
+      subscriptions also fund ongoing open-source development.
 
   - q: "Technical Architecture"
     a: ""
