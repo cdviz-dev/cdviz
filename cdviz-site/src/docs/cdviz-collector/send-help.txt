@@ -2,7 +2,11 @@ Send JSON data directly to a sink for testing and scripting.
 
 This command allows sending JSON data directly to configured sinks without running a full server. Useful for testing transformations, debugging sink configurations, or scripting event dispatch.
 
-Usage: cdviz-collector send [OPTIONS] --data <DATA>
+Usage: cdviz-collector send [OPTIONS] [-- <COMMAND>...]
+
+Arguments:
+  [COMMAND]...
+          Child command and args (specified after --)
 
 Options:
   -d, --data <DATA>
@@ -10,7 +14,7 @@ Options:
           
           Can be specified as: - Direct string: '{"test": "value"}' or raw text/XML/YAML content - File path: @data.json (format auto-detected from extension) - Stdin: @-
           
-          The data will be parsed according to `--input-parser` and processed through the configured pipeline before being sent to the specified sink.
+          The data will be parsed according to `--input-parser` and processed through the configured pipeline before being sent to the specified sink. Can be repeated to send multiple items.
 
   -v, --verbose...
           Increase logging verbosity
@@ -36,11 +40,16 @@ Options:
           Example: `--total-duration-of-retries 1m`
 
       --config <CONFIG>
-          Configuration file for advanced sink settings.
+          Configuration file path or HTTP/HTTPS URL for advanced sink settings.
           
-          Optional TOML configuration file for advanced sink configuration such as authentication, headers generation, or custom sink types. Command line arguments will override configuration file settings.
+          Optional TOML configuration for advanced sink configuration such as authentication, headers generation, or custom sink types. Command line arguments will override configuration file settings.
           
           [env: CDVIZ_COLLECTOR_CONFIG=]
+
+      --config-header <CONFIG_HEADERS>
+          HTTP headers to use when fetching config from a URL.
+          
+          Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
 
   -C, --directory <DIRECTORY>
           Working directory for relative paths.
@@ -71,6 +80,23 @@ Options:
           - text-line: Each line as a separate raw text event
           
           [default: auto]
+
+      --run <RUN>
+          Wrap a child process and emit `CDEvents` around it
+
+      --no-data
+          Disable result file parsing, use exit code only (--run mode)
+
+      --metadata <METADATA>
+          Override metadata fields: --metadata key=value (repeatable, --run mode)
+
+      --fail-on-collector-error
+          Fail if collector sink is unreachable (default: warn and continue)
+
+      --log-full-response-on-error
+          Log the full HTTP response (headers + body) on non-2xx errors.
+          
+          When set, the response headers and body are included in the warning log entry for failed HTTP sink requests. Useful for debugging in CI. Overrides the `log_full_response_on_error` config field.
 
   -h, --help
           Print help (see a summary with '-h')

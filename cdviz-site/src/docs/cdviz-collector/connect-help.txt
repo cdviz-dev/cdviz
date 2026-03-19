@@ -6,16 +6,21 @@ Usage: cdviz-collector connect [OPTIONS]
 
 Options:
       --config <CONFIG>
-          Configuration file path for sources, sinks, and transformers.
+          Configuration file path or HTTP/HTTPS URL for sources, sinks, and transformers.
           
-          Specifies the TOML configuration file that defines the pipeline behavior. If not provided, the collector will use the base configuration with default settings. The configuration can also be specified via the `CDVIZ_COLLECTOR_CONFIG` environment variable.
+          Specifies the TOML configuration that defines the pipeline behavior. If not provided, the collector will use the base configuration with default settings. The configuration can also be specified via the `CDVIZ_COLLECTOR_CONFIG` environment variable.
           
-          Example: `--config cdviz-collector.toml`
+          Example: `--config cdviz-collector.toml` Example: `--config https://config.example.com/cdviz.toml`
           
           [env: CDVIZ_COLLECTOR_CONFIG=]
 
   -v, --verbose...
           Increase logging verbosity
+
+      --config-header <CONFIG_HEADERS>
+          HTTP headers to use when fetching config from a URL.
+          
+          Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
 
   -q, --quiet...
           Decrease logging verbosity

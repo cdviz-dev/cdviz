@@ -69,6 +69,68 @@ cdviz-collector send --data @junit.xml --input-parser xml --url $CDVIZ_URL --hea
 npm test --reporter=tap | cdviz-collector send --data @- --input-parser tap --url $CDVIZ_URL
 ```
 
+## Process Wrapping (`--run`)
+
+`--run` wraps a child process and emits CDEvents around its execution — a `started` event before the process begins and a `finished` event when it completes. This is the primary way to capture **test result observability** from CI jobs: webhook integrations track pipeline-level events, but `--run testsuiterun_junit` (or `_tap`) additionally parses JUnit/TAP output and emits structured `testSuiteRun` events.
+
+### Syntax
+
+```bash
+cdviz-collector send --run <NAME> [OPTIONS] -- <COMMAND>...
+```
+
+- `<NAME>`: a **source key** from the built-in config (or your own config overlay). The key determines which CDEvent type is emitted and how result files are collected.
+- `-- <COMMAND>...`: the child process to execute (everything after `--`)
+
+### Built-in run types
+
+| `--run` value | CDEvent emitted | Result collection |
+| ------------- | --------------- | ----------------- |
+| `testsuiterun_junit`  | `testSuiteRun.started` / `.finished` | Globs `**/TEST-*.xml`, `**/*.xml` |
+| `testsuiterun_tap`    | `testSuiteRun.started` / `.finished` | Globs `**/*.tap` |
+| `testsuiterun_sarif`  | `testSuiteRun.started` / `.finished` | Globs `**/*.sarif`, `**/*.sarif.json` |
+| `taskrun`             | `taskRun.started` / `.finished`      | Exit code only |
+
+> [!NOTE]
+> `--run testsuiterun_junit` and `--run testsuiterun_tap` require the `parser_xml` / `parser_tap` feature flags respectively. Check with `cdviz-collector --version`.
+
+### CI auto-detection
+
+The built-in `ci_env_detection` transformer automatically reads branch, commit SHA, and job name from standard CI environment variables (`GITHUB_ACTIONS`, `GITLAB_CI`, `JENKINS_URL`, …). **You do not need `--metadata branch=...` or `--metadata commit=...`.**
+
+### `--metadata` for cross-referencing
+
+Use `--metadata` to supply data that cannot be auto-detected — primarily identifiers for the artifact, environment, or repository being tested. These feed `customData.links` in the emitted CDEvent, enabling cross-referencing between test results and other subjects.
+
+```bash
+# JUnit test suite with artifact cross-reference
+cdviz-collector send --run testsuiterun_junit \
+  --metadata tested_artifact_id="pkg:oci/my-app@sha256:abc123" \
+  --url $CDVIZ_URL \
+  -- mvn test
+
+# TAP test suite
+cdviz-collector send --run testsuiterun_tap \
+  --url $CDVIZ_URL \
+  -- npm test --reporter=tap
+
+# Exit-code only for non-test steps (build, deploy)
+cdviz-collector send --run taskrun \
+  --url $CDVIZ_URL \
+  -- make build
+```
+
+### Custom run types
+
+Supply your own TOML config with `--config my-run.toml` to define additional `[sources.*]` entries with custom `data_globs`, parsers, and transformers. This file is merged on top of the built-in `send.base.toml`.
+
+**[→ Complete `--run` reference and CI examples](./send-run.md)**
+
+For real-world CI/CD usage see the integration guides:
+- **[GitHub Actions CI](./integrations/github-actions-ci.md)**
+- **[GitLab CI](./integrations/gitlab-ci.md)**
+- **[Jenkins](./integrations/jenkins.md)**
+
 ## Examples
 
 ```bash

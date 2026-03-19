@@ -155,6 +155,10 @@ export default defineConfig({
                   link: "/docs/cdviz-collector/send",
                 },
                 {
+                  text: "send --run (test reporting)",
+                  link: "/docs/cdviz-collector/send-run",
+                },
+                {
                   text: "transform",
                   link: "/docs/cdviz-collector/transform",
                 },
@@ -316,20 +320,44 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  text: "ArgoCD",
-                  link: "/docs/cdviz-collector/integrations/argocd",
-                },
-                {
                   text: "GitHub",
-                  link: "/docs/cdviz-collector/integrations/github",
-                },
-                {
-                  text: "GitHub Action",
-                  link: "/docs/cdviz-collector/integrations/github-action",
+                  collapsed: false,
+                  items: [
+                    {
+                      text: "Webhook",
+                      link: "/docs/cdviz-collector/integrations/github",
+                    },
+                    {
+                      text: "GitHub Action",
+                      link: "/docs/cdviz-collector/integrations/github-action",
+                    },
+                    {
+                      text: "Actions CI",
+                      link: "/docs/cdviz-collector/integrations/github-actions-ci",
+                    },
+                  ],
                 },
                 {
                   text: "GitLab",
-                  link: "/docs/cdviz-collector/integrations/gitlab",
+                  collapsed: false,
+                  items: [
+                    {
+                      text: "Webhook",
+                      link: "/docs/cdviz-collector/integrations/gitlab",
+                    },
+                    {
+                      text: "GitLab CI",
+                      link: "/docs/cdviz-collector/integrations/gitlab-ci",
+                    },
+                  ],
+                },
+                {
+                  text: "Jenkins",
+                  link: "/docs/cdviz-collector/integrations/jenkins",
+                },
+                {
+                  text: "ArgoCD",
+                  link: "/docs/cdviz-collector/integrations/argocd",
                 },
                 {
                   text: "Kubernetes (via Kubewatch)",
