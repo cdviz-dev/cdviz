@@ -99,7 +99,7 @@ affinity: {}
 # Content could set by override of the values
 # or via `helm ... --set-file 'configFiles.config\.toml'=custom-config.toml`
 configFiles:
-  "cdviz-collector.toml": |-
+  "cdviz-collector.toml": |
     [pipeline]
     transformer_refs = ["cdevents_v0_3_to_v0_4", "cdevents_v0_4_to_v0_5"]
 
@@ -136,7 +136,7 @@ configFiles:
     [sources.kubewatch_webhook.extractor]
     type = "webhook"
     id = "000-kubewatch"
-    metadata.environment_id = "cluster/A-dev"
+    metadata.environment_id = "/cluster/A-dev"
 
     [sources.argocd_webhook]
     enabled = true
@@ -145,7 +145,7 @@ configFiles:
     [sources.argocd_webhook.extractor]
     type = "webhook"
     id = "000-argocd"
-    metadata.environment_id = "cluster/A-dev"
+    metadata.environment_id = "/cluster/A-dev"
 
     [remote.transformers-community]
     type = "github"
@@ -175,13 +175,13 @@ env:
   #   valueFrom:
   #     secretKeyRef:
   #       name: "cdviz-collector-secret"
-  #       key: DATABASE_URL
+  #       key: CDVIZ_COLLECTOR__SINKS__DATABASE__URL
   # GitHub webhook signature token (for validating GitHub webhooks)
   # CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN:
   #   valueFrom:
   #     secretKeyRef:
   #       name: "cdviz-collector-secret"
-  #       key: GITHUB_WEBHOOK_SIGNATURE_TOKEN
+  #       key: CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
 
 # Additional kubernetes resources to create. Helm template could be used.
 # you could use it to create secrets, external secrets,
