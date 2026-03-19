@@ -23,7 +23,7 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
     # log(ts, level: "info", rate_limit_secs: 60)
     pipeline_name = to_string!(.body.name)
     event_type = "dev.cdevents.pipelinerun." + to_string!(value) + ".0.2.0"
-    pipeline_url = "https://www.example.com/pipeline/" + pipeline_name
+    pipeline_url = "https://www.example.com/pipeline/" + kebabcase(pipeline_name)
     event = {
       "metadata": .metadata,
       "headers": .headers,

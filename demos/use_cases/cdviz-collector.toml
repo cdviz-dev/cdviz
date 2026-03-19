@@ -1,5 +1,10 @@
 [pipeline]
 queue_capacity = 2000
+transformer_refs = [
+  "cdevents_v0_3_to_v0_4",
+  "cdevents_v0_4_to_v0_5",
+  "normalize_names",
+]
 
 [sinks.debug]
 enabled = true
@@ -142,8 +147,21 @@ testcaserun_x = { type = "vrl", template_file = "./transformers/testcaserun_x.vr
 taskrun_x = { type = "vrl", template_file = "./transformers/taskrun_x.vrl" }
 incident_x = { type = "vrl", template_file = "./transformers/incident_x.vrl" }
 ticket_x = { type = "vrl", template_file = "./transformers/ticket_x.vrl" }
-# github_events = { type = "vrl", template_rfile = "transformers-community:///github_events/to_v0_4.vrl" }
-# kubewatch_cloudevents = { type = "vrl", template_rfile = "transformers-community:///kubewatch_cloudevents/to_v0_4.vrl" }
-# argocd_notifications = { type = "vrl", template_rfile = "transformers-community:///argocd_notifications/to_v0_4.vrl" }
-# cdevents_v0_3_to_v0_4 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_3/to_v0_4.vrl" }
+# github_events = { type = "vrl", template_rfile = "transformers-community:///github_events/to_v0_5.vrl" }
+# kubewatch_cloudevents = { type = "vrl", template_rfile = "transformers-community:///kubewatch_cloudevents/to_v0_5.vrl" }
+# argocd_notifications = { type = "vrl", template_rfile = "transformers-community:///argocd_notifications/to_v0_5.vrl" }
+cdevents_v0_3_to_v0_4 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_3/to_v0_4.vrl" }
 cdevents_v0_4_to_v0_5 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_4/to_v0_5.vrl" }
+
+[transformers.normalize_names]
+type = "vrl"
+template = '''
+# ellipsis number injected into some pipeline/tasks Name by tools (eg. Dependabot) `#1234` -> `#...`
+if exists(.body.subject.content.pipelineName) {
+    .body.subject.content.pipelineName = replace!(.body.subject.content.pipelineName, r'(?i)\s#\d+', " #...")
+}
+if exists(.body.subject.content.taskName) {
+    .body.subject.content.taskName = replace!(.body.subject.content.taskName, r'(?i)\s#\d+', " #...")
+}
+[.]
+'''

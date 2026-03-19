@@ -415,3 +415,4 @@ megalinter-reports/
 proptest-regressions/
 build/
 .helmwave/
+.cdviz-collector
