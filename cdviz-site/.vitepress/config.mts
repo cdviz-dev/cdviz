@@ -227,6 +227,10 @@ export default defineConfig({
                   text: "Transformers & CDEvents Rules",
                   link: "/docs/cdviz-collector/transformers-rules",
                 },
+                {
+                  text: "CDEvents Version Conversion",
+                  link: "/docs/cdviz-collector/cdevents-version-conversion",
+                },
               ],
             },
             {
