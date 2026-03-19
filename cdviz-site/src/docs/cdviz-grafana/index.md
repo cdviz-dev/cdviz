@@ -22,16 +22,17 @@ CDviz Grafana provides a comprehensive visualization layer for continuous delive
 
 ### Requirements
 
-- Grafana version: 11+
+- Grafana version: 12+
 - Required Grafana Plugins:
-  - **marcusolsson-dynamictext-panel** (requires HTML sanitization to be disabled in Grafana)
+  - **volkovlabs-echarts-panel**
   - **volkovlabs-form-panel**
   - **volkovlabs-table-panel**
+  - **cdviz-executiontable-panel** (custom unsigned plugin — install from [GitHub releases](https://github.com/cdviz-dev/cdviz-executiontable-panel/releases))
 - Database credentials with read access to a CDviz Database instance
 
 ### Manual Installation
 
-1. Configure Grafana according to the requirements above (plugins and settings)
+1. Install the required plugins and allow loading unsigned plugins (`cdviz-executiontable-panel`) via `GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=cdviz-executiontable-panel`
 2. Create a PostgreSQL datasource in Grafana to connect to the CDviz Database:
    - Type: `grafana-postgresql-datasource`
    - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
@@ -62,12 +63,10 @@ Available dashboards:
    # Configuration override with environment variables
    # https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
    env:
-     GF_PANELS_DISABLE_SANITIZE_HTML: "true" # Required for dynamic/business text rendering
-
-   plugins:
-     - marcusolsson-dynamictext-panel
-     - volkovlabs-form-panel
-     - volkovlabs-table-panel
+     # Allow loading unsigned plugins (required for cdviz-executiontable-panel)
+     GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "cdviz-executiontable-panel"
+     # Pre-install plugins (Grafana 12+). Format: <id>[@<version>[@<url>]]
+     GF_PLUGINS_PREINSTALL_SYNC: "volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip"
 
    # Sidecar configuration for dashboard and datasource provisioning
    sidecar:
@@ -96,18 +95,18 @@ Available dashboards:
          type: grafana-postgresql-datasource
          access: proxy
          # Environment variable injection syntax
-         url: "$CDVIZ_DASHBOARDS_POSTGRES_HOST"
-         user: "$CDVIZ_DASHBOARDS_POSTGRES_USER"
+         url: "$CDVIZ_RO_POSTGRES_HOST:$CDVIZ_RO_POSTGRES_PORT_NUMBER"
+         user: "$CDVIZ_RO_POSTGRES_USER"
          secureJsonData:
-           password: "$CDVIZ_DASHBOARDS_POSTGRES_PASSWORD"
+           password: "$CDVIZ_RO_POSTGRES_PASSWORD"
          jsonData:
-           database: "$CDVIZ_DASHBOARDS_POSTGRES_DB"
+           database: "$CDVIZ_RO_POSTGRES_DB"
            sslmode: "require" # Options: disable/require/verify-ca/verify-full
            maxOpenConns: 100
            maxIdleConns: 100
            maxIdleConnsAuto: true
            connMaxLifetime: 14400
-           postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+           postgresVersion: 1600 # 903=9.3, 1000=10, 1500=15, 1600=16
            timescaledb: true
    ```
 
