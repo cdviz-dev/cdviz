@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-03-23
+
+### Fixed
+
+- Bump kind to 0.31.0 (#414) ([066ce92](066ce92525b0980c01c449ccd1dee1a2a0e5a162))
+- Bump cdviz-collector to 0.32.0 (#413) ([36134ed](36134ede317327f9e6a677f328bf4052583afa59))
+- Bump cdviz-collector to 0.33.0 (#417) ([be8d2cb](be8d2cb1779efff3fbe698619b3a124b71c380d8))
+
 ## [1.2.0] - 2026-03-13
 
 ### Added
