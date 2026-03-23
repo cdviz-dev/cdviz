@@ -12,7 +12,7 @@ enabled = true
 transformer_refs = ["my_transformer"]
 
 [sources.my_source.extractor]
-type = "webhook"  # webhook | opendal | sse | kafka | nats | noop
+type = "webhook"  # webhook | opendal | sse | kafka | nats | noop | http_polling
 # ... extractor-specific parameters
 ```
 
@@ -46,14 +46,15 @@ metadata.team = "platform"
 
 ## Available Extractors
 
-| Type                      | Description                        | Use Cases                                                 |
-| ------------------------- | ---------------------------------- | --------------------------------------------------------- |
-| [`noop`](./noop.md)       | No-operation extractor for testing | Configuration testing, pipeline validation                |
-| [`webhook`](./webhook.md) | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations   |
-| [`opendal`](./opendal.md) | File system and cloud storage      | Log files, artifact monitoring, batch processing          |
-| [`sse`](./sse.md)         | Server-Sent Events client          | Real-time event streams, SSE endpoints                    |
-| [`kafka`](./kafka.md)     | Apache Kafka consumer              | Event streaming, message queues, Kafka-compatible brokers |
-| [`nats`](./nats.md)       | NATS Core / JetStream consumer     | Cloud-native messaging, lightweight pub/sub, JetStream    |
+| Type                                | Description                        | Use Cases                                                   |
+| ----------------------------------- | ---------------------------------- | ----------------------------------------------------------- |
+| [`noop`](./noop.md)                 | No-operation extractor for testing | Configuration testing, pipeline validation                  |
+| [`webhook`](./webhook.md)           | HTTP webhook endpoints             | CI/CD systems, GitHub/GitLab webhooks, API integrations     |
+| [`sse`](./sse.md)                   | Server-Sent Events client          | Real-time event streams, SSE endpoints                      |
+| [`http_polling`](./http_polling.md) | Periodic HTTP polling              | Legacy APIs, historical backfill, services without webhooks |
+| [`opendal`](./opendal.md)           | File system and cloud storage      | Log files, artifact monitoring, batch processing            |
+| [`kafka`](./kafka.md)               | Apache Kafka consumer              | Event streaming, message queues, Kafka-compatible brokers   |
+| [`nats`](./nats.md)                 | NATS Core / JetStream consumer     | Cloud-native messaging, lightweight pub/sub, JetStream      |
 
 ## Shared Configuration
 

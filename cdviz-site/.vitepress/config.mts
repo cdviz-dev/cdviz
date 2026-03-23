@@ -216,6 +216,10 @@ export default defineConfig({
                   text: "NATS",
                   link: "/docs/cdviz-collector/sources/nats",
                 },
+                {
+                  text: "HTTP Polling",
+                  link: "/docs/cdviz-collector/sources/http_polling",
+                },
               ],
             },
             {
