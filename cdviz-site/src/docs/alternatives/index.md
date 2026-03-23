@@ -1,10 +1,10 @@
 ---
-description: Compare CDviz with Apache DevLake, Datadog CI Visibility, and other SDLC observability tools. Built on the open CDEvents standard.
+description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, Jellyfish, Swarmia, GetDX, and other SDLC observability tools. Built on the open CDEvents standard.
 ---
 
 # CI/CD Observability Tools & DevLake Alternatives
 
-Looking for an open-source alternative to Apache DevLake, Datadog CI, or LinearB?
+Looking for an open-source alternative to Apache DevLake, Datadog CI, Sleuth, or LinearB?
 CDviz is a self-hosted, open-source CI/CD observability platform built natively on
 [CDEvents](https://cdevents.dev/) and Grafana. The comparisons below cover architecture,
 integrations, data ownership, and when to choose each tool.
@@ -17,9 +17,13 @@ integrations, data ownership, and when to choose each tool.
 | [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
 | [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)   |
 | [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
+| [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
+| [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion |
 | [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
+| [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)   |
+| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion |
+| [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 
 _CDviz is free and open-source (Apache 2.0). Commercial support is available as an optional add-on._
 
@@ -64,12 +68,44 @@ Available as self-hosted (Splunk Enterprise) or SaaS (Splunk Cloud). Volume-base
 
 → [CDviz vs Splunk](./vs-splunk)
 
+### GetDX {#getdx}
+
+Commercial SaaS platform that combines quantitative engineering metrics (DORA, PR analytics)
+with qualitative developer experience surveys based on the SPACE and DX Core frameworks.
+Targets engineering leaders running formal Developer Experience programs. No self-hosted option.
+
+→ [CDviz vs GetDX](./vs-getdx)
+
+### Jellyfish {#jellyfish}
+
+Commercial SaaS platform for engineering management intelligence. Focuses on mapping
+engineering investment to business initiatives via Jira and GitHub data. Primary buyers
+are VPs and engineering directors. No self-hosted option.
+
+→ [CDviz vs Jellyfish](./vs-jellyfish)
+
 ### Powerpipe {#powerpipe}
 
 Open-source dashboarding tool from Turbot. Visualizes cloud configurations and security
 posture. Can be extended for DevOps metrics. Pull-based, query-driven model.
 
 → [CDviz vs Powerpipe](./vs-powerpipe)
+
+### Sleuth {#sleuth}
+
+Commercial SaaS DORA metrics platform. Tracks deployments, change failure rates, and
+lead time by connecting to GitHub, GitLab, Jira, and Slack. Focused on deployment
+observability with a polished, low-setup experience. No self-hosted option.
+
+→ [CDviz vs Sleuth](./vs-sleuth)
+
+### Swarmia {#swarmia}
+
+Commercial SaaS engineering effectiveness platform. Tracks DORA metrics, PR cycle times,
+code review quality, and engineering investment distribution. Lets teams set working
+agreements. No self-hosted option.
+
+→ [CDviz vs Swarmia](./vs-swarmia)
 
 ## CDEvents ecosystem
 

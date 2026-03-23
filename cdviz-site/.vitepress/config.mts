@@ -415,13 +415,18 @@ export default defineConfig({
         {
           text: "Alternatives, tools, ...",
           link: "/docs/alternatives/",
+          collapsed: true,
           items: [
             { text: "CDviz vs Apache DevLake", link: "/docs/alternatives/vs-apache-devlake" },
             { text: "CDviz vs Datadog CI", link: "/docs/alternatives/vs-datadog-ci" },
             { text: "CDviz vs DevStats", link: "/docs/alternatives/vs-devstats" },
+            { text: "CDviz vs GetDX", link: "/docs/alternatives/vs-getdx" },
+            { text: "CDviz vs Jellyfish", link: "/docs/alternatives/vs-jellyfish" },
             { text: "CDviz vs LinearB", link: "/docs/alternatives/vs-linearb" },
             { text: "CDviz vs Powerpipe", link: "/docs/alternatives/vs-powerpipe" },
+            { text: "CDviz vs Sleuth", link: "/docs/alternatives/vs-sleuth" },
             { text: "CDviz vs Splunk", link: "/docs/alternatives/vs-splunk" },
+            { text: "CDviz vs Swarmia", link: "/docs/alternatives/vs-swarmia" },
           ],
         },
       ],
