@@ -107,27 +107,6 @@ agreements. No self-hosted option.
 
 → [CDviz vs Swarmia](./vs-swarmia)
 
-## CDEvents ecosystem
-
-Tools that emit or consume CDEvents — compatible with CDviz as sources or consumers.
-
-### [CDEvents CLI](https://brunseba.github.io/cdevents-tools/)
-
-[brunseba/cdevents-tools](https://github.com/brunseba/cdevents-tools)
-
-CLI tool for generating and transmitting CDEvents from CI/CD pipelines. Useful for
-instrumenting pipelines that don't have a native CDviz integration yet.
-
-### [JReleaser CDEvents extension](https://jreleaser.org/guide/latest/extensions/extensions/jreleaser-cdevents.html)
-
-JReleaser extension that emits CDEvents on release workflow events. Compatible with
-cdviz-collector as a source.
-
-## Related standards
-
-- [Semantic conventions for CI/CD — OpenTelemetry](https://opentelemetry.io/docs/specs/semconv/cicd/)
-- [CDEvents specification](https://cdevents.dev/) — the open standard CDviz is built on
-
 ## Turbot companion tools
 
 The Turbot suite pairs well with CDviz for broader DevOps observability:
