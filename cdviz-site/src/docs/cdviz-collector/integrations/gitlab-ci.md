@@ -56,7 +56,7 @@ Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` e
 .install-cdviz: &install-cdviz
   before_script:
     - curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz
-        | tar xz -C /usr/local/bin
+      | tar xz -C /usr/local/bin
     - chmod +x /usr/local/bin/cdviz-collector
 ```
 
@@ -64,9 +64,9 @@ Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` e
 
 In **Settings > CI/CD > Variables**, add:
 
-| Variable | Value |
-| -------- | ----- |
-| `CDVIZ_URL` | Your cdviz-collector HTTP endpoint |
+| Variable      | Value                                         |
+| ------------- | --------------------------------------------- |
+| `CDVIZ_URL`   | Your cdviz-collector HTTP endpoint            |
 | `CDVIZ_TOKEN` | Bearer token for authentication (if required) |
 
 Mark both as **masked** to prevent them from appearing in job logs.
@@ -143,19 +143,19 @@ deploy:
 
 ## Options Reference
 
-| Flag | Description |
-| ---- | ----------- |
-| `--run testsuiterun_junit` | Parse JUnit XML; emit `testSuiteRun` events |
-| `--run testsuiterun_tap` | Parse TAP output; emit `testSuiteRun` events |
-| `--run testsuiterun_sarif` | Parse SARIF JSON; emit `testSuiteRun` events |
-| `--run taskrun` | Exit code only; emit `taskRun` events |
-| `--data <path>` | Override the built-in glob with a specific result file path |
-| `--metadata tested_artifact_id=<purl>` | Cross-reference artifact under test (repeatable) |
-| `--metadata tested_env_id=<id>` | Cross-reference environment under test |
-| `--metadata results_url=<url>` | Link to results page; also emits `testoutput.published` |
-| `--url <URL>` | cdviz-collector HTTP endpoint |
-| `--header "..."` | Additional HTTP header (repeatable) |
-| `--fail-on-collector-error` | Fail the job if the collector sink is unreachable |
+| Flag                                   | Description                                                 |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `--run testsuiterun_junit`             | Parse JUnit XML; emit `testSuiteRun` events                 |
+| `--run testsuiterun_tap`               | Parse TAP output; emit `testSuiteRun` events                |
+| `--run testsuiterun_sarif`             | Parse SARIF JSON; emit `testSuiteRun` events                |
+| `--run taskrun`                        | Exit code only; emit `taskRun` events                       |
+| `--data <path>`                        | Override the built-in glob with a specific result file path |
+| `--metadata tested_artifact_id=<purl>` | Cross-reference artifact under test (repeatable)            |
+| `--metadata tested_env_id=<id>`        | Cross-reference environment under test                      |
+| `--metadata results_url=<url>`         | Link to results page; also emits `testoutput.published`     |
+| `--url <URL>`                          | cdviz-collector HTTP endpoint                               |
+| `--header "..."`                       | Additional HTTP header (repeatable)                         |
+| `--fail-on-collector-error`            | Fail the job if the collector sink is unreachable           |
 
 See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.
 

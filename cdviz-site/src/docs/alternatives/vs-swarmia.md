@@ -12,23 +12,23 @@ CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a
 
 ## At a glance
 
-|                                           |             **CDviz**              |          **Swarmia**          |
-| ----------------------------------------- | :--------------------------------: | :---------------------------: |
-| License                                   |             Apache 2.0             |          Proprietary          |
-| Self-hosted                               |                 ✅                 |              ❌               |
-| SaaS option                               |            ⏳ waitlist             |              ✅               |
-| Commercial support                        |                 ✅                 |         ✅ (included)         |
-| Data ownership                            |              ✅ full               |       ❌ vendor-hosted        |
-| [CDEvents](https://cdevents.dev) standard |                 ✅                 |              ❌               |
-| DORA metrics                              |                 ✅                 |              ✅               |
-| PR / code review analytics                |                 ⏳                 |              ✅               |
-| Engineering investment tracking           |                 ⏳                 |              ✅               |
-| Working agreements / team norms           |                 ❌                 |              ✅               |
-| Pipeline / CI-CD observability            |                 ✅                 |           limited             |
-| Beyond monitoring: trigger workflows      |                 ✅                 |              ❌               |
-| Customizable storage backends             |    ✅ (PostgreSQL, ClickHouse…)    |              ❌               |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP  |      built-in dashboards      |
-| Cost                                      |      Infra + optional support      |       Per-user pricing        |
+|                                           |            **CDviz**             |     **Swarmia**     |
+| ----------------------------------------- | :------------------------------: | :-----------------: |
+| License                                   |            Apache 2.0            |     Proprietary     |
+| Self-hosted                               |                ✅                |         ❌          |
+| SaaS option                               |           ⏳ waitlist            |         ✅          |
+| Commercial support                        |                ✅                |    ✅ (included)    |
+| Data ownership                            |             ✅ full              |  ❌ vendor-hosted   |
+| [CDEvents](https://cdevents.dev) standard |                ✅                |         ❌          |
+| DORA metrics                              |                ✅                |         ✅          |
+| PR / code review analytics                |                ⏳                |         ✅          |
+| Engineering investment tracking           |                ⏳                |         ✅          |
+| Working agreements / team norms           |                ❌                |         ✅          |
+| Pipeline / CI-CD observability            |                ✅                |       limited       |
+| Beyond monitoring: trigger workflows      |                ✅                |         ❌          |
+| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |         ❌          |
+| Visualization                             | Grafana, BI, AI agents, MCP, IDP | built-in dashboards |
+| Cost                                      |     Infra + optional support     |  Per-user pricing   |
 
 ## Key differences
 

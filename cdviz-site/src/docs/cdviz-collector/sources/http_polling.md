@@ -48,17 +48,17 @@ request_vrl = """
 
 ## Parameters
 
-| Parameter                 | Type     | Default         | Description                                                                       |
-| ------------------------- | -------- | --------------- | --------------------------------------------------------------------------------- |
-| `polling_interval`        | duration | —               | How often to poll the endpoint (required).                                        |
-| `request_vrl`             | string   | —               | VRL script to build the HTTP request; must set `.url` (required).                 |
-| `ts_after`                | datetime | `Timestamp::MIN`| Initial lower bound of the time window. Overridden by persisted state on restart. |
-| `ts_before_limit`         | datetime | none            | Optional upper cap. When `ts_after` reaches this value the source stops.          |
-| `parser`                  | string   | `"auto"`        | How to parse the response body. See [Response parsing](#response-parsing).        |
-| `total_duration_of_retries` | duration | `"30s"`        | Retry budget for transient HTTP failures.                                         |
-| `headers`                 | object   | `{}`            | Static or secret headers added to every request.                                  |
-| `metadata`                | object   | `{}`            | Static metadata merged into every `EventSource`.                                  |
-| `user_agent`              | string   | `cdviz-collector/<version>` | `User-Agent` header sent with every request.                        |
+| Parameter                   | Type     | Default                     | Description                                                                       |
+| --------------------------- | -------- | --------------------------- | --------------------------------------------------------------------------------- |
+| `polling_interval`          | duration | —                           | How often to poll the endpoint (required).                                        |
+| `request_vrl`               | string   | —                           | VRL script to build the HTTP request; must set `.url` (required).                 |
+| `ts_after`                  | datetime | `Timestamp::MIN`            | Initial lower bound of the time window. Overridden by persisted state on restart. |
+| `ts_before_limit`           | datetime | none                        | Optional upper cap. When `ts_after` reaches this value the source stops.          |
+| `parser`                    | string   | `"auto"`                    | How to parse the response body. See [Response parsing](#response-parsing).        |
+| `total_duration_of_retries` | duration | `"30s"`                     | Retry budget for transient HTTP failures.                                         |
+| `headers`                   | object   | `{}`                        | Static or secret headers added to every request.                                  |
+| `metadata`                  | object   | `{}`                        | Static metadata merged into every `EventSource`.                                  |
+| `user_agent`                | string   | `cdviz-collector/<version>` | `User-Agent` header sent with every request.                                      |
 
 ## How It Works
 
@@ -70,11 +70,11 @@ request_vrl = """
 
 ## Time Window
 
-| Field             | Description                                                                                                                        |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Field             | Description                                                                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `ts_after`        | Exclusive lower bound. Defaults to `Timestamp::MIN`. Loaded from persisted state on restart; config value is the initial bootstrap. |
-| `ts_before`       | Exclusive upper bound. Always computed as `now − 1 s` (capped at `ts_before_limit`).                                               |
-| `ts_before_limit` | Optional cap. When `ts_after` reaches this value the source stops.                                                                 |
+| `ts_before`       | Exclusive upper bound. Always computed as `now − 1 s` (capped at `ts_before_limit`).                                                |
+| `ts_before_limit` | Optional cap. When `ts_after` reaches this value the source stops.                                                                  |
 
 Both values are exposed as `metadata.ts_after` and `metadata.ts_before` (ISO 8601 strings) in the VRL request script and in every `EventSource` sent downstream.
 
@@ -122,12 +122,12 @@ It must **set `.url`** (required) and may set any of the following:
 
 ## Response Parsing
 
-| Value    | `Accept` header sent                                   | Parsing                                           |
-| -------- | ------------------------------------------------------ | ------------------------------------------------- |
-| `auto`   | `application/json, application/x-ndjson, text/plain`   | Detected from `Content-Type` (default).           |
-| `json`   | `application/json`                                     | Whole body → one `EventSource`.                   |
-| `jsonl`  | `application/x-ndjson`                                 | One `EventSource` per non-empty newline-delimited line. |
-| `text`   | `text/plain`                                           | Whole body as a JSON string → one `EventSource`.  |
+| Value   | `Accept` header sent                                 | Parsing                                                 |
+| ------- | ---------------------------------------------------- | ------------------------------------------------------- |
+| `auto`  | `application/json, application/x-ndjson, text/plain` | Detected from `Content-Type` (default).                 |
+| `json`  | `application/json`                                   | Whole body → one `EventSource`.                         |
+| `jsonl` | `application/x-ndjson`                               | One `EventSource` per non-empty newline-delimited line. |
+| `text`  | `text/plain`                                         | Whole body as a JSON string → one `EventSource`.        |
 
 With `jsonl` a single poll can emit multiple events. Timestamp advancement still happens when parsing succeeds, even when zero lines are present.
 

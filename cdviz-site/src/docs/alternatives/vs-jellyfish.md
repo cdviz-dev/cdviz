@@ -12,23 +12,23 @@ CDviz is an open-source platform with self-hosted and SaaS options. Jellyfish is
 
 ## At a glance
 
-|                                           |             **CDviz**              |          **Jellyfish**          |
-| ----------------------------------------- | :--------------------------------: | :-----------------------------: |
-| License                                   |             Apache 2.0             |           Proprietary           |
-| Self-hosted                               |                 ✅                 |               ❌                |
-| SaaS option                               |            ⏳ waitlist             |               ✅                |
-| Commercial support                        |                 ✅                 |          ✅ (included)          |
-| Data ownership                            |              ✅ full               |        ❌ vendor-hosted         |
-| [CDEvents](https://cdevents.dev) standard |                 ✅                 |               ❌                |
-| DORA metrics                              |                 ✅                 |               ✅                |
-| Engineering investment reporting          |                 ⏳                 |           ✅ (core)             |
-| Jira / sprint allocation tracking         |                 ❌                 |               ✅                |
-| Pipeline / CI-CD observability            |                 ✅                 |            limited              |
-| Beyond monitoring: trigger workflows      |                 ✅                 |               ❌                |
-| Customizable storage backends             |    ✅ (PostgreSQL, ClickHouse…)    |               ❌                |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP  |       built-in dashboards       |
-| Primary buyer                             |     Platform / DevOps teams        |   Engineering leadership / VPs  |
-| Cost                                      |      Infra + optional support      |    Enterprise SaaS contract     |
+|                                           |            **CDviz**             |        **Jellyfish**         |
+| ----------------------------------------- | :------------------------------: | :--------------------------: |
+| License                                   |            Apache 2.0            |         Proprietary          |
+| Self-hosted                               |                ✅                |              ❌              |
+| SaaS option                               |           ⏳ waitlist            |              ✅              |
+| Commercial support                        |                ✅                |        ✅ (included)         |
+| Data ownership                            |             ✅ full              |       ❌ vendor-hosted       |
+| [CDEvents](https://cdevents.dev) standard |                ✅                |              ❌              |
+| DORA metrics                              |                ✅                |              ✅              |
+| Engineering investment reporting          |                ⏳                |          ✅ (core)           |
+| Jira / sprint allocation tracking         |                ❌                |              ✅              |
+| Pipeline / CI-CD observability            |                ✅                |           limited            |
+| Beyond monitoring: trigger workflows      |                ✅                |              ❌              |
+| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |              ❌              |
+| Visualization                             | Grafana, BI, AI agents, MCP, IDP |     built-in dashboards      |
+| Primary buyer                             |     Platform / DevOps teams      | Engineering leadership / VPs |
+| Cost                                      |     Infra + optional support     |   Enterprise SaaS contract   |
 
 ## Key differences
 

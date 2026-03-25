@@ -54,14 +54,11 @@
       <p class="text-sm text-text/60">
         Have a use case, questions, or ideas? →
         <a href="mailto:contact@cdviz.dev" class="text-primary hover:underline"
-          >contact@cdviz.dev</a
-        >
+        >contact@cdviz.dev</a>
       </p>
 
       <!-- Social links -->
-      <div
-        class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-secondary/20"
-      >
+      <div class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-secondary/20">
         <a
           href="https://github.com/cdviz-dev"
           target="_blank"

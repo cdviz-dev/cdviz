@@ -59,33 +59,33 @@ Tools that emit or consume CDEvents — compatible with CDviz as sources or cons
 
 ### CI/CD pipelines
 
-| Tool | CDEvents role | Notes |
-| ---- | ------------- | ----- |
-| [Jenkins](https://www.jenkins.io/) | producer | [CDEvents plugin](https://plugins.jenkins.io/cdevents/) emits events for builds and deployments |
-| [Tekton](https://tekton.dev/) | producer | Native CDEvents emission from pipeline runs and task runs |
-| [Spinnaker](https://spinnaker.io/) | producer | CDEvents integration for deployment pipeline events |
-| [Argo CD](https://argoproj.github.io/cd/) | producer | Emits CDEvents on application sync and deployment events |
+| Tool                                      | CDEvents role | Notes                                                                                           |
+| ----------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
+| [Jenkins](https://www.jenkins.io/)        | producer      | [CDEvents plugin](https://plugins.jenkins.io/cdevents/) emits events for builds and deployments |
+| [Tekton](https://tekton.dev/)             | producer      | Native CDEvents emission from pipeline runs and task runs                                       |
+| [Spinnaker](https://spinnaker.io/)        | producer      | CDEvents integration for deployment pipeline events                                             |
+| [Argo CD](https://argoproj.github.io/cd/) | producer      | Emits CDEvents on application sync and deployment events                                        |
 
 ### GitOps & continuous delivery
 
-| Tool | CDEvents role | Notes |
-| ---- | ------------- | ----- |
-| [Flux](https://fluxcd.io/) | producer | Emits CDEvents via notification-controller for reconciliation and deployment events |
-| [Keptn](https://keptn.sh/) | producer / consumer | Lifecycle toolkit emits and reacts to CDEvents for deployment observability |
+| Tool                       | CDEvents role       | Notes                                                                               |
+| -------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| [Flux](https://fluxcd.io/) | producer            | Emits CDEvents via notification-controller for reconciliation and deployment events |
+| [Keptn](https://keptn.sh/) | producer / consumer | Lifecycle toolkit emits and reacts to CDEvents for deployment observability         |
 
 ### Testing
 
-| Tool | CDEvents role | Notes |
-| ---- | ------------- | ----- |
-| [Testkube](https://testkube.io/) | producer | Emits CDEvents on test execution events |
-| [Tracetest](https://tracetest.io/) | producer | Emits CDEvents for trace-based test results |
+| Tool                               | CDEvents role | Notes                                       |
+| ---------------------------------- | ------------- | ------------------------------------------- |
+| [Testkube](https://testkube.io/)   | producer      | Emits CDEvents on test execution events     |
+| [Tracetest](https://tracetest.io/) | producer      | Emits CDEvents for trace-based test results |
 
 ### Artifact registries & supply chain
 
-| Tool | CDEvents role | Notes |
-| ---- | ------------- | ----- |
-| [Harbor](https://goharbor.io/) | producer | Emits CDEvents for artifact push, scan, and replication events |
-| [GUAC](https://guac.sh/) | consumer | Graph for Understanding Artifact Composition — ingests CDEvents to build software supply chain graphs |
+| Tool                           | CDEvents role | Notes                                                                                                 |
+| ------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------- |
+| [Harbor](https://goharbor.io/) | producer      | Emits CDEvents for artifact push, scan, and replication events                                        |
+| [GUAC](https://guac.sh/)       | consumer      | Graph for Understanding Artifact Composition — ingests CDEvents to build software supply chain graphs |
 
 ### CLIs & utilities
 

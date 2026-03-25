@@ -12,22 +12,22 @@ CDviz is an open-source platform with self-hosted and SaaS options. Sleuth is a 
 
 ## At a glance
 
-|                                           |             **CDviz**              |         **Sleuth**          |
-| ----------------------------------------- | :--------------------------------: | :-------------------------: |
-| License                                   |             Apache 2.0             |         Proprietary         |
-| Self-hosted                               |                 ✅                 |             ❌              |
-| SaaS option                               |            ⏳ waitlist             |             ✅              |
-| Commercial support                        |                 ✅                 |       ✅ (included)         |
-| Data ownership                            |              ✅ full               |      ❌ vendor-hosted       |
-| [CDEvents](https://cdevents.dev) standard |                 ✅                 |             ❌              |
-| DORA metrics                              |                 ✅                 |             ✅              |
-| Deployment tracking                       |                 ✅                 |             ✅              |
-| Change failure rate                       |                 ✅                 |             ✅              |
-| Beyond monitoring: trigger workflows      |                 ✅                 |             ❌              |
-| Slack / PR tool integrations              |                 ✅                 |             ✅              |
-| Customizable storage backends             |    ✅ (PostgreSQL, ClickHouse…)    |             ❌              |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP  |      built-in dashboards    |
-| Cost                                      |      Infra + optional support      |      Per-user pricing       |
+|                                           |            **CDviz**             |     **Sleuth**      |
+| ----------------------------------------- | :------------------------------: | :-----------------: |
+| License                                   |            Apache 2.0            |     Proprietary     |
+| Self-hosted                               |                ✅                |         ❌          |
+| SaaS option                               |           ⏳ waitlist            |         ✅          |
+| Commercial support                        |                ✅                |    ✅ (included)    |
+| Data ownership                            |             ✅ full              |  ❌ vendor-hosted   |
+| [CDEvents](https://cdevents.dev) standard |                ✅                |         ❌          |
+| DORA metrics                              |                ✅                |         ✅          |
+| Deployment tracking                       |                ✅                |         ✅          |
+| Change failure rate                       |                ✅                |         ✅          |
+| Beyond monitoring: trigger workflows      |                ✅                |         ❌          |
+| Slack / PR tool integrations              |                ✅                |         ✅          |
+| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |         ❌          |
+| Visualization                             | Grafana, BI, AI agents, MCP, IDP | built-in dashboards |
+| Cost                                      |     Infra + optional support     |  Per-user pricing   |
 
 ## Key differences
 

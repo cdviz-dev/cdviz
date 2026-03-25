@@ -64,10 +64,10 @@ sh '''
 
 Add the following in **Manage Jenkins > Credentials**:
 
-| ID | Kind | Value |
-| -- | ---- | ----- |
-| `cdviz-url` | Secret text | Your cdviz-collector HTTP endpoint |
-| `cdviz-token` | Secret text | Bearer token for authentication |
+| ID            | Kind        | Value                              |
+| ------------- | ----------- | ---------------------------------- |
+| `cdviz-url`   | Secret text | Your cdviz-collector HTTP endpoint |
+| `cdviz-token` | Secret text | Bearer token for authentication    |
 
 ### 3. Wrap a test stage
 
@@ -158,18 +158,18 @@ pipeline {
 
 ## Options Reference
 
-| Flag | Description |
-| ---- | ----------- |
-| `--run testsuiterun_junit` | Parse JUnit XML; emit `testSuiteRun` events |
-| `--run testsuiterun_tap` | Parse TAP output; emit `testSuiteRun` events |
-| `--run testsuiterun_sarif` | Parse SARIF JSON; emit `testSuiteRun` events |
-| `--run taskrun` | Exit code only; emit `taskRun` events |
-| `--data <path>` | Override the built-in glob with a specific result file path |
-| `--metadata tested_artifact_id=<purl>` | Cross-reference artifact under test (repeatable) |
-| `--metadata tested_env_id=<id>` | Cross-reference environment under test |
-| `--metadata results_url=<url>` | Link to results page; also emits `testoutput.published` |
-| `--url <URL>` | cdviz-collector HTTP endpoint |
-| `--header "..."` | Additional HTTP header (repeatable) |
-| `--fail-on-collector-error` | Fail the stage if the collector sink is unreachable |
+| Flag                                   | Description                                                 |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `--run testsuiterun_junit`             | Parse JUnit XML; emit `testSuiteRun` events                 |
+| `--run testsuiterun_tap`               | Parse TAP output; emit `testSuiteRun` events                |
+| `--run testsuiterun_sarif`             | Parse SARIF JSON; emit `testSuiteRun` events                |
+| `--run taskrun`                        | Exit code only; emit `taskRun` events                       |
+| `--data <path>`                        | Override the built-in glob with a specific result file path |
+| `--metadata tested_artifact_id=<purl>` | Cross-reference artifact under test (repeatable)            |
+| `--metadata tested_env_id=<id>`        | Cross-reference environment under test                      |
+| `--metadata results_url=<url>`         | Link to results page; also emits `testoutput.published`     |
+| `--url <URL>`                          | cdviz-collector HTTP endpoint                               |
+| `--header "..."`                       | Additional HTTP header (repeatable)                         |
+| `--fail-on-collector-error`            | Fail the stage if the collector sink is unreachable         |
 
 See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.

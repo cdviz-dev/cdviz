@@ -84,12 +84,12 @@ cdviz-collector send --run <NAME> [OPTIONS] -- <COMMAND>...
 
 ### Built-in run types
 
-| `--run` value | CDEvent emitted | Result collection |
-| ------------- | --------------- | ----------------- |
-| `testsuiterun_junit`  | `testSuiteRun.started` / `.finished` | Globs `**/TEST-*.xml`, `**/*.xml` |
-| `testsuiterun_tap`    | `testSuiteRun.started` / `.finished` | Globs `**/*.tap` |
-| `testsuiterun_sarif`  | `testSuiteRun.started` / `.finished` | Globs `**/*.sarif`, `**/*.sarif.json` |
-| `taskrun`             | `taskRun.started` / `.finished`      | Exit code only |
+| `--run` value        | CDEvent emitted                      | Result collection                     |
+| -------------------- | ------------------------------------ | ------------------------------------- |
+| `testsuiterun_junit` | `testSuiteRun.started` / `.finished` | Globs `**/TEST-*.xml`, `**/*.xml`     |
+| `testsuiterun_tap`   | `testSuiteRun.started` / `.finished` | Globs `**/*.tap`                      |
+| `testsuiterun_sarif` | `testSuiteRun.started` / `.finished` | Globs `**/*.sarif`, `**/*.sarif.json` |
+| `taskrun`            | `taskRun.started` / `.finished`      | Exit code only                        |
 
 > [!NOTE]
 > `--run testsuiterun_junit` and `--run testsuiterun_tap` require the `parser_xml` / `parser_tap` feature flags respectively. Check with `cdviz-collector --version`.
@@ -127,6 +127,7 @@ Supply your own TOML config with `--config my-run.toml` to define additional `[s
 **[→ Complete `--run` reference and CI examples](./send-run.md)**
 
 For real-world CI/CD usage see the integration guides:
+
 - **[GitHub Actions CI](./integrations/github-actions-ci.md)**
 - **[GitLab CI](./integrations/gitlab-ci.md)**
 - **[Jenkins](./integrations/jenkins.md)**

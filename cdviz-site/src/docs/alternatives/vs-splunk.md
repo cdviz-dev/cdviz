@@ -22,13 +22,13 @@ CDviz is built specifically for SDLC observability using the CDEvents standard. 
 | Data ownership                            |             ✅ full              |        ✅ (self-hosted only)        |
 | [CDEvents](https://cdevents.dev) standard |            ✅ native             |                 ❌                  |
 | Data model                                |       Event-driven (push)        |     Log/metric ingestion (push)     |
-| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup     |
+| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup      |
 | Beyond monitoring: trigger workflows      |                ✅                |    ✅ (via Splunk SOAR / alerts)    |
-| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup     |
+| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup      |
 | Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |  ✅ (Splunk indexes / SmartStore)   |
 | Visualization                             | Grafana, BI, AI agents, MCP, IDP |   Splunk dashboards / Grafana OSS   |
 | Pricing model                             |     Infra + optional support     |  Volume (GB/day) or workload-based  |
-| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high               |
+| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high                |
 
 ## Key differences
 

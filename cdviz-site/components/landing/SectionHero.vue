@@ -134,9 +134,7 @@ onMounted(() => {
             loading="eager"
           />
         </picture>
-        <div
-          class="absolute inset-0 rounded-xl flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300"
-        >
+        <div class="absolute inset-0 rounded-xl flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
           <span
             class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-semibold text-lg px-4 py-2 rounded-lg bg-black/50 backdrop-blur-sm"
           >
@@ -145,9 +143,7 @@ onMounted(() => {
         </div>
       </a>
     </div>
-    <div
-      class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10"
-    >
+    <div class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10">
       <h1
         id="hero-title"
         class="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"
@@ -157,30 +153,18 @@ onMounted(() => {
           v-for="(h, i) in headlines"
           :key="i"
           class="hero-headline block w-full"
-          :style="
-            i !== 0
-              ? { position: 'absolute', top: 0, left: 0, right: 0, opacity: 0 }
-              : {}
-          "
+          :style='i !== 0 ? { position: "absolute", top: 0, left: 0, right: 0, opacity: 0 } : {}'
         >
           <span
             class="text-text block"
-            :class="
-              i === 0
-                ? 'animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out'
-                : ''
-            "
-            >{{ h.line1 }}</span
-          >
+            :class='i === 0 ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out" : ""'
+          >{{ h.line1 }}</span>
           <span
             class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-2 sm:mt-3 bg-[length:200%_auto] animate-gradient hero-glow-text"
-            :class="
-              i === 0
-                ? 'animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300'
-                : ''
-            "
-            >{{ h.line2 }}</span
-          >
+            :class='i === 0
+            ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300"
+            : ""'
+          >{{ h.line2 }}</span>
         </span>
       </h1>
       <div
@@ -189,10 +173,9 @@ onMounted(() => {
       >
         CDviz is an open-source observability platform built on
         <a href="https://cdevents.dev">CDEvents</a>, the
-        <a href="https://cd.foundation">CD Foundation</a>-backed standard for
-        software delivery. Connect GitHub, GitLab, Kubernetes, and more. Get
-        DORA metrics, deployment timelines, and test results in Grafana — then
-        trigger workflows from the same event stream.
+        <a href="https://cd.foundation">CD Foundation</a>-backed standard for software delivery.
+        Connect GitHub, GitLab, Kubernetes, and more. Get DORA metrics, deployment timelines, and
+        test results in Grafana — then trigger workflows from the same event stream.
       </div>
 
       <div
@@ -205,8 +188,7 @@ onMounted(() => {
           target="_blank"
           rel="noopener"
           primary
-          >Try Live Demo</Btn
-        >
+        >Try Live Demo</Btn>
         <Btn href="/docs">Get Started Free</Btn>
         <Btn href="#how">See How It Works</Btn>
       </div>
@@ -217,9 +199,7 @@ onMounted(() => {
         <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
           <!-- CDEvents badge -->
           <div class="flex items-center gap-3">
-            <span
-              class="svg-mask svg-cdevents w-20 h-10 opacity-70 cdevents-badge-glow"
-            ></span>
+            <span class="svg-mask svg-cdevents w-20 h-10 opacity-70 cdevents-badge-glow"></span>
             <div class="text-xs text-text/80">
               <div class="font-medium">CDEvents Compatible</div>
               <div class="opacity-75">CD Foundation standard</div>
@@ -246,9 +226,7 @@ onMounted(() => {
           <span class="hidden sm:block text-secondary/40 text-lg">|</span>
           <!-- License -->
           <div class="flex items-center gap-2 text-xs text-text/70">
-            <span
-              class="icon-[lucide--shield-check] h-4 w-4 text-primary/70"
-            ></span>
+            <span class="icon-[lucide--shield-check] h-4 w-4 text-primary/70"></span>
             <span>Apache 2.0 · Free Forever</span>
           </div>
         </div>

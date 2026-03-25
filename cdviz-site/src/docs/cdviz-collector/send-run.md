@@ -17,12 +17,12 @@ For non-test steps (build, deploy) where you only need exit-code observability, 
 
 ## Built-in Run Types
 
-| `--run` value | CDEvent emitted | Result collection |
-| ------------- | --------------- | ----------------- |
-| `testsuiterun_junit`  | `testSuiteRun.started` / `.finished` | Globs `**/TEST-*.xml`, `**/*.xml` via XML parser |
-| `testsuiterun_tap`    | `testSuiteRun.started` / `.finished` | Globs `**/*.tap` via TAP parser |
-| `testsuiterun_sarif`  | `testSuiteRun.started` / `.finished` | Globs `**/*.sarif`, `**/*.sarif.json` via JSON parser |
-| `taskrun`             | `taskRun.started` / `.finished`      | Exit code only (no file parsing) |
+| `--run` value        | CDEvent emitted                      | Result collection                                     |
+| -------------------- | ------------------------------------ | ----------------------------------------------------- |
+| `testsuiterun_junit` | `testSuiteRun.started` / `.finished` | Globs `**/TEST-*.xml`, `**/*.xml` via XML parser      |
+| `testsuiterun_tap`   | `testSuiteRun.started` / `.finished` | Globs `**/*.tap` via TAP parser                       |
+| `testsuiterun_sarif` | `testSuiteRun.started` / `.finished` | Globs `**/*.sarif`, `**/*.sarif.json` via JSON parser |
+| `taskrun`            | `taskRun.started` / `.finished`      | Exit code only (no file parsing)                      |
 
 > [!NOTE]
 > `testsuiterun_junit` and `testsuiterun_tap` require the `parser_xml` and `parser_tap` feature flags. Verify with `cdviz-collector --version`.
@@ -31,22 +31,22 @@ For non-test steps (build, deploy) where you only need exit-code observability, 
 
 The built-in `ci_env_detection` transformer automatically populates context fields from standard CI environment variables. **No `--metadata` flags are needed for branch, commit, or job name.**
 
-| CI system | Variables read automatically |
-| --------- | --------------------------- |
-| GitHub Actions | `GITHUB_REF_NAME`, `GITHUB_SHA`, `GITHUB_JOB`, `GITHUB_RUN_ID` |
-| GitLab CI | `CI_COMMIT_REF_NAME`, `CI_COMMIT_SHA`, `CI_JOB_NAME`, `CI_PIPELINE_ID` |
-| Jenkins | `JENKINS_URL`, `JOB_BASE_NAME`, `BUILD_NUMBER`, `GIT_BRANCH`, `GIT_COMMIT` |
+| CI system      | Variables read automatically                                               |
+| -------------- | -------------------------------------------------------------------------- |
+| GitHub Actions | `GITHUB_REF_NAME`, `GITHUB_SHA`, `GITHUB_JOB`, `GITHUB_RUN_ID`             |
+| GitLab CI      | `CI_COMMIT_REF_NAME`, `CI_COMMIT_SHA`, `CI_JOB_NAME`, `CI_PIPELINE_ID`     |
+| Jenkins        | `JENKINS_URL`, `JOB_BASE_NAME`, `BUILD_NUMBER`, `GIT_BRANCH`, `GIT_COMMIT` |
 
 ## `customData.links` — Cross-Referencing
 
 `customData.links` is the CDEvents standard mechanism for cross-referencing related subjects (until `context.links` gains full subject support in spec 0.6+). Use `--metadata` to supply identifiers that `--run` cannot auto-detect:
 
-| `--metadata` key | Link kind | Target subject type |
-| ---------------- | --------- | ------------------- |
-| `tested_artifact_id` | `testedAgainst` | `artifact` (repeatable — one link per value) |
-| `tested_env_id` | `testedAgainst` | `environment` |
-| `tested_repo_id` | `testedAgainst` | `repository` |
-| `results_url` | `storedAt` | `testoutput` — also triggers an extra `testoutput.published` event |
+| `--metadata` key     | Link kind       | Target subject type                                                |
+| -------------------- | --------------- | ------------------------------------------------------------------ |
+| `tested_artifact_id` | `testedAgainst` | `artifact` (repeatable — one link per value)                       |
+| `tested_env_id`      | `testedAgainst` | `environment`                                                      |
+| `tested_repo_id`     | `testedAgainst` | `repository`                                                       |
+| `results_url`        | `storedAt`      | `testoutput` — also triggers an extra `testoutput.published` event |
 
 Example resulting `customData.links` in the emitted CDEvent:
 
@@ -164,11 +164,11 @@ The `--config` file is merged on top of the built-in `send.base.toml`, so built-
 
 ## Additional Flags
 
-| Flag | Description |
-| ---- | ----------- |
-| `--no-data` | Skip result file parsing entirely; use exit code only (overrides `data_globs`) |
-| `--fail-on-collector-error` | Exit non-zero if the sink is unreachable (default: warn and continue) |
-| `--log-full-response-on-error` | Log full HTTP response body on non-2xx errors — useful for CI debugging |
+| Flag                           | Description                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| `--no-data`                    | Skip result file parsing entirely; use exit code only (overrides `data_globs`) |
+| `--fail-on-collector-error`    | Exit non-zero if the sink is unreachable (default: warn and continue)          |
+| `--log-full-response-on-error` | Log full HTTP response body on non-2xx errors — useful for CI debugging        |
 
 ## CI Integration Guides
 
