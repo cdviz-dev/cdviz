@@ -3,7 +3,7 @@ title: "CDEvents in Action #7: One Commit, Six CDEvents"
 description: "Follow a single feature from git push to production and see every CDEvent it generates — the full pipeline timeline that CDviz makes visible."
 tags: ["cdevents", "devops", "cicd", "kubernetes", "observability", "pipeline"]
 author: "David B."
-author_github: "davidb31"
+author_github: "davidB"
 date: "2026-03-25"
 target_audience: "DevOps Engineers, Platform Engineers, Engineering Managers"
 reading_time: "4 minutes"

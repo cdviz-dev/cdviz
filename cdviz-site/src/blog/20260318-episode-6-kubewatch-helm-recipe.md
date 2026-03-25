@@ -12,7 +12,7 @@ tags:
     "devops",
   ]
 author: "David B."
-author_github: "davidb31"
+author_github: "davidB"
 date: "2026-03-18"
 target_audience: "Platform Engineers, DevOps Engineers, Kubernetes Operators"
 reading_time: "4 minutes"

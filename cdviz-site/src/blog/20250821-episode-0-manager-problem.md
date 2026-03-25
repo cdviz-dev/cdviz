@@ -11,7 +11,7 @@ tags:
     "platformengineering",
   ]
 author: "David B."
-author_github: "davidb31"
+author_github: "davidB"
 date: "2025-08-21"
 target_audience: "Engineering Managers, Team Leads"
 reading_time: "5 minutes"
