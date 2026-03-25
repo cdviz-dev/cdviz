@@ -23,6 +23,17 @@ function buildBlogSidebar() {
   }));
 }
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "David Bernard",
+  url: "https://github.com/davidB",
+  sameAs: [
+    "https://www.linkedin.com/in/davidbernard31/",
+    "https://dev.to/davidB",
+  ],
+};
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "CDviz",
@@ -565,19 +576,6 @@ export default defineConfig({
         sameAs: ["https://github.com/cdviz-dev", "https://www.youtube.com/@CDviz"],
       };
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(orgSchema)]);
-
-      const personSchema = {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "David B.",
-        url: "https://github.com/davidb31",
-        // TODO: add LinkedIn URL when available
-        sameAs: [
-          "https://github.com/davidb31",
-          "https://dev.to/davidb31",
-          "https://www.youtube.com/@CDviz",
-        ],
-      };
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(personSchema)]);
     }
 
@@ -604,12 +602,8 @@ export default defineConfig({
             url: pageData.frontmatter.author_github
               ? `https://github.com/${pageData.frontmatter.author_github}`
               : "https://github.com/cdviz-dev",
-            ...(pageData.frontmatter.author_github === "davidb31" && {
-              sameAs: [
-                "https://github.com/davidb31",
-                "https://dev.to/davidb31",
-                "https://www.youtube.com/@CDviz",
-              ],
+            ...(pageData.frontmatter.author_github === "davidB" && {
+              sameAs: personSchema.sameAs,
             }),
           },
           publisher: {
