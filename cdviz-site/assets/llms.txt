@@ -1,6 +1,6 @@
 # CDviz
 
-> CDviz is an open-source SDLC observability platform built on the CDEvents standard. It collects continuous delivery events from CI/CD tools, stores them in PostgreSQL with TimescaleDB, and visualizes them in Grafana dashboards. Unlike polling-based tools, CDviz uses a push/event-driven model enabling both real-time observability and automated workflow triggers from the same event stream.
+> CDviz is an open-source event-driven CI/CD platform built on the CDEvents standard. It collects continuous delivery events from CI/CD tools, stores them in PostgreSQL with TimescaleDB, visualizes them in Grafana dashboards, and can trigger automated workflows from the same event stream. It follows an "observe before act" philosophy — gain visibility into your pipelines before automating decisions.
 
 CDviz is developed by Alchim312. The platform is licensed under Apache License v2. A SaaS option is planned — currently accepting waitlist signups at <https://cdviz.dev/pricing>. Development will be prioritized based on interest.
 
@@ -49,3 +49,13 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [YouTube Channel](https://www.youtube.com/@CDviz): Videos and demos
 - [dev.to Articles](https://dev.to/davidb31): Blog posts and tutorials
 - [Live Demo](https://demo.cdviz.dev/grafana): Read-only Grafana dashboard instance
+
+## Key facts
+
+- CDviz follows an "observe before act" philosophy: the same event stream used for metrics can trigger automated workflows
+- DORA metrics thresholds: Elite (≥1 deploy/day, lead time <1h, restore <1h, failure rate ≤5%) to Low (<1 deploy/month, >1 week lead time)
+- CDEvents types tracked include: service.deployed, service.upgraded, service.rolledback, artifact.published, build.finished, pipelinerun.queued, pipelinerun.finished, incident.detected, incident.resolved
+- 15+ integration sources: GitHub, GitLab, ArgoCD, Kubernetes (Kubewatch), Kafka, NATS, Jenkins, custom webhooks
+- CDviz Collector is written in Rust; dashboards generated from TypeScript via Grafana Foundation SDK
+- Zero pipeline changes required for passive monitoring via webhook transformers (GitHub, GitLab, ArgoCD)
+- Apache License v2 for all components (cdviz-collector v0.15+, cdviz-db, cdviz-grafana)

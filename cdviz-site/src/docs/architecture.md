@@ -1,5 +1,7 @@
 # Architecture
 
+CDviz is an event-driven CI/CD platform built on the CDEvents standard. Its four-layer architecture — Collector, Database, Grafana, and Event Reactions — lets teams observe software delivery events in real time and trigger automated workflows from the same event stream.
+
 > [!NOTE]
 > CDviz employs a modular architecture with three independent components that can be deployed individually or as an integrated solution.
 

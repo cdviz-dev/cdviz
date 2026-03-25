@@ -1,5 +1,7 @@
 # CDviz Grafana
 
+CDviz Grafana provides pre-built dashboards that visualize CDEvents collected by the CDviz Collector. It surfaces DORA metrics, deployment timelines, artifact history, and incident tracking without any manual dashboard configuration.
+
 > [!TIP] Online Demo
 > Explore a live read-only instance of the CDviz Grafana dashboards at
 > **[demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana)** — no installation required.

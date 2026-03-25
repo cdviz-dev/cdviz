@@ -1,6 +1,6 @@
 # CDviz Collector
 
-Collect events from your SDLC, transform them into [CDEvents](https://cdevents.dev/), and dispatch to various destinations.
+CDviz Collector is an open-source event ingestion agent written in Rust. It receives software delivery events from webhooks, Kafka, NATS, SSE, and file sources, normalizes them to the CDEvents standard, and routes them to configured sinks including PostgreSQL, ClickHouse, and HTTP endpoints.
 
 ![Inside a collector](/architectures/inside_collector.excalidraw.svg)
 

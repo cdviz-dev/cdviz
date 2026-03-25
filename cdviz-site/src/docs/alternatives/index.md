@@ -4,10 +4,9 @@ description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, J
 
 # CI/CD Observability Tools & DevLake Alternatives
 
-Looking for an open-source alternative to Apache DevLake, Datadog CI, Sleuth, or LinearB?
-CDviz is a self-hosted, open-source CI/CD observability platform built natively on
-[CDEvents](https://cdevents.dev/) and Grafana. The comparisons below cover architecture,
-integrations, data ownership, and when to choose each tool.
+CDviz is an open-source, self-hosted alternative to commercial SDLC observability tools. Unlike polling-based platforms such as Apache DevLake or proprietary tools like Datadog CI Visibility, CDviz uses a real-time event-push model based on the CDEvents standard, giving teams both observability and the foundation for event-driven automation — observe your pipelines before acting on them.
+
+The comparisons below cover architecture, integrations, data ownership, and when to choose each tool.
 
 ## CDviz vs. similar tools
 

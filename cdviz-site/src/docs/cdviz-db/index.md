@@ -1,5 +1,7 @@
 # CDviz Database
 
+CDviz Database is the persistence layer for CDEvents. It stores normalized delivery events in a PostgreSQL + TimescaleDB hypertable with a JSONB payload column, enabling time-series queries for DORA metrics, deployment timelines, and incident tracking.
+
 ## Overview
 
 The CDviz database provides the foundational data storage layer for the CDviz platform, enabling efficient capture and retrieval of continuous delivery events and metrics.

@@ -28,7 +28,7 @@ export default defineConfig({
   title: "CDviz",
   titleTemplate: ":title - CDviz",
   description:
-    "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.",
+    "Open-source event-driven CI/CD platform built on CDEvents. Collect software delivery events, visualize DORA metrics and deployment timelines in Grafana, and trigger automated workflows — observe your pipelines before acting on them.",
   cleanUrls: true, // supported by Cloudflare, and when false google search console warns about page with redirect
   head: [
     [
@@ -528,7 +528,7 @@ export default defineConfig({
         "@type": "SoftwareApplication",
         name: "CDviz",
         description:
-          "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines, deployments, and incidents with Grafana dashboards.",
+          "Open-source event-driven CI/CD platform built on CDEvents. Collect software delivery events, visualize DORA metrics and deployment timelines in Grafana, and trigger automated workflows — observe your pipelines before acting on them.",
         url: "https://cdviz.dev",
         applicationCategory: "DeveloperApplication",
         operatingSystem: "Linux, macOS, Windows (via Docker)",
@@ -562,9 +562,23 @@ export default defineConfig({
         name: "CDviz",
         url: "https://cdviz.dev",
         logo: "https://cdviz.dev/favicon.svg",
-        sameAs: ["https://github.com/cdviz-dev"],
+        sameAs: ["https://github.com/cdviz-dev", "https://www.youtube.com/@CDviz"],
       };
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(orgSchema)]);
+
+      const personSchema = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "David B.",
+        url: "https://github.com/davidb31",
+        // TODO: add LinkedIn URL when available
+        sameAs: [
+          "https://github.com/davidb31",
+          "https://dev.to/davidb31",
+          "https://www.youtube.com/@CDviz",
+        ],
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(personSchema)]);
     }
 
     if (pageData.relativePath.startsWith("blog/")) {
@@ -590,6 +604,13 @@ export default defineConfig({
             url: pageData.frontmatter.author_github
               ? `https://github.com/${pageData.frontmatter.author_github}`
               : "https://github.com/cdviz-dev",
+            ...(pageData.frontmatter.author_github === "davidb31" && {
+              sameAs: [
+                "https://github.com/davidb31",
+                "https://dev.to/davidb31",
+                "https://www.youtube.com/@CDviz",
+              ],
+            }),
           },
           publisher: {
             "@type": "Organization",
@@ -606,6 +627,49 @@ export default defineConfig({
         };
         head.push(["script", { type: "application/ld+json" }, JSON.stringify(articleSchema)]);
       }
+    }
+
+    if (pageData.relativePath === "docs/getting-started.md") {
+      const howToSchema = {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: "How to set up CDviz locally",
+        description:
+          "Set up a CDviz demo environment locally using Docker Compose with simulated events. Includes CDviz Collector, PostgreSQL with TimescaleDB, and Grafana dashboards for DORA metrics.",
+        estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0" },
+        totalTime: "PT5M",
+        tool: [
+          { "@type": "HowToTool", name: "Docker Compose" },
+          { "@type": "HowToTool", name: "Git" },
+        ],
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Clone the CDviz repository",
+            text: "Run: git clone https://github.com/cdviz-dev/cdviz.git",
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Launch the demo stack",
+            text: "Navigate to cdviz/demos/stack-compose and run: docker compose up",
+          },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Access the Grafana dashboard",
+            text: "Open http://localhost:3000/d/demo_service_deployed/service3a-demo in your browser.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 4,
+            name: "Send your first simulated CDEvent",
+            text: "Fill the Services Deployed form on the dashboard and click Submit to see DORA metrics update in real time.",
+          },
+        ],
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(howToSchema)]);
     }
 
     if (pageData.relativePath.startsWith("docs/")) {
