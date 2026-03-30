@@ -25,7 +25,12 @@ import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 type DashboardSpec = Pick<
   LifecycleConfig,
-  "subject" | "label" | "payloadSelector" | "withQueuedAt" | "lifecycleType"
+  | "subject"
+  | "label"
+  | "payloadSelector"
+  | "idFallbackSelector"
+  | "withQueuedAt"
+  | "lifecycleType"
 >;
 
 const DASHBOARD_CONFIGS: DashboardSpec[] = [
@@ -55,6 +60,8 @@ const DASHBOARD_CONFIGS: DashboardSpec[] = [
     label: "Test",
     payloadSelector:
       "payload -> 'subject' -> 'content' -> 'testCase' ->> 'name'",
+    idFallbackSelector:
+      "payload -> 'subject' -> 'content' -> 'testCase' ->> 'id'",
     withQueuedAt: true,
     lifecycleType: "traditional",
   },
@@ -63,6 +70,8 @@ const DASHBOARD_CONFIGS: DashboardSpec[] = [
     label: "Test Suite",
     payloadSelector:
       "payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name'",
+    idFallbackSelector:
+      "payload -> 'subject' -> 'content' -> 'testSuite' ->> 'id'",
     withQueuedAt: true,
     lifecycleType: "traditional",
   },
@@ -115,8 +124,34 @@ async function buildDashboard(spec: DashboardSpec): Promise<Dashboard> {
   return builder.build();
 }
 
+function buildResolvedSelector(
+  payloadSelector: string,
+  idFallbackSelector: string | undefined,
+  prefix: "payload" | "last_payload",
+): string {
+  const applyPrefix = (expr: string) =>
+    prefix === "last_payload" ? expr.replace(/^payload/, "last_payload") : expr;
+  const fallback =
+    idFallbackSelector !== undefined
+      ? `${applyPrefix(idFallbackSelector)}, `
+      : "";
+  return `COALESCE(NULLIF(${applyPrefix(payloadSelector)}, ''), ${fallback}'unknown')`;
+}
+
 function resolveLifecycle(spec: DashboardSpec): LifecycleConfig {
-  const { subject, label, payloadSelector, withQueuedAt, lifecycleType } = spec;
+  const {
+    subject,
+    label,
+    payloadSelector,
+    idFallbackSelector,
+    withQueuedAt,
+    lifecycleType,
+  } = spec;
+  const resolvedSelector = buildResolvedSelector(
+    payloadSelector,
+    idFallbackSelector,
+    "last_payload",
+  );
 
   switch (lifecycleType) {
     case "incident":
@@ -124,6 +159,7 @@ function resolveLifecycle(spec: DashboardSpec): LifecycleConfig {
         subject,
         label,
         payloadSelector,
+        idFallbackSelector,
         withQueuedAt,
         lifecycleType,
         selectAt: "detected_at, reported_at, resolved_at",
@@ -131,24 +167,28 @@ function resolveLifecycle(spec: DashboardSpec): LifecycleConfig {
           "($__timeFilter(detected_at) OR $__timeFilter(resolved_at))",
         startCol: "detected_at",
         endCol: "resolved_at",
+        resolvedSelector,
       };
     case "ticket":
       return {
         subject,
         label,
         payloadSelector,
+        idFallbackSelector,
         withQueuedAt,
         lifecycleType,
         selectAt: "created_at, updated_at, closed_at",
         timeFilter: "($__timeFilter(created_at) OR $__timeFilter(closed_at))",
         startCol: "created_at",
         endCol: "closed_at",
+        resolvedSelector,
       };
     default:
       return {
         subject,
         label,
         payloadSelector,
+        idFallbackSelector,
         withQueuedAt,
         lifecycleType,
         selectAt: withQueuedAt
@@ -159,6 +199,7 @@ function resolveLifecycle(spec: DashboardSpec): LifecycleConfig {
           : "$__timeFilter(finished_at)",
         startCol: "started_at",
         endCol: "finished_at",
+        resolvedSelector,
       };
   }
 }
@@ -198,10 +239,15 @@ function buildOverviewPanels(lifecycle: LifecycleConfig) {
 function newVariable4Selected(
   lifecycle: LifecycleConfig,
 ): QueryVariableBuilder {
-  const { subject, label, payloadSelector } = lifecycle;
+  const { subject, label, payloadSelector, idFallbackSelector } = lifecycle;
+  const valueExpr = buildResolvedSelector(
+    payloadSelector,
+    idFallbackSelector,
+    "payload",
+  );
   return newVariableOnDatasource(
     dedent`
-      SELECT DISTINCT ${payloadSelector} AS __value
+      SELECT DISTINCT ${valueExpr} AS __value
       FROM cdviz.cdevents_lake
       WHERE $__timeFilter(timestamp)
       AND subject = '${subject}'

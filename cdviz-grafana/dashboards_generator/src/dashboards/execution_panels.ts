@@ -21,6 +21,8 @@ export interface LifecycleConfig {
   endCol: string;
   timeFilter: string;
   selectAt: string;
+  idFallbackSelector?: string;
+  resolvedSelector: string;
 }
 
 export const SELECTED_FIELD_NAME = "selected_value";
@@ -123,11 +125,11 @@ export function createTotalDurationStatPanel(
 ): PanelBuilder {
   const {
     subject,
-    payloadSelector,
     lifecycleType,
     timeFilter,
     startCol,
     endCol,
+    resolvedSelector,
   } = lifecycle;
 
   const title =
@@ -143,7 +145,7 @@ export function createTotalDurationStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND ${endCol} IS NOT NULL
   `;
 
@@ -158,11 +160,11 @@ export function createAvgRuntimeStatPanel(
 ): PanelBuilder {
   const {
     subject,
-    payloadSelector,
     lifecycleType,
     timeFilter,
     startCol,
     endCol,
+    resolvedSelector,
   } = lifecycle;
 
   const title =
@@ -178,7 +180,7 @@ export function createAvgRuntimeStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND ${endCol} IS NOT NULL
   `;
 
@@ -191,7 +193,7 @@ export function createAvgRuntimeStatPanel(
 export function createAvgQueueTimeStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, timeFilter } = lifecycle;
+  const { subject, timeFilter, resolvedSelector } = lifecycle;
 
   const query = dedent`
     SELECT
@@ -199,7 +201,7 @@ export function createAvgQueueTimeStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND finished_at IS NOT NULL
       AND queued_at IS NOT NULL
   `;
@@ -213,7 +215,7 @@ export function createAvgQueueTimeStatPanel(
 export function createAvgTimeToReportStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, timeFilter } = lifecycle;
+  const { subject, timeFilter, resolvedSelector } = lifecycle;
 
   const query = dedent`
     SELECT
@@ -221,7 +223,7 @@ export function createAvgTimeToReportStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND reported_at IS NOT NULL
       AND detected_at IS NOT NULL
   `;
@@ -235,7 +237,7 @@ export function createAvgTimeToReportStatPanel(
 export function createAvgTimeToUpdateStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, timeFilter } = lifecycle;
+  const { subject, timeFilter, resolvedSelector } = lifecycle;
 
   const query = dedent`
     SELECT
@@ -243,7 +245,7 @@ export function createAvgTimeToUpdateStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND updated_at IS NOT NULL
       AND created_at IS NOT NULL
   `;
@@ -257,7 +259,7 @@ export function createAvgTimeToUpdateStatPanel(
 export function createResolutionRateStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, timeFilter } = lifecycle;
+  const { subject, timeFilter, resolvedSelector } = lifecycle;
 
   const query = dedent`
     SELECT
@@ -268,7 +270,7 @@ export function createResolutionRateStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
   `;
 
   return createStatPanel("Resolution Rate", query, 18, "percent", [
@@ -282,7 +284,7 @@ export function createResolutionRateStatPanel(
 export function createCompletionRateStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, timeFilter } = lifecycle;
+  const { subject, timeFilter, resolvedSelector } = lifecycle;
 
   const query = dedent`
     SELECT
@@ -295,7 +297,7 @@ export function createCompletionRateStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
   `;
 
   return createStatPanel("Completion Rate", query, 18, "percent", [
@@ -309,7 +311,7 @@ export function createCompletionRateStatPanel(
 export function createFailureRateStatPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, payloadSelector, withQueuedAt, timeFilter } = lifecycle;
+  const { subject, withQueuedAt, timeFilter, resolvedSelector } = lifecycle;
 
   const outcomeField =
     subject === "testcaserun" || subject === "testsuiterun"
@@ -325,7 +327,7 @@ export function createFailureRateStatPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND finished_at IS NOT NULL
   `;
 
@@ -348,7 +350,7 @@ export function createFailureRateStatPanel(
 export function createDurationTimeSeriesPanel(
   lifecycle: LifecycleConfig,
 ): PanelBuilder {
-  const { subject, label, payloadSelector, timeFilter, endCol, startCol } =
+  const { subject, label, timeFilter, endCol, startCol, resolvedSelector } =
     lifecycle;
 
   const query = dedent`
@@ -358,7 +360,7 @@ export function createDurationTimeSeriesPanel(
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       AND ${endCol} IS NOT NULL
     GROUP BY time
     ORDER BY time
@@ -428,7 +430,7 @@ const COUNT_PER_DAY_OVERRIDES = [
 ];
 
 function buildCountPerDayQuery(lifecycle: LifecycleConfig): string {
-  const { subject, payloadSelector, lifecycleType, timeFilter, withQueuedAt } =
+  const { subject, lifecycleType, timeFilter, withQueuedAt, resolvedSelector } =
     lifecycle;
 
   if (lifecycleType === "incident") {
@@ -445,7 +447,7 @@ function buildCountPerDayQuery(lifecycle: LifecycleConfig): string {
       FROM cdviz.${subject}
       WHERE
         ${timeFilter}
-        AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+        AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       GROUP BY time, status
       ORDER BY time, status
     `;
@@ -466,7 +468,7 @@ function buildCountPerDayQuery(lifecycle: LifecycleConfig): string {
       FROM cdviz.${subject}
       WHERE
         ${timeFilter}
-        AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+        AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
       GROUP BY time, status
       ORDER BY time, status
     `;
@@ -503,7 +505,7 @@ function buildCountPerDayQuery(lifecycle: LifecycleConfig): string {
     WHERE
       ${timeFilter}
       ${nullTimeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
     GROUP BY time, status
     ORDER BY time, status
   `;
@@ -541,7 +543,7 @@ export function createCountPerDayPanel(
 // --- Execution table panel ---
 
 function buildOperationalTableQuery(lifecycle: LifecycleConfig): string {
-  const { subject, payloadSelector, lifecycleType, timeFilter } = lifecycle;
+  const { subject, lifecycleType, timeFilter, resolvedSelector } = lifecycle;
   const startCol = lifecycleType === "incident" ? "detected_at" : "created_at";
   const endCol = lifecycleType === "incident" ? "resolved_at" : "closed_at";
   const firstColLabel = lifecycleType === "incident" ? "Environment" : "Type";
@@ -552,7 +554,7 @@ function buildOperationalTableQuery(lifecycle: LifecycleConfig): string {
 
   return dedent`
     SELECT
-      last_${payloadSelector} AS "${firstColLabel}",
+      ${resolvedSelector} AS "${firstColLabel}",
       subject_id AS "ID",
       ${startCol} AS "Started",
       ${endCol} AS "Completed",
@@ -562,14 +564,14 @@ function buildOperationalTableQuery(lifecycle: LifecycleConfig): string {
     FROM cdviz.${subject}
     WHERE
       ${timeFilter}
-      AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+      AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
     ORDER BY ${endCol} DESC NULLS FIRST
     LIMIT \${limit}
   `;
 }
 
 function buildTraditionalTableQuery(lifecycle: LifecycleConfig): string {
-  const { subject, payloadSelector, withQueuedAt, timeFilter } = lifecycle;
+  const { subject, withQueuedAt, timeFilter, resolvedSelector } = lifecycle;
   const needsOutcomeFromPayload =
     subject === "testcaserun" || subject === "testsuiterun";
 
@@ -578,7 +580,7 @@ function buildTraditionalTableQuery(lifecycle: LifecycleConfig): string {
       -- Get last N executions per name with all details
       execution_history AS (
         SELECT
-          last_${payloadSelector} AS name,
+          ${resolvedSelector} AS name,
           subject_id,
           ${needsOutcomeFromPayload ? "last_payload -> 'subject' -> 'content' ->> 'outcome' AS outcome," : "outcome,"}
           extract('epoch' from (finished_at - started_at)) AS run_duration,
@@ -587,11 +589,11 @@ function buildTraditionalTableQuery(lifecycle: LifecycleConfig): string {
           started_at,
           finished_at,
           ${withQueuedAt ? "queued_at," : ""}
-          row_number() OVER (PARTITION BY last_${payloadSelector} ORDER BY finished_at DESC) AS rn
+          row_number() OVER (PARTITION BY ${resolvedSelector} ORDER BY finished_at DESC) AS rn
         FROM cdviz.${subject}
         WHERE
           ${timeFilter}
-          AND last_${payloadSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
+          AND ${resolvedSelector} = ANY(ARRAY[\${${SELECTED_FIELD_NAME}:sqlstring}]::text[])
           AND finished_at IS NOT NULL
       ),
 
@@ -693,6 +695,7 @@ export function createExecutionTablePanel(
       showQueueHistory: withQueuedAt,
       barHeight: 20,
       barGap: 2,
+      sortBy: [{ displayName: "Run History (s)", desc: true }],
     };
   }
 

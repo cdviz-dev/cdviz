@@ -35,7 +35,7 @@
           "type": "grafana-postgresql-datasource",
           "uid": "${datasource}"
         },
-        "query": "SELECT DISTINCT payload -> 'subject' -> 'content' ->> 'ticketType' AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'ticket'\nORDER BY __value",
+        "query": "SELECT DISTINCT COALESCE(NULLIF(payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'ticket'\nORDER BY __value",
         "sort": 5,
         "refresh": 2,
         "current": {
@@ -94,7 +94,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (closed_at - created_at))), 0) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (closed_at - created_at))), 0) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -137,7 +137,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (closed_at - created_at))), 0) AS avg_runtime\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (closed_at - created_at))), 0) AS avg_runtime\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -180,7 +180,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (updated_at - created_at))), 0) AS avg_time_to_update\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND updated_at IS NOT NULL\n  AND created_at IS NOT NULL",
+          "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (updated_at - created_at))), 0) AS avg_time_to_update\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND updated_at IS NOT NULL\n  AND created_at IS NOT NULL",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -223,7 +223,7 @@
       "targets": [
         {
           "format": "table",
-          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (\n      WHERE last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed'\n    ) / NULLIF(COUNT(*) FILTER (WHERE closed_at IS NOT NULL), 0),\n    0\n  ) AS completion_rate\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])",
+          "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (\n      WHERE last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed'\n    ) / NULLIF(COUNT(*) FILTER (WHERE closed_at IS NOT NULL), 0),\n    0\n  ) AS completion_rate\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -274,7 +274,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', closed_at) AS time,\n  SUM(extract('epoch' from (closed_at - created_at))) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL\nGROUP BY time\nORDER BY time",
+          "rawSql": "SELECT\n  time_bucket('1 day', closed_at) AS time,\n  SUM(extract('epoch' from (closed_at - created_at))) AS total_duration\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND closed_at IS NOT NULL\nGROUP BY time\nORDER BY time",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -368,7 +368,7 @@
       "targets": [
         {
           "format": "time_series",
-          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(closed_at, created_at)) AS time,\n  CASE\n    WHEN closed_at IS NULL THEN 'open'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed' THEN 'completed'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'withdrawn' THEN 'withdrawn'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'duplicate' THEN 'duplicate'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'resolution', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
+          "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(closed_at, created_at)) AS time,\n  CASE\n    WHEN closed_at IS NULL THEN 'open'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'completed' THEN 'completed'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'withdrawn' THEN 'withdrawn'\n    WHEN last_payload -> 'subject' -> 'content' ->> 'resolution' = 'duplicate' THEN 'duplicate'\n    ELSE COALESCE(last_payload -> 'subject' -> 'content' ->> 'resolution', 'unknown')\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${datasource}"
@@ -573,7 +573,7 @@
           "targets": [
             {
               "format": "table",
-              "rawSql": "SELECT\n  last_payload -> 'subject' -> 'content' ->> 'ticketType' AS \"Type\",\n  subject_id AS \"ID\",\n  created_at AS \"Started\",\n  closed_at AS \"Completed\",\n  extract('epoch' from (closed_at - created_at)) AS \"Duration\",\n  last_payload -> 'subject' -> 'content' ->> 'resolution' AS \"Status\",\n  COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS \"URL\"\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND last_payload -> 'subject' -> 'content' ->> 'ticketType' = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY closed_at DESC NULLS FIRST\nLIMIT ${limit}",
+              "rawSql": "SELECT\n  COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') AS \"Type\",\n  subject_id AS \"ID\",\n  created_at AS \"Started\",\n  closed_at AS \"Completed\",\n  extract('epoch' from (closed_at - created_at)) AS \"Duration\",\n  last_payload -> 'subject' -> 'content' ->> 'resolution' AS \"Status\",\n  COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS \"URL\"\nFROM cdviz.ticket\nWHERE\n  ($__timeFilter(created_at) OR $__timeFilter(closed_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' ->> 'ticketType', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY closed_at DESC NULLS FIRST\nLIMIT ${limit}",
               "datasource": {
                 "type": "grafana-postgresql-datasource",
                 "uid": "${datasource}"
@@ -616,5 +616,5 @@
       }
     }
   ],
-  "version": 2026031317
+  "version": 2026033017
 }
