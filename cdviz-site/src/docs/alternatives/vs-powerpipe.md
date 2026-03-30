@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Powerpipe: SDLC Event History vs Cloud State Dashboards"
 description: "Open-source Powerpipe alternative for pipeline observability. CDviz vs Powerpipe: data model, deployment, and integration approach."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Powerpipe","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Powerpipe","url":"https://powerpipe.io"}]}'
 ---
 
 # CDviz vs Powerpipe
@@ -53,4 +58,21 @@ Both are open-source, self-hosted tools for engineering visibility — but they 
 
 ## Summary
 
-These tools are largely complementary rather than competing. Powerpipe excels at "what does my cloud look like right now"; CDviz excels at "what happened in my delivery pipeline over time — and what should happen next." Running both is a reasonable choice for platform teams.
+These tools solve different problems. Powerpipe visualizes current cloud state (resource inventories, compliance benchmarks); CDviz tracks what happened in your delivery pipeline over time and routes events to trigger downstream automation. If your primary need is SDLC observability, CDviz is purpose-built for it — Powerpipe fills a separate cloud infrastructure gap.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Is Powerpipe free?** Powerpipe is open-source under AGPL v3. Note: AGPL requires source disclosure for networked deployments, which may affect enterprise use. CDviz uses the more permissive Apache 2.0 license.
+
+**Can CDviz query cloud APIs like Powerpipe?** No. CDviz receives push events from your SDLC toolchain. Powerpipe queries cloud APIs on demand via Steampipe.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source engineering metrics platform
+- [All alternatives](./index)

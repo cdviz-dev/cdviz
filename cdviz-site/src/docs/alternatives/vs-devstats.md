@@ -1,8 +1,17 @@
 ---
+title: "CDviz vs DevStats: Full SDLC Observability vs Git Analytics"
 description: "Open-source DevStats alternative for SDLC observability. CDviz vs DevStats: data model, deployment, and integration differences."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs DevStats","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"DevStats","url":"https://www.devstats.com"}]}'
 ---
 
-# CDviz vs DevStats
+# CDviz vs DevStats (commercial)
+
+::: tip Two products share the DevStats name
+This page covers **DevStats.com**, the commercial SaaS product for enterprise engineering metrics. If you're looking for the open-source CNCF tooling used to track contributor activity on public GitHub repositories, see [CDviz vs CNCF DevStats](./vs-devstats-cncf).
+:::
 
 Comparing DevStats alternatives for SDLC observability? This page covers how CDviz and DevStats differ in architecture, data model, and use cases.
 
@@ -58,3 +67,22 @@ CDviz is an open-source, event-driven SDLC observability platform. DevStats is a
 ## Summary
 
 DevStats is a quick-start SaaS tool for git-centric engineering metrics with a polished management interface. CDviz covers a broader scope — the full SDLC event stream — with real-time events, workflow triggers, open standards, and the option to run entirely on your own infrastructure.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Does DevStats cover CI/CD pipeline events?** No. DevStats focuses on git and PR-centric metrics derived from GitHub, GitLab, and Bitbucket APIs.
+
+**Can I self-host DevStats?** No. DevStats is a commercial SaaS product with no self-hosted option.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs LinearB](./vs-linearb) — similar git-centric metrics scope
+- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
+- [CDviz vs Sleuth](./vs-sleuth) — DORA metrics SaaS
+- [All alternatives](./index)

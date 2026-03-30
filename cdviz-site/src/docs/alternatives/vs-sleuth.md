@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Sleuth: DORA Metrics Without Vendor Lock-In"
 description: "Self-hosted Sleuth alternative. CDviz vs Sleuth: open-source, data ownership, CDEvents standard, cost comparison. No vendor lock-in."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Sleuth","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Sleuth","url":"https://www.sleuth.io"}]}'
 ---
 
 # CDviz vs Sleuth
@@ -31,10 +36,10 @@ CDviz is an open-source platform with self-hosted and SaaS options. Sleuth is a 
 
 ## Key differences
 
-- **Data sovereignty**: With CDviz, your SDLC event data stays in your infrastructure. Sleuth sends all deployment signals and metrics data to Sleuth servers.
-- **Open standard**: CDviz is built on [CDEvents](https://cdevents.dev/), making your event data portable across vendors. Sleuth uses a proprietary deployment model tied to its own integrations.
+- **Deployment model**: Sleuth tracks deployments via explicit "deploy sources" tied to VCS branches or PR merges — each environment is tracked separately. CDviz ingests the full SDLC event stream across all systems (CI, CD, artifact registries, incident managers) using the CDEvents standard, not just deployments.
+- **DORA calculation**: Sleuth derives DORA metrics from deployment annotations on your PR commit history. CDviz derives DORA metrics from push events emitted by your pipeline toolchain — no polling, real-time as they happen.
+- **Data sovereignty**: With CDviz, your SDLC event data stays in your infrastructure. Sleuth stores all data on Sleuth servers.
 - **Observe and act**: CDviz events can trigger downstream workflows — the same event stream drives both observability and automation. Sleuth is monitoring-only.
-- **Customization**: CDviz lets you enrich events at ingestion, choose your storage backend, and connect any visualization or reporting tool — Grafana, BI platforms, AI agents, MCP-connected tools, Internal Developer Platforms. Sleuth is a closed ecosystem.
 - **Cost model**: CDviz self-hosted is free (infra costs only), with optional commercial support. Sleuth's per-user SaaS pricing scales linearly with team size.
 - **Operational burden**: Sleuth requires near-zero ops. CDviz self-hosted requires operating PostgreSQL, Grafana, and the collector — offset by commercial support or the upcoming SaaS option.
 
@@ -57,3 +62,22 @@ CDviz is an open-source platform with self-hosted and SaaS options. Sleuth is a 
 ## Summary
 
 Sleuth is a fast, polished SaaS for teams that want DORA metrics with minimal setup and tight Git/issue tracker integrations. CDviz is the right choice when data ownership, open standards, event-driven automation, and cost control matter — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Is Sleuth open-source?** No. Sleuth is a proprietary SaaS product with no self-hosted option.
+
+**Does Sleuth support CDEvents?** No. Sleuth uses a proprietary deployment signal model tied to its own integrations.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs LinearB](./vs-linearb) — engineering metrics with PR analytics
+- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
+- [CDviz vs DevStats](./vs-devstats) — git-centric engineering metrics
+- [All alternatives](./index)

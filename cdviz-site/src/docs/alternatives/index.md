@@ -1,5 +1,10 @@
 ---
+title: "CDviz Alternatives & Comparisons: SDLC Observability Tools"
 description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, Jellyfish, Swarmia, GetDX, and other SDLC observability tools. Built on the open CDEvents standard.
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":10,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":11,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":12,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
 ---
 
 # CI/CD Observability Tools & DevLake Alternatives
@@ -16,6 +21,7 @@ The comparisons below cover architecture, integrations, data ownership, and when
 | [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
 | [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)   |
 | [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
+| [CNCF DevStats](#cncf-devstats)   | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
 | [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
@@ -42,13 +48,22 @@ APM/infra. Proprietary, vendor-hosted data model.
 
 → [CDviz vs Datadog CI Visibility](./vs-datadog-ci)
 
-### DevStats {#devstats}
+### DevStats (commercial) {#devstats}
 
 Commercial SaaS platform for engineering metrics. Pulls data from GitHub, GitLab, and
 Bitbucket via API polling. Focused on git and PR-centric metrics (cycle time, DORA, PR
-review time) with built-in dashboards for engineering leadership.
+review time) with built-in dashboards for engineering leadership. No self-hosted option.
 
 → [CDviz vs DevStats](./vs-devstats)
+
+### CNCF DevStats {#cncf-devstats}
+
+Open-source community health analytics tool maintained by the CNCF (`github.com/cncf/devstats`).
+Ingests GitHub Archive data (hourly) to track contributor activity, company attribution,
+PR review times, and SIG workload for public open-source projects. Uses PostgreSQL + Grafana.
+Not designed for private pipelines or SDLC observability. Unrelated to the commercial DevStats SaaS.
+
+→ [CDviz vs CNCF DevStats](./vs-devstats-cncf)
 
 ### LinearB {#linearb}
 
@@ -106,10 +121,15 @@ agreements. No self-hosted option.
 
 → [CDviz vs Swarmia](./vs-swarmia)
 
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
 ## Turbot companion tools
 
-The Turbot suite pairs well with CDviz for broader DevOps observability:
+CDviz focuses on SDLC event observability. For adjacent DevOps needs, the Turbot open-source suite covers complementary ground:
 
 - [steampipe](https://steampipe.io/) — query cloud APIs with SQL
 - [flowpipe](https://flowpipe.io) — workflow automation for DevOps
 - [tailpipe](https://tailpipe.io) — open-source SIEM for log insights (DuckDB-powered)
+- [powerpipe](https://powerpipe.io) — dashboards over current cloud state ([see comparison](./vs-powerpipe))

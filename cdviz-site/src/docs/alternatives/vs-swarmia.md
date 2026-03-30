@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Swarmia: Open-Source Engineering Effectiveness"
 description: "Self-hosted Swarmia alternative. CDviz vs Swarmia: open-source, data ownership, CDEvents standard, engineering effectiveness without vendor lock-in."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Swarmia","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
 ---
 
 # CDviz vs Swarmia
@@ -60,3 +65,22 @@ CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a
 ## Summary
 
 Swarmia is a polished fit for engineering teams focused on developer effectiveness, PR analytics, and working agreements without operational overhead. CDviz is the right choice when data ownership, open standards, CI/CD pipeline observability, event-driven automation, and cost control matter — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Does CDviz support working agreements?** Not natively. CDviz events can power custom alerting for agreement violations, but Swarmia has this built-in.
+
+**Can I self-host Swarmia?** No. Swarmia is a SaaS-only product.
+
+**Is CDviz free?** Yes — Apache 2.0. No per-developer pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs LinearB](./vs-linearb) — PR-centric engineering metrics
+- [CDviz vs Sleuth](./vs-sleuth) — DORA-focused SaaS
+- [CDviz vs GetDX](./vs-getdx) — developer experience platform
+- [All alternatives](./index)
