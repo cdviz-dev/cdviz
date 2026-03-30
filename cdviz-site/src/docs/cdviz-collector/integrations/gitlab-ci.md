@@ -48,7 +48,22 @@ This complements the [GitLab Webhook integration](/docs/cdviz-collector/integrat
 
 ## Quick Start
 
-### 1. Install cdviz-collector
+### 1. Configure CI variables
+
+In **Settings > CI/CD > Variables**, add:
+
+| Variable      | Value                                         |
+| ------------- | --------------------------------------------- |
+| `CDVIZ_COLLECTOR_URL`   | Your cdviz-collector HTTP endpoint            |
+| `CDVIZ_COLLECTOR_TOKEN` | Your cdviz-collector config (see example below)|
+
+
+Mark both as **masked** to prevent them from appearing in job logs.
+
+Using token to sign or as bearer token depends of the configuration of your cdevents consummer (could be a cdviz-collector running in server mode).
+
+
+### 2. Install cdviz-collector
 
 Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` entry or a dedicated job:
 
@@ -58,18 +73,18 @@ Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` e
     - curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz
       | tar xz -C /usr/local/bin
     - chmod +x /usr/local/bin/cdviz-collector
+    - cat >cdviz-collector.toml <<EOF
+      [sinks.http.headers.x-signature]
+      type = "signature"
+      token = "$CDVIZ_COLLECTOR_TOKEN"
+      signature_prefix = "sha256="
+      signature_encoding = "hex"
+      EOF
 ```
 
-### 2. Configure CI variables
+> [!WARNING]
+> cdviz-collector allow to define / override any configuration via environment variable. But GitLab uses bash `export` that doesn't support variable name with `-`. So use configuration file for variable with a `-` like some http header.
 
-In **Settings > CI/CD > Variables**, add:
-
-| Variable      | Value                                         |
-| ------------- | --------------------------------------------- |
-| `CDVIZ_URL`   | Your cdviz-collector HTTP endpoint            |
-| `CDVIZ_TOKEN` | Bearer token for authentication (if required) |
-
-Mark both as **masked** to prevent them from appearing in job logs.
 
 ### 3. Wrap a test command
 
@@ -79,8 +94,8 @@ test:
   script:
     - cdviz-collector send --run testsuiterun_junit
         --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA"
-        --url $CDVIZ_URL
-        --header "Authorization: Bearer $CDVIZ_TOKEN"
+        --url "$CDVIZ_COLLECTOR_URL"
+        --config cdviz-collector.toml
         -- mvn test
 ```
 
@@ -95,27 +110,31 @@ stages:
   - deploy
 
 variables:
-  CDVIZ_URL: $CDVIZ_URL        # set in CI/CD Variables
-  CDVIZ_TOKEN: $CDVIZ_TOKEN    # set in CI/CD Variables
+  CDVIZ_COLLECTOR_URL: ${CDVIZ_COLLECTOR_URL} # set in CI/CD Variables
+  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__TYPE: "signature"
+  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__TOKEN: ${CDVIZ_COLLECTOR_TOKEN} # set in CI/CD Variables
+  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__SIGNATURE_PREFIX: "sha256="
+  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__SIGNATURE_ENCODING: "hex"
 
-.cdviz-setup:
+.install-cdviz: &install-cdviz
   before_script:
     - curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz
-        | tar xz -C /usr/local/bin
+      | tar xz -C /usr/local/bin
+    - chmod +x /usr/local/bin/cdviz-collector
 
 # Build: exit-code only, no test result parsing
 build:
-  extends: .cdviz-setup
+  extends: .install-cdviz
   stage: build
   script:
     - cdviz-collector send --run taskrun
-        --url $CDVIZ_URL
+        --url "$CDVIZ_COLLECTOR_URL"
         --header "Authorization: Bearer $CDVIZ_TOKEN"
         -- make build
 
 # Unit tests: JUnit XML parsed automatically from **/TEST-*.xml
 test:
-  extends: .cdviz-setup
+  extends: .install-cdviz
   stage: test
   script:
     - cdviz-collector send --run testsuiterun_junit
@@ -126,7 +145,7 @@ test:
 
 # Deploy: exit-code only
 deploy:
-  extends: .cdviz-setup
+  extends: .install-cdviz
   stage: deploy
   when: on_success
   script:
