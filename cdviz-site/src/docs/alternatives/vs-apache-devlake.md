@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Apache DevLake: Event-Driven vs Polling"
 description: "Open-source Apache DevLake alternative. CDviz vs DevLake: architecture, integrations, DORA metrics. Self-hosted, CDEvents-native."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Apache DevLake","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"}]}'
 ---
 
 # CDviz vs Apache DevLake
@@ -55,3 +60,22 @@ Both are open-source platforms for engineering metrics and SDLC visibility. They
 ## Summary
 
 DevLake is the safer "broad coverage" choice for pure metrics and dashboards. CDviz is the right bet if open standards, real-time events, event-driven automation, and composable tooling matter to your team — or if you want commercial support to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Which has more out-of-the-box integrations?** Apache DevLake (50+). CDviz covers GitHub, GitLab, ArgoCD, and Kubernetes today; more via webhooks.
+
+**Does Apache DevLake support CDEvents?** No. DevLake uses a proprietary domain model optimized for its own dashboards.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs Powerpipe](./vs-powerpipe) — another open-source DevOps visibility tool
+- [CDviz vs Datadog CI Visibility](./vs-datadog-ci) — commercial SaaS alternative
+- [CDviz vs DevStats](./vs-devstats) — commercial SaaS for git-centric metrics
+- [All alternatives](./index)

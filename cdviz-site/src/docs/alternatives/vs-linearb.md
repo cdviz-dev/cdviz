@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs LinearB: Open-Source Engineering Metrics"
 description: "Self-hosted LinearB alternative for engineering metrics. CDviz vs LinearB: open-source, CDEvents-native, no per-seat pricing."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs LinearB","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"LinearB","url":"https://linearb.io"}]}'
 ---
 
 # CDviz vs LinearB
@@ -62,3 +67,22 @@ Both platforms surface engineering metrics for software delivery teams. They sol
 ## Summary
 
 LinearB is the fastest path to PR-centric engineering metrics and AI-powered code review workflows for teams already using GitHub/GitLab and Jira. CDviz is the right choice when you need full-pipeline observability beyond git, data ownership, an open event standard, real-time event streaming, or cost efficiency at scale — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Does LinearB have a free tier?** Yes — up to 8 contributors. Paid plans start around $420–$549 per contributor/year.
+
+**Does LinearB support CDEvents?** No. LinearB uses a proprietary polling-based data model tied to its own platform.
+
+**Is CDviz free?** Yes — Apache 2.0. No per-contributor pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs DevStats](./vs-devstats) — similar git-centric scope
+- [CDviz vs Sleuth](./vs-sleuth) — DORA-focused SaaS
+- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
+- [All alternatives](./index)

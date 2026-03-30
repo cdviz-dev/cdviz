@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Datadog CI Visibility: Self-Hosted Alternative"
 description: "Self-hosted Datadog CI Visibility alternative. CDviz vs Datadog CI: open-source, data ownership, cost comparison. No vendor lock-in."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Datadog CI Visibility","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"}]}'
 ---
 
 # CDviz vs Datadog CI Visibility
@@ -57,3 +62,22 @@ CDviz is an open-source platform with self-hosted and SaaS options. Datadog CI V
 ## Summary
 
 Datadog CI is the fastest zero-ops path if you are already in the Datadog ecosystem. CDviz is the right choice when data ownership, open standards, event-driven automation, and cost control matter — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Can CDviz replace Datadog for APM and infrastructure monitoring?** No. CDviz is SDLC-specific (deployments, pipelines, artifacts). Datadog covers full-stack APM, infra, and logs.
+
+**Does Datadog CI Visibility support CDEvents?** No. Datadog uses a proprietary trace/span model tied to the Datadog agent.
+
+**Is CDviz free?** Yes — Apache 2.0. No per-pipeline pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs Splunk](./vs-splunk) — another enterprise data platform
+- [CDviz vs Sleuth](./vs-sleuth) — SaaS-native DORA metrics alternative
+- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source alternative
+- [All alternatives](./index)

@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs GetDX: Pipeline Observability vs Developer Experience"
 description: "Self-hosted GetDX alternative. CDviz vs GetDX: open-source, data ownership, CDEvents standard, developer experience metrics without vendor lock-in."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs GetDX","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"GetDX","url":"https://getdx.com"}]}'
 ---
 
 # CDviz vs GetDX
@@ -61,3 +66,21 @@ CDviz is an open-source platform with self-hosted and SaaS options. GetDX is a f
 ## Summary
 
 GetDX is a strong fit for organizations running formal developer experience programs that need to combine quantitative pipeline metrics with qualitative developer sentiment surveys. CDviz is the right choice for platform and DevOps teams who need CI/CD pipeline observability, open standards, event-driven automation, and data ownership — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Does CDviz run developer experience surveys?** No. CDviz is quantitative-only (event-driven metrics). GetDX combines quantitative metrics with SPACE/DX Core qualitative surveys.
+
+**Can I self-host GetDX?** No. GetDX is an enterprise SaaS product.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs Jellyfish](./vs-jellyfish) — engineering management intelligence
+- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
+- [All alternatives](./index)

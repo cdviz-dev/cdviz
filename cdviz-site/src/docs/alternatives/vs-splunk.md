@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Splunk for CI/CD Observability"
 description: "Open-source Splunk alternative for CI/CD observability. CDviz vs Splunk: self-hosted, data ownership, cost comparison."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Splunk","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Splunk","url":"https://www.splunk.com"}]}'
 ---
 
 # CDviz vs Splunk
@@ -60,3 +65,21 @@ CDviz is built specifically for SDLC observability using the CDEvents standard. 
 ## Summary
 
 Splunk is the right choice when you already run it for security or operations and want to extend it to DevOps log analysis — leveraging existing investment and expertise. CDviz is the right choice when SDLC observability is the primary goal: it delivers purpose-built DORA dashboards, real-time CDEvents pipelines, and workflow automation out of the box, at lower cost and setup complexity, without volume-based pricing.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Can CDviz replace Splunk for SIEM and security monitoring?** No. CDviz is SDLC-specific. Splunk covers security, compliance, and operational monitoring well beyond software delivery.
+
+**Does Splunk support CDEvents?** No. Splunk uses a proprietary index and query language (SPL).
+
+**Is CDviz free?** Yes — Apache 2.0. No volume-based pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs Datadog CI Visibility](./vs-datadog-ci) — commercial SaaS pipeline monitoring
+- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source engineering metrics
+- [All alternatives](./index)

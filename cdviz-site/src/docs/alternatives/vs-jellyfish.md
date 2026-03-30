@@ -1,5 +1,10 @@
 ---
+title: "CDviz vs Jellyfish: CI/CD Observability vs Engineering Investment Intelligence"
 description: "Self-hosted Jellyfish alternative. CDviz vs Jellyfish: open-source, data ownership, CDEvents standard, engineering metrics without vendor lock-in."
+head:
+  - - script
+    - type: application/ld+json
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"CDviz vs Jellyfish","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Jellyfish","url":"https://jellyfish.co"}]}'
 ---
 
 # CDviz vs Jellyfish
@@ -58,3 +63,22 @@ CDviz is an open-source platform with self-hosted and SaaS options. Jellyfish is
 ## Summary
 
 Jellyfish is a strong fit for engineering leaders who need investment allocation reporting and visibility into how engineering effort maps to business priorities. CDviz is the right choice for platform and DevOps teams who need CI/CD pipeline observability, open standards, event-driven automation, and data ownership — with commercial support available to reduce operational risk.
+
+::: tip Get started with CDviz
+[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
+:::
+
+## FAQ
+
+**Does CDviz support engineering investment allocation reporting?** Not yet — it's on the roadmap. Jellyfish is purpose-built for this use case.
+
+**Can I self-host Jellyfish?** No. Jellyfish is an enterprise SaaS product with contract-based pricing.
+
+**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+
+## Related comparisons
+
+- [CDviz vs GetDX](./vs-getdx) — developer experience metrics platform
+- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
+- [CDviz vs LinearB](./vs-linearb) — PR-centric engineering metrics
+- [All alternatives](./index)
