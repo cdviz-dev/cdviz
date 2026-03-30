@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-03-30
+
+### Added
+
+- Fallback value of name (to id) when avaliable or to `unknown` in executions'dashboards ([d0fe440](d0fe440b0353c195217feeea0a0c1c4e9a8f1e70))
+
+### Changed
+
+- Update description, introduction & metadata ([5c644e0](5c644e01226439b42ba271bc299756ebaac40517))
+
 ## [1.9.1] - 2026-03-24
 
 ### Changed
