@@ -435,6 +435,7 @@ export default defineConfig({
             { text: "CDviz vs GetDX", link: "/docs/alternatives/vs-getdx" },
             { text: "CDviz vs Jellyfish", link: "/docs/alternatives/vs-jellyfish" },
             { text: "CDviz vs LinearB", link: "/docs/alternatives/vs-linearb" },
+            { text: "CDviz vs Middleware", link: "/docs/alternatives/vs-middleware" },
             { text: "CDviz vs Powerpipe", link: "/docs/alternatives/vs-powerpipe" },
             { text: "CDviz vs Sleuth", link: "/docs/alternatives/vs-sleuth" },
             { text: "CDviz vs Splunk", link: "/docs/alternatives/vs-splunk" },
