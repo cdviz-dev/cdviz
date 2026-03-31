@@ -1,0 +1,5 @@
+artifact_id,deploy_ns,dts_0,dts_published,dts_signed,dts_group1-dev/eu-1,dts_group1-uat/eu-1,dts_group1-prod/eu-2,dts_group1-prod/us-2
+pkg:oci/app-d?tag=0.1.0&repository_url=my_repo.io/my_org,ns-d/deploy-d/container-d,1d,9h,,9h 30m,10h,,
+pkg:oci/app-d?tag=0.1.0&repository_url=my_repo.io/my_org/charts,ns-d/deploy-d/container-d,1d,9h 1m,,9h 31m,10h 1m,,
+pkg:oci/app-d?tag=0.2.0&repository_url=my_repo.io/my_org,ns-d/deploy-d/container-d,3d,9h,,9h 30m,10h,,
+pkg:oci/app-d?tag=0.2.0&repository_url=my_repo.io/my_org/charts,ns-d/deploy-d/container-d,3d,9h 1m,,9h 31m,10h 1m,,

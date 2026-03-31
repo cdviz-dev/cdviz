@@ -1,0 +1,7 @@
+dts_0,id,testSuite_id,testSuite_name,environment,queued,started,finished,outcome,severity,reason,linked_artifact_id
+0d,ci-app-d-0.1.0,ts-app-d-unit,Unit Tests,ci,8h,8h 2s,8h 35m,pass,,,pkg:oci/app-d?repository_url=my_repo.io/my_org
+0d,dev-app-d-0.1.0,ts-app-d-integration,Integration Tests,group1-dev/eu-1,9h 45m,9h 46m,10h,pass,,,pkg:oci/app-d?repository_url=my_repo.io/my_org&tag=0.1.0
+0d,uat-app-d-0.1.0,ts-app-d-e2e,E2E Tests,group1-uat/eu-1,10h 15m,10h 16m,10h 46m,pass,,,pkg:oci/app-d?repository_url=my_repo.io/my_org&tag=0.1.0
+2d,ci-app-d-0.2.0,ts-app-d-unit,Unit Tests,ci,8h,8h 2s,8h 35m,pass,,,pkg:oci/app-d?repository_url=my_repo.io/my_org
+2d,dev-app-d-0.2.0,ts-app-d-integration,Integration Tests,group1-dev/eu-1,9h 45m,9h 46m,10h,fail,high,New API incompatibility found,pkg:oci/app-d?repository_url=my_repo.io/my_org&tag=0.2.0
+2d,uat-app-d-0.2.0,ts-app-d-e2e,E2E Tests,group1-uat/eu-1,10h 15m,10h 16m,10h 56m,fail,medium,Degraded performance under load,pkg:oci/app-d?repository_url=my_repo.io/my_org&tag=0.2.0

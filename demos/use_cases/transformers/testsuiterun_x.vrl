@@ -67,6 +67,22 @@ for_each(["queued", "started", "finished"]) -> |_index, value| {
       event.body.subject.content.reason = .body.reason
     }
 
+    # Add customData.links when linked_artifact_id is provided.
+    # This enables artifact timeline queries via customData.links[*].subject.id.
+    if !is_nullish(.body.linked_artifact_id) {
+      event.body.customData = {
+        "links": [
+          {
+            "linkkind": "trigger",
+            "subject": {
+              "id": to_string!(.body.linked_artifact_id),
+              "type": "artifact"
+            }
+          }
+        ]
+      }
+    }
+
     output = push(output, event)
   }
 }
