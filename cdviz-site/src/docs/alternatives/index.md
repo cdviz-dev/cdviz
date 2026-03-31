@@ -4,7 +4,7 @@ description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, J
 head:
   - - script
     - type: application/ld+json
-    - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":10,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":11,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":12,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Middleware","url":"https://middlewarehq.com"},{"@type":"ListItem","position":10,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":11,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":12,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":13,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
 ---
 
 # CI/CD Observability Tools & DevLake Alternatives
@@ -25,6 +25,7 @@ The comparisons below cover architecture, integrations, data ownership, and when
 | [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
+| [Middleware](#middleware)          | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling) |
 | [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
 | [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)   |
 | [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion |
@@ -97,6 +98,15 @@ engineering investment to business initiatives via Jira and GitHub data. Primary
 are VPs and engineering directors. No self-hosted option.
 
 → [CDviz vs Jellyfish](./vs-jellyfish)
+
+### Middleware {#middleware}
+
+Open-source DORA metrics platform (Apache 2.0, ~1.5k GitHub stars). Polls GitHub, GitLab, and
+Jira to compute DORA metrics, PR review analytics, and sprint flow insights. Offers AI-generated
+sprint reports and Slack automation on paid tiers. Available as self-hosted Docker or SaaS
+($39/user/month Standard). Uses a proprietary data model, not CDEvents.
+
+→ [CDviz vs Middleware](./vs-middleware)
 
 ### Powerpipe {#powerpipe}
 
