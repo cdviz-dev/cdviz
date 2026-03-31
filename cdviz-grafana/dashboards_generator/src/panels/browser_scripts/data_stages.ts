@@ -1,21 +1,63 @@
 import { ArtifactInfo } from "./artifact_info";
 
+// Sentinel prefix used in the stages array to mark repo separator rows.
+// This string cannot appear as a real stage name (starts with NUL byte).
+export const REPO_SEPARATOR_PREFIX = "\x00repo:";
+// Separator between repo and stage name in a prefixed stage key.
+export const STAGE_KEY_SEP = "\x01";
+
+/** Build a Y-axis key combining repo and stage, used when multiRepo=true. */
+export function makeStageKey(stage: string, repo: string | null): string {
+  return repo !== null ? `${repo}${STAGE_KEY_SEP}${stage}` : stage;
+}
+
+/** Parse a stage key back into {repo, stage}. repo is null when no prefix. */
+export function parseStageKey(key: string): {
+  repo: string | null;
+  stage: string;
+} {
+  const sep = key.indexOf(STAGE_KEY_SEP);
+  if (sep === -1) return { repo: null, stage: key };
+  return { repo: key.slice(0, sep), stage: key.slice(sep + 1) };
+}
+
+/** Returns true if this stages[] entry is a repo separator row, not a real stage. */
+export function isSeparator(key: string): boolean {
+  return key.startsWith(REPO_SEPARATOR_PREFIX);
+}
+
+/** Extract the repo label from a separator key. */
+export function separatorRepo(key: string): string {
+  return key.slice(REPO_SEPARATOR_PREFIX.length);
+}
+
 export type Datum = {
   timestamp: number;
   action: string;
   stage: string;
   artifact_id: string;
+  entity_type?: string;
+  entity_id?: string;
+  environment_id?: string;
 };
 export type DatumExt = {
   timestamp: number;
   action: string;
   stage: string;
   artifactInfo: ArtifactInfo;
+  /** Canonical key for connecting events with a line: first non-latest tag, or version, or "" for bare. */
+  lineKey: string;
+  entity_type?: string;
+  entity_id?: string;
+  environment_id?: string;
 };
 export type Domains = {
   timestampMin: number;
   timestampMax: number;
+  /** Y-axis keys. In multi-repo mode includes REPO_SEPARATOR_PREFIX rows and STAGE_KEY_SEP-prefixed stage keys. */
   stages: string[];
+  /** True when data contains more than one distinct repositoryUrl — enables separator-band layout. */
+  multiRepo: boolean;
 };
 export type DataOutput = { series: DatumExt[][]; domains: Domains };
 
@@ -46,12 +88,27 @@ export function groupBySeries(data: Datum[]): DatumExt[][] {
         dest = [artifactInfo, []];
         res.push(dest);
       }
+      // Compute line key from the per-event ArtifactInfo (before merging into series).
+      // Lines are drawn only between events sharing the same tag (fallback: version).
+      const nonLatestTags = [...artifactInfo.tags]
+        .filter((t) => t !== "latest")
+        .sort();
+      const lineKey =
+        nonLatestTags.length > 0
+          ? nonLatestTags[0]
+          : (artifactInfo.version ?? "");
+
       dest[0].mergeVersionAndTags(artifactInfo);
+
       const datum: DatumExt = {
         timestamp: it.timestamp,
         action: it.action,
         stage: it.stage,
         artifactInfo: dest[0],
+        lineKey,
+        entity_type: it.entity_type,
+        entity_id: it.entity_id,
+        environment_id: it.environment_id,
       };
       dest[1].push(datum);
     } catch (e) {
@@ -96,14 +153,47 @@ function extractDomains(data: DatumExt[][]): Domains {
       timestampMin: Date.now(),
       timestampMax: Date.now(),
       stages: [],
+      multiRepo: false,
     };
   }
 
-  const stages = sortStages(data);
+  // Collect distinct repos in order of first appearance
+  const reposSeen = new Set<string | null>();
+  for (const serie of data) {
+    for (const d of serie) {
+      reposSeen.add(d.artifactInfo.repositoryUrl);
+    }
+  }
+  const repos = [...reposSeen];
+  const multiRepo = repos.length > 1;
+
+  let stages: string[];
+  if (!multiRepo) {
+    stages = sortStages(data);
+  } else {
+    // Build per-repo stage lists with separators.
+    // Stages array layout (bottom → top in ECharts Y-axis):
+    //   [repo_A_latest, ..., repo_A_earliest, sep:A,
+    //    repo_B_latest, ..., repo_B_earliest, sep:B]
+    // This makes sep:B the topmost row (header) of its band when read top→bottom.
+    stages = [];
+    for (const repo of repos) {
+      const repoSeries = data
+        .map((serie) =>
+          serie.filter((d) => d.artifactInfo.repositoryUrl === repo),
+        )
+        .filter((s) => s.length > 0);
+      const repoStages = sortStages(repoSeries); // [latest, ..., earliest] after reverse
+      stages.push(...repoStages.map((s) => makeStageKey(s, repo)));
+      stages.push(REPO_SEPARATOR_PREFIX + (repo ?? ""));
+    }
+  }
+
   return {
     timestampMin,
     timestampMax,
-    stages: stages,
+    stages,
+    multiRepo,
   };
 }
 
@@ -126,6 +216,21 @@ function sortStages(seriesValues: DatumExt[][]): string[] {
   // performance.mark("buildTransitionGraph");
   const graph = buildTransitionGraph(seriesValues);
   // console.log(performance.measure("buildTransitionGraph-duration", "buildTransitionGraph"));
+
+  // Identify isolated stages: no outgoing AND no incoming transitions.
+  // These are stages that have no lifecycle connection to others (e.g. CI testsuiterun
+  // events that use bare artifact IDs kept in a separate series after the isSimilarTo fix).
+  // They are placed at the TOP of the chart (end of the sorted array) so that connected
+  // stages form a coherent chain below, with isolated stages as a "preamble" above.
+  const hasIncoming = new Set<string>();
+  for (const neighbors of graph.values()) {
+    for (const n of neighbors) hasIncoming.add(n);
+  }
+  const isolated = new Set<string>();
+  for (const [node, neighbors] of graph) {
+    if (neighbors.size === 0 && !hasIncoming.has(node)) isolated.add(node);
+  }
+
   // performance.mark("topologicalSort");
   let stagesSorted: string[] = [];
   try {
@@ -138,7 +243,16 @@ function sortStages(seriesValues: DatumExt[][]): string[] {
     stagesSorted = graph.keys().toArray().sort();
   }
   // console.log(performance.measure("topologicalSort-duration", "topologicalSort"));
-  stagesSorted.reverse(); // Reverse to have the earliest stage last
+  stagesSorted.reverse(); // Reverse to have the earliest stage last (= end of array = top of chart)
+
+  // Move isolated stages to the end so they appear at the top of the chart,
+  // above the connected lifecycle chain.
+  if (isolated.size > 0) {
+    const connected = stagesSorted.filter((s) => !isolated.has(s));
+    const isolatedArr = stagesSorted.filter((s) => isolated.has(s));
+    stagesSorted = [...connected, ...isolatedArr];
+  }
+
   return stagesSorted;
 }
 
@@ -300,6 +414,7 @@ class StageSummary {
 
 function summarizeStages(
   seriesValues: DatumExt[][],
+  multiRepo = false,
 ): Map<string, StageSummary> {
   const summaries: Map<string, StageSummary> = new Map();
 
@@ -307,17 +422,19 @@ function summarizeStages(
     let previousTimestamp: number | null = null;
 
     for (const datum of sequence) {
-      const stage = datum.stage;
+      const key = multiRepo
+        ? makeStageKey(datum.stage, datum.artifactInfo.repositoryUrl)
+        : datum.stage;
       const timestamp = datum.timestamp;
       const version =
         datum.artifactInfo.version ||
         datum.artifactInfo.tags.values().next().value ||
         "unknown";
 
-      if (!summaries.has(stage)) {
-        summaries.set(stage, new StageSummary(stage));
+      if (!summaries.has(key)) {
+        summaries.set(key, new StageSummary(key));
       }
-      const summary = summaries.get(stage);
+      const summary = summaries.get(key);
       if (summary) {
         summary.registerEvent(timestamp, version, previousTimestamp);
       }
@@ -331,7 +448,8 @@ function summarizeStages(
 export function summarizeSortedStages(
   seriesValues: DatumExt[][],
   stages: string[],
+  multiRepo = false,
 ): StageSummary[] {
-  const summaries = summarizeStages(seriesValues);
+  const summaries = summarizeStages(seriesValues, multiRepo);
   return stages.map((stage) => summaries.get(stage) || new StageSummary(stage));
 }

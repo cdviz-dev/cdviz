@@ -38,21 +38,27 @@ export class ArtifactInfo {
       //   console.debug("check tags", this.tags, other.tags, intersection, res);
       // }
     } else {
-      res = res && this.tags === other.tags && this.version === other.version;
-      // if (debug) {
-      //   console.debug(
-      //     "check full",
-      //     this.version,
-      //     other.version,
-      //     this.version === other.version,
-      //     this.tags,
-      //     other.tags,
-      //     this.tags === other.tags,
-      //     res,
-      //   );
-      // }
+      // Only merge when BOTH sides have no version AND no non-latest tags.
+      // Prevents bare/CI artifacts (no tags, no version) from merging with
+      // tag-versioned artifacts (e.g. pkg:app?tag=0.1.0), which would create
+      // spurious lifecycle edges in the timeline.
+      const nonLatestSelf = new Set(this.tags);
+      nonLatestSelf.delete("latest");
+      const nonLatestOther = new Set(other.tags);
+      nonLatestOther.delete("latest");
+      res =
+        res &&
+        this.version === other.version &&
+        nonLatestSelf.size === 0 &&
+        nonLatestOther.size === 0;
     }
     return res;
+  }
+
+  get hasVersion(): boolean {
+    const nonLatestTags = new Set(this.tags);
+    nonLatestTags.delete("latest");
+    return !!this.version || nonLatestTags.size > 0;
   }
 
   mergeVersionAndTags(other: ArtifactInfo): void {

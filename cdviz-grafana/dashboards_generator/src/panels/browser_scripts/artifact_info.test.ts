@@ -11,6 +11,9 @@ test("parse pkg:oci/app-a@0.0.1", () => {
 test("isSimilarTo", () => {
   const app_a = new ArtifactInfo("pkg:oci/app-a");
   expect(app_a.isSimilarTo(app_a)).toBeTrue();
+  // Two separately constructed bare (no-version, no-tag) instances must group together
+  const app_a_2 = new ArtifactInfo("pkg:oci/app-a");
+  expect(app_a.isSimilarTo(app_a_2)).toBeTrue();
 
   const app_a_v001 = new ArtifactInfo("pkg:oci/app-a@0.0.1");
   expect(app_a_v001.isSimilarTo(app_a_v001)).toBeTrue();
@@ -44,6 +47,25 @@ test("isSimilarTo", () => {
 
   const app_a_v002_latest = new ArtifactInfo("pkg:oci/app-a@0.0.2?tag=latest");
   expect(app_a_v001_latest.isSimilarTo(app_a_v002_latest)).toBeFalse();
+});
+
+test("hasVersion", () => {
+  // Bare: no version, no tags → no version
+  expect(new ArtifactInfo("pkg:oci/app-a").hasVersion).toBeFalse();
+  // only 'latest' tag → still no meaningful version
+  expect(new ArtifactInfo("pkg:oci/app-a?tag=latest").hasVersion).toBeFalse();
+  // explicit version → has version
+  expect(new ArtifactInfo("pkg:oci/app-a@0.0.1").hasVersion).toBeTrue();
+  // digest as version → has version
+  expect(
+    new ArtifactInfo("pkg:oci/app-a@sha256%3Aabc123").hasVersion,
+  ).toBeTrue();
+  // non-latest tag (OCI primary version) → has version
+  expect(new ArtifactInfo("pkg:oci/app-a?tag=v1.0").hasVersion).toBeTrue();
+  // non-latest tag alongside latest → has version
+  expect(
+    new ArtifactInfo("pkg:oci/app-a?tag=v1.0&tag=latest").hasVersion,
+  ).toBeTrue();
 });
 
 test("mergeVersionAndTags", () => {

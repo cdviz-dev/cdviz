@@ -26,6 +26,11 @@ import type {
 import {
   type Datum,
   type DatumExt,
+  isSeparator,
+  makeStageKey,
+  parseStageKey,
+  REPO_SEPARATOR_PREFIX,
+  separatorRepo,
   summarizeSortedStages,
   transformData,
 } from "./data_stages";
@@ -41,6 +46,9 @@ function dataFramesToDatums(
   const actionField = getField("action");
   const stageField = getField("stage");
   const artifactIdField = getField("artifact_id");
+  const entityTypeField = getField("entity_type");
+  const entityIdField = getField("entity_id");
+  const environmentIdField = getField("environment_id");
   if (!timestampField) return [];
 
   return (timestampField.values as (string | number | Date)[]).map((ts, i) => ({
@@ -48,7 +56,26 @@ function dataFramesToDatums(
     action: (actionField?.values[i] as string) ?? "",
     stage: (stageField?.values[i] as string) ?? "",
     artifact_id: (artifactIdField?.values[i] as string) ?? "",
+    entity_type: (entityTypeField?.values[i] as string) || undefined,
+    entity_id: (entityIdField?.values[i] as string) || undefined,
+    environment_id: (environmentIdField?.values[i] as string) || undefined,
   }));
+}
+
+/**
+ * Stage strings for related entities use '\n' as a separator:
+ *   {linkkind}\n{entity_id}\n{environment_id}  (with env)
+ *   {predicate}\n{entity_id}                    (without env)
+ *
+ * For table display we show "{linkkind/predicate}\n{environment_id}" — the entity_id
+ * is too long for the column but is available in the tooltip.
+ * For artifact direct events the stage is just the predicate (no '\n').
+ */
+function stageDisplayLabel(stage: string): string {
+  const parts = stage.split("\n");
+  if (parts.length === 1) return stage; // plain predicate (artifact direct)
+  if (parts.length === 2) return `${parts[0]}\n${parts[1]}`; // predicate + entity_id
+  return `${parts[0]}\n${parts[2]}`; // linkkind + environment_id (skip long entity_id)
 }
 
 function durationFormat(duration: number): string {
@@ -88,6 +115,28 @@ function stageColorPalette(stageCount: number): string[] {
   );
 }
 
+function repoColorPalette(count: number): string[] {
+  // Distinct hues for repo bands — different from the stage lifecycle palette
+  const colors = [
+    "#60a5fa", // blue-400
+    "#f97316", // orange-500
+    "#a3e635", // lime-400
+    "#c084fc", // purple-400
+    "#f43f5e", // rose-500
+  ];
+  if (count <= colors.length) return colors.slice(0, count);
+  return colors.concat(
+    new Array(count - colors.length).fill(colors[colors.length - 1]),
+  );
+}
+
+/** Returns the Y-axis key for an event: prefixed in multi-repo mode, plain otherwise. */
+function stageKeyOf(d: DatumExt, multiRepo: boolean): string {
+  return multiRepo
+    ? makeStageKey(d.stage, d.artifactInfo.repositoryUrl)
+    : d.stage;
+}
+
 export function getOption(context: EChartsContext) {
   const rawDatums = dataFramesToDatums(context.panel.data.series);
   if (rawDatums.length === 0) {
@@ -103,8 +152,34 @@ export function getOption(context: EChartsContext) {
 
   const { series, domains } = transformData(rawDatums);
   const stages = domains.stages;
-  const colors = stageColorPalette(stages.length);
-  const colorMap = new Map(stages.map((s, i) => [s, colors[i]]));
+  const multiRepo = domains.multiRepo;
+
+  // Build color map keyed by stageKey (= stage name in single-repo, prefixed in multi-repo).
+  // Single-repo: lifecycle-position palette (earliest stage gets amber, latest gets gray).
+  // Multi-repo: each repo band gets a distinct hue; separator rows get a muted gray.
+  let colorMap: Map<string, string>;
+  if (multiRepo) {
+    // Collect repos in order from separator rows
+    const repos: string[] = [];
+    for (const key of stages) {
+      if (isSeparator(key)) repos.push(separatorRepo(key));
+    }
+    const repoColors = repoColorPalette(repos.length);
+    const repoColorMap = new Map(repos.map((r, i) => [r, repoColors[i]]));
+    colorMap = new Map(
+      stages.map((key) => {
+        if (isSeparator(key)) return [key, "#4b5563"] as [string, string];
+        const { repo } = parseStageKey(key);
+        return [key, repoColorMap.get(repo ?? "") ?? "#9ca3af"] as [
+          string,
+          string,
+        ];
+      }),
+    );
+  } else {
+    const colors = stageColorPalette(stages.length);
+    colorMap = new Map(stages.map((s, i) => [s, colors[i]]));
+  }
 
   // Time range: prefer context.panel.data.timeRange (standard Grafana PanelData).
   // context.grafana.timeRange is absent in volkovlabs-echarts-panel v7.2.2.
@@ -124,9 +199,27 @@ export function getOption(context: EChartsContext) {
   const xMid = (domainMin + domainMax) / 2;
 
   const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
-  const summaries = summarizeSortedStages(series, stages);
+  const summaries = summarizeSortedStages(series, stages, multiRepo);
   const tableRows = summaries.map((s) => {
     const sum = s.getSummary();
+
+    if (isSeparator(sum.stage)) {
+      const repo = separatorRepo(sum.stage);
+      return {
+        isSeparator: true,
+        stage: repo || "(no repository)",
+        freq: "",
+        transition: "",
+        latest: "",
+        latestVersion: "",
+      };
+    }
+
+    // In multi-repo mode stage keys are prefixed — strip for display.
+    // Then apply stageDisplayLabel to condense multi-part stage strings.
+    const rawStage = multiRepo ? parseStageKey(sum.stage).stage : sum.stage;
+    const displayStage = stageDisplayLabel(rawStage);
+
     let freq: string;
     if (
       sum.countTimestamp <= 1 ||
@@ -141,7 +234,8 @@ export function getOption(context: EChartsContext) {
         weeks > 0 ? `${((sum.countTimestamp - 1) / weeks).toFixed(2)}/w` : "-";
     }
     return {
-      stage: sum.stage,
+      isSeparator: false,
+      stage: displayStage,
       freq,
       transition: durationFormat(sum.intervalAverage),
       latest: sum.lastTimestamp ? formatDatetime(sum.lastTimestamp) : "N/A",
@@ -218,18 +312,40 @@ export function getOption(context: EChartsContext) {
           const latest = group.reduce((a, b) =>
             b.timestamp > a.timestamp ? b : a,
           );
-          const lineColor = colorMap.get(latest.stage) ?? "#9ca3af";
-          const points = group.map((d) => api.coord([d.timestamp, d.stage]));
-          return {
-            type: "polyline",
-            shape: { points },
-            style: {
-              stroke: lineColor,
-              lineWidth: 1.5,
-              fill: "none",
-              opacity: 0.6,
-            },
-          };
+          const lineColor =
+            colorMap.get(stageKeyOf(latest, multiRepo)) ?? "#9ca3af";
+          const hasVersion = group[0]?.artifactInfo.hasVersion ?? true;
+
+          // No lines for unversioned/untagged artifacts — dots only.
+          if (!hasVersion) return { type: "group", children: [] };
+
+          // Split into sub-groups by lineKey (same tag, fallback version).
+          // Each sub-group gets its own polyline so only truly related events are connected.
+          const subGroups = new Map<string, DatumExt[]>();
+          for (const d of group) {
+            const key = d.lineKey;
+            if (!subGroups.has(key)) subGroups.set(key, []);
+            subGroups.get(key)?.push(d);
+          }
+
+          const children = [];
+          for (const subGroup of subGroups.values()) {
+            if (subGroup.length < 2) continue;
+            const points = subGroup.map((d) =>
+              api.coord([d.timestamp, stageKeyOf(d, multiRepo)]),
+            );
+            children.push({
+              type: "polyline" as const,
+              shape: { points },
+              style: {
+                stroke: lineColor,
+                lineWidth: 1.5,
+                fill: "none",
+                opacity: 0.6,
+              },
+            });
+          }
+          return { type: "group", children };
         },
         data: series.map((_, i) => i),
       },
@@ -244,15 +360,28 @@ export function getOption(context: EChartsContext) {
           const latest = group.reduce((a, b) =>
             b.timestamp > a.timestamp ? b : a,
           );
-          const dotColor = colorMap.get(latest.stage) ?? "#9ca3af";
+          const dotColor =
+            colorMap.get(stageKeyOf(latest, multiRepo)) ?? "#9ca3af";
+          const hasVersion = group[0]?.artifactInfo.hasVersion ?? true;
           return group.map((d) => ({
-            value: [d.timestamp, d.stage],
+            value: [d.timestamp, stageKeyOf(d, multiRepo)],
+            // No-version events: hollow diamond; versioned: filled circle
+            symbol: hasVersion ? "circle" : "emptyCircle",
             itemStyle: { color: dotColor, borderColor: dotColor, opacity: 0.9 },
             tooltipText:
               `<b>${d.artifactInfo.base}</b>` +
-              `<br/>version: ${d.artifactInfo.version}` +
-              `<br/>tags: ${Array.from(d.artifactInfo.tags)}` +
-              `<br/>stage: ${d.stage.replaceAll("\n", "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")}` +
+              `<br/>version: ${d.artifactInfo.version ?? "(none)"}` +
+              (d.artifactInfo.tags.size > 0
+                ? `<br/>tags: ${Array.from(d.artifactInfo.tags).join(", ")}`
+                : "") +
+              `<br/>action: ${d.action}` +
+              (d.entity_type && d.entity_type !== "artifact"
+                ? `<br/>entity: ${d.entity_id} (${d.entity_type})`
+                : "") +
+              (d.environment_id
+                ? `<br/>environment: ${d.environment_id}`
+                : "") +
+              `<br/>stage: ${d.stage.replaceAll("\n", " / ")}` +
               `<br/>timestamp: ${new Date(d.timestamp).toISOString()}`,
           }));
         }),
@@ -299,23 +428,45 @@ export function getOption(context: EChartsContext) {
         coordinateSystem: "cartesian2d",
         // clip: false allows rendering outside the grid (into the right margin)
         clip: false,
-        silent: true,
-        tooltip: { show: false },
+        silent: false,
+        tooltip: { show: true },
         renderItem: (
           params: EChartsRenderItemParams,
           api: EChartsRenderItemApi,
         ) => {
           const i = params.dataIndex;
           const row = tableRows[i];
-          const stage = stages[i];
+          const stageKey = stages[i];
 
           // Use api.coord() to get pixel Y perfectly aligned with the Y axis bands.
           // xMid is within the axis domain; we only use the resulting Y coordinate.
-          const [_x, cy] = api.coord([xMid, stage]);
+          const [_x, cy] = api.coord([xMid, stageKey]);
 
           const canvasW = api.getWidth();
           const tableX = canvasW * 0.645;
-          const stageColor = colorMap.get(stage) ?? "#9ca3af";
+
+          if (row.isSeparator) {
+            // Repo separator header — spans the full table width with italic label
+            return {
+              type: "group" as const,
+              children: [
+                {
+                  type: "text" as const,
+                  style: {
+                    text: `── ${row.stage}`,
+                    x: tableX,
+                    y: cy,
+                    fill: "#6b7280",
+                    fontSize: 10,
+                    fontStyle: "italic",
+                    textAlign: "left",
+                  },
+                },
+              ],
+            };
+          }
+
+          const stageColor = colorMap.get(stageKey) ?? "#9ca3af";
 
           const cellValues = [
             row.stage,
@@ -352,8 +503,12 @@ export function getOption(context: EChartsContext) {
             }),
           };
         },
-        // Each item encodes the stage (by name on Y axis) so api.coord() returns the correct Y
-        data: stages.map((stage) => [xMid, stage]),
+        // Each item encodes the stageKey (by name on Y axis) so api.coord() returns the correct Y.
+        // The stageKey field is used by the tooltip formatter to show the full stage value.
+        data: stages.map((stageKey) => ({
+          value: [xMid, stageKey],
+          stageKey,
+        })),
         encode: { x: 0, y: 1 },
       },
     ],
@@ -363,10 +518,21 @@ export function getOption(context: EChartsContext) {
       enterable: false,
       formatter: (params: {
         seriesName: string;
-        data?: { tooltipText?: string };
+        data?: { tooltipText?: string; stageKey?: string };
       }) => {
-        if (params.seriesName !== "timeline-dots") return "";
-        return params.data?.tooltipText ?? "";
+        if (params.seriesName === "timeline-dots") {
+          return params.data?.tooltipText ?? "";
+        }
+        if (params.seriesName === "table-rows") {
+          const raw = params.data?.stageKey ?? "";
+          if (!raw || raw.startsWith(REPO_SEPARATOR_PREFIX)) return "";
+          const parts = raw.split("\n");
+          if (parts.length === 3)
+            return `<b>${parts[0]}</b><br/>entity: ${parts[1]}<br/>env: ${parts[2]}`;
+          if (parts.length === 2) return `<b>${parts[0]}</b><br/>${parts[1]}`;
+          return `<b>${raw}</b>`;
+        }
+        return "";
       },
     },
     // Brush component for drag-select time range.
