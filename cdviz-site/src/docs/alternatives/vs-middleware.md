@@ -43,7 +43,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 - **Scope**: Middleware extends beyond CI/CD into sprint health — blocked work, spilled stories, Jira flow metrics, and AI-generated sprint summaries. CDviz focuses on the full SDLC event stream (build, test, artifact, deploy, incident) with less emphasis on issue-tracker analytics.
 - **Event standard**: CDviz is built on the [CDEvents](https://cdevents.dev) specification — a [CD Foundation](https://cd.foundation) project for interoperable CI/CD events. Middleware uses a proprietary data model tied to its own integrations.
 - **Observe and act**: CDviz events can trigger downstream workflows — the same event stream that drives observability can also drive automation. Middleware is monitoring and reporting only.
-- **Visualization**: CDviz integrates with Grafana, BI tools, AI agents, and IDP frameworks, giving teams full flexibility. Middleware ships its own built-in dashboard UI, optimized for DORA and sprint metrics.
+- **Visualization**: CDviz integrates with Grafana, BI tools, AI agents, and IDP frameworks, giving teams full flexibility. Middleware ships its own built-in dashboard UI, optimised for DORA and sprint metrics.
 - **Cost model**: CDviz commercial support is priced per organization per month — not per seat — so cost does not scale with team size. Middleware's Standard SaaS tier is $39 per user per month, which grows linearly with headcount.
 
 ## When to choose CDviz
