@@ -34,3 +34,22 @@ run = "GITHUB_TOKEN=$(gh auth token) updatecli diff --config updatecli/updatecli
 [tasks."updatecli:apply"]
 description = "Apply all pending dependency updates via updatecli (creates PRs)"
 run = "GITHUB_TOKEN=$(gh auth token) updatecli apply --config updatecli/updatecli.d/ --values updatecli/values.yaml"
+
+[tasks."cdevents:change-branch"]
+description = "Change the branch of the cdevents-specs submodules (eg to reflect version update)"
+usage = '''
+arg "<branch>" {
+  help "branch to switch"
+  long_help """
+  Change the branch of cdevents/spec repository to use for submodule/folder cdevents-specs
+
+  Example:
+    mise run //:cdevents:change-branch spec-v0.5
+  """
+}
+'''
+run = [
+  'git submodule set-branch -b "${usage_branch?}" cdevents-spec',
+  "git submodule sync --recursive",
+  "git submodule update --init --remote cdevents-spec",
+]
