@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@types/bun": "1.3.11"
+  },
+  "name": "cdviz-db-test",
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "type": "module"
+}

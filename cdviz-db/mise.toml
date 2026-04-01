@@ -7,6 +7,7 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 # docker = "latest"
 "ubi:golang-migrate/migrate" = "latest"
 "ubi:quarylabs/sqruff" = "latest"
+"bun" = "latest"
 
 [tasks."migrate:create"]
 description = "Create a new migration file (usage: mise run migrate:create name)"
@@ -36,6 +37,10 @@ run = "sqruff lint migrations/"
 alias = "fmt"
 description = "Format SQL files with sqruff"
 run = "sqruff fix migrations/"
+
+[tasks."autofix"]
+description = "Format and fix linting issues in SQL files"
+depends = ["format"]
 
 [tasks."db-local_start-empty"]
 description = "start a container for the local db (empty: no data, no schema)"
@@ -87,12 +92,26 @@ run = [
   {task = ":migrate:version"},
   "echo '=== Verifying schema exists ==='",
   "docker exec cdviz-db psql -U cdviz -d cdviz -c '\\dt cdviz.*'",
+  "echo '=== Run tests ==='",
+  {task = ":test:unit"},
   "echo '=== Rolling back migration ==='",
   {task = ":migrate:down"},
   "echo '=== Migration version after down (should be none) ==='",
   "mise run :migrate:version || echo 'No migrations applied (expected after full rollback)'",
   {task = ":db-local_stop"},
 ]
+
+[tasks."test:unit:install"]
+run = "bun install"
+dir = "tests"
+sources = ["package.json"]
+outputs = ["bun.lock"]
+
+[tasks."test:unit"]
+env = { DATABASE_URL = "{{env.PG_LOCAL_URL}}"}
+depends = [":test:unit:install"]
+run = "bun test --reporter=junit --reporter-outfile=./build/junit.xml"
+dir = "tests"
 
 [tasks."ci"]
 description = "set of tasks run by CI"
