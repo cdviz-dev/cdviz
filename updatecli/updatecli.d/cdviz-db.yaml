@@ -1,0 +1,50 @@
+---
+# Propagate cdviz-db-migration releases to the cdviz-db Helm chart.
+#
+# Releases are git tags (not GitHub releases) in cdviz-dev/cdviz following the
+# pattern "cdviz-db-migration-X.Y.Z".
+name: "bump cdviz-db-migration version"
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "{{ .github.user }}"
+      username: "{{ .github.username }}"
+      email: "{{ .github.email }}"
+      owner: "{{ .github.owner }}"
+      repository: "{{ .github.repository }}"
+      branch: "{{ .github.branch }}"
+
+sources:
+  dbMigrationVersion:
+    name: "Get latest cdviz-db-migration git tag"
+    kind: gittag
+    spec:
+      url: https://github.com/cdviz-dev/cdviz.git
+      versionfilter:
+        kind: regex
+        pattern: "^cdviz-db-migration-[0-9]+\\.[0-9]+\\.[0-9]+$"
+    transformers:
+      - trimprefix: "cdviz-db-migration-"
+
+targets:
+  chartImageTag:
+    name: "charts/cdviz-db/values.yaml image.tag"
+    kind: yaml
+    sourceid: dbMigrationVersion
+    scmid: default
+    spec:
+      file: charts/cdviz-db/values.yaml
+      key: $.image.tag
+
+actions:
+  dbMigrationVersion:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - chartImageTag
+    spec:
+      title: 'fix(deps): Bump cdviz-db-migration to {{ source "dbMigrationVersion" }}'
+      labels:
+        - dependencies

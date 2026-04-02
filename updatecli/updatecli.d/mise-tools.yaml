@@ -3,6 +3,11 @@
 #
 # Tools left at "latest" (bun, yq, git-cliff, dprint, biome, golang-migrate,
 # sqruff) are intentionally not pinned — they resolve at install time.
+#
+# Excluded:
+#   - helmwave (demos/stack-k8s/mise.toml)  — uses a complex TOML inline table
+#     with special characters in the key ("ubi:helmwave/helmwave") that cannot
+#     be reliably updated via regex or simple TOML key paths. See not-managed.txt.
 name: "bump mise tool versions"
 
 scms:
@@ -65,18 +70,6 @@ sources:
     transformers:
       - trimprefix: "v"
 
-  helmwave:
-    name: "Get latest helmwave release"
-    kind: githubrelease
-    spec:
-      owner: helmwave
-      repository: helmwave
-      versionfilter:
-        kind: semver
-        pattern: ">= 0"
-    transformers:
-      - trimprefix: "v"
-
 targets:
   helmCharts:
     name: "charts/mise.toml helm version"
@@ -132,16 +125,6 @@ targets:
       file: demos/stack-k8s/mise.toml
       key: tools.ctlptl
 
-  helmwaveStackK8s:
-    name: "demos/stack-k8s/mise.toml helmwave version"
-    kind: file
-    sourceid: helmwave
-    scmid: default
-    spec:
-      file: demos/stack-k8s/mise.toml
-      matchpattern: '"ubi:helmwave/helmwave" = \{ version = "[0-9]+\.[0-9]+\.[0-9]+", matching = "helmwave" \}'
-      replacepattern: '"ubi:helmwave/helmwave" = { version = "{{ source "helmwave" }}", matching = "helmwave" }'
-
 actions:
   helm:
     kind: github/pullrequest
@@ -185,12 +168,3 @@ actions:
       labels:
         - dependencies
 
-  helmwave:
-    kind: github/pullrequest
-    scmid: default
-    targets:
-      - helmwaveStackK8s
-    spec:
-      title: 'fix(deps): Bump helmwave to {{ source "helmwave" }}'
-      labels:
-        - dependencies
