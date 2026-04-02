@@ -3,7 +3,7 @@ image:
   repository: ghcr.io/cdviz-dev/cdviz-db-migration
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: "1.2.0"
+  tag: 1.3.0
 annotations: {}
 
 # Run a migration Job as a Helm post-install/post-upgrade hook so migrations
@@ -42,13 +42,13 @@ env:
 # - user can add any other resource definition as child node of extraObjects
 # The manifests can be defined as a string or as a dictionary. But the string doesn't use the 'enabled' field.
 extraObjects: {}
-  # cdviz-db-owner-secret:
-  #   enabled: false
-  #   apiVersion: v1
-  #   kind: Secret
-  #   metadata:
-  #     name: cdviz-db-owner-secret
-  #   type: kubernetes.io/basic-auth
-  #   data:
-  #     username: '{{ "cdviz-su" | b64enc }}'
-  #     password: '{{ "mysecretpassword" | b64enc }}'
+# cdviz-db-owner-secret:
+#   enabled: false
+#   apiVersion: v1
+#   kind: Secret
+#   metadata:
+#     name: cdviz-db-owner-secret
+#   type: kubernetes.io/basic-auth
+#   data:
+#     username: '{{ "cdviz-su" | b64enc }}'
+#     password: '{{ "mysecretpassword" | b64enc }}'
