@@ -366,13 +366,13 @@ EXECUTE FUNCTION "cdviz"."fn_cdevents_lake_graph_upsert"();
 -- ungrouped columns inside a GROUP BY query.
 WITH
     first_seen AS (
-        SELECT
+        SELECT DISTINCT ON (payload -> 'subject' ->> 'id')
             subject AS node_type,
-            payload -> 'subject' ->> 'id' AS node_id,
-            MIN("timestamp") AS first_seen_at
+            "timestamp" AS first_seen_at,
+            payload -> 'subject' ->> 'id' AS node_id
         FROM "cdviz"."cdevents_lake"
         WHERE payload -> 'subject' ->> 'id' IS NOT NULL
-        GROUP BY payload -> 'subject' ->> 'id', subject
+        ORDER BY payload -> 'subject' ->> 'id', "timestamp"
     ),
 
     latest_content AS (
