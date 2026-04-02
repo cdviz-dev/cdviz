@@ -17,6 +17,15 @@ run = "migrate create -ext sql -dir migrations -format 200601021504 $@"
 description = "Apply all pending migrations"
 run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' up"
 
+[tasks."migrate:debug"]
+hide = true
+run = [
+  # help to debug error like `error: Dirty database version 202603310000. Fix and force version.`
+  'echo see https://www.tutorialpedia.org/blog/dirty-database-version-error-when-using-golang-migrate/',
+  # 'migrate -database "${DATABASE_URL}" -path migrations force 202602161352',
+  # 'migrate -database "${DATABASE_URL}" -path migrations up',
+]
+
 [tasks."migrate:down"]
 description = "Rollback the last migration"
 run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' down 1"
