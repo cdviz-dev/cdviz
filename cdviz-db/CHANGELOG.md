@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-04-02
+
+### Fixed
+
+- Migration error on neon (with existing data) (#439) ([671ffe8](671ffe81e30a763a640ee91aa78b87b3a50b9612))
+
 ## [1.3.0] - 2026-04-02
 
 ### Added
