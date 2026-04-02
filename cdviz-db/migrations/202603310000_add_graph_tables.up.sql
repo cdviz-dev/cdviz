@@ -402,18 +402,23 @@ properties = excluded.properties;
 -- Step 2: artifact base nodes (stripped pURLs that may not have their own events)
 INSERT INTO "cdviz"."graph_nodes" ("node_id", "node_type", "first_seen_at", "properties")
 SELECT
-    DISTINCT
-    regexp_replace (payload -> 'subject' ->> 'id', '[@?].*$', ''),
-    'artifact',
-    MIN (timestamp) OVER (PARTITION BY regexp_replace (payload -> 'subject' ->> 'id', '[@?].*$', '')),
-    '{}'::JSONB
-FROM "cdviz"."cdevents_lake"
-WHERE
-    subject = 'artifact'
-    AND (
-        payload -> 'subject' ->> 'id' LIKE 'pkg:%@%'
-        OR payload -> 'subject' ->> 'id' LIKE 'pkg:%?%'
-    )
+    node_id,
+    'artifact' AS node_type,
+    MIN(timestamp) AS first_seen_at,
+    '{}'::JSONB AS properties
+FROM (
+    SELECT
+        timestamp,
+        REGEXP_REPLACE(payload -> 'subject' ->> 'id', '[@?#].*$', '') AS node_id
+    FROM "cdviz"."cdevents_lake"
+    WHERE
+        subject = 'artifact'
+        AND (
+            payload -> 'subject' ->> 'id' LIKE 'pkg:%@%'
+            OR payload -> 'subject' ->> 'id' LIKE 'pkg:%?%'
+        )
+) AS t
+GROUP BY node_id
 ON CONFLICT ("node_id") DO NOTHING;
 
 -- Step 3: environment nodes referenced in content (no dedicated CDEvents subject type)
@@ -442,15 +447,20 @@ ON CONFLICT ("node_id") DO NOTHING;
 -- Step 5: base nodes for referenced artifacts that carry qualifiers
 INSERT INTO "cdviz"."graph_nodes" ("node_id", "node_type", "first_seen_at", "properties")
 SELECT
-    DISTINCT
-    regexp_replace (payload -> 'subject' -> 'content' ->> 'artifactId', '[@?].*$', ''),
-    'artifact',
-    MIN (timestamp) OVER (PARTITION BY regexp_replace (payload -> 'subject' -> 'content' ->> 'artifactId', '[@?].*$', '')),
-    '{}'::JSONB
-FROM "cdviz"."cdevents_lake"
-WHERE
-    payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:%@%'
-    OR payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:%?%'
+    node_id,
+    'artifact' AS node_type,
+    MIN(timestamp) AS first_seen_at,
+    '{}'::JSONB AS properties
+FROM (
+    SELECT
+        timestamp,
+        REGEXP_REPLACE(payload -> 'subject' -> 'content' ->> 'artifactId', '[@?#].*$', '') AS node_id
+    FROM "cdviz"."cdevents_lake"
+    WHERE
+        payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:%@%'
+        OR payload -> 'subject' -> 'content' ->> 'artifactId' LIKE 'pkg:%?%'
+) AS t
+GROUP BY node_id
 ON CONFLICT ("node_id") DO NOTHING;
 
 -- Step 6: pipelinerun nodes referenced by taskrun events
