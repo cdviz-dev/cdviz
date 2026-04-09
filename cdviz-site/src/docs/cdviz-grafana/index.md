@@ -68,7 +68,7 @@ Available dashboards:
      # Allow loading unsigned plugins (required for cdviz-executiontable-panel)
      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "cdviz-executiontable-panel"
      # Pre-install plugins (Grafana 12+). Format: <id>[@<version>[@<url>]]
-     GF_PLUGINS_PREINSTALL_SYNC: "volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.1.0@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.1.0/cdviz-executiontable-panel-1.1.0.zip"
+     GF_PLUGINS_PREINSTALL_SYNC: "volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.2.2@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.2.2/cdviz-executiontable-panel-1.2.2.zip"
 
    # Sidecar configuration for dashboard and datasource provisioning
    sidecar:
