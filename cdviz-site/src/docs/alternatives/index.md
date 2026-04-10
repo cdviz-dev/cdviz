@@ -25,7 +25,7 @@ The comparisons below cover architecture, integrations, data ownership, and when
 | [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 | [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [Middleware](#middleware)          | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling) |
+| [Middleware](#middleware)         | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling) |
 | [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
 | [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)   |
 | [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion |

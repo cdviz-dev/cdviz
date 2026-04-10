@@ -52,16 +52,14 @@ This complements the [GitLab Webhook integration](/docs/cdviz-collector/integrat
 
 In **Settings > CI/CD > Variables**, add:
 
-| Variable      | Value                                         |
-| ------------- | --------------------------------------------- |
-| `CDVIZ_COLLECTOR_URL`   | Your cdviz-collector HTTP endpoint            |
-| `CDVIZ_COLLECTOR_TOKEN` | Your cdviz-collector config (see example below)|
-
+| Variable                | Value                                           |
+| ----------------------- | ----------------------------------------------- |
+| `CDVIZ_COLLECTOR_URL`   | Your cdviz-collector HTTP endpoint              |
+| `CDVIZ_COLLECTOR_TOKEN` | Your cdviz-collector config (see example below) |
 
 Mark both as **masked** to prevent them from appearing in job logs.
 
 Using token to sign or as bearer token depends of the configuration of your cdevents consummer (could be a cdviz-collector running in server mode).
-
 
 ### 2. Install cdviz-collector
 
@@ -85,7 +83,6 @@ Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` e
 > [!WARNING]
 > cdviz-collector allow to define / override any configuration via environment variable. But GitLab uses bash `export` that doesn't support variable name with `-`. So use configuration file for variable with a `-` like some http header.
 
-
 ### 3. Wrap a test command
 
 ```yaml
@@ -93,10 +90,10 @@ test:
   <<: *install-cdviz
   script:
     - cdviz-collector send --run testsuiterun_junit
-        --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA"
-        --url "$CDVIZ_COLLECTOR_URL"
-        --config cdviz-collector.toml
-        -- mvn test
+      --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA"
+      --url "$CDVIZ_COLLECTOR_URL"
+      --config cdviz-collector.toml
+      -- mvn test
 ```
 
 The collector globs `**/TEST-*.xml` and `**/*.xml` after the process exits and includes parsed results in the `testSuiteRun.finished` event.

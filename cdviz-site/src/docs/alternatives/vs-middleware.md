@@ -15,26 +15,26 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 
 ## At a glance
 
-|                                           |              **CDviz**               |         **Middleware**          |
-| ----------------------------------------- | :----------------------------------: | :-----------------------------: |
-| License                                   |             Apache 2.0               |           Apache 2.0            |
-| Self-hosted                               |                  ✅                  |               ✅                |
-| SaaS option                               |             ⏳ waitlist              |               ✅                |
-| Commercial support                        |                  ✅                  |      ✅ (paid tiers only)       |
-| Data ownership                            |               ✅ full                |  ✅ self-hosted / ❌ SaaS cloud |
-| [CDEvents](https://cdevents.dev) standard |                  ✅                  |               ❌                |
-| Data model                                | Event-driven (push, real-time)       |    Pull-based (polling)         |
-| DORA metrics                              |                  ✅                  |               ✅                |
-| Sprint / project flow insights            |                  ❌                  |               ✅                |
-| PR review analytics                       |                  ✅                  |               ✅                |
-| AI-powered reports                        |                  ❌                  |          ✅ (Standard+)         |
-| Beyond monitoring: trigger workflows      |                  ✅                  |               ❌                |
-| Jira integration                          |                  ✅                  |               ✅                |
-| Slack integration                         |                  ✅                  |          ✅ (Standard+)         |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)       |               ❌                |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP     | built-in dashboards             |
-| Cost (self-hosted)                        | Infra + optional support             |          Free community         |
-| Cost (SaaS)                               | ⏳ waitlist (per org/month)          |    $39/user/month (Standard)    |
+|                                           |            **CDviz**             |         **Middleware**         |
+| ----------------------------------------- | :------------------------------: | :----------------------------: |
+| License                                   |            Apache 2.0            |           Apache 2.0           |
+| Self-hosted                               |                ✅                |               ✅               |
+| SaaS option                               |           ⏳ waitlist            |               ✅               |
+| Commercial support                        |                ✅                |      ✅ (paid tiers only)      |
+| Data ownership                            |             ✅ full              | ✅ self-hosted / ❌ SaaS cloud |
+| [CDEvents](https://cdevents.dev) standard |                ✅                |               ❌               |
+| Data model                                |  Event-driven (push, real-time)  |      Pull-based (polling)      |
+| DORA metrics                              |                ✅                |               ✅               |
+| Sprint / project flow insights            |                ❌                |               ✅               |
+| PR review analytics                       |                ✅                |               ✅               |
+| AI-powered reports                        |                ❌                |         ✅ (Standard+)         |
+| Beyond monitoring: trigger workflows      |                ✅                |               ❌               |
+| Jira integration                          |                ✅                |               ✅               |
+| Slack integration                         |                ✅                |         ✅ (Standard+)         |
+| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |               ❌               |
+| Visualization                             | Grafana, BI, AI agents, MCP, IDP |      built-in dashboards       |
+| Cost (self-hosted)                        |     Infra + optional support     |         Free community         |
+| Cost (SaaS)                               |   ⏳ waitlist (per org/month)    |   $39/user/month (Standard)    |
 
 ## Key differences
 

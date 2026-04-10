@@ -28,10 +28,7 @@ const personSchema = {
   "@type": "Person",
   name: "David Bernard",
   url: "https://github.com/davidB",
-  sameAs: [
-    "https://www.linkedin.com/in/davidbernard31/",
-    "https://dev.to/davidB",
-  ],
+  sameAs: ["https://www.linkedin.com/in/davidbernard31/", "https://dev.to/davidB"],
 };
 
 // https://vitepress.dev/reference/site-config
