@@ -74,8 +74,8 @@ Example resulting `customData.links` in the emitted CDEvent:
 ```bash
 # Maven generates TEST-*.xml under target/surefire-reports/
 cdviz-collector send --run testsuiterun_junit \
-  --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA" \
-  --url $CDVIZ_URL \
+  --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA" \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- mvn test
 ```
@@ -84,8 +84,8 @@ cdviz-collector send --run testsuiterun_junit \
 
 ```bash
 cdviz-collector send --run testsuiterun_junit \
-  --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA" \
-  --url $CDVIZ_URL \
+  --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA" \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- pytest --junit-xml=TEST-results.xml
 ```
@@ -94,8 +94,8 @@ cdviz-collector send --run testsuiterun_junit \
 
 ```bash
 cdviz-collector send --run testsuiterun_tap \
-  --metadata tested_artifact_id="pkg:npm/my-package@$NPM_VERSION" \
-  --url $CDVIZ_URL \
+  --metadata "tested_artifact_id=pkg:npm/my-package@$NPM_VERSION" \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- node --test --test-reporter=tap
 ```
@@ -105,8 +105,8 @@ cdviz-collector send --run testsuiterun_tap \
 ```bash
 # SARIF output collected from **/*.sarif after the scan exits
 cdviz-collector send --run testsuiterun_sarif \
-  --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA" \
-  --url $CDVIZ_URL \
+  --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA" \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- trivy image --format sarif --output results.sarif my-app:latest
 ```
@@ -115,7 +115,7 @@ cdviz-collector send --run testsuiterun_sarif \
 
 ```bash
 cdviz-collector send --run taskrun \
-  --url $CDVIZ_URL \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- make build
 ```
@@ -128,17 +128,21 @@ By default each `--run` type uses a built-in glob to find result files (e.g. `**
 # Explicit file path — avoids picking up unrelated XML files in the workspace
 cdviz-collector send --run testsuiterun_junit \
   --data target/surefire-reports/TEST-MyModule.xml \
-  --url $CDVIZ_URL \
+  --url "$CDVIZ_URL" \
   -- mvn test
 
 # Or pass the path as an absolute file reference
 cdviz-collector send --run testsuiterun_sarif \
   --data /tmp/scan-results.sarif \
-  --url $CDVIZ_URL \
+  --url "$CDVIZ_URL" \
   -- ./run-scan.sh
 ```
 
 `--data` replaces the built-in `data_globs` for that invocation; the command still runs normally.
+
+### Using signature instead of Bearer token
+
+see examples from [GitLab CI](./integrations/gitlab-ci.md)
 
 ## Custom Run Types
 

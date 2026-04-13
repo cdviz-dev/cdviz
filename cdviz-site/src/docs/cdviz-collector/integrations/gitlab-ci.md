@@ -66,18 +66,21 @@ Using token to sign or as bearer token depends of the configuration of your cdev
 Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` entry or a dedicated job:
 
 ```yaml
-.install-cdviz: &install-cdviz
+.install-cdviz:
   before_script:
-    - curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz
-      | tar xz -C /usr/local/bin
+    - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.xz
+      | tar xJ -C /usr/local/bin --strip-components=1 cdviz-collector-x86_64-unknown-linux-musl/cdviz-collector
     - chmod +x /usr/local/bin/cdviz-collector
-    - cat >cdviz-collector.toml <<EOF
-      [sinks.http.headers.x-signature]
-      type = "signature"
-      token = "$CDVIZ_COLLECTOR_TOKEN"
-      signature_prefix = "sha256="
-      signature_encoding = "hex"
-      EOF
+    - |
+        cat >"$CI_PROJECT_DIR/.cdviz-collector.toml" <<-EOF
+        [sinks.http.headers.x-signature]
+        type = "signature"
+        token = "$CDVIZ_COLLECTOR_TOKEN"
+        signature_prefix = "sha256="
+        signature_encoding = "hex"
+        EOF
+  after_script:
+    - rm -f "$CI_PROJECT_DIR/.cdviz-collector.toml"
 ```
 
 > [!WARNING]
@@ -87,12 +90,13 @@ Add an installation step in your `.gitlab-ci.yml`, either as a `before_script` e
 
 ```yaml
 test:
-  <<: *install-cdviz
+  extends: .install-cdviz
   script:
-    - cdviz-collector send --run testsuiterun_junit
-      --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA"
+    - cdviz-collector send -q
+      --run testsuiterun_junit
+      --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA"
       --url "$CDVIZ_COLLECTOR_URL"
-      --config cdviz-collector.toml
+      --config "$CI_PROJECT_DIR/.cdviz-collector.toml"
       -- mvn test
 ```
 
@@ -106,39 +110,44 @@ stages:
   - test
   - deploy
 
-variables:
-  CDVIZ_COLLECTOR_URL: ${CDVIZ_COLLECTOR_URL} # set in CI/CD Variables
-  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__TYPE: "signature"
-  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__TOKEN: ${CDVIZ_COLLECTOR_TOKEN} # set in CI/CD Variables
-  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__SIGNATURE_PREFIX: "sha256="
-  CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE__SIGNATURE_ENCODING: "hex"
-
-.install-cdviz: &install-cdviz
+.install-cdviz:
   before_script:
-    - curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz
-      | tar xz -C /usr/local/bin
+    - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.xz
+      | tar xJ -C /usr/local/bin --strip-components=1 cdviz-collector-x86_64-unknown-linux-musl/cdviz-collector
     - chmod +x /usr/local/bin/cdviz-collector
+    - |
+        cat >"$CI_PROJECT_DIR/.cdviz-collector.toml" <<-EOF
+        [sinks.http.headers.x-signature]
+        type = "signature"
+        token = "$CDVIZ_COLLECTOR_TOKEN"
+        signature_prefix = "sha256="
+        signature_encoding = "hex"
+        EOF
+  after_script:
+    - rm -f "$CI_PROJECT_DIR/.cdviz-collector.toml"
 
 # Build: exit-code only, no test result parsing
 build:
   extends: .install-cdviz
   stage: build
   script:
-    - cdviz-collector send --run taskrun
-        --url "$CDVIZ_COLLECTOR_URL"
-        --header "Authorization: Bearer $CDVIZ_TOKEN"
-        -- make build
+    - cdviz-collector send
+      --run taskrun
+      --url "$CDVIZ_COLLECTOR_URL"
+      --config "$CI_PROJECT_DIR/.cdviz-collector.toml"
+      -- make build
 
 # Unit tests: JUnit XML parsed automatically from **/TEST-*.xml
 test:
   extends: .install-cdviz
   stage: test
   script:
-    - cdviz-collector send --run testsuiterun_junit
-        --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA"
-        --url $CDVIZ_URL
-        --header "Authorization: Bearer $CDVIZ_TOKEN"
-        -- make test
+    - cdviz-collector send -q
+      --run testsuiterun_junit
+      --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA"
+      --url "$CDVIZ_COLLECTOR_URL"
+      --config "$CI_PROJECT_DIR/.cdviz-collector.toml"
+      -- mvn test
 
 # Deploy: exit-code only
 deploy:
@@ -146,10 +155,11 @@ deploy:
   stage: deploy
   when: on_success
   script:
-    - cdviz-collector send --run taskrun
-        --url $CDVIZ_URL
-        --header "Authorization: Bearer $CDVIZ_TOKEN"
-        -- ./deploy.sh
+    - cdviz-collector send
+      --run taskrun
+      --url "$CDVIZ_COLLECTOR_URL"
+      --config "$CI_PROJECT_DIR/.cdviz-collector.toml"
+      -- ./deploy.sh
   only:
     - main
 ```
