@@ -55,7 +55,7 @@ services:
       # cdviz-executiontable-panel is mounted as local plugin (see volumes below)
       # GF_PLUGINS_INSTALL (Deprecated since v12.1.0)
       # Format: <plugin ID>@[<plugin version>]@<url to plugin zip>
-      - GF_PLUGINS_PREINSTALL_SYNC=volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.2.2@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.2.2/cdviz-executiontable-panel-1.2.2.zip
+      - GF_PLUGINS_PREINSTALL_SYNC=volkovlabs-echarts-panel,volkovlabs-form-panel,volkovlabs-table-panel,cdviz-executiontable-panel@1.2.4@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v1.2.4/cdviz-executiontable-panel-1.2.4.zip
       # Allow loading unsigned plugins (required for custom plugins not in Grafana plugin registry)
       - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=cdviz-executiontable-panel
       # - GF_SECURITY_ADMIN_USER=admin
