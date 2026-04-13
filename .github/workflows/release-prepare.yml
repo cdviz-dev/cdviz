@@ -31,10 +31,11 @@ jobs:
           fetch-depth: 0 # Full history needed for git-cliff
           token: ${{ steps.get_token.outputs.token }}
       - name: Install mise
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
         with:
+          version: 2026.3.10
+          install: false
           experimental: true
-
       - name: Prepare releases
         id: prepare
         # shell: bash
