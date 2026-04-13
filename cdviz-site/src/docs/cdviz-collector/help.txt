@@ -41,6 +41,13 @@ Inspect or validate the resolved configuration
           
           Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
 
+      --set <SET>
+          Override individual config key/value pairs.
+          
+          Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
+          
+          Example: `--set sources.my-source.enabled=true`
+
       --print
           Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
 
@@ -48,7 +55,19 @@ Inspect or validate the resolved configuration
           Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files
 
       --check
-          Validate the configuration by parsing it into the typed Config structure
+          Validate the configuration by parsing it into the typed `Config` structure, and compile all transformer templates (including VRL) to catch runtime errors early
+
+      --for <FOR_COMMAND>
+          Select which subcommand's base configuration to apply.
+          
+          Controls which embedded base TOML is merged before your configuration file. Match this to the subcommand you intend to run the config with: `connect` (default) for server mode, `send` for the send subcommand, `transform` for batch transformation mode.
+
+          Possible values:
+          - connect:   Base config for the `connect` server subcommand (default)
+          - send:      Base config for the `send` subcommand
+          - transform: Base config for the `transform` subcommand (same embedded base as `connect`)
+          
+          [default: connect]
 
   -h, --help
           Print help (see a summary with '-h')
@@ -68,6 +87,13 @@ Launch collector as a server to connect sources to sinks
           HTTP headers to use when fetching config from a URL.
           
           Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
+
+      --set <SET>
+          Override individual config key/value pairs.
+          
+          Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
+          
+          Example: `--set sources.my-source.enabled=true`
 
   -h, --help
           Print help (see a summary with '-h')
@@ -104,6 +130,13 @@ Send JSON data directly to a sink for testing and scripting
           HTTP headers to use when fetching config from a URL.
           
           Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
+
+      --set <SET>
+          Override individual config key/value pairs.
+          
+          Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
+          
+          Example: `--set sinks.http.enabled=true --set sinks.http.destination=http://...`
 
   -C, --directory <DIRECTORY>
           Working directory for relative paths.

@@ -30,6 +30,13 @@ Options:
           
           This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
 
+      --set <SET>
+          Override individual config key/value pairs.
+          
+          Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
+          
+          Example: `--set sources.my-source.enabled=true`
+
   -C, --directory <DIRECTORY>
           Change working directory before executing the command.
           

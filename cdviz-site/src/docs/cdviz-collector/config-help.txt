@@ -26,19 +26,38 @@ Options:
           
           This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
 
-      --print
-          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
+      --set <SET>
+          Override individual config key/value pairs.
+          
+          Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
+          
+          Example: `--set sources.my-source.enabled=true`
 
   -C, --directory <DIRECTORY>
           Change working directory before executing the command.
           
           This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
 
+      --print
+          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
+
       --print-raw
           Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files
 
       --check
-          Validate the configuration by parsing it into the typed Config structure
+          Validate the configuration by parsing it into the typed `Config` structure, and compile all transformer templates (including VRL) to catch runtime errors early
+
+      --for <FOR_COMMAND>
+          Select which subcommand's base configuration to apply.
+          
+          Controls which embedded base TOML is merged before your configuration file. Match this to the subcommand you intend to run the config with: `connect` (default) for server mode, `send` for the send subcommand, `transform` for batch transformation mode.
+
+          Possible values:
+          - connect:   Base config for the `connect` server subcommand (default)
+          - send:      Base config for the `send` subcommand
+          - transform: Base config for the `transform` subcommand (same embedded base as `connect`)
+          
+          [default: connect]
 
   -h, --help
           Print help (see a summary with '-h')
