@@ -35,8 +35,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Docker Buildx # to support buildx, multi-arch builds
         uses: docker/setup-buildx-action@v3
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
         with:
+          version: 2026.3.10
+          install: false
           experimental: true
       - run: mise run '//cdviz-db:release_publish'
         shell: bash
