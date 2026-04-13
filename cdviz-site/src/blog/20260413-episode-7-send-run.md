@@ -74,20 +74,20 @@ Install the binary once, then wrap each step:
 ```yaml
 - name: Install cdviz-collector
   run: |
-    curl -sSfL https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.gz \
-      | tar xz -C /usr/local/bin
-
+    curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/latest/download/cdviz-collector-x86_64-unknown-linux-musl.tar.xz \
+      | tar xJ -C /usr/local/bin --strip-components=1 cdviz-collector-x86_64-unknown-linux-musl/cdviz-collector
+    chmod +x /usr/local/bin/cdviz-collector
 - name: Build
   run: |
     cdviz-collector send --run taskrun \
-      --url ${{ secrets.CDVIZ_URL }} \
+      --url "${{ secrets.CDVIZ_URL }}" \
       --header "Authorization: Bearer ${{ secrets.CDVIZ_TOKEN }}" \
       -- npm run build
 
 - name: Test # expects JUnit XML output from npm test
   run: |
     cdviz-collector send --run testsuiterun_junit \
-      --url ${{ secrets.CDVIZ_URL }} \
+      --url "${{ secrets.CDVIZ_URL }}" \
       --header "Authorization: Bearer ${{ secrets.CDVIZ_TOKEN }}" \
       -- npm test
 ```
@@ -100,8 +100,8 @@ If you built a Docker image earlier in the pipeline, pass its digest with `--met
 
 ```bash
 cdviz-collector send --run testsuiterun_junit \
-  --metadata tested_artifact_id="pkg:oci/my-app@sha256:$IMAGE_SHA" \
-  --url $CDVIZ_URL \
+  --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA" \
+  --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
   -- npm test
 ```
