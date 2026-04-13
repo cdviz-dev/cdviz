@@ -1,21 +1,19 @@
+[tools]
+helm = "4.1.4"
 
 [tasks]
+[tasks.ci]
+depends = ["//charts/...:ci"]
+description = "set of tasks run by CI"
 
-  [tasks.ci]
-    depends = ["//charts/...:ci"]
-    description = "set of tasks run by CI"
+[tasks.release_prepare]
+depends = ["//charts/...:release_prepare"]
+description = "Prepare releases for all charts (update versions & changelogs)"
 
-  [tasks.release_prepare]
-    depends = ["//charts/...:release_prepare"]
-    description = "Prepare releases for all charts (update versions & changelogs)"
+[tasks.release_publish]
+depends = ["//charts/...:release_publish"]
+description = "Publish all charts to OCI registry"
 
-  [tasks.release_publish]
-    depends = ["//charts/...:release_publish"]
-    description = "Publish all charts to OCI registry"
-
-  [tasks.release_status]
-    description = "Show release status for all charts"
-    run = "echo \"=== Chart Release Status ===\"\nfor chart in charts/cdviz-*/; do\n  if [[ ! -f \"$chart/Chart.yaml\" ]]; then continue; fi\n  name=$(basename \"$chart\")\n  version=$(yq .version \"$chart/Chart.yaml\" 2>/dev/null || echo \"N/A\")\n  if helm show chart \"$CHARTS_OCI_REGISTRY/$name\" --version \"$version\" &>/dev/null; then\n    status=\"✅ published\"\n  else\n    status=\"❌ not published\"\n  fi\n  echo \"  $name: $version $status\"\ndone\n"
-
-[tools]
-  helm = "4.1.3"
+[tasks.release_status]
+description = "Show release status for all charts"
+run = "echo \"=== Chart Release Status ===\"\nfor chart in charts/cdviz-*/; do\n  if [[ ! -f \"$chart/Chart.yaml\" ]]; then continue; fi\n  name=$(basename \"$chart\")\n  version=$(yq .version \"$chart/Chart.yaml\" 2>/dev/null || echo \"N/A\")\n  if helm show chart \"$CHARTS_OCI_REGISTRY/$name\" --version \"$version\" &>/dev/null; then\n    status=\"✅ published\"\n  else\n    status=\"❌ not published\"\n  fi\n  echo \"  $name: $version $status\"\ndone\n"

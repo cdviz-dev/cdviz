@@ -43,14 +43,17 @@ jobs:
       - name: log
         if: steps.changed-files.outputs.any_changed != 'true'
         run: echo "::notice ::no changed files on ${{ matrix.folder }} - skipping"
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
         if: steps.changed-files.outputs.any_changed == 'true'
+        with:
+          version: 2026.3.10
+          install: false
       - uses: helm/kind-action@v1.14.0
         if: (steps.changed-files.outputs.any_changed == 'true' && matrix.folder != 'cdviz-grafana')
-      - run: mise install
-        if: steps.changed-files.outputs.any_changed == 'true'
-        shell: bash
-        working-directory: ${{ matrix.folder }}
+      # - run: mise install
+      #   if: steps.changed-files.outputs.any_changed == 'true'
+      #   shell: bash
+      #   working-directory: ${{ matrix.folder }}
       - run: |
           mise run '//${{ matrix.folder }}:ci'
         if: steps.changed-files.outputs.any_changed == 'true'
