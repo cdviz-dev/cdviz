@@ -29,4 +29,4 @@
 
 [tools]
   kind = "0.31.0"
-  kubectl = "1.35.3"
+  kubectl = "1.35.4"

@@ -74,7 +74,7 @@
 [tools]
   ctlptl = "0.9.2"
   kind = "0.31.0"
-  kubectl = "1.35.3"
+  kubectl = "1.35.4"
 
   [tools."ubi:helmwave/helmwave"]
     matching = "helmwave"
