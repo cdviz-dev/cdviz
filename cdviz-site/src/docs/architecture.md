@@ -1,3 +1,7 @@
+<script setup>
+import CdvizArchitecture from '../../components/diagrams/CdvizArchitecture.vue'
+</script>
+
 # Architecture
 
 CDviz is an event-driven CI/CD platform built on the CDEvents standard. Its four-layer architecture — Collector, Database, Grafana, and Event Reactions — lets teams observe software delivery events in real time and trigger automated workflows from the same event stream.
@@ -23,4 +27,5 @@ CDviz is an event-driven CI/CD platform built on the CDEvents standard. Its four
 4. **Event Processing**
 
    An event-driven architecture for triggering downstream actions in external systems based on collected events.
-   ![CDviz Event Processing Layer: CDEvents flowing from the database to downstream automation systems via NATS, Kafka, and HTTP sinks for workflow triggering](/architectures/overview_04.excalidraw.svg)
+
+    <CdvizArchitecture/>

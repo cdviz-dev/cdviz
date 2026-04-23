@@ -1,8 +1,12 @@
+<script setup>
+import InsideCollector from '../../../components/diagrams/InsideCollector.vue'
+</script>
+
 # CDviz Collector
 
 CDviz Collector is an open-source event ingestion agent written in Rust. It receives software delivery events from webhooks, Kafka, NATS, SSE, and file sources, normalizes them to the CDEvents standard, and routes them to configured sinks including PostgreSQL, ClickHouse, and HTTP endpoints.
 
-![Inside a collector](/architectures/inside_collector.excalidraw.svg)
+<InsideCollector />
 
 ## Quick Start
 
