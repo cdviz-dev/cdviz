@@ -72,9 +72,9 @@
     wait_for = [":create"]
 
 [tools]
-  ctlptl = "0.9.2"
+  ctlptl = "0.9.3"
   kind = "0.31.0"
-  kubectl = "1.35.4"
+  kubectl = "1.36.0"
 
   [tools."ubi:helmwave/helmwave"]
     matching = "helmwave"
