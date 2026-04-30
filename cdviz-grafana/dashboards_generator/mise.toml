@@ -1,42 +1,36 @@
+
+[tasks]
+
+  [tasks.build]
+    description = "build dashboards"
+    outputs = ["dashboards/*.json"]
+    run = "bun run src/index.ts --output ../dashboards"
+    sources = ["*/src/**"]
+    wait_for = [":install:deps", ":check", ":test"]
+
+  [tasks.check]
+    description = "lint"
+    run = ["bun run tsc", "biome check"]
+    wait_for = [":install:deps"]
+
+  [tasks.ci]
+    depends = [":install:deps", ":check", ":build", ":test"]
+    description = "tasks for CI (build, test, ...)"
+
+  [tasks.format]
+    alias = "fmt"
+    description = "format"
+    run = ["biome format --write", "biome check --write"]
+    wait_for = [":install:deps"]
+
+  [tasks."install:deps"]
+    run = "bun install"
+
+  [tasks.test]
+    depends = [":check"]
+    run = "bun test"
+    wait_for = [":install:deps"]
+
 [tools]
-"bun" = "1.3.13"
-"biome" = "2.2.0"
-# "watchexec" = "latest"
-
-[tasks."build"]
-description = "build dashboards"
-run = "bun run src/index.ts --output ../dashboards"
-outputs = ["dashboards/*.json"]
-sources = ["*/src/**"]
-wait_for = [":install:deps", ":check", ":test"]
-
-[tasks."install:deps"]
-run = "bun install"
-
-[tasks.check]
-# use https://biomejs.dev/guides/getting-started/
-description = "lint"
-run = [
-  "bun run tsc",
-  "biome check",
-]
-wait_for = [":install:deps"]
-
-[tasks.format]
-alias = "fmt"
-# use https://biomejs.dev/guides/getting-started/
-description = "format"
-run = [
-  "biome format --write",
-  "biome check --write",
-]
-wait_for = [":install:deps"]
-
-[tasks.test]
-depends = [":check"]
-run = "bun test"
-wait_for = [":install:deps"]
-
-[tasks.ci]
-description = "tasks for CI (build, test, ...)"
-depends = [":install:deps", ":check", ":build", ":test"]
+  biome = "1.9.4"
+  bun = "1.3.13"
