@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@iconify-json/lucide": "1.2.104",
+    "@iconify-json/lucide": "1.2.105",
     "@iconify-json/mdi": "1.2.3",
     "@iconify-json/simple-icons": "1.2.80",
     "@iconify/tailwind4": "1.2.3",
