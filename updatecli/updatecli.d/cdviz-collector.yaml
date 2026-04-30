@@ -7,6 +7,8 @@
 #   - charts/cdviz-collector/Chart.yaml   (appVersion)
 #   - cdviz-site/src/docs/cdviz-collector/install.md   (frontmatter version field)
 #   - cdviz-site/src/docs/cdviz-collector/quick-start.md  (installer URL)
+#   - demos/use_cases/mise.toml  (tool version)
+#   - cdviz-site/mise.toml  (tool version)
 name: "bump cdviz-collector version"
 
 scms:
@@ -74,6 +76,26 @@ targets:
       matchpattern: 'releases/download/v?[0-9]+\.[0-9]+\.[0-9]+/'
       replacepattern: 'releases/download/{{ source "collectorVersion" }}/'
 
+  miseUseCases:
+    name: "demos/use_cases/mise.toml cdviz-collector version"
+    kind: file
+    sourceid: collectorVersion
+    scmid: default
+    spec:
+      file: demos/use_cases/mise.toml
+      matchpattern: '"github:cdviz-dev/cdviz-collector" = "(.*)"'
+      replacepattern: '"github:cdviz-dev/cdviz-collector" = "{{ source "collectorVersion" }}"'
+
+  miseSite:
+    name: "cdviz-site/mise.toml cdviz-collector version"
+    kind: file
+    sourceid: collectorVersion
+    scmid: default
+    spec:
+      file: cdviz-site/mise.toml
+      matchpattern: '"github:cdviz-dev/cdviz-collector" = "(.*)"'
+      replacepattern: '"github:cdviz-dev/cdviz-collector" = "{{ source "collectorVersion" }}"'
+
 actions:
   collectorVersion:
     kind: github/pullrequest
@@ -83,6 +105,8 @@ actions:
       # - chartAppVersion
       # - docsInstallVersion
       - docsQuickStartUrl
+      - miseUseCases
+      - miseSite
     spec:
       title: 'fix(deps): Bump cdviz-collector to {{ source "collectorVersion" }}'
       labels:

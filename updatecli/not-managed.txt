@@ -38,19 +38,9 @@
 #   can reliably target this entry. Update manually by editing the `version`
 #   field in that section.
 
-## Mise tools pinned to "latest"
-# These tools intentionally resolve to the latest available version at
-# install time and are therefore not version-pinned in mise.toml files.
-
-# bun          — fast-moving runtime, always want the latest stable
-# yq           — YAML processor, no breaking changes expected
-# git-cliff    — changelog generator
-# dprint       — code formatter
-# biome        — linter/formatter
-# golang-migrate — DB migration CLI (version pinned in cdviz-db/Dockerfile instead)
-# sqruff       — SQL linter
-# updatecli    — updatecli itself (updatecli/mise.toml)
-# ubi:chris48s/v8r — JSON schema validator (updatecli/mise.toml)
+## Mise tools — pinned to "latest" (not version-managed)
+# bun in cdviz-grafana-plugin.off/mise.toml and cdviz-site/perf/mise.toml
+#   These entries use the bare string "latest" with no pinned version.
 
 ## npm packages — manually managed
 # vitepress (cdviz-site)

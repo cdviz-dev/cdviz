@@ -1,5 +1,5 @@
 [tools]
-"github:cdviz-dev/cdviz-collector" = "latest"
+"github:cdviz-dev/cdviz-collector" = "0.37.0"
 
 [tasks."run"]
 description = "Launch cdviz-collector cli with content (data & configuration) of the use_cases folder"

@@ -1,13 +1,11 @@
 ---
 # Mise tool version pins.
 #
-# Tools left at "latest" (bun, yq, git-cliff, dprint, biome, golang-migrate,
-# sqruff) are intentionally not pinned — they resolve at install time.
-#
 # Excluded:
 #   - helmwave (demos/stack-k8s/mise.toml)  — uses a complex TOML inline table
 #     with special characters in the key ("ubi:helmwave/helmwave") that cannot
 #     be reliably updated via regex or simple TOML key paths. See not-managed.txt.
+#   - bun entries pinned to "latest" (cdviz-grafana-plugin.off, cdviz-site/perf)
 name: "bump mise tool versions"
 
 scms:
@@ -70,6 +68,112 @@ sources:
     transformers:
       - trimprefix: "v"
 
+  yq:
+    name: "Get latest yq release"
+    kind: githubrelease
+    spec:
+      owner: mikefarah
+      repository: yq
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
+  gitcliff:
+    name: "Get latest git-cliff release"
+    kind: githubrelease
+    spec:
+      owner: orhun
+      repository: git-cliff
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
+  bun:
+    name: "Get latest bun release"
+    kind: githubrelease
+    spec:
+      owner: oven-sh
+      repository: bun
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "bun-v"
+
+  dprint:
+    name: "Get latest dprint release"
+    kind: githubrelease
+    spec:
+      owner: dprint
+      repository: dprint
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+
+  biome:
+    name: "Get latest biome release"
+    kind: githubrelease
+    spec:
+      owner: biomejs
+      repository: biome
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "cli/v"
+
+  golangmigrate:
+    name: "Get latest golang-migrate release"
+    kind: githubrelease
+    spec:
+      owner: golang-migrate
+      repository: migrate
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
+  sqruff:
+    name: "Get latest sqruff release"
+    kind: githubrelease
+    spec:
+      owner: quarylabs
+      repository: sqruff
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
+  updatecliTool:
+    name: "Get latest updatecli release"
+    kind: githubrelease
+    spec:
+      owner: updatecli
+      repository: updatecli
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
+  v8r:
+    name: "Get latest v8r release"
+    kind: githubrelease
+    spec:
+      owner: chris48s
+      repository: v8r
+      versionfilter:
+        kind: semver
+        pattern: ">= 0"
+    transformers:
+      - trimprefix: "v"
+
 targets:
   helmCharts:
     name: "charts/mise.toml helm version"
@@ -125,6 +229,137 @@ targets:
       file: demos/stack-k8s/mise.toml
       key: tools.ctlptl
 
+  yqRoot:
+    name: "mise.toml yq version"
+    kind: toml
+    sourceid: yq
+    scmid: default
+    spec:
+      file: mise.toml
+      key: tools.yq
+
+  yqGrafana:
+    name: "cdviz-grafana/mise.toml yq version"
+    kind: toml
+    sourceid: yq
+    scmid: default
+    spec:
+      file: cdviz-grafana/mise.toml
+      key: tools.yq
+
+  gitcliffRoot:
+    name: "mise.toml git-cliff version"
+    kind: toml
+    sourceid: gitcliff
+    scmid: default
+    spec:
+      file: mise.toml
+      key: tools.git-cliff
+
+  bunDb:
+    name: "cdviz-db/mise.toml bun version"
+    kind: toml
+    sourceid: bun
+    scmid: default
+    spec:
+      file: cdviz-db/mise.toml
+      key: tools.bun
+
+  bunSite:
+    name: "cdviz-site/mise.toml bun version"
+    kind: toml
+    sourceid: bun
+    scmid: default
+    spec:
+      file: cdviz-site/mise.toml
+      key: tools.bun
+
+  bunDashboards:
+    name: "cdviz-grafana/dashboards_generator/mise.toml bun version"
+    kind: toml
+    sourceid: bun
+    scmid: default
+    spec:
+      file: cdviz-grafana/dashboards_generator/mise.toml
+      key: tools.bun
+
+  dprintAdr:
+    name: "adr/mise.toml dprint version"
+    kind: toml
+    sourceid: dprint
+    scmid: default
+    spec:
+      file: adr/mise.toml
+      key: tools.dprint
+
+  dprintSite:
+    name: "cdviz-site/mise.toml dprint version"
+    kind: toml
+    sourceid: dprint
+    scmid: default
+    spec:
+      file: cdviz-site/mise.toml
+      key: tools.dprint
+
+  biomeDashboards:
+    name: "cdviz-grafana/dashboards_generator/mise.toml biome version"
+    kind: toml
+    sourceid: biome
+    scmid: default
+    spec:
+      file: cdviz-grafana/dashboards_generator/mise.toml
+      key: tools.biome
+
+  golangmigrateDb:
+    name: "cdviz-db/mise.toml golang-migrate version"
+    kind: file
+    sourceid: golangmigrate
+    scmid: default
+    spec:
+      file: cdviz-db/mise.toml
+      matchpattern: '"github:golang-migrate/migrate" = "(.*)"'
+      replacepattern: '"github:golang-migrate/migrate" = "{{ source "golangmigrate" }}"'
+
+  sqruffDb:
+    name: "cdviz-db/mise.toml sqruff version"
+    kind: file
+    sourceid: sqruff
+    scmid: default
+    spec:
+      file: cdviz-db/mise.toml
+      matchpattern: '"github:quarylabs/sqruff" = "(.*)"'
+      replacepattern: '"github:quarylabs/sqruff" = "{{ source "sqruff" }}"'
+
+  updatecliRoot:
+    name: "mise.toml updatecli version"
+    kind: file
+    sourceid: updatecliTool
+    scmid: default
+    spec:
+      file: mise.toml
+      matchpattern: '"github:updatecli/updatecli" = "(.*)"'
+      replacepattern: '"github:updatecli/updatecli" = "{{ source "updatecliTool" }}"'
+
+  updatecliUpdatecli:
+    name: "updatecli/mise.toml updatecli version"
+    kind: file
+    sourceid: updatecliTool
+    scmid: default
+    spec:
+      file: updatecli/mise.toml
+      matchpattern: '"github:updatecli/updatecli" = "(.*)"'
+      replacepattern: '"github:updatecli/updatecli" = "{{ source "updatecliTool" }}"'
+
+  v8rUpdatecli:
+    name: "updatecli/mise.toml v8r version"
+    kind: file
+    sourceid: v8r
+    scmid: default
+    spec:
+      file: updatecli/mise.toml
+      matchpattern: '"github:chris48s/v8r" = "(.*)"'
+      replacepattern: '"github:chris48s/v8r" = "{{ source "v8r" }}"'
+
 actions:
   helm:
     kind: github/pullrequest
@@ -168,3 +403,97 @@ actions:
       labels:
         - dependencies
 
+  yq:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - yqRoot
+      - yqGrafana
+    spec:
+      title: 'fix(deps): Bump yq to {{ source "yq" }}'
+      labels:
+        - dependencies
+
+  gitcliff:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - gitcliffRoot
+    spec:
+      title: 'fix(deps): Bump git-cliff to {{ source "gitcliff" }}'
+      labels:
+        - dependencies
+
+  bun:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - bunDb
+      - bunSite
+      - bunDashboards
+    spec:
+      title: 'fix(deps): Bump bun to {{ source "bun" }}'
+      labels:
+        - dependencies
+
+  dprint:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - dprintAdr
+      - dprintSite
+    spec:
+      title: 'fix(deps): Bump dprint to {{ source "dprint" }}'
+      labels:
+        - dependencies
+
+  biome:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - biomeDashboards
+    spec:
+      title: 'fix(deps): Bump biome to {{ source "biome" }}'
+      labels:
+        - dependencies
+
+  golangmigrate:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - golangmigrateDb
+    spec:
+      title: 'fix(deps): Bump golang-migrate to {{ source "golangmigrate" }}'
+      labels:
+        - dependencies
+
+  sqruff:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - sqruffDb
+    spec:
+      title: 'fix(deps): Bump sqruff to {{ source "sqruff" }}'
+      labels:
+        - dependencies
+
+  updatecliTool:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - updatecliRoot
+      - updatecliUpdatecli
+    spec:
+      title: 'fix(deps): Bump updatecli to {{ source "updatecliTool" }}'
+      labels:
+        - dependencies
+
+  v8r:
+    kind: github/pullrequest
+    scmid: default
+    targets:
+      - v8rUpdatecli
+    spec:
+      title: 'fix(deps): Bump v8r to {{ source "v8r" }}'
+      labels:
+        - dependencies

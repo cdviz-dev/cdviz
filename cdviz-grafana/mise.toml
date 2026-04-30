@@ -1,5 +1,5 @@
 [tools]
-"yq" = "latest" # used by build to update / normalize dashboards
+"yq" = "4.53.2" # used by build to update / normalize dashboards
 # "watchexec" = "latest"
 
 [tasks.build]

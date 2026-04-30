@@ -23,9 +23,9 @@ experimental = true
 CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
 
 [tools]
-yq = "latest"  # used by build to update / normalize dashboards / release
-git-cliff = "latest"
-updatecli = "latest"
+yq = "4.53.2"                            # used by build to update / normalize dashboards / release
+git-cliff = "2.13.1"
+"github:updatecli/updatecli" = "0.116.3"
 
 [tasks."updatecli:diff"]
 description = "Show what updatecli would update (dry run, no changes)"

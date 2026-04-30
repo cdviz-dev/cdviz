@@ -1,8 +1,8 @@
 [tools]
-"bun" = "latest"
-"dprint" = "latest"
+"bun" = "1.3.13"
+"dprint" = "0.54.0"
 # "magick" = "latest" # imagemagick
-"github:cdviz-dev/cdviz-collector" = "latest"
+"github:cdviz-dev/cdviz-collector" = "0.37.0"
 
 [tasks]
 install = "bun install"
