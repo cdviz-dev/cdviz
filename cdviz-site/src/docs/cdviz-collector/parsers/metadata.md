@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector metadata parser: emit file metadata (name, size, modified time) as CDEvents without reading file contents."
+---
+
 # Metadata Parser
 
 Extract file metadata without reading content.

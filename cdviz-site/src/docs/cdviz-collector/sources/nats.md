@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector NATS source: subscribe to NATS Core subjects or JetStream consumers for cloud-native event collection."
+---
+
 # NATS Source
 
 Consumes events from NATS subjects. Supports NATS Core (pub/sub with queue groups) and NATS JetStream (persistent, replay-capable messaging).

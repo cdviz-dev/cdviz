@@ -1,3 +1,7 @@
+---
+description: "Authenticate outgoing HTTP requests in CDviz Collector: bearer tokens, basic auth, and custom header injection for sink and SSE source requests."
+---
+
 # Header Authentication
 
 Header authentication is used by components that **send outgoing messages** to authenticate with external services. This includes [SSE](./sources/sse.md) sources that connect to HTTP event streams, [HTTP sinks](./sinks/http.md) that post events to external endpoints, and [Kafka sinks](./sinks/kafka.md) that generate authentication headers for Kafka messages.

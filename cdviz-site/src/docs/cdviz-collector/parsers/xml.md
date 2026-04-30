@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector XML parser: convert XML files to JSON and emit as CDEvents messages using the parser_xml feature."
+---
+
 # XML Parser
 
 Parse XML documents and convert them to JSON structure.

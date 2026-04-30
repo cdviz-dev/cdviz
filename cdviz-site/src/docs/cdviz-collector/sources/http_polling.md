@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector HTTP polling source: periodically fetch events from REST APIs, legacy systems, and services without push capabilities."
+---
+
 # HTTP Polling Extractor
 
 Periodically polls an HTTP endpoint and emits one or more events per successful response. Useful for services that expose data via a pull API rather than pushing webhooks, and for bootstrapping historical data before switching to webhook-based ingestion.

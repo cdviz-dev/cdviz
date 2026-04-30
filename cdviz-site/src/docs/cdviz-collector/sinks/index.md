@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector sinks: deliver CDEvents to PostgreSQL, ClickHouse, HTTP endpoints, Kafka, NATS, SSE streams, or local folders."
+---
+
 # Sinks
 
 Sinks deliver CDEvents to their final destinations.

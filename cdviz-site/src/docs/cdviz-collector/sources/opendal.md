@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector OpenDAL source: poll JSON, CSV, and XML files from local filesystem, AWS S3, Google Cloud Storage, or Azure Blob Storage."
+---
+
 # OpenDAL Extractor
 
 Polls files from local filesystems, cloud storage (S3, GCS, Azure Blob), and other sources supported by [OpenDAL](https://docs.rs/opendal). Processes matching files according to path patterns and parser configuration.

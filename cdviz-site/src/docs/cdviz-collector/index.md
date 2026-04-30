@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector: open-source event collection agent. Receives events from CI/CD pipelines, transforms them to CDEvents, and forwards to sinks."
+---
+
 <script setup>
 import InsideCollector from '../../../components/diagrams/InsideCollector.vue'
 </script>

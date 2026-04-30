@@ -1,3 +1,7 @@
+---
+description: "CDviz Grafana CDEvents activity dashboard: monitor event volume, source distribution, and pipeline activity in real time."
+---
+
 # CDEvents Activity Dashboard
 
 ![CDEvents activity visualization](/screenshots/grafana_dashboard_cdevents_activity-20250606_2102.png)

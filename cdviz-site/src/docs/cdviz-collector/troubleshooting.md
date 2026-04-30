@@ -1,3 +1,7 @@
+---
+description: "Troubleshoot CDviz Collector: diagnose connection issues, event delivery failures, transformer errors, and configuration problems."
+---
+
 # Troubleshooting Guide
 
 Systematic approaches to diagnose and resolve common CDviz Collector issues.

@@ -1,3 +1,7 @@
+---
+description: "Run CDviz Collector in server mode with the connect command. Starts HTTP endpoints for webhooks, SSE streaming, and health checks."
+---
+
 # Connect Command
 
 Launch the collector as a server to connect configured sources to sinks.

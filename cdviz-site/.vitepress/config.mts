@@ -622,6 +622,30 @@ export default defineConfig({
       }
     }
 
+    if (pageData.relativePath.startsWith("docs/") && pageData.relativePath !== "docs/getting-started.md") {
+      const docArticleSchema = {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        headline: title,
+        description: description,
+        dateModified: pageData.lastUpdated
+          ? new Date(pageData.lastUpdated).toISOString().split("T")[0]
+          : undefined,
+        author: {
+          "@type": "Organization",
+          name: "CDviz",
+          url: "https://cdviz.dev",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "CDviz",
+          logo: { "@type": "ImageObject", url: "https://cdviz.dev/favicon.svg" },
+        },
+        url: canonicalUrl,
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(docArticleSchema)]);
+    }
+
     if (pageData.relativePath === "docs/getting-started.md") {
       const howToSchema = {
         "@context": "https://schema.org",

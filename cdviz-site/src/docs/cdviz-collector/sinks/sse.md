@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector SSE sink: stream CDEvents to clients via Server-Sent Events for real-time dashboards and monitoring tools."
+---
+
 # Server-Sent Events (SSE) Sink
 
 The SSE sink exposes CDEvents as a real-time HTTP stream that any browser or HTTP client can subscribe to. Each sink creates one endpoint broadcasting all processed events.

@@ -1,3 +1,7 @@
+---
+description: "Validate incoming HTTP request headers in CDviz Collector: API key checks, HMAC signature verification, and header-based authentication."
+---
+
 # Header Validation
 
 Header validation is used by components that **receive incoming messages** to verify the authenticity and authorization of those messages. This includes [webhook](./sources/webhook.md) sources that accept HTTP events from external systems, [Kafka sources](./sources/kafka.md) that validate Kafka message headers, and [SSE sinks](./sinks/sse.md) that receive HTTP requests.

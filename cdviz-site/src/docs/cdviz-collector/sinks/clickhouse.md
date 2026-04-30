@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector ClickHouse sink: forward CDEvents to ClickHouse for high-throughput columnar analytics and pipeline observability."
+---
+
 # ClickHouse Sink
 
 > [!WARNING] No Grafana dashboards for ClickHouse yet

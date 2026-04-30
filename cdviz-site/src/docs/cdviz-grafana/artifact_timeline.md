@@ -1,3 +1,7 @@
+---
+description: "CDviz Grafana artifact timeline dashboard: visualize artifact promotion, container image deployments, and release progressions across environments."
+---
+
 <script setup>
 import GrafanaPanelTimelineVersionOnStageWithLegend from '../../../components/diagrams/GrafanaPanelTimelineVersionOnStageWithLegend.vue'
 </script>

@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector database sink: store CDEvents in PostgreSQL with TimescaleDB for DORA metrics dashboards and delivery analytics."
+---
+
 # Database Sink
 
 Stores CDEvents in PostgreSQL. The primary sink for CDviz dashboards and analytics.

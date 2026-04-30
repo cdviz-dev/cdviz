@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector text_line parser: parse plain text files line-by-line into individual CDEvents messages."
+---
+
 # Text Line Parser
 
 Parse text files line-by-line — one message per non-empty line.

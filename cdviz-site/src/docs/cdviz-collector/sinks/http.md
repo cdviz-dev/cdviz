@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector HTTP sink: forward CDEvents to external webhooks and REST APIs with configurable headers and authentication."
+---
+
 # HTTP Sink
 
 Forwards CDEvents to an external HTTP endpoint via POST request. Use for webhooks, external APIs, and any HTTP-based service.

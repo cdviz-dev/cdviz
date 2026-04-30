@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector CSV parser: parse CSV files row-by-row into CDEvents messages for batch deployment and pipeline event ingestion."
+---
+
 # CSV Parser
 
 Parse CSV files with one message per data row.

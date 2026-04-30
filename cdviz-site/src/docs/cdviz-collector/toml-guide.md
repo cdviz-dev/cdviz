@@ -1,3 +1,7 @@
+---
+description: "TOML configuration guide for CDviz Collector: syntax, inheritance, environment variable substitution, and configuration file structure."
+---
+
 # TOML Configuration Guide
 
 CDviz Collector uses TOML (Tom's Obvious Minimal Language) for configuration. This guide covers the essential TOML syntax patterns you'll need to understand when configuring the collector.

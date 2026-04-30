@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector text parser: read a complete plain text file as a single CDEvents message body."
+---
+
 # Text Parser
 
 Parse entire file content as raw text, wrapped in `{"text": "..."}`.

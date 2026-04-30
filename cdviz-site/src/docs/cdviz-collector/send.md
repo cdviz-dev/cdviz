@@ -1,3 +1,7 @@
+---
+description: "Send CDEvents directly from the CLI with cdviz-collector send. Emit pipeline and deployment events without a running collector server."
+---
+
 # Send Command
 
 Send CDEvent JSON directly to configured sinks for testing and scripting, without running a full server.

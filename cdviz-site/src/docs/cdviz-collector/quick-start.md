@@ -1,3 +1,7 @@
+---
+description: "Get CDviz Collector running in 5 minutes: install, configure a webhook source and file sink, and send your first CDEvent."
+---
+
 # Quick Start Guide
 
 Get CDviz Collector running in 5 minutes with a working example.

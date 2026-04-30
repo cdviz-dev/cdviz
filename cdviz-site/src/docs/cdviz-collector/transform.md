@@ -1,3 +1,7 @@
+---
+description: "Transform raw pipeline events into CDEvents using VRL (Vector Remap Language) templates in CDviz Collector."
+---
+
 # Transform Command
 
 Batch-process local files through configured transformers and write CDEvent JSON to an output directory.

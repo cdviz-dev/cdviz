@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector auto parser: automatically detect and parse file format by extension for JSON, JSONL, CSV, and text files."
+---
+
 # Auto Parser
 
 Automatically select the parser based on file extension. Default when `parser` is omitted.

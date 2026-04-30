@@ -1,3 +1,7 @@
+---
+description: "Hosting options for CDviz Database: self-hosted PostgreSQL with TimescaleDB, managed cloud databases, and Kubernetes Helm chart deployment."
+---
+
 # Database Hosting Options
 
 ## Kubernetes Deployments

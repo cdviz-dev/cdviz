@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector debug sink: log CDEvents to stdout for development, testing, and pipeline troubleshooting."
+---
+
 # Debug Sink
 
 Prints every CDEvent to the log at `INFO` level. Use during development to verify pipeline flow and transformer output.

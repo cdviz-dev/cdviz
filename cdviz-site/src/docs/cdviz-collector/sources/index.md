@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector sources: webhook, Kafka, NATS, OpenDAL (S3/GCS/local), SSE, and HTTP polling extractors for CI/CD event collection."
+---
+
 # Sources
 
 Sources collect events from external systems and feed them into the CDviz pipeline.

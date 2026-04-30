@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector noop source: no-operation extractor for pipeline testing and configuration validation without external dependencies."
+---
+
 # Noop Extractor
 
 A no-operation extractor that does nothing — sleeps until cancelled. Use for testing configurations and pipeline setups without processing actual events.

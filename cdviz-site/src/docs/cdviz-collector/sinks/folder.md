@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector folder sink: write CDEvents as JSON files to local filesystem or cloud storage (S3, GCS, Azure Blob) via OpenDAL."
+---
+
 # Folder Sink
 
 Writes each CDEvent as a JSON file to a storage backend via [OpenDAL](https://opendal.apache.org/). Supports local filesystem, Amazon S3, Google Cloud Storage, Azure Blob Storage, and other OpenDAL-compatible services.

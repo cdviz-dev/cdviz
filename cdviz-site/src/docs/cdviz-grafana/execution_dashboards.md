@@ -1,3 +1,7 @@
+---
+description: "CDviz Grafana execution dashboards: track CI/CD pipeline runs, test suite results, and task execution metrics from CDEvents."
+---
+
 # Execution Performance Dashboard
 
 ![Execution dashboard overview](/screenshots/grafana_dashboard_pipeline_executions-20260213.png)

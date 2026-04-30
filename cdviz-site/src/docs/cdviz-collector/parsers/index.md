@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector parsers: parse JSON, JSON Lines, CSV, XML, TAP, plain text, and metadata from files collected by the OpenDAL source."
+---
+
 # Parsers
 
 Parsers convert file contents into JSON messages for the CDviz pipeline.

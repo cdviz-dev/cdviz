@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector NATS sink: publish CDEvents to NATS Core subjects or JetStream streams for cloud-native messaging."
+---
+
 # NATS Sink
 
 The NATS sink forwards CDEvents to NATS subjects. It supports both NATS Core (fire-and-forget pub/sub) and NATS JetStream (persistent, acknowledged publishing).

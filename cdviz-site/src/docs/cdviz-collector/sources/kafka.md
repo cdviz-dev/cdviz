@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector Kafka source: consume CDEvents from Apache Kafka, Confluent, Redpanda, and Amazon MSK topics with consumer group support."
+---
+
 # Kafka Source
 
 Consumes events from Kafka topics. Supports Apache Kafka, Confluent Kafka, Redpanda, Amazon MSK, and other Kafka-compatible brokers.

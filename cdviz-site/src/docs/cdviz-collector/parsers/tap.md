@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector TAP parser: parse Test Anything Protocol output into CDEvents testSuiteRun messages."
+---
+
 # TAP Parser
 
 Parse Test Anything Protocol (TAP) format test results into structured JSON.

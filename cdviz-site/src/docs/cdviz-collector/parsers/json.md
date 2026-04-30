@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector JSON parser: parse a single JSON object from a file into one CDEvents message."
+---
+
 # JSON Parser
 
 Parse entire file as a single JSON object.

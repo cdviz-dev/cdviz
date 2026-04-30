@@ -1,3 +1,7 @@
+---
+description: "CDviz Grafana incidents and tickets dashboard: correlate deployment events with incidents and ticket lifecycle for change failure analysis."
+---
+
 # Incidents & Tickets Dashboard
 
 ![Incidents & Tickets dashboard overview](/screenshots/grafana_dashboard_incidents_tickets-20260222.png)

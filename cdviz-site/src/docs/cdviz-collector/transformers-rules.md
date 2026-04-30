@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector transformer rules: conditional routing, multi-output transforms, and VRL scripting patterns for CDEvents normalization."
+---
+
 # Rules
 
 Opinionated rules for creating CDEvents and transformers.

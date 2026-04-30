@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector use cases: DORA metrics collection, multi-tool CI/CD pipelines, Kubernetes deployment tracking, and audit trails."
+---
+
 # Use Cases
 
 Common scenarios and complete configurations for real-world deployments.

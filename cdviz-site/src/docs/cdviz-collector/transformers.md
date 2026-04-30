@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector transformers: convert raw events to CDEvents using VRL templates. Configuration reference and example transformers."
+---
+
 # Transformers
 
 Transform, filter, or enrich messages as they flow through the pipeline.

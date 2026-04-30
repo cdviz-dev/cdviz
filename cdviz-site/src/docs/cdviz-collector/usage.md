@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector CLI usage reference: available commands, global flags, and common invocation patterns."
+---
+
 # Usage of cdviz-collector
 
 ```bash

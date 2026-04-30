@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector Kafka sink: publish CDEvents to Apache Kafka, Confluent, Redpanda, or Amazon MSK topics."
+---
+
 # Kafka Sink
 
 The Kafka sink forwards CDEvents to Kafka topics. It supports all Kafka-compatible brokers including Apache Kafka, Confluent Kafka, Redpanda, Amazon MSK, and other implementations of the Kafka protocol.

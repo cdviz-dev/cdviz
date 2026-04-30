@@ -1,3 +1,7 @@
+---
+description: "DORA metrics with CDviz and Grafana: measure deployment frequency, lead time for changes, change failure rate, and MTTR from CDEvents."
+---
+
 # DORA Metrics Dashboard
 
 ![DORA Metrics dashboard overview](/screenshots/grafana_dashboard_dora_metrics-20260222.png)

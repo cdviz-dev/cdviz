@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector configuration reference: TOML structure, environment variable overrides, sources, transformers, sinks, and HTTP server settings."
+---
+
 # Configuration
 
 CDviz Collector uses TOML configuration files with environment variable overrides.

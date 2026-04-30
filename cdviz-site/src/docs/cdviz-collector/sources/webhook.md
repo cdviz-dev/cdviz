@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector webhook source: receive CI/CD events via HTTP POST. Supports GitHub, GitLab, Jenkins webhooks with HMAC signature validation."
+---
+
 # Webhook Extractor
 
 Receives events via HTTP POST requests, creating endpoints that accept JSON payloads from CI/CD pipelines and external services.

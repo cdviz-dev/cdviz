@@ -1,5 +1,6 @@
 ---
 version: 0.30.0
+description: "Install CDviz Collector via shell script, Homebrew, mise, Docker, or Helm chart on Kubernetes."
 ---
 
 # Installation of cdviz-collector

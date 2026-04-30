@@ -1,3 +1,7 @@
+---
+description: "CDviz platform architecture: event-driven pipeline from CDviz Collector to PostgreSQL TimescaleDB and Grafana dashboards for DORA metrics."
+---
+
 <script setup>
 import CdvizArchitecture from '../../components/diagrams/CdvizArchitecture.vue'
 </script>

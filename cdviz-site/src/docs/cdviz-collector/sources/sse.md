@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector SSE source: consume real-time events from Server-Sent Events endpoints in external services and pipelines."
+---
+
 # SSE Extractor
 
 Connects to HTTP endpoints that stream events via Server-Sent Events protocol — ideal for consuming live event streams.

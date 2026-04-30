@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector JSONL parser: parse JSON Lines files into multiple CDEvents messages, one per line."
+---
+
 # JSONL Parser
 
 Parse JSON Lines format — one JSON object per line, one message per line.

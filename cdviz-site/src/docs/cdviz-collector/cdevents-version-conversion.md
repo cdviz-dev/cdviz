@@ -1,3 +1,7 @@
+---
+description: "CDviz Collector CDEvents version conversion: automatically upgrade or downgrade CDEvents schema versions across pipeline stages."
+---
+
 # CDEvents Version Conversion
 
 Normalize CDEvents from older versions (v0.3, v0.4) to v0.5 using a global transformer chain.
