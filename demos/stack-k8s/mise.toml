@@ -1,81 +1,99 @@
 
 [env]
-  CLUSTER_NAME = "kind-local"
+CLUSTER_NAME = "kind-local"
 
 [tasks]
 
-  [tasks.check]
-    depends = [":use-context"]
-    description = "check the helwave config to deploy the stack"
-    run = ["helmwave build"]
+[tasks.check]
+depends = [":use-context"]
+description = "check the helwave config to deploy the stack"
+run = ["helmwave build"]
 
-  [tasks.ci]
-    description = "Run all the ci tasks"
+[tasks.ci]
+description = "Run all the ci tasks"
 
-  [tasks.create]
-    description = "Create a k8s cluster (kind)"
-    run = ["ctlptl create registry ctlptl-registry --port=5005", "ctlptl create cluster kind --name \"$CLUSTER_NAME\" --registry=ctlptl-registry", "kubectl cluster-info --context \"$CLUSTER_NAME\""]
+[tasks.create]
+description = "Create a k8s cluster (kind)"
+run = [
+  "ctlptl create registry ctlptl-registry --port=5005",
+  "ctlptl create cluster kind --name \"$CLUSTER_NAME\" --registry=ctlptl-registry",
+  "kubectl cluster-info --context \"$CLUSTER_NAME\"",
+]
 
-  [tasks.delete]
-    depends = [":delete_*"]
-    description = "Delete a k8s cluster (kind) and its resources"
-    run = ["ctlptl delete cluster \"$CLUSTER_NAME\"", "ctlptl delete registry ctlptl-registry"]
+[tasks.delete]
+depends = [":delete_*"]
+description = "Delete a k8s cluster (kind) and its resources"
+run = [
+  "ctlptl delete cluster \"$CLUSTER_NAME\"",
+  "ctlptl delete registry ctlptl-registry",
+]
 
-  [tasks.delete_cdviz]
-    depends = [":use-context"]
-    description = "Delete cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
-    run = ["helmwave down --build  -t cdviz", "kubectl delete namespace cdviz-dev || true"]
+[tasks.delete_cdviz]
+depends = [":use-context"]
+description = "Delete cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
+run = [
+  "helmwave down --build  -t cdviz",
+  "kubectl delete namespace cdviz-dev || true",
+]
 
-  [tasks.delete_pre-req]
-    depends = [":delete_cdviz"]
-    description = "Delete the pre-requirement for cdviz (postgresql, grafana, ...) on a k8s cluster"
-    run = ["helmwave down --build  -t pre-req"]
+[tasks.delete_pre-req]
+depends = [":delete_cdviz"]
+description = "Delete the pre-requirement for cdviz (postgresql, grafana, ...) on a k8s cluster"
+run = ["helmwave down --build  -t pre-req"]
 
-  [tasks.deploy]
-    depends = [":use-context", ":deploy_*"]
-    description = "Deploy all the resources (pre-req, cdviz, integrations,...) on a k8s cluster"
+[tasks.deploy]
+depends = [":use-context", ":deploy_*"]
+description = "Deploy all the resources (pre-req, cdviz, integrations,...) on a k8s cluster"
 
-  [tasks.deploy_cdviz]
-    depends = [":use-context"]
-    description = "Deploy cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
-    run = ["kubectl create namespace cdviz-dev || true", "helmwave up --build --progress --skip-unchanged -t cdviz"]
-    wait_for = [":deploy_pre-req"]
+[tasks.deploy_cdviz]
+depends = [":use-context"]
+description = "Deploy cdviz stack (cdviz-collector, cdviz-db) on a k8s cluster"
+run = [
+  "kubectl create namespace cdviz-dev || true",
+  "helmwave up --build --progress --skip-unchanged -t cdviz",
+]
+wait_for = [":deploy_pre-req"]
 
-  [tasks.deploy_pre-req]
-    depends = [":use-context"]
-    description = "Deploy the pre-requirement for cdviz (grafana, ...) on a k8s cluster"
-    run = ["helmwave up --build --progress --skip-unchanged -t pre-req", "# look at the logs to have some instructions to connect to the services, retrieve the passwords,..."]
+[tasks.deploy_pre-req]
+depends = [":use-context"]
+description = "Deploy the pre-requirement for cdviz (grafana, ...) on a k8s cluster"
+run = [
+  "helmwave up --build --progress --skip-unchanged -t pre-req",
+  "# look at the logs to have some instructions to connect to the services, retrieve the passwords,...",
+]
 
-  [tasks.port-forward_cdviz-collector]
-    depends = [":use-context"]
-    description = "Port-forward the cdviz-collector to localhost:8080"
-    run = ["kubectl port-forward svc/cdviz-collector -n cdviz-dev 8080:8080"]
+[tasks.port-forward_cdviz-collector]
+depends = [":use-context"]
+description = "Port-forward the cdviz-collector to localhost:8080"
+run = ["kubectl port-forward svc/cdviz-collector -n cdviz-dev 8080:8080"]
 
-  [tasks.port-forward_cdviz-db]
-    depends = [":use-context"]
-    description = "Port-forward the PostgreSQL database to localhost:5432"
-    run = ["kubectl port-forward svc/timescaledb -n cdviz-dev 5432:5432"]
+[tasks.port-forward_cdviz-db]
+depends = [":use-context"]
+description = "Port-forward the PostgreSQL database to localhost:5432"
+run = ["kubectl port-forward svc/timescaledb -n cdviz-dev 5432:5432"]
 
-  [tasks.port-forward_grafana]
-    depends = [":use-context"]
-    description = "Port-forward the Grafana dashboard to localhost:3000"
-    run = ["kubectl port-forward svc/grafana -n grafana 3000:80"]
+[tasks.port-forward_grafana]
+depends = [":use-context"]
+description = "Port-forward the Grafana dashboard to localhost:3000"
+run = ["kubectl port-forward svc/grafana -n grafana 3000:80"]
 
-  [tasks.show-grafana_admin-password]
-    depends = [":use-context"]
-    description = "Show the Grafana admin password"
-    run = ["kubectl get secret --namespace grafana grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode ; echo"]
+[tasks.show-grafana_admin-password]
+depends = [":use-context"]
+description = "Show the Grafana admin password"
+run = [
+  "kubectl get secret --namespace grafana grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode ; echo",
+]
 
-  [tasks.use-context]
-    description = "Use the k8s cluster (kind) context"
-    run = ["kubectl config use-context kind-local"]
-    wait_for = [":create"]
+[tasks.use-context]
+description = "Use the k8s cluster (kind) context"
+run = ["kubectl config use-context kind-local"]
+wait_for = [":create"]
 
 [tools]
-  ctlptl = "0.9.3"
-  kind = "0.31.0"
-  kubectl = "1.36.0"
+ctlptl = "0.9.3"
+kind = "0.31.0"
+kubectl = "1.36.0"
 
-  [tools."github:helmwave/helmwave"]
-    matching = "helmwave"
-    version = "0.42.3"
+[tools."github:helmwave/helmwave"]
+matching = "helmwave"
+version = "0.42.3"
