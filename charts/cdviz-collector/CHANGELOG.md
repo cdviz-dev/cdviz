@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.7] - 2026-04-30
+
+### Fixed
+
+- Bump helm to 4.1.4 (#464) ([530bd8b](530bd8b6784a5b8bba189175dfd6e35a24f8d2a4))
+- Bump cdviz-collector to 0.37.0 (#470) ([f7336fe](f7336fe0d7d7f07907bcf7b6fc540bd33542db5a))
+
 ## [1.2.6] - 2026-04-19
 
 ### Fixed
