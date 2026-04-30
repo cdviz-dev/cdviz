@@ -5,8 +5,8 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 
 [tools]
 # docker = "latest"
-"ubi:golang-migrate/migrate" = "latest"
-"ubi:quarylabs/sqruff" = "latest"
+"github:golang-migrate/migrate" = "latest"
+"github:quarylabs/sqruff" = "latest"
 "bun" = "latest"
 
 [tasks."migrate:create"]

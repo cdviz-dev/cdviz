@@ -41,9 +41,10 @@ jobs:
 
       - uses: jdx/mise-action@v4
         with:
-          version: 2026.3.10
           install: false
           working_directory: ./cdviz-site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           mise run :install
           mise run :build

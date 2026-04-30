@@ -1,6 +1,6 @@
 [tools]
-updatecli = "latest"
-"ubi:chris48s/v8r" = "latest"
+"github:updatecli/updatecli" = "latest"
+"github:chris48s/v8r" = "latest"
 
 [tasks."diff"]
 description = "Show what updatecli would update (dry run, no changes)"

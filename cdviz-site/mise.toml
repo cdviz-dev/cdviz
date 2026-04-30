@@ -2,7 +2,7 @@
 "bun" = "latest"
 "dprint" = "latest"
 # "magick" = "latest" # imagemagick
-"ubi:cdviz-dev/cdviz-collector" = "latest"
+"github:cdviz-dev/cdviz-collector" = "latest"
 
 [tasks]
 install = "bun install"

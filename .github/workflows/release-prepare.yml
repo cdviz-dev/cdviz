@@ -33,9 +33,10 @@ jobs:
       - name: Install mise
         uses: jdx/mise-action@v4
         with:
-          version: 2026.3.10
           install: false
           experimental: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Prepare releases
         id: prepare
         # shell: bash
