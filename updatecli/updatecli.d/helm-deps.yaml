@@ -33,6 +33,7 @@ targets:
     spec:
       file: charts/cdviz-collector/Chart.yaml
       key: "$.dependencies[0].version"
+      engine: dasel/v2
 
 actions:
   kubewatch:

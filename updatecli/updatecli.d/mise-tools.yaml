@@ -99,8 +99,8 @@ sources:
       owner: oven-sh
       repository: bun
       versionfilter:
-        kind: semver
-        pattern: ">= 0"
+        kind: regex
+        pattern: '^bun-v\d+\.\d+\.\d+$'
     transformers:
       - trimprefix: "bun-v"
 
@@ -121,8 +121,8 @@ sources:
       owner: biomejs
       repository: biome
       versionfilter:
-        kind: semver
-        pattern: ">= 0"
+        kind: regex
+        pattern: '^cli/v\d+\.\d+\.\d+$'
     transformers:
       - trimprefix: "cli/v"
 
@@ -183,6 +183,7 @@ targets:
     spec:
       file: charts/mise.toml
       key: tools.helm
+      engine: dasel/v2
 
   kubectlCollectorChart:
     name: "charts/cdviz-collector/mise.toml kubectl version"
@@ -192,6 +193,7 @@ targets:
     spec:
       file: charts/cdviz-collector/mise.toml
       key: tools.kubectl
+      engine: dasel/v2
 
   kindCollectorChart:
     name: "charts/cdviz-collector/mise.toml kind version"
@@ -201,6 +203,7 @@ targets:
     spec:
       file: charts/cdviz-collector/mise.toml
       key: tools.kind
+      engine: dasel/v2
 
   kubectlStackK8s:
     name: "demos/stack-k8s/mise.toml kubectl version"
@@ -210,6 +213,7 @@ targets:
     spec:
       file: demos/stack-k8s/mise.toml
       key: tools.kubectl
+      engine: dasel/v2
 
   kindStackK8s:
     name: "demos/stack-k8s/mise.toml kind version"
@@ -219,6 +223,7 @@ targets:
     spec:
       file: demos/stack-k8s/mise.toml
       key: tools.kind
+      engine: dasel/v2
 
   ctlptlStackK8s:
     name: "demos/stack-k8s/mise.toml ctlptl version"
@@ -228,6 +233,7 @@ targets:
     spec:
       file: demos/stack-k8s/mise.toml
       key: tools.ctlptl
+      engine: dasel/v2
 
   yqRoot:
     name: "mise.toml yq version"
@@ -237,6 +243,7 @@ targets:
     spec:
       file: mise.toml
       key: tools.yq
+      engine: dasel/v2
 
   yqGrafana:
     name: "cdviz-grafana/mise.toml yq version"
@@ -246,6 +253,7 @@ targets:
     spec:
       file: cdviz-grafana/mise.toml
       key: tools.yq
+      engine: dasel/v2
 
   gitcliffRoot:
     name: "mise.toml git-cliff version"
@@ -255,6 +263,7 @@ targets:
     spec:
       file: mise.toml
       key: tools.git-cliff
+      engine: dasel/v2
 
   bunDb:
     name: "cdviz-db/mise.toml bun version"
@@ -264,6 +273,7 @@ targets:
     spec:
       file: cdviz-db/mise.toml
       key: tools.bun
+      engine: dasel/v2
 
   bunSite:
     name: "cdviz-site/mise.toml bun version"
@@ -273,6 +283,7 @@ targets:
     spec:
       file: cdviz-site/mise.toml
       key: tools.bun
+      engine: dasel/v2
 
   bunDashboards:
     name: "cdviz-grafana/dashboards_generator/mise.toml bun version"
@@ -282,6 +293,7 @@ targets:
     spec:
       file: cdviz-grafana/dashboards_generator/mise.toml
       key: tools.bun
+      engine: dasel/v2
 
   dprintAdr:
     name: "adr/mise.toml dprint version"
@@ -291,6 +303,7 @@ targets:
     spec:
       file: adr/mise.toml
       key: tools.dprint
+      engine: dasel/v2
 
   dprintSite:
     name: "cdviz-site/mise.toml dprint version"
@@ -300,6 +313,7 @@ targets:
     spec:
       file: cdviz-site/mise.toml
       key: tools.dprint
+      engine: dasel/v2
 
   biomeDashboards:
     name: "cdviz-grafana/dashboards_generator/mise.toml biome version"
@@ -309,6 +323,7 @@ targets:
     spec:
       file: cdviz-grafana/dashboards_generator/mise.toml
       key: tools.biome
+      engine: dasel/v2
 
   golangmigrateDb:
     name: "cdviz-db/mise.toml golang-migrate version"

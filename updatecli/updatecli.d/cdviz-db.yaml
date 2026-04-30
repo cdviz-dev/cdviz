@@ -37,6 +37,7 @@ targets:
     spec:
       file: charts/cdviz-db/values.yaml
       key: $.image.tag
+      engine: dasel/v2
 
 actions:
   dbMigrationVersion:

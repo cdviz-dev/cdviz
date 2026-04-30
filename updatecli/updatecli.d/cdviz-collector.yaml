@@ -44,6 +44,7 @@ targets:
     spec:
       file: charts/cdviz-collector/values.yaml
       key: $.image.tag
+      engine: dasel/v2
 
   # FIXME: useless to update the version of the app in the chart as is it override by the "prepare-publish script" used for chart, So first update the script
   # chartAppVersion:

@@ -56,10 +56,6 @@ jobs:
         #   persist-credentials: false
       # Required by npm.yaml shell targets that run `bun install`
       - uses: jdx/mise-action@v4
-        with:
-          tool_versions: |
-            bun latest
-            "github:updatecli/updatecli" latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
