@@ -1,6 +1,21 @@
-/docs/vs-apache-devlake    /docs/alternatives/vs-apache-devlake    301
-/docs/vs-datadog-ci        /docs/alternatives/vs-datadog-ci        301
-/docs/vs-devstats          /docs/alternatives/vs-devstats          301
-/docs/vs-linearb           /docs/alternatives/vs-linearb           301
-/docs/vs-powerpipe         /docs/alternatives/vs-powerpipe         301
-/docs/vs-splunk            /docs/alternatives/vs-splunk            301
+# Specific path changes (must be before generic rules — first match wins)
+/docs/vs-apache-devlake        /docs/alternatives/vs-apache-devlake    301
+/docs/vs-datadog-ci            /docs/alternatives/vs-datadog-ci         301
+/docs/vs-devstats              /docs/alternatives/vs-devstats           301
+/docs/vs-linearb               /docs/alternatives/vs-linearb            301
+/docs/vs-powerpipe             /docs/alternatives/vs-powerpipe          301
+/docs/vs-splunk                /docs/alternatives/vs-splunk             301
+
+/docs/vs-apache-devlake.html   /docs/alternatives/vs-apache-devlake    301
+/docs/vs-datadog-ci.html       /docs/alternatives/vs-datadog-ci         301
+/docs/vs-devstats.html         /docs/alternatives/vs-devstats           301
+/docs/vs-linearb.html          /docs/alternatives/vs-linearb            301
+/docs/vs-powerpipe.html        /docs/alternatives/vs-powerpipe          301
+/docs/vs-splunk.html           /docs/alternatives/vs-splunk             301
+
+# Generic /index suffix redirects (covers any current and future path)
+/index          /               301
+/*/index        /:splat/        301
+
+# Generic .html suffix redirects (covers any current and future path)
+/*.html         /:splat         301

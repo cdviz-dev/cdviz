@@ -5,7 +5,7 @@ import svgLoader from "vite-svg-loader";
 // import { configureDiagramsPlugin } from "vitepress-plugin-diagrams";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { getBlogPosts } from "./blog-utils.ts";
+import { getBlogPosts, Status } from "./blog-utils.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "../src/blog");
@@ -13,7 +13,9 @@ const isDev = process.env.NODE_ENV !== "production";
 
 function getDraftExcludes(): string[] {
   if (isDev) return [];
-  return getBlogPosts(blogDir, false).map((p) => `blog/${p.file}`);
+  return getBlogPosts(blogDir, true)
+    .filter((p) => p.status !== Status.Published)
+    .map((p) => `blog/${p.file}`);
 }
 
 function buildBlogSidebar() {
@@ -479,7 +481,7 @@ export default defineConfig({
 
   transformHead({ pageData }) {
     const siteUrl = "https://cdviz.dev";
-    const relativePath = pageData.relativePath.replace(/\.md$/, "").replace(/index\.html$/, "");
+    const relativePath = pageData.relativePath.replace(/\.md$/, "").replace(/(^|\/)index$/, "$1");
     const canonicalUrl = `${siteUrl}/${relativePath}`;
     const title =
       pageData.title ||
