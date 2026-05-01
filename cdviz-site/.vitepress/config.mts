@@ -105,14 +105,17 @@ export default defineConfig({
   // base: "/docs/",
   srcDir: "./src",
   srcExclude: getDraftExcludes(),
-  // markdown: {
-  //   config: (md) => {
-  //     configureDiagramsPlugin(md, {
-  //       diagramsDir: "src/public/diagrams", // Optional: custom directory for SVG files
-  //       publicPath: "/docs/diagrams", // Optional: custom public path for images
-  //     });
-  //   },
-  // },
+  markdown: {
+    languages: [
+      // VRL (Vector Remap Language) has no Shiki grammar; register as stub to avoid fallback warnings
+      {
+        name: "vrl",
+        scopeName: "source.vrl",
+        patterns: [],
+        repository: {},
+      },
+    ],
+  },
   appearance: "dark",
   lastUpdated: true,
   themeConfig: {
@@ -720,6 +723,11 @@ export default defineConfig({
     build: {
       // Optimize bundle splitting for better caching
       rollupOptions: {
+        onwarn(warning, warn) {
+          // VitePress markdown compilation generates unused vue imports; suppress noise
+          if (warning.code === "UNUSED_EXTERNAL_IMPORT" && warning.exporter === "vue") return;
+          warn(warning);
+        },
         output: {
           // Split landing page and pricing page components into separate chunks
           manualChunks: {
@@ -738,6 +746,8 @@ export default defineConfig({
       },
       // Enable compression for smaller bundles
       minify: true,
+      // Local search index is a lazily-loaded data chunk that legitimately exceeds 500 kB
+      chunkSizeWarningLimit: 650,
     },
     plugins: [
       tailwindcss() as any,
