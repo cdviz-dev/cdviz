@@ -18,5 +18,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /*?
 
 Sitemap: https://cdviz.dev/sitemap.xml
