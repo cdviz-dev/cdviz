@@ -1,118 +1,54 @@
-[tools]
-"bun" = "1.3.13"
-"dprint" = "0.54.0"
-# "magick" = "latest" # imagemagick
-"github:cdviz-dev/cdviz-collector" = "0.37.0"
 
 [tasks]
-install = "bun install"
-dev = "bun run docs:dev"
-preview = "bun run docs:preview"
+  dev = "bun run docs:dev"
+  install = "bun install"
+  preview = "bun run docs:preview"
 
-[tasks."build"]
-run = "bun run docs:build"
-wait_for = [":build:images", ":build:markdown", ":build:help"]
+  [tasks.build]
+    run = "bun run docs:build"
+    wait_for = [":build:images", ":build:markdown", ":build:help"]
 
-[tasks."build:all"]
-depends = [":build:images", ":build:markdown", ":build:help", "build"]
+  [tasks."build:all"]
+    depends = [":build:images", ":build:markdown", ":build:help", "build"]
 
-[tasks."build:help"]
-description = "build help snippet from cdviz-collector, to be imported into docs"
-run = [
-  "cdviz-collector --help > src/docs/cdviz-collector/help.txt",
-  "cdviz-collector connect --help > src/docs/cdviz-collector/connect-help.txt",
-  "cdviz-collector send --help > src/docs/cdviz-collector/send-help.txt",
-  "cdviz-collector transform --help > src/docs/cdviz-collector/transform-help.txt",
-  "cdviz-collector config --help > src/docs/cdviz-collector/config-help.txt",
-]
+  [tasks."build:favicon"]
+    description = "rebuild favicon.{ico,png,webp} from favicon.svg"
+    dir = "assets"
+    outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+    run = ["magick -background none favicon.svg -define icon:auto-resize=16,32,48,64 favicon.ico", "magick -background none favicon.svg -resize 48x48 favicon.png", "magick -background none favicon.svg -resize 48x48 favicon.webp", "magick -background none favicon.svg -resize 320x320 logos/cdviz-320x320-c.png"]
+    sources = ["favicon.svg"]
 
-sources = ["favicon.svg"]
-outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+  [tasks."build:help"]
+    description = "build help snippet from cdviz-collector, to be imported into docs"
+    outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+    run = ["cdviz-collector --help > src/docs/cdviz-collector/help.txt", "cdviz-collector connect --help > src/docs/cdviz-collector/connect-help.txt", "cdviz-collector send --help > src/docs/cdviz-collector/send-help.txt", "cdviz-collector transform --help > src/docs/cdviz-collector/transform-help.txt", "cdviz-collector config --help > src/docs/cdviz-collector/config-help.txt"]
+    sources = ["favicon.svg"]
 
-[tasks."build:favicon"]
-description = "rebuild favicon.{ico,png,webp} from favicon.svg"
-dir = "assets"
-run = [
-  # limit to browser resolution see https://favicon.im/blog/favicon-formats-sizes-best-practices
-  # use imagemagick
-  # -background none to keep transparency, should be before the input file
-  "magick -background none favicon.svg -define icon:auto-resize=16,32,48,64 favicon.ico",
-  "magick -background none favicon.svg -resize 48x48 favicon.png",
-  "magick -background none favicon.svg -resize 48x48 favicon.webp",
-  "magick -background none favicon.svg -resize 320x320 logos/cdviz-320x320-c.png",
-]
-sources = ["favicon.svg"]
-outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+  [tasks."build:hero-images"]
+    description = "rebuild optimized hero images from hero-dashboard-01.webp"
+    dir = "assets/illustrations"
+    outputs = ["hero-dashboard-01-q75.webp", "hero-dashboard-01-q60.webp", "hero-dashboard-01-600w.webp", "hero-dashboard-01-400w.webp", "hero-dashboard-01.avif", "hero-dashboard-01-600w.avif", "hero-dashboard-01-400w.avif"]
+    run = ["magick hero-dashboard-01.webp -quality 75 -define webp:method=6 hero-dashboard-01-q75.webp", "magick hero-dashboard-01.webp -quality 60 -define webp:method=6 hero-dashboard-01-q60.webp", "magick hero-dashboard-01.webp -resize 600x537 -quality 80 -define webp:method=6 hero-dashboard-01-600w.webp", "magick hero-dashboard-01.webp -resize 400x358 -quality 85 -define webp:method=6 hero-dashboard-01-400w.webp", "magick hero-dashboard-01.webp -quality 75 hero-dashboard-01.avif", "magick hero-dashboard-01-600w.webp -quality 75 hero-dashboard-01-600w.avif", "magick hero-dashboard-01-400w.webp -quality 75 hero-dashboard-01-400w.avif"]
+    sources = ["hero-dashboard-01.webp"]
 
-[tasks."build:hero-images"]
-description = "rebuild optimized hero images from hero-dashboard-01.webp"
-dir = "assets/illustrations"
-# to create the image effect in GIMP
-# - Scale to have height > 700px
-# - Make the perspective
-#   - Tools>Transform Tools>Perpective
-#   - define the form, apply
-# - Blurring the edge (https://graphicdesign.stackexchange.com/questions/120420/blurring-the-edges-of-a-layer-on-gimp)
-#   - Layer>Transparency>Add alpha channel (if grayed the alpha channel is already there)
-#   - Layer>Transparency>Alpha to selection
-#   - Select>Shrink by N/2 pixels (N being the span of the feathering) N = 20
-#   - Select>Feather by N pixels
-#   - Select>Invert
-#   - Edit>Clear or [delete]
-# - Image>Crop to Content
-# - File>Export
-run = [
-  # Create optimized WebP versions with different quality levels
-  "magick hero-dashboard-01.webp -quality 75 -define webp:method=6 hero-dashboard-01-q75.webp",
-  "magick hero-dashboard-01.webp -quality 60 -define webp:method=6 hero-dashboard-01-q60.webp",
-  # Create responsive sizes with WebP format
-  "magick hero-dashboard-01.webp -resize 600x537 -quality 80 -define webp:method=6 hero-dashboard-01-600w.webp",
-  "magick hero-dashboard-01.webp -resize 400x358 -quality 85 -define webp:method=6 hero-dashboard-01-400w.webp",
-  # Create AVIF versions for modern browsers (better compression)
-  "magick hero-dashboard-01.webp -quality 75 hero-dashboard-01.avif",
-  "magick hero-dashboard-01-600w.webp -quality 75 hero-dashboard-01-600w.avif",
-  "magick hero-dashboard-01-400w.webp -quality 75 hero-dashboard-01-400w.avif",
-]
-sources = ["hero-dashboard-01.webp"]
-outputs = [
-  "hero-dashboard-01-q75.webp",
-  "hero-dashboard-01-q60.webp",
-  "hero-dashboard-01-600w.webp",
-  "hero-dashboard-01-400w.webp",
-  "hero-dashboard-01.avif",
-  "hero-dashboard-01-600w.avif",
-  "hero-dashboard-01-400w.avif",
-]
+  [tasks."build:images"]
+    depends = [":build:favicon", ":build:hero-images"]
+    description = "rebuild all optimized images (favicon + hero images)"
 
-[tasks."build:images"]
-description = "rebuild all optimized images (favicon + hero images)"
-depends = [":build:favicon", ":build:hero-images"]
+  [tasks."build:markdown"]
+    description = "generate, import some markdown"
+    run = ["curl -sfL 'https://github.com/cdviz-dev/transformers-community/raw/refs/heads/main/RULES.md' -o src/docs/cdviz-collector/transformers-rules.md"]
 
-[tasks."build:markdown"]
-description = "generate, import some markdown"
-run = [
-  "curl -sfL 'https://github.com/cdviz-dev/transformers-community/raw/refs/heads/main/RULES.md' -o src/docs/cdviz-collector/transformers-rules.md",
-]
+  [tasks.format]
+    alias = "fmt"
+    description = "format with dprint (includes biome plugin)"
+    run = ["dprint fmt"]
 
-[tasks.format]
-alias = "fmt"
-description = "format with dprint (includes biome plugin)"
-# depends = [":trim_trailing-space"]
-run = ["dprint fmt"]
+  [tasks.trim_trailing-space]
+    description = "trim trailing whitespace"
+    run = ["find . -type f -name '*.md' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.vue' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.js' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.ts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.json' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.css' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.scss' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.html' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.yml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.yaml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.toml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;", "find . -type f -name '*.mts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;"]
 
-[tasks."trim_trailing-space"]
-description = "trim trailing whitespace"
-run = [
-  "find . -type f -name '*.md' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.vue' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.js' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.ts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.json' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.css' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.scss' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.html' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.yml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.yaml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.toml' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-  "find . -type f -name '*.mts' -exec sed -i -e 's/[[:space:]]*$//' {} \\;",
-]
+[tools]
+  bun = "1.3.14"
+  dprint = "0.54.0"
+  "github:cdviz-dev/cdviz-collector" = "0.37.0"
