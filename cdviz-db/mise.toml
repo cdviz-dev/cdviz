@@ -1,176 +1,109 @@
+
 [env]
-PG_LOCAL_PWD = "postgres-password"
-PG_LOCAL_USER = "cdviz"
-PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:5432/{{env.PG_LOCAL_USER}}?search_path=public&sslmode=disable"
+  PG_LOCAL_PWD = "postgres-password"
+  PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:5432/{{env.PG_LOCAL_USER}}?search_path=public&sslmode=disable"
+  PG_LOCAL_USER = "cdviz"
+
+[tasks]
+
+  [tasks.autofix]
+    depends = ["format"]
+    description = "Format and fix linting issues in SQL files"
+
+  [tasks.build]
+    description = "build the docker image for the migration"
+    run = ["docker buildx bake --progress=plain cdviz-db-migration"]
+
+  [tasks.ci]
+    depends = [":lint", ":test", ":build"]
+    description = "set of tasks run by CI"
+
+  [tasks.db-local_psql]
+    description = "connect to the local db with psql"
+    run = ["echo password=$PG_LOCAL_PWD", "docker run -it --rm --network host postgres psql -h 127.0.0.1 --username {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}"]
+
+  [tasks.db-local_start]
+    description = "start a container for the local db with the migrations applied"
+    run = [{ task = ":db-local_start-empty" }, { task = ":migrate:up" }]
+
+  [tasks.db-local_start-empty]
+    description = "start a container for the local db (empty: no data, no schema)"
+    run = [{ task = ":db-local_stop" }, "docker run --rm --name cdviz-db -e \"POSTGRES_PASSWORD={{env.PG_LOCAL_PWD}}\" -e \"POSTGRES_USER={{env.PG_LOCAL_USER}}\" -p 5432:5432 --health-cmd \"pg_isready -U {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}\" --health-interval 2s --health-timeout 5s --health-retries 5 -d timescale/timescaledb-ha:pg18\n  ", "echo 'Waiting for database to be ready...'", "until docker exec cdviz-db pg_isready -U cdviz -d cdviz > /dev/null 2>&1; do echo 'Still waiting...'; sleep 2; done", "sleep 2 # Extra wait to ensure full readiness"]
+
+  [tasks.db-local_stop]
+    description = "stop the container of the local db"
+    run = ["docker rm -f cdviz-db || true"]
+
+  [tasks.debug_bake]
+    description = "show the 'resovled' bake definition"
+    run = ["docker info -f '{{ .DriverStatus }}'", "docker buildx bake --print"]
+
+  [tasks.format]
+    alias = "fmt"
+    description = "Format SQL files with sqruff"
+    run = "sqruff fix migrations/"
+
+  [tasks.lint]
+    description = "Lint SQL files with sqruff"
+    run = "sqruff lint migrations/"
+
+  [tasks.list_containers]
+    description = "list all containers images"
+    run = "docker image ls --tree --filter 'reference=*/*/cdviz-db*'"
+
+  [tasks."migrate:create"]
+    description = "Create a new migration file (usage: mise run migrate:create name)"
+    run = "migrate create -ext sql -dir migrations -format 200601021504 $@"
+
+  [tasks."migrate:debug"]
+    hide = true
+    run = ["echo see https://www.tutorialpedia.org/blog/dirty-database-version-error-when-using-golang-migrate/"]
+
+  [tasks."migrate:down"]
+    description = "Rollback the last migration"
+    run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' down 1"
+
+  [tasks."migrate:force"]
+    description = "Force set migration version (usage: mise run migrate:force VERSION)"
+    run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' force $@"
+
+  [tasks."migrate:up"]
+    description = "Apply all pending migrations"
+    run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' up"
+
+  [tasks."migrate:version"]
+    description = "Show current migration version"
+    run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' version"
+
+  [tasks.release_prepare]
+    description = "Prepare release (calculate version & generate changelog)"
+    run = "VERSION=$(mise run //:_release_version cdviz-db-migration \"cdviz-db/**\" VERSION)\nmise run //:_release_changelog cdviz-db-migration \"cdviz-db/**\" \"$VERSION\"\necho \"Prepared cdviz-db-migration $VERSION\"\n"
+    shell = "bash -c"
+
+  [tasks.release_publish]
+    description = "Build and publish container image to registry"
+    run = "set -euo pipefail\nVERSION=$(cat VERSION 2>/dev/null || echo \"0.0.0\")\nNAME=cdviz-db-migration\n\nif [[ \"$VERSION\" == \"0.0.0\" ]]; then\n  echo \"No VERSION file. Run release_prepare first.\"\n  exit 1\nfi\n\nif git rev-parse \"$NAME-$VERSION\" >/dev/null 2>&1; then\n  echo \"$NAME $VERSION already published\"\n  exit 0\nfi\n\necho \"Publishing $NAME $VERSION...\"\nexport MIGRATION_VERSION=\"$VERSION\"\ndocker buildx bake --push \"$NAME\"\n\nmise run //:_release_tag \"$NAME\" \"$VERSION\"\n"
+    shell = "bash -c"
+
+  [tasks.test]
+    description = "Test full migration lifecycle (up, verify, down)"
+    run = [{ task = ":db-local_start-empty" }, { task = ":migrate:up" }, "echo '=== Migration version after up ==='", { task = ":migrate:version" }, "echo '=== Verifying schema exists ==='", "docker exec cdviz-db psql -U cdviz -d cdviz -c '\\dt cdviz.*'", "echo '=== Run tests ==='", { task = ":test:unit" }, "echo '=== Rolling back migration ==='", { task = ":migrate:down" }, "echo '=== Migration version after down (should be none) ==='", "mise run :migrate:version || echo 'No migrations applied (expected after full rollback)'", { task = ":db-local_stop" }]
+
+  [tasks."test:unit"]
+    depends = [":test:unit:install"]
+    dir = "tests"
+    run = "bun test --reporter=junit --reporter-outfile=./build/junit.xml"
+
+    [tasks."test:unit".env]
+      DATABASE_URL = "{{env.PG_LOCAL_URL}}"
+
+  [tasks."test:unit:install"]
+    dir = "tests"
+    outputs = ["bun.lock"]
+    run = "bun install"
+    sources = ["package.json"]
 
 [tools]
-# docker = "latest"
-"github:golang-migrate/migrate" = "4.19.1"
-"github:quarylabs/sqruff" = "0.37.3"
-"bun" = "1.3.13"
-
-[tasks."migrate:create"]
-description = "Create a new migration file (usage: mise run migrate:create name)"
-run = "migrate create -ext sql -dir migrations -format 200601021504 $@"
-
-[tasks."migrate:up"]
-description = "Apply all pending migrations"
-run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' up"
-
-[tasks."migrate:debug"]
-hide = true
-run = [
-  # help to debug error like `error: Dirty database version 202603310000. Fix and force version.`
-  'echo see https://www.tutorialpedia.org/blog/dirty-database-version-error-when-using-golang-migrate/',
-  # 'migrate -database "${DATABASE_URL}" -path migrations force 202602161352',
-  # 'migrate -database "${DATABASE_URL}" -path migrations up',
-]
-
-[tasks."migrate:down"]
-description = "Rollback the last migration"
-run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' down 1"
-
-[tasks."migrate:version"]
-description = "Show current migration version"
-run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' version"
-
-[tasks."migrate:force"]
-description = "Force set migration version (usage: mise run migrate:force VERSION)"
-run = "migrate -path migrations -database '{{env.PG_LOCAL_URL}}' force $@"
-
-[tasks.lint]
-description = "Lint SQL files with sqruff"
-run = "sqruff lint migrations/"
-
-[tasks."format"]
-alias = "fmt"
-description = "Format SQL files with sqruff"
-run = "sqruff fix migrations/"
-
-[tasks."autofix"]
-description = "Format and fix linting issues in SQL files"
-depends = ["format"]
-
-[tasks."db-local_start-empty"]
-description = "start a container for the local db (empty: no data, no schema)"
-run = [
-  { task = ":db-local_stop"},
-  """docker run --rm --name cdviz-db \
-    -e \"POSTGRES_PASSWORD={{env.PG_LOCAL_PWD}}\" \
-    -e \"POSTGRES_USER={{env.PG_LOCAL_USER}}\" \
-    -p 5432:5432 \
-    --health-cmd "pg_isready -U {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}" \
-    --health-interval 2s \
-    --health-timeout 5s \
-    --health-retries 5 \
-    -d \
-    timescale/timescaledb-ha:pg18
-  """,
-  "echo 'Waiting for database to be ready...'",
-  "until docker exec cdviz-db pg_isready -U cdviz -d cdviz > /dev/null 2>&1; do echo 'Still waiting...'; sleep 2; done",
-  "sleep 2 # Extra wait to ensure full readiness",
-]
-
-[tasks."db-local_start"]
-description = "start a container for the local db with the migrations applied"
-run = [
-  {task = ":db-local_start-empty"},
-  {task = ":migrate:up"},
-]
-
-[tasks."db-local_stop"]
-description = "stop the container of the local db"
-run = [
-  # "docker stop cdviz-db || true",
-  "docker rm -f cdviz-db || true",
-]
-
-[tasks."db-local_psql"]
-description = "connect to the local db with psql"
-run = [
-  "echo password=$PG_LOCAL_PWD",
-  "docker run -it --rm --network host postgres psql -h 127.0.0.1 --username {{env.PG_LOCAL_USER}} -d {{env.PG_LOCAL_USER}}",
-]
-
-[tasks."test"]
-description = "Test full migration lifecycle (up, verify, down)"
-run = [
-  {task = ":db-local_start-empty"},
-  {task = ":migrate:up"},
-  "echo '=== Migration version after up ==='",
-  {task = ":migrate:version"},
-  "echo '=== Verifying schema exists ==='",
-  "docker exec cdviz-db psql -U cdviz -d cdviz -c '\\dt cdviz.*'",
-  "echo '=== Run tests ==='",
-  {task = ":test:unit"},
-  "echo '=== Rolling back migration ==='",
-  {task = ":migrate:down"},
-  "echo '=== Migration version after down (should be none) ==='",
-  "mise run :migrate:version || echo 'No migrations applied (expected after full rollback)'",
-  {task = ":db-local_stop"},
-]
-
-[tasks."test:unit:install"]
-run = "bun install"
-dir = "tests"
-sources = ["package.json"]
-outputs = ["bun.lock"]
-
-[tasks."test:unit"]
-env = { DATABASE_URL = "{{env.PG_LOCAL_URL}}"}
-depends = [":test:unit:install"]
-run = "bun test --reporter=junit --reporter-outfile=./build/junit.xml"
-dir = "tests"
-
-[tasks."ci"]
-description = "set of tasks run by CI"
-depends = [":lint", ":test", ":build"]
-
-[tasks."list_containers"]
-description = "list all containers images"
-run = "docker image ls --tree --filter 'reference=*/*/cdviz-db*'"
-
-[tasks."debug_bake"]
-description = "show the 'resovled' bake definition"
-run = [
-  "docker info -f '{{ .DriverStatus }}'",
-  "docker buildx bake --print",
-]
-
-[tasks."build"]
-description = "build the docker image for the migration"
-run = ["docker buildx bake --progress=plain cdviz-db-migration"]
-
-[tasks."release_prepare"]
-description = "Prepare release (calculate version & generate changelog)"
-shell = "bash -c"
-run = """
-VERSION=$(mise run //:_release_version cdviz-db-migration "cdviz-db/**" VERSION)
-mise run //:_release_changelog cdviz-db-migration "cdviz-db/**" "$VERSION"
-echo "Prepared cdviz-db-migration $VERSION"
-"""
-
-[tasks."release_publish"]
-description = "Build and publish container image to registry"
-shell = "bash -c"
-run = """
-set -euo pipefail
-VERSION=$(cat VERSION 2>/dev/null || echo "0.0.0")
-NAME=cdviz-db-migration
-
-if [[ "$VERSION" == "0.0.0" ]]; then
-  echo "No VERSION file. Run release_prepare first."
-  exit 1
-fi
-
-if git rev-parse "$NAME-$VERSION" >/dev/null 2>&1; then
-  echo "$NAME $VERSION already published"
-  exit 0
-fi
-
-echo "Publishing $NAME $VERSION..."
-export MIGRATION_VERSION="$VERSION"
-docker buildx bake --push "$NAME"
-
-mise run //:_release_tag "$NAME" "$VERSION"
-"""
+  bun = "1.3.14"
+  "github:golang-migrate/migrate" = "4.19.1"
+  "github:quarylabs/sqruff" = "0.37.3"
