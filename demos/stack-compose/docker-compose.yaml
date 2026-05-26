@@ -32,7 +32,7 @@ services:
     image: ghcr.io/cdviz-dev/cdviz-db-migration:latest
     command:
       - -database
-      - postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable
+      - postgres://cdviz:postgres-password@postgres:5432/cdviz?sslmode=disable&search_path=public
       - -path
       - /migrations/
       - up

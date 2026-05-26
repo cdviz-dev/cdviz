@@ -349,7 +349,7 @@ $$;
 -- Attach the trigger to cdevents_lake.
 -- AFTER INSERT: runs once the row is durably written; using AFTER avoids any risk of
 -- accidentally mutating NEW. TimescaleDB fully supports AFTER INSERT row triggers on hypertables.
-CREATE TRIGGER "trg_cdevents_lake_graph"
+CREATE OR REPLACE TRIGGER "trg_cdevents_lake_graph"
 AFTER INSERT ON "cdviz"."cdevents_lake"
 FOR EACH ROW
 EXECUTE FUNCTION "cdviz"."fn_cdevents_lake_graph_upsert"();
