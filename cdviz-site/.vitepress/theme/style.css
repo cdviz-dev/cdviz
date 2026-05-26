@@ -132,14 +132,18 @@
 }
 
 /* ─── Light mode: restore readable values ───────────────────────────── */
-@media (prefers-color-scheme: light) {
-  :root {
-    --vp-c-bg: var(--cdviz-fog);
-    --vp-c-bg-soft: oklch(98% 0 0);
-    --vp-c-bg-elv: oklch(98% 0 0);
-    --vp-c-text-1: oklch(19.15% 0.016 244.65);
-    --vp-c-text-2: oklch(40% 0.016 244.65);
-  }
+html:not(.dark) {
+  --vp-c-bg: var(--cdviz-fog);
+  --vp-c-bg-soft: oklch(98% 0 0);
+  --vp-c-bg-elv: oklch(98% 0 0);
+  --vp-c-text-1: oklch(19.15% 0.016 244.65);
+  --vp-c-text-2: oklch(40% 0.016 244.65);
+  /* Orange mirrored for contrast on light bg: keep H=64.29, C≈0.18, lower L to ~42% */
+  --cdviz-orange: oklch(42% 0.185 64.29);
+  --cdviz-orange-dim: oklch(52% 0.155 64.29);
+  /* Sidebar/nav bg: override dark ink to a light surface */
+  --vp-sidebar-bg-color: oklch(95% 0.008 255);
+  --vp-nav-bg-color: oklch(95% 0.008 255);
 }
 
 /* ─── CDviz semantic aliases (reference VitePress, not raw palette) ─ */
