@@ -1,3 +1,6 @@
+[state.parameters]
+root = "/tmp/cdvizcollector/state"
+
 [pipeline]
 queue_capacity = 2000
 transformer_refs = [

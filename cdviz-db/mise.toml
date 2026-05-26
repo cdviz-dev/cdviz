@@ -101,6 +101,8 @@ run = [
   {task = ":migrate:version"},
   "echo '=== Verifying schema exists ==='",
   "docker exec cdviz-db psql -U cdviz -d cdviz -c '\\dt cdviz.*'",
+  "echo '=== Run migration again to check idempotency ==='",
+  {task = ":migrate:up"},
   "echo '=== Run tests ==='",
   {task = ":test:unit"},
   "echo '=== Rolling back migration ==='",
