@@ -18,7 +18,7 @@ const buttonClasses = computed(() => {
     font-semibold min-h-[44px] min-w-[44px] touch-manipulation
     rounded-lg px-6 sm:px-8 py-3 sm:py-3 text-sm sm:text-base
     focus:outline-none focus:ring-2 focus:ring-offset-2
-    transform-gpu transition-all duration-300 ease-out
+    transform-gpu transition-[transform,box-shadow] duration-[160ms] ease-[cubic-bezier(0.23,1,0.32,1)]
     relative overflow-hidden
   `;
 
@@ -33,7 +33,7 @@ const buttonClasses = computed(() => {
       bg-primary text-background
       hover:scale-105 hover:shadow-[0_8px_30px_-8px_var(--primary)] hover:shadow-primary/50
       focus:ring-primary focus:scale-105
-      active:scale-95 active:shadow-sm
+      active:scale-[0.97] active:shadow-sm
       before:absolute before:inset-0 before:bg-gradient-to-r
       before:from-transparent before:via-white/20 before:to-transparent
       before:translate-x-[-100%] hover:before:translate-x-[100%]
@@ -48,7 +48,7 @@ const buttonClasses = computed(() => {
       bg-secondary text-text
       hover:scale-105 hover:shadow-lg hover:bg-secondary/90
       focus:ring-secondary focus:scale-105
-      active:scale-95 active:shadow-sm
+      active:scale-[0.97] active:shadow-sm
       before:absolute before:inset-0 before:bg-gradient-to-r
       before:from-transparent before:via-white/10 before:to-transparent
       before:translate-x-[-100%] hover:before:translate-x-[100%]

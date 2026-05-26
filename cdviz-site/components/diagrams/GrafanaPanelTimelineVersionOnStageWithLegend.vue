@@ -4,15 +4,13 @@ import { onUnmounted, onMounted, useTemplateRef } from "vue";
 import PanelSvg from "./GrafanaPanelTimelineVersionOnStageWithLegend.svg?skipsvgo";
 
 const componentRoot = useTemplateRef("componentRoot");
-const selector_prefix = "GrafanaPanelTimelineVersionOnStageWithLegend_svg__";
 let timeline = null;
 
 onMounted(() => {
-  // Reset elements to initial state
-  // gsap.set(`.${selector_prefix}annotation`, { opacity: 1 });
+  const sel = gsap.utils.selector(componentRoot.value);
   timeline = gsap.timeline({ defaults: { ease: "back" } });
 
-  timeline.from(`.${selector_prefix}annotation`, {
+  timeline.from(sel(".annotation"), {
     opacity: 0,
     duration: 0.5,
     ease: "power2.inOut",

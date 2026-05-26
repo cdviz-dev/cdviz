@@ -54,16 +54,18 @@ function cycleHeadline() {
 }
 
 onMounted(() => {
-  // Subtle breathing pulse effect on hero dashboard to suggest "live monitoring"
-  gsap.to("#hero-image-img", {
-    boxShadow: "0 0 30px var(--primary / 0.3)",
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) return;
+
+  // Breathing glow: animates opacity of overlay element — no layout properties
+  gsap.to(".hero-image-glow", {
+    opacity: 1,
     duration: 2.5,
     repeat: -1,
     yoyo: true,
     ease: "sine.inOut",
   });
 
-  // Start cycling — reduced to 3s so it's noticeable quickly
   gsap.delayedCall(3, cycleHeadline);
 });
 </script>
@@ -74,14 +76,10 @@ onMounted(() => {
     aria-labelledby="hero-title"
     role="banner"
   >
-    <!-- class="my-lg md:grid md:grid-cols-2 md:gap-md relative overflow-hidden before:absolute before:inset-0" -->
     <div
       id="hero-image"
       class="order-2 md:order-last flex items-center justify-center rounded-xl my-lg md:my-0"
     >
-      <!-- class="order-last items-center overflow-hidden rounded-xl md:absolute md:relative" -->
-      <!-- Help people visualize what we're offering: snapshot/screenshot of the product -->
-      <!-- TODO: replace with a screenshot of the product -->
       <a
         href="https://demo.cdviz.dev/grafana"
         target="_blank"
@@ -122,18 +120,22 @@ onMounted(() => {
             type="image/webp"
           />
 
-          <!-- Original fallback -->
           <img
             id="hero-image-img"
             width="666"
             height="596"
-            class="w-full h-auto max-h-[500px] md:max-h-[600px] lg:max-h-none rounded-xl object-contain parallax-element"
+            class="w-full h-auto max-h-[500px] md:max-h-[600px] lg:max-h-none rounded-xl object-contain"
             src="/illustrations/hero-dashboard-01-q60.webp"
             alt="CDviz dashboard showing software delivery pipeline monitoring with deployment tracking and analytics"
             fetchpriority="high"
             loading="eager"
           />
         </picture>
+
+        <!-- Glow overlay: opacity animated by GSAP (no layout property) -->
+        <div class="hero-image-glow" aria-hidden="true"></div>
+
+        <!-- Hover overlay -->
         <div class="absolute inset-0 rounded-xl flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all duration-300">
           <span
             class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-semibold text-lg px-4 py-2 rounded-lg bg-black/50 backdrop-blur-sm"
@@ -146,7 +148,7 @@ onMounted(() => {
     <div class="order-1 md:order-first overflow-hidden rounded-xl p-lg relative z-10">
       <h1
         id="hero-title"
-        class="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-md leading-tight"
+        class="cdviz-h1-sketch my-md relative"
       >
         <!-- All variants rendered in DOM for crawlers; inactive ones hidden via inline style from SSR -->
         <span
@@ -160,7 +162,7 @@ onMounted(() => {
             :class='i === 0 ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out" : ""'
           >{{ h.line1 }}</span>
           <span
-            class="block text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text font-extrabold mt-2 sm:mt-3 bg-[length:200%_auto] animate-gradient hero-glow-text"
+            class="cdviz-gradient-text block mt-2 sm:mt-3"
             :class='i === 0
             ? "animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-300"
             : ""'
@@ -238,10 +240,8 @@ onMounted(() => {
 <style lang="css">
 /* technics from https://iconify.design/docs/usage/css/ */
 .svg-mask {
-  /* Add dimensions to span */
-  display: inline-block; /* width: 32px; height: 32px; */ /* Add background color */
-  background-color: currentColor; /* Add mask image, use variable to reduce duplication */ /* --svg:
-  url("https://api.iconify.design/bi/bell-fill.svg"); */
+  display: inline-block;
+  background-color: currentColor;
   -webkit-mask-image: var(--svg);
   mask-image: var(--svg);
   -webkit-mask-repeat: no-repeat;
@@ -250,38 +250,32 @@ onMounted(() => {
   mask-size: 100% 100%;
 }
 .svg-cdevents {
-  /* width: 444px; height: 184px; */
   --svg: url("/logos/cdevents_monochrome.svg");
 }
 
-/* Pulse glow effect for CDEvents badge */
+/* CDEvents badge glow — opacity animation (GPU-composited) */
 @keyframes badge-pulse-glow {
-  0%,
-  100% {
-    filter: drop-shadow(0 0 2px var(--primary / 0.3));
-    opacity: 0.7;
-  }
-  50% {
-    filter: drop-shadow(0 0 8px var(--primary / 0.6));
-    opacity: 0.9;
-  }
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.95; }
 }
 
 .cdevents-badge-glow {
   animation: badge-pulse-glow 3s ease-in-out infinite;
 }
 
-/* Enhanced text glow for hero gradient text */
-.hero-glow-text {
-  filter: drop-shadow(0 0 20px var(--primary / 0.4));
+/* Glow overlay for hero image — opacity animated by GSAP */
+.hero-image-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem; /* matches rounded-xl */
+  box-shadow: 0 0 30px color-mix(in oklch, var(--primary) 40%, transparent);
+  opacity: 0.3;
+  pointer-events: none;
 }
 
-/* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .cdevents-badge-glow,
-  .hero-glow-text {
-    animation: none !important;
-    filter: none !important;
+  .cdevents-badge-glow {
+    animation: none;
   }
 }
 </style>

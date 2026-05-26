@@ -52,6 +52,20 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
 
+  /* Easing tokens */
+  --ease-ui: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-reveal: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border radius tokens */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
   /* Typography stack - JetBrains Mono for technical feel, Inter for readability */
   --font-family-base:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Oxygen, Ubuntu, Cantarell,
@@ -91,14 +105,103 @@
   --md-body-small-height: 1rem; /* 16px */
 }
 
+/* ─── CDviz raw palette ──────────────────────────────────────────────── */
 :root {
+  --cdviz-orange: oklch(74.22% 0.166 64.29);   /* #f29107 */
+  --cdviz-orange-dim: oklch(64% 0.14 64.29);
+  --cdviz-purple: oklch(69.49% 0.068 298.56);  /* secondary */
+  --cdviz-purple-deep: oklch(49.68% 0.104 307.15); /* accent */
+  --cdviz-black: oklch(10.5% 0.01 244);        /* #0e151b page bg */
+  --cdviz-ink: oklch(15% 0.012 244);           /* #111820 raised surfaces */
+  --cdviz-fog: oklch(80.5% 0.019 255.54);      /* #c9d2de body text */
+}
+
+/* ─── Override VitePress vars with CDviz values (dark-first) ─────── */
+:root {
+  --vp-c-bg: var(--cdviz-black);
+  --vp-c-bg-soft: var(--cdviz-ink);
+  --vp-c-bg-elv: var(--cdviz-ink);
+  --vp-c-text-1: var(--cdviz-fog);
+  --vp-c-text-2: color-mix(in oklch, var(--cdviz-fog) 70%, transparent);
+  --vp-c-brand-1: var(--cdviz-orange);
+  --vp-c-brand-2: var(--cdviz-orange-dim);
+  --vp-c-divider: color-mix(in oklch, var(--cdviz-purple) 20%, transparent);
+  --vp-sidebar-bg-color: var(--cdviz-ink);
+  --vp-font-family-base: var(--font-family-base);
+  --vp-font-family-mono: var(--font-family-mono);
+}
+
+/* ─── Light mode: restore readable values ───────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --vp-c-bg: var(--cdviz-fog);
+    --vp-c-bg-soft: oklch(98% 0 0);
+    --vp-c-bg-elv: oklch(98% 0 0);
+    --vp-c-text-1: oklch(19.15% 0.016 244.65);
+    --vp-c-text-2: oklch(40% 0.016 244.65);
+  }
+}
+
+/* ─── CDviz semantic aliases (reference VitePress, not raw palette) ─ */
+:root {
+  /* Short names for @theme var() references + component usage */
+  --primary: var(--vp-c-brand-1);
+  --secondary: var(--cdviz-purple);
+  --accent: var(--cdviz-purple-deep);
   --text: var(--vp-c-text-1);
   --background: var(--vp-c-bg);
-  /* --text: oklch(19.15% 0.016 244.65);
-  --background: oklch(86.05% 0.019 255.54); */
-  --primary: oklch(74.22% 0.166 64.29);
-  --secondary: oklch(69.49% 0.068 298.56);
-  --accent: oklch(49.68% 0.104 307.15);
+
+  /* Longer semantic tokens (used in style.css component rules below) */
+  --color-bg: var(--vp-c-bg);
+  --color-bg-raised: var(--vp-c-bg-soft);
+  --color-border: var(--vp-c-divider);
+  --color-border-hover: color-mix(in oklch, var(--cdviz-orange) 40%, transparent);
+  --color-text-muted: var(--vp-c-text-2);
+  --color-text-dim: color-mix(in oklch, var(--cdviz-fog) 50%, transparent);
+  --color-primary-hover: var(--cdviz-orange-dim);
+  --color-focus-ring: color-mix(in oklch, var(--cdviz-orange) 30%, transparent);
+
+  /* Shadow tokens */
+  --shadow-primary-glow: 0 8px 30px -8px color-mix(in oklch, var(--cdviz-orange) 50%, transparent);
+  --shadow-card-hover: 0 8px 25px -8px color-mix(in oklch, var(--cdviz-orange) 30%, transparent);
+
+  /* Font short-name aliases (colors_and_type.css compatibility) */
+  --font-base: var(--font-family-base);
+  --font-display: var(--font-family-display);
+  --font-mono: var(--font-family-mono);
+  --font-sketch: var(--font-family-sketch);
+
+  /* Type scale short-name aliases (colors_and_type.css compatibility) */
+  --type-display-lg: var(--md-display-large);
+  --type-display-md: var(--md-display-medium);
+  --type-display-sm: var(--md-display-small);
+  --type-headline-lg: var(--md-headline-large);
+  --type-headline-md: var(--md-headline-medium);
+  --type-headline-sm: var(--md-headline-small);
+  --type-title-lg: var(--md-title-large);
+  --type-body-lg: var(--md-body-large);
+  --type-body-md: var(--md-body-medium);
+  --type-body-sm: var(--md-body-small);
+  --lh-display-lg: var(--md-display-large-height);
+  --lh-display-md: var(--md-display-medium-height);
+  --lh-display-sm: var(--md-display-small-height);
+  --lh-headline-lg: var(--md-headline-large-height);
+  --lh-headline-md: var(--md-headline-medium-height);
+  --lh-headline-sm: var(--md-headline-small-height);
+  --lh-title-lg: var(--md-title-large-height);
+  --lh-body-lg: var(--md-body-large-height);
+  --lh-body-md: var(--md-body-medium-height);
+  --lh-body-sm: var(--md-body-small-height);
+
+  /* Spacing tokens (colors_and_type.css compat) */
+  --space-2xs: var(--spacing-2xs);
+  --space-xs: var(--spacing-xs);
+  --space-sm: var(--spacing-sm);
+  --space-md: var(--spacing-md);
+  --space-lg: var(--spacing-lg);
+  --space-xl: var(--spacing-xl);
+  --space-2xl: var(--spacing-2xl);
+  --space-3xl: var(--spacing-3xl);
 }
 
 /* Typography Performance Optimizations */
@@ -208,7 +311,7 @@ html {
 
 /* Landing page component-specific resets to override default browser margins */
 /* Apply only to landing page components, not documentation */
-main[role="main"] h1,
+main[role="main"] h1:not(.cdviz-h1-sketch),
 main[role="main"] h2,
 main[role="main"] h3,
 main[role="main"] h4,
@@ -232,84 +335,82 @@ main[role="main"] .my-md {
   margin-bottom: var(--spacing-md);
 }
 
-/* Material Design 3 Typography - Documentation Only */
-/* All headings use same font family with appropriate weights and sizes */
+/* Documentation Typography (per surfaces/DOCS.md) */
+
+/* Shared doc heading base */
 .vp-doc h1,
 .vp-doc h2,
 .vp-doc h3,
 .vp-doc h4,
 .vp-doc h5,
-.vp-doc h6,
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6 {
-  font-family: var(--font-family-base);
+.vp-doc h6 {
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
-  letter-spacing: 0; /* Material Design uses normal letter spacing */
-  color: var(--primary); /* Orange accent color for titles */
 }
 
-/* H1 - Display Medium style */
-.vp-doc h1,
-.content h1 {
-  font-size: clamp(var(--md-headline-large), 4vw, var(--md-display-medium));
-  line-height: var(--md-display-medium-height);
-  font-weight: 300; /* Light weight for display text */
+/* H1 — Excalifont page title, fog/text color, max 36px */
+.vp-doc h1 {
+  font-family: var(--font-family-sketch);
+  font-size: clamp(var(--md-headline-large), 4vw, var(--md-display-small));
+  line-height: var(--md-display-small-height);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--text);
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
-  letter-spacing: -0.025em; /* Slight negative spacing for large text */
 }
 
-/* H2 - Headline Large style */
-.vp-doc h2,
-.content h2 {
+/* H2 — JetBrains Mono, primary orange (only heading in orange) */
+.vp-doc h2 {
+  font-family: var(--font-family-display);
   font-size: var(--md-headline-large);
   line-height: var(--md-headline-large-height);
-  font-weight: 300; /* Light weight */
-  letter-spacing: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--primary);
 }
 
-/* H3 - Headline Medium style */
-.vp-doc h3,
-.content h3 {
-  font-size: var(--md-headline-medium);
-  line-height: var(--md-headline-medium-height);
-  font-weight: 400; /* Regular weight */
-  letter-spacing: 0;
-}
-
-/* H4 - Headline Small style */
-.vp-doc h4,
-.content h4 {
+/* H3 — JetBrains Mono, text color */
+.vp-doc h3 {
+  font-family: var(--font-family-display);
   font-size: var(--md-headline-small);
   line-height: var(--md-headline-small-height);
-  font-weight: 400; /* Regular weight */
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+/* H4 — JetBrains Mono, muted */
+.vp-doc h4 {
+  font-family: var(--font-family-display);
+  font-size: var(--md-title-large);
+  line-height: var(--md-title-large-height);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--vp-c-text-2);
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
 }
 
-/* H5 - Title Large style */
+/* H5, H6 — JetBrains Mono, muted, smaller */
 .vp-doc h5,
-.content h5 {
-  font-size: var(--md-title-large);
-  line-height: var(--md-title-large-height);
-  font-weight: 400; /* Regular weight */
+.vp-doc h6 {
+  font-family: var(--font-family-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--vp-c-text-2);
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
 }
 
-/* H6 - Title Medium style */
-.vp-doc h6,
-.content h6 {
+.vp-doc h5 {
+  font-size: var(--md-title-large);
+  line-height: var(--md-title-large-height);
+}
+
+.vp-doc h6 {
   font-size: var(--md-title-medium);
   line-height: var(--md-title-medium-height);
-  font-weight: 500; /* Medium weight for smallest headings */
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
 }
 
 /* Reset paragraphs and lists for landing page */
@@ -510,34 +611,30 @@ blockquote::before {
   top: 0;
 }
 
-/* Material Design 3 code blocks - documentation only */
+/* Documentation code blocks (per surfaces/DOCS.md §3) */
 .vp-doc pre,
-.vp-doc code,
-.content pre,
-.content code {
+.vp-doc code {
   font-family: var(--font-family-mono);
-  font-size: var(--md-body-medium); /* Slightly smaller for code */
+  font-size: var(--md-body-medium);
   line-height: var(--md-body-medium-height);
   letter-spacing: 0;
 }
 
-.vp-doc pre,
-.content pre {
+.vp-doc pre {
   margin: var(--spacing-xl) 0;
   padding: var(--spacing-lg);
   overflow-x: auto;
-  border-radius: 12px; /* Material Design uses larger border radius */
-  background: color-mix(in oklch, var(--color-secondary) 5%, transparent);
-  border: 1px solid color-mix(in oklch, var(--color-secondary) 20%, transparent);
+  border-radius: 12px; /* --radius-lg */
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
 }
 
-/* Inline code styling */
-.vp-doc code:not(pre code),
-.content code:not(pre code) {
+.vp-doc code:not(pre code) {
   font-size: var(--md-body-medium);
-  padding: 0.125rem 0.25rem;
-  border-radius: 4px;
-  background: color-mix(in oklch, var(--color-secondary) 8%, transparent);
+  padding: 0.1em 0.35em;
+  border-radius: 4px; /* --radius-sm */
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
 }
 
 /* Table spacing */
@@ -606,17 +703,12 @@ hr {
 
 .animate-scale-in-initial {
   opacity: 0;
-  transform: scale(0.8);
+  transform: scale(0.95);
 }
 
 .animate-rotate-in-initial {
   opacity: 0;
-  transform: rotate(-10deg) scale(0.8);
-}
-
-.animate-flip-in-initial {
-  opacity: 0;
-  transform: rotateY(-90deg);
+  transform: rotate(-10deg) scale(0.95);
 }
 
 /* Animation Active States */
@@ -649,10 +741,6 @@ hr {
   transform: rotate(0deg) scale(1);
 }
 
-.animate-in.animate-flip-in {
-  opacity: 1;
-  transform: rotateY(0deg);
-}
 
 /* GPU-accelerated animations */
 .transform-gpu {
@@ -951,10 +1039,6 @@ img[src$=".svg"] {
   animation: rotate-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.animate-flip-in {
-  animation: flip-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transform-style: preserve-3d;
-}
 
 /* Card hover animations - User-friendly version */
 .card-hover {
@@ -1256,8 +1340,7 @@ summary:focus-visible {
 }
 
 .parallax-element {
-  animation: parallax-float 8s ease-in-out infinite;
-  transform-style: preserve-3d;
+  /* parallax and 3D transforms removed per design system rules */
 }
 
 /* Advanced glow effects */
@@ -1681,4 +1764,193 @@ details > *:not(summary) {
     transparent 1px
   );
   background-size: 24px 24px;
+}
+
+/* ─── CDviz Design System semantic classes ───────────────────────── */
+/* Source: cdviz-design/colors_and_type.css                           */
+
+.cdviz-h1 {
+  font-family: var(--font-family-display);
+  font-size: clamp(var(--md-headline-large), 4vw, var(--md-display-medium));
+  line-height: var(--md-display-medium-height);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.cdviz-h2 {
+  font-family: var(--font-family-display);
+  font-size: var(--md-headline-large);
+  line-height: var(--md-headline-large-height);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.cdviz-h3 {
+  font-family: var(--font-family-display);
+  font-size: var(--md-headline-small);
+  line-height: var(--md-headline-small-height);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.cdviz-body {
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-large);
+  line-height: var(--md-body-large-height);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.cdviz-body-sm {
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-medium);
+  line-height: var(--md-body-medium-height);
+  color: var(--vp-c-text-2);
+}
+
+.cdviz-mono {
+  font-family: var(--font-family-mono);
+  font-size: var(--md-body-medium);
+  line-height: var(--md-body-medium-height);
+}
+
+.cdviz-sketch {
+  font-family: var(--font-family-sketch);
+}
+
+/* Landing hero H1 — Excalifont, large, landing page only */
+.cdviz-h1-sketch {
+  font-family: var(--font-family-sketch);
+  font-size: clamp(var(--md-headline-large), 5vw, var(--md-display-large));
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.cdviz-tagline-sketch {
+  font-family: var(--font-family-sketch);
+  font-size: clamp(var(--md-title-large), 2vw, var(--md-headline-small));
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--vp-c-text-2);
+}
+
+/* Gradient text — landing hero H1 only, forbidden in docs and SaaS */
+.cdviz-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--cdviz-orange),
+    var(--cdviz-purple-deep),
+    var(--cdviz-orange)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: cdviz-gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes cdviz-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdviz-gradient-text {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}
+
+/* Card base — marketing cards only */
+.cdviz-card {
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  transition: border-color 160ms var(--ease-ui), box-shadow 160ms var(--ease-ui), transform 160ms var(--ease-ui);
+}
+
+.cdviz-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: scale(1.02);
+}
+
+/* Button base (semantic CSS alternative to Tailwind Btn.vue) */
+.cdviz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-base);
+  font-size: var(--md-body-large);
+  font-weight: 600;
+  min-height: 44px;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-ui), box-shadow 160ms var(--ease-ui);
+  position: relative;
+  overflow: hidden;
+}
+
+.cdviz-btn-primary {
+  background: var(--primary);
+  color: var(--background);
+  box-shadow: 0 4px 15px color-mix(in oklch, var(--cdviz-orange) 25%, transparent);
+}
+
+.cdviz-btn-primary:hover { transform: scale(1.05); box-shadow: var(--shadow-primary-glow); }
+.cdviz-btn-primary:active { transform: scale(0.97); }
+
+.cdviz-btn-secondary {
+  background: var(--secondary);
+  color: var(--text);
+}
+
+.cdviz-btn-secondary:hover { transform: scale(1.05); box-shadow: var(--shadow-card-hover); }
+.cdviz-btn-secondary:active { transform: scale(0.97); }
+
+/* Float animation — marketing only */
+@keyframes cdviz-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.cdviz-float {
+  animation: cdviz-float 3s ease-in-out infinite;
+}
+
+/* Glow via ::after opacity (GPU-composited, no box-shadow animation) */
+@keyframes cdviz-glow-fade {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.cdviz-glow {
+  position: relative;
+}
+
+.cdviz-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 30px color-mix(in oklch, var(--cdviz-orange) 50%, transparent);
+  opacity: 0.3;
+  animation: cdviz-glow-fade 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdviz-float,
+  .cdviz-glow::after {
+    animation: none;
+  }
 }
