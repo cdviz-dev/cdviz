@@ -31,13 +31,13 @@ sources:
 targets:
   chartImageTag:
     name: "charts/cdviz-db/values.yaml image.tag"
-    kind: yaml
+    kind: file
     sourceid: dbMigrationVersion
     scmid: default
     spec:
       file: charts/cdviz-db/values.yaml
-      key: $.image.tag
-      engine: dasel/v2
+      matchpattern: '  tag: [0-9]+\.[0-9]+\.[0-9]+'
+      replacepattern: '  tag: {{ source "dbMigrationVersion" }}'
 
 actions:
   dbMigrationVersion:

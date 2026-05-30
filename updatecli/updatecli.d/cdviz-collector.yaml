@@ -38,13 +38,13 @@ sources:
 targets:
   valuesTag:
     name: "charts/cdviz-collector/values.yaml image.tag"
-    kind: yaml
+    kind: file
     sourceid: collectorVersion
     scmid: default
     spec:
       file: charts/cdviz-collector/values.yaml
-      key: $.image.tag
-      engine: dasel/v2
+      matchpattern: '  tag: [0-9]+\.[0-9]+\.[0-9]+'
+      replacepattern: '  tag: {{ source "collectorVersion" }}'
 
   # FIXME: useless to update the version of the app in the chart as is it override by the "prepare-publish script" used for chart, So first update the script
   # chartAppVersion:
