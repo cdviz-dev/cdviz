@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.3] - 2026-05-30
+
+### Changed
+
+- Add missing description ([1c345a4](1c345a40c276319105bec084cb6f8387e8400dee))
+
+### Fixed
+
+- Bump npm dependencies in cdviz-grafana (#466) ([7b53474](7b53474c5f6f640ef9eef5457a556d68594b7c78))
+- Bump npm dependencies in cdviz-grafana (#477) ([1ea790d](1ea790dc37a0e4c9130c5ce86c1c93a695b73309))
+- Bump npm dependencies in cdviz-grafana (#486) ([b587700](b5877008bd00af03ef505ca96313c544a2629996))
+- Use biome 2.4 (error from updatedeps) ([27f7dfc](27f7dfcc2e24cd9271c7d19b4f115e5dfa2e9793))
+
 ## [1.11.2] - 2026-04-19
 
 ### Fixed
