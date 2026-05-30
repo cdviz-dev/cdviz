@@ -1,7 +1,7 @@
 <script setup>
 import { gsap } from "gsap";
 import { onUnmounted, onMounted, useTemplateRef } from "vue";
-import PanelSvg from "./Empty.svg";
+import PanelSvg from "./InsideSource.svg";
 //import { GSDevTools } from "gsap/GSDevTools";
 
 const componentRoot = useTemplateRef("componentRoot");

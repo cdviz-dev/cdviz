@@ -93,7 +93,8 @@ onUnmounted(() => {
     /> -->
 
     <PanelSvg
-      class="h-auto w-full"
+      class="h-auto w-full text-primary"
+      fill="currentColor"
       alt="CDviz architecture diagram showing event flow from sources through collector to database and dashboards"
     />
   </div>

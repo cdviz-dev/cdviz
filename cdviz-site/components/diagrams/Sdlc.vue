@@ -71,6 +71,6 @@ onUnmounted(() => {
 </script>
 <template>
   <div ref="componentRoot">
-    <PanelSvg class="h-full w-full" />
+    <PanelSvg class="h-full w-full text-primary" fill="currentColor"/>
   </div>
 </template>

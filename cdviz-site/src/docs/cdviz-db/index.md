@@ -1,6 +1,13 @@
 ---
 description: "CDviz Database: PostgreSQL + TimescaleDB schema for CDEvents storage. Hypertable, JSONB payload, DORA metrics views, and event ingestion API."
 ---
+<script setup>
+import DbConceptual from '../../../components/diagrams/DbConceptual.vue'
+</script>
+
+# Sources
+
+Sources collect events from external systems and feed them into the CDviz pipeline.
 
 # CDviz Database
 
@@ -15,7 +22,7 @@ The database is built on PostgreSQL with TimescaleDB extensions, optimized for t
 
 The conceptual architecture of the CDviz database is as follows:
 
-![CDviz Database Architecture](/architectures/cdviz_db_conceptual.excalidraw.svg)
+<DbConceptual/>
 
 - a schema for CDEvents storage and analytics: `cdviz`
 - a stored procedure for event ingestion (used by the collector service or other event sources): `cdviz.store_cdevent`

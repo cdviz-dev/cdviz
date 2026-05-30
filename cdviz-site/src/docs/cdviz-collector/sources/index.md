@@ -2,11 +2,15 @@
 description: "CDviz Collector sources: webhook, Kafka, NATS, OpenDAL (S3/GCS/local), SSE, and HTTP polling extractors for CI/CD event collection."
 ---
 
+<script setup>
+import InsideSource from '../../../../components/diagrams/InsideSource.vue'
+</script>
+
 # Sources
 
 Sources collect events from external systems and feed them into the CDviz pipeline.
 
-![inside a source](/architectures/inside_source.excalidraw.svg)
+<InsideSource/>
 
 ## Quick Reference
 

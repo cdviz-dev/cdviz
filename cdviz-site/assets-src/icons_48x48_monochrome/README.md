@@ -2,7 +2,7 @@ icons are extracted/downloaded from https://icon-sets.iconify.design/
 
 - export svg
 - size 48x48
-- prefer monochrome: transparancy & #f08c00 (set other color with opacity 00)
+- prefer monochrome: transparancy & currentColor (set other color with opacity 00)
 
 ## LICENSES
 
