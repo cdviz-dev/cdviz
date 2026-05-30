@@ -414,6 +414,70 @@ rate_limit = "100/minute"
    curl -v $WEBHOOK_URL
    ```
 
+### 7. Webhook Header Secret: Env Var / Config Key Mismatch
+
+**Symptoms:**
+
+```
+Configuration is invalid:   × missing field `type` for key "default.sources.<name>.extractor"
+  in Remote File Adapter
+```
+
+The error path (`extractor`) and "Remote File Adapter" mention are misleading — the real failure is inside `extractor.headers`.
+
+**Reproduce:**
+
+```bash
+cdviz-collector config --config your-config.toml --check
+```
+
+**Root cause:**
+
+`cdviz-collector` uses [figment](https://docs.rs/figment) with `Env::prefixed("CDVIZ_COLLECTOR__").split("__")`. Double underscores are key-path separators; single underscores are **preserved as literal characters**. HTTP header names use hyphens (`x-hub-signature-256`), so an env var with underscores creates a *second* map entry missing the required `type` field:
+
+| Env var segment | figment key segment |
+| --- | --- |
+| `X_HUB_SIGNATURE_256` | `x_hub_signature_256` (underscore — no match) |
+| `X-HUB-SIGNATURE-256` | `x-hub-signature-256` (hyphen — matches TOML key) |
+
+**Option A — Keep hyphens in the env var name (simplest)**
+
+Env var names with hyphens are valid in Linux and in Kubernetes `env[].name`:
+
+```
+CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN=secret
+```
+
+Kubernetes example:
+
+```yaml
+env:
+  - name: CDVIZ_COLLECTOR__SOURCES__GITHUB_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: collector-secrets
+        key: github_webhook_token
+```
+
+**Option B — Mount secret as a file and use `token_file` (more secure)**
+
+`figment_file_provider_adapter::FileAdapter` resolves any config key ending in `_file` by reading the referenced file and replacing the key with its contents:
+
+```toml
+[sources.github_webhook.extractor.headers]
+"x-hub-signature-256" = { type = "signature", ..., token_file = "/secrets/github_webhook_token" }
+```
+
+Mount the Kubernetes Secret as a volume — secret values stay out of `kubectl describe pod` output and header names with hyphens map cleanly to filenames.
+
+**Summary:**
+
+| Approach | Env var key | TOML key | Match? |
+| --- | --- | --- | --- |
+| ❌ Wrong | `X_HUB_SIGNATURE_256` (underscore) | `x-hub-signature-256` (hyphen) | No → two map entries, missing `type` |
+| ✅ Option A | `X-HUB-SIGNATURE-256` (hyphen) | `x-hub-signature-256` (hyphen) | Yes |
+| ✅ Option B | _(no env var)_ | `x-hub-signature-256` + `token_file` | Yes (file-based) |
+
 ## Performance Troubleshooting
 
 ### Performance Factors
