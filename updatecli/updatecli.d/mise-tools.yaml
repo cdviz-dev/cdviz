@@ -177,153 +177,153 @@ sources:
 targets:
   helmCharts:
     name: "charts/mise.toml helm version"
-    kind: toml
+    kind: file
     sourceid: helm
     scmid: default
     spec:
       file: charts/mise.toml
-      key: tools.helm
-      engine: dasel/v2
+      matchpattern: 'helm = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'helm = "{{ source "helm" }}"'
 
   kubectlCollectorChart:
     name: "charts/cdviz-collector/mise.toml kubectl version"
-    kind: toml
+    kind: file
     sourceid: kubectl
     scmid: default
     spec:
       file: charts/cdviz-collector/mise.toml
-      key: tools.kubectl
-      engine: dasel/v2
+      matchpattern: 'kubectl = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'kubectl = "{{ source "kubectl" }}"'
 
   kindCollectorChart:
     name: "charts/cdviz-collector/mise.toml kind version"
-    kind: toml
+    kind: file
     sourceid: kind
     scmid: default
     spec:
       file: charts/cdviz-collector/mise.toml
-      key: tools.kind
-      engine: dasel/v2
+      matchpattern: 'kind = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'kind = "{{ source "kind" }}"'
 
   kubectlStackK8s:
     name: "demos/stack-k8s/mise.toml kubectl version"
-    kind: toml
+    kind: file
     sourceid: kubectl
     scmid: default
     spec:
       file: demos/stack-k8s/mise.toml
-      key: tools.kubectl
-      engine: dasel/v2
+      matchpattern: 'kubectl = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'kubectl = "{{ source "kubectl" }}"'
 
   kindStackK8s:
     name: "demos/stack-k8s/mise.toml kind version"
-    kind: toml
+    kind: file
     sourceid: kind
     scmid: default
     spec:
       file: demos/stack-k8s/mise.toml
-      key: tools.kind
-      engine: dasel/v2
+      matchpattern: 'kind = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'kind = "{{ source "kind" }}"'
 
   ctlptlStackK8s:
     name: "demos/stack-k8s/mise.toml ctlptl version"
-    kind: toml
+    kind: file
     sourceid: ctlptl
     scmid: default
     spec:
       file: demos/stack-k8s/mise.toml
-      key: tools.ctlptl
-      engine: dasel/v2
+      matchpattern: 'ctlptl = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'ctlptl = "{{ source "ctlptl" }}"'
 
   yqRoot:
     name: "mise.toml yq version"
-    kind: toml
+    kind: file
     sourceid: yq
     scmid: default
     spec:
       file: mise.toml
-      key: tools.yq
-      engine: dasel/v2
+      matchpattern: 'yq = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'yq = "{{ source "yq" }}"'
 
   yqGrafana:
     name: "cdviz-grafana/mise.toml yq version"
-    kind: toml
+    kind: file
     sourceid: yq
     scmid: default
     spec:
       file: cdviz-grafana/mise.toml
-      key: tools.yq
-      engine: dasel/v2
+      matchpattern: '"yq" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"yq" = "{{ source "yq" }}"'
 
   gitcliffRoot:
     name: "mise.toml git-cliff version"
-    kind: toml
+    kind: file
     sourceid: gitcliff
     scmid: default
     spec:
       file: mise.toml
-      key: tools.git-cliff
-      engine: dasel/v2
+      matchpattern: 'git-cliff = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: 'git-cliff = "{{ source "gitcliff" }}"'
 
   bunDb:
     name: "cdviz-db/mise.toml bun version"
-    kind: toml
+    kind: file
     sourceid: bun
     scmid: default
     spec:
       file: cdviz-db/mise.toml
-      key: tools.bun
-      engine: dasel/v2
+      matchpattern: '"bun" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"bun" = "{{ source "bun" }}"'
 
   bunSite:
     name: "cdviz-site/mise.toml bun version"
-    kind: toml
+    kind: file
     sourceid: bun
     scmid: default
     spec:
       file: cdviz-site/mise.toml
-      key: tools.bun
-      engine: dasel/v2
+      matchpattern: '"bun" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"bun" = "{{ source "bun" }}"'
 
   bunDashboards:
     name: "cdviz-grafana/dashboards_generator/mise.toml bun version"
-    kind: toml
+    kind: file
     sourceid: bun
     scmid: default
     spec:
       file: cdviz-grafana/dashboards_generator/mise.toml
-      key: tools.bun
-      engine: dasel/v2
+      matchpattern: '"bun" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"bun" = "{{ source "bun" }}"'
 
   dprintAdr:
     name: "adr/mise.toml dprint version"
-    kind: toml
+    kind: file
     sourceid: dprint
     scmid: default
     spec:
       file: adr/mise.toml
-      key: tools.dprint
-      engine: dasel/v2
+      matchpattern: '"dprint" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"dprint" = "{{ source "dprint" }}"'
 
   dprintSite:
     name: "cdviz-site/mise.toml dprint version"
-    kind: toml
+    kind: file
     sourceid: dprint
     scmid: default
     spec:
       file: cdviz-site/mise.toml
-      key: tools.dprint
-      engine: dasel/v2
+      matchpattern: '"dprint" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"dprint" = "{{ source "dprint" }}"'
 
   biomeDashboards:
     name: "cdviz-grafana/dashboards_generator/mise.toml biome version"
-    kind: toml
+    kind: file
     sourceid: biome
     scmid: default
     spec:
       file: cdviz-grafana/dashboards_generator/mise.toml
-      key: tools.biome
-      engine: dasel/v2
+      matchpattern: '"biome" = "[0-9]+\.[0-9]+\.[0-9]+"'
+      replacepattern: '"biome" = "{{ source "biome" }}"'
 
   golangmigrateDb:
     name: "cdviz-db/mise.toml golang-migrate version"

@@ -27,13 +27,13 @@ sources:
 targets:
   kubewatchVersion:
     name: "charts/cdviz-collector/Chart.yaml kubewatch dependency version"
-    kind: yaml
+    kind: file
     sourceid: kubewatch
     scmid: default
     spec:
       file: charts/cdviz-collector/Chart.yaml
-      key: "$.dependencies[0].version"
-      engine: dasel/v2
+      matchpattern: '    version: [0-9]+\.[0-9]+\.[0-9]+'
+      replacepattern: '    version: {{ source "kubewatch" }}'
 
 actions:
   kubewatch:
