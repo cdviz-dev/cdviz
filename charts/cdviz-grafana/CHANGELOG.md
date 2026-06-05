@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.4] - 2026-06-05
+
+### Fixed
+
+- Fix(cdviz-grafana): xxx.annotations in Charts is to set annotations, not ([8f6a7f4](8f6a7f4142af7121841cf994f3c5fb5087a889c5))
+- Syntax error in charts ([6c4cd6a](6c4cd6abbe18714fcf7304a56419dfe4919d28a0))
+- Bump npm dependencies in cdviz-grafana (#494) ([824af1f](824af1fdc7034c40666a67afbed58e4ae1f06d37))
+
 ## [1.11.3] - 2026-05-30
 
 ### Changed
