@@ -4,8 +4,10 @@ kind: Secret
 metadata:
   name: "{{ include "my.fullname" $ }}-datasources"
   labels:
-    {{- toYaml .Values.datasources.annotations | nindent 4}}
     {{- include "my.labels" . | nindent 4 }}
+    {{- toYaml $.Values.datasources.labels | nindent 4}}
+  annotations:
+    {{- toYaml .Values.datasources.annotations | nindent 4}}
 stringData:
   {{ include "my.fullname" $ }}-datasources.yaml: |-
     apiVersion: 1
