@@ -12,7 +12,7 @@ metadata:
   labels:
     {{- include "my.labels" $ | nindent 4 }}
     {{- toYaml $.Values.dashboards.labels | nindent 4}}
-   annotations:
+  annotations:
     {{- toYaml $.Values.dashboards.annotations | nindent 4}}
 data:
   {{ include "my.fullname" $ }}-{{ base $path }}: |-
