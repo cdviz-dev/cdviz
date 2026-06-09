@@ -416,3 +416,4 @@ proptest-regressions/
 build/
 .helmwave/
 .cdviz-collector
+.claude
