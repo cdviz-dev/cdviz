@@ -28,7 +28,7 @@ export interface LifecycleConfig {
 export const SELECTED_FIELD_NAME = "selected_value";
 
 export const DATASOURCE = {
-  type: "grafana-postgresql-datasource",
+  type: "postgres",
   // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
   uid: "${datasource}",
 } as const;

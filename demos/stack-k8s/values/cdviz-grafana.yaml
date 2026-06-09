@@ -3,7 +3,7 @@ datasources:
   definitions:
     cdviz-db:
       enabled: true
-      type: grafana-postgresql-datasource
+      type: postgres
       access: proxy
       # Use the syntax "$..." to inject the values from the grafana environment
       url: "{{ $.Values.secrets.CDVIZ_DASHBOARDS_POSTGRES_HOST }}:{{ $.Values.secrets.POSTGRES_PORT_NUMBER }}"

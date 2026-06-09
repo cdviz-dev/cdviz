@@ -26,7 +26,7 @@ export function applyDefaults(
 
 export function newVariable4datasource() {
   return new DatasourceVariableBuilder("datasource")
-    .type("grafana-postgresql-datasource")
+    .type("postgres")
     .regex("cdviz.*")
     .multi(false)
     .includeAll(false)
@@ -42,7 +42,7 @@ export function newVariableOnDatasource(
     new QueryVariableBuilder(name)
       .label(label || name)
       .datasource({
-        type: "grafana-postgresql-datasource",
+        type: "postgres",
         // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
         uid: "${datasource}",
       })

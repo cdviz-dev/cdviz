@@ -24,7 +24,7 @@ export async function buildDashboard(): Promise<Dashboard> {
     "./src/panels/browser_scripts/draw_sunburst_count_per_path_echarts.ts",
   ]);
   const datasource = {
-    type: "grafana-postgresql-datasource",
+    type: "postgres",
     // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
     uid: "${datasource}",
   };

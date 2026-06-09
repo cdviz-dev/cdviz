@@ -4,7 +4,7 @@
       {
         "builtIn": 1,
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "enable": true,
@@ -72,7 +72,7 @@
       },
       {
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "enable": true,
@@ -167,7 +167,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "description": "nb (deployed, upgraded, rolledback) * 7 / nb days",
@@ -231,7 +231,7 @@
       "targets": [
         {
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -263,7 +263,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "fieldConfig": {
@@ -321,7 +321,7 @@
       "targets": [
         {
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -444,7 +444,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "cdviz-db"
       },
       "description": "Send a service event",
@@ -637,7 +637,7 @@
       "targets": [
         {
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "cdviz-db"
           },
           "refId": "A"
@@ -648,7 +648,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "cdviz-db"
       },
       "description": "Send an incident event",
@@ -870,7 +870,7 @@
       "targets": [
         {
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "cdviz-db"
           },
           "refId": "A"
@@ -881,7 +881,7 @@
     },
     {
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "cdviz-db"
       },
       "description": "Send a raw json event",
@@ -1022,7 +1022,7 @@
         {
           "dataset": "cdviz",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "cdviz-db"
           },
           "editorMode": "builder",
@@ -1053,7 +1053,7 @@
         },
         "name": "datasource",
         "options": [],
-        "query": "grafana-postgresql-datasource",
+        "query": "postgres",
         "refresh": 1,
         "regex": "",
         "type": "datasource"
@@ -1064,7 +1064,7 @@
           "value": "$__all"
         },
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "definition": "SELECT DISTINCT payload -> 'subject' ->> 'id' as service\nFROM cdevents_lake\nWHERE subject = 'service'\nAND  $__timeFilter(timestamp)\nUNION\nSELECT DISTINCT payload -> 'subject' -> 'content' -> 'service' ->> 'id' as service\nFROM cdevents_lake\nWHERE subject = 'incident'\nAND  $__timeFilter(timestamp)\n",
@@ -1086,7 +1086,7 @@
           "value": "$__all"
         },
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "definition": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'environment' ->> 'id' as environment\nFROM cdevents_lake\nWHERE (subject = 'service' OR subject = 'incident')\nAND  $__timeFilter(timestamp)\n",
@@ -1129,6 +1129,6 @@
   "timezone": "browser",
   "title": "Service: Demo",
   "uid": "demo_service_deployed",
-  "version": 2026030921,
+  "version": 2026060914,
   "weekStart": ""
 }

@@ -16,7 +16,7 @@ import { VolkovlabsTablePanelBuilder } from "../panels/volkovlabs_table_panel";
 import { applyDefaults, DEFAULT_TAGS, newVariableOnDatasource } from "./utils";
 
 const DATASOURCE = {
-  type: "grafana-postgresql-datasource",
+  type: "postgres",
   // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
   uid: "${datasource}",
 } as const;

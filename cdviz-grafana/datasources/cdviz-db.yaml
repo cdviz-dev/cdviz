@@ -3,7 +3,7 @@ apiVersion: 1
 datasources:
   - name: cdviz-db
     uid: cdviz-db
-    type: grafana-postgresql-datasource
+    type: postgres
     access: proxy
     url: "$CDVIZ_RO_POSTGRES_HOST:$CDVIZ_RO_POSTGRES_PORT_NUMBER"
     user: $CDVIZ_RO_POSTGRES_USER

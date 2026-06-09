@@ -16,7 +16,7 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "query": "grafana-postgresql-datasource",
+        "query": "postgres",
         "regex": "cdviz.*",
         "hide": 3
       },
@@ -32,7 +32,7 @@
         "auto_count": 30,
         "label": "Environments",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT payload -> 'subject' -> 'content' -> 'environment' ->> 'id'\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND $__timeFilter(timestamp)\nORDER BY 1",
@@ -55,7 +55,7 @@
         "auto_count": 30,
         "label": "Actions",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT predicate\nFROM cdviz.cdevents_lake\nWHERE subject = 'service'\n  AND $__timeFilter(timestamp)\nORDER BY 1",
@@ -137,7 +137,7 @@
       "title": "Environments",
       "description": "Distinct environments with service events in the selected time window and filters.",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -145,7 +145,7 @@
           "format": "table",
           "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' -> 'environment' ->> 'id') AS count\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -185,7 +185,7 @@
       "title": "Services",
       "description": "Distinct service IDs with events in the selected time window and filters.",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -193,7 +193,7 @@
           "format": "table",
           "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' ->> 'id') AS count\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -233,7 +233,7 @@
       "title": "Artifacts",
       "description": "Distinct artifact IDs deployed to services in the selected time window and filters.",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -241,7 +241,7 @@
           "format": "table",
           "rawSql": "SELECT COUNT(DISTINCT payload -> 'subject' -> 'content' ->> 'artifactId') AS count\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -281,7 +281,7 @@
       "title": "Total Events",
       "description": "Total number of service deployment events matching the selected time window and filters.",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -289,7 +289,7 @@
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS count\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -757,7 +757,7 @@
         "y": 4
       },
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -765,7 +765,7 @@
           "format": "table",
           "rawSql": "SELECT\n          timestamp,\n          payload -> 'subject' ->> 'id' AS service_id,\n          payload -> 'subject' -> 'content' ->> 'artifactId' AS artifact_id,\n          payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS environment_id,\n          predicate\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])\n        ORDER BY timestamp DESC\n        LIMIT ${pageSize}\n        OFFSET ${offset}",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -775,7 +775,7 @@
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS count\n        FROM cdviz.cdevents_lake\n        WHERE $__timeFilter(timestamp)\nAND subject = 'service'\nAND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nAND payload -> 'subject' -> 'content' -> 'environment' ->> 'id' = ANY(ARRAY[${environments:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -837,5 +837,5 @@
       }
     }
   ],
-  "version": 2026031319
+  "version": 2026060914
 }

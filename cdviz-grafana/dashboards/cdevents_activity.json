@@ -16,7 +16,7 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "query": "grafana-postgresql-datasource",
+        "query": "postgres",
         "regex": "cdviz.*",
         "hide": 3
       },
@@ -32,7 +32,7 @@
         "auto_count": 30,
         "label": "Subjects",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT \"subject\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)",
@@ -55,7 +55,7 @@
         "auto_count": 30,
         "label": "Predicates",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT \"predicate\"\nFROM cdviz.\"cdevents_lake\"\nWHERE $__timeFilter(timestamp)\n  AND \"subject\" = ANY(ARRAY[${subjects:sqlstring}]::text[])",
@@ -133,7 +133,7 @@
         "y": 0
       },
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -141,7 +141,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COUNT(*) as count,\n  subject || '/' || predicate as path\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY subject, predicate\nORDER BY subject, predicate",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -178,7 +178,7 @@
           "format": "table",
           "rawSql": "SELECT\n  time_bucket('1 hour', timestamp) AS time,\n  (subject || '/' || predicate) AS kind,\n  COUNT(*)\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY time, kind\nORDER BY time, kind",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -235,7 +235,7 @@
         "y": 0
       },
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -243,7 +243,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COUNT(*) as count,\n  \"payload\" -> 'context' ->> 'source' as \"path\"\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nGROUP BY path\nORDER BY path",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -838,7 +838,7 @@
         "y": 8
       },
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -846,7 +846,7 @@
           "format": "table",
           "rawSql": "SELECT\n  \"timestamp\",\n  \"subject\",\n  \"predicate\",\n  (\"payload\" -> 'subject')::text as \"payload_subject\",\n  (\"payload\" -> 'context')::text as \"payload_context\",\n  (\"payload\" -> 'customData')::text as \"payload_custom\",\n  \"imported_at\"\nFROM\n  cdviz.cdevents_lake\nWHERE\n  $__timeFilter(timestamp)\n  AND subject = ANY(ARRAY[${subjects:sqlstring}]::text[])\n  AND predicate = ANY(ARRAY[${predicates:sqlstring}]::text[])\nORDER BY\n  imported_at DESC\nLIMIT\n  ${pageSize}\nOFFSET\n  ${offset}",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -855,5 +855,5 @@
       ]
     }
   ],
-  "version": 2026031316
+  "version": 2026060914
 }

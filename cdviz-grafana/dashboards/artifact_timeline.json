@@ -16,7 +16,7 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "query": "grafana-postgresql-datasource",
+        "query": "postgres",
         "regex": "cdviz.*",
         "hide": 3
       },
@@ -32,7 +32,7 @@
         "auto_count": 30,
         "label": "Artifacts",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT\n  COALESCE(\n    SUBSTRING(node_id FROM 'pkg:([^@\\\\?]+)'),\n    SUBSTRING(node_id FROM 'pkg:(.+)')\n  ) || E'\\\n' ||\n  COALESCE((regexp_match(node_id, 'repository_url=([^&]+)'))[1], '') AS __value\nFROM cdviz.graph_nodes\nWHERE node_type = 'artifact'\n  AND node_id LIKE 'pkg:%'\n  AND (node_id LIKE 'pkg:%@%' OR node_id LIKE 'pkg:%?%')\nORDER BY 1",
@@ -74,7 +74,7 @@
       "repeat": "artifact_fnames",
       "maxPerRow": 1,
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -82,7 +82,7 @@
           "format": "table",
           "rawSql": "WITH artifact_filter AS (\n  SELECT\n    SPLIT_PART('${artifact_fnames:raw}', '\n', 1) AS base_name,\n    NULLIF(SPLIT_PART('${artifact_fnames:raw}', '\n', 2), '') AS repository_url\n),\nartifact_nodes AS (\n  SELECT n.node_id\n  FROM cdviz.graph_nodes n, artifact_filter\n  WHERE n.node_type = 'artifact'\n    AND (\n      n.node_id SIMILAR TO 'pkg:' || artifact_filter.base_name || '(@|\\\\?)%'\n      OR n.node_id = 'pkg:' || artifact_filter.base_name\n    )\n    AND (\n      artifact_filter.repository_url IS NULL\n      OR n.node_id SIMILAR TO '%repository_url=' || artifact_filter.repository_url || '(&%)?'\n    )\n),\n-- Run-type events raw: extract definition name for stage grouping.\n-- pipelinerun/taskrun/testcaserun/testsuiterun each have a \"definition\" field\n-- (pipelineName, taskName, testCase.name|id, testSuite.name|id) that is stable\n-- across multiple runs, unlike subject.id which is unique per run instance.\nrun_events_raw AS (\n  SELECT\n    cl.timestamp,\n    cl.subject || '.' || cl.predicate      AS action,\n    ge.relation                            AS relation,\n    CASE cl.subject\n      WHEN 'pipelinerun'  THEN COALESCE(cl.payload -> 'subject' -> 'content' ->> 'pipelineName', cl.payload -> 'subject' ->> 'id')\n      WHEN 'taskrun'      THEN COALESCE(cl.payload -> 'subject' -> 'content' ->> 'taskName', cl.payload -> 'subject' ->> 'id')\n      WHEN 'testcaserun'  THEN COALESCE(cl.payload -> 'subject' -> 'content' -> 'testCase' ->> 'name', cl.payload -> 'subject' -> 'content' -> 'testCase' ->> 'id', cl.payload -> 'subject' ->> 'id')\n      WHEN 'testsuiterun' THEN COALESCE(cl.payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name', cl.payload -> 'subject' -> 'content' -> 'testSuite' ->> 'id', cl.payload -> 'subject' ->> 'id')\n    END                                    AS run_def_name,\n    an.node_id                             AS artifact_id,\n    gn.node_type                           AS entity_type,\n    cl.payload -> 'subject' ->> 'id'       AS entity_id,\n    cl.payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS environment_id\n  FROM artifact_nodes an\n  JOIN cdviz.graph_edges ge\n    ON ge.to_node_id = an.node_id\n    AND ge.relation != 'derivedFrom'\n  JOIN cdviz.graph_nodes gn ON gn.node_id = ge.from_node_id\n  JOIN cdviz.cdevents_lake cl\n    ON cl.subject = gn.node_type\n    AND cl.payload -> 'subject' ->> 'id' = ge.from_node_id\n    AND cl.subject IN ('pipelinerun', 'taskrun', 'testcaserun', 'testsuiterun')\n    AND (\n      cl.payload -> 'subject' -> 'content' ->> 'artifactId' = an.node_id\n      OR EXISTS (\n        SELECT 1\n        FROM jsonb_array_elements(\n          COALESCE(cl.payload -> 'customData' -> 'links', '[]'::jsonb)\n        ) AS lnk(v)\n        WHERE lnk.v -> 'subject' ->> 'id' = an.node_id\n      )\n    )\n  WHERE $__timeFilter(cl.timestamp)\n)\n-- Part 1: direct artifact events (published, signed, packaged, …)\nSELECT\n  cl.timestamp,\n  cl.predicate                             AS action,\n  cl.predicate                             AS stage,\n  cl.payload -> 'subject' ->> 'id'         AS artifact_id,\n  'artifact'::text                         AS entity_type,\n  cl.payload -> 'subject' ->> 'id'         AS entity_id,\n  NULL::text                               AS environment_id\nFROM artifact_nodes an\nJOIN cdviz.cdevents_lake cl\n  ON cl.subject = 'artifact'\n  AND cl.payload -> 'subject' ->> 'id' = an.node_id\nWHERE $__timeFilter(cl.timestamp)\n\nUNION ALL\n\n-- Part 2: non-run related-entity events (service deployments, …)\n-- Joined through graph_edges with an artifact-match constraint so each event\n-- appears exactly once — for the specific artifact version it references in its\n-- own payload (content.artifactId or customData.links), never fanning out to\n-- all versions the entity was historically linked to.\nSELECT\n  cl.timestamp,\n  cl.subject || '.' || cl.predicate        AS action,\n  CASE\n    WHEN cl.payload -> 'subject' -> 'content' -> 'environment' ->> 'id' IS NOT NULL\n      THEN ge.relation\n        || E'\\\n' || (cl.payload -> 'subject' ->> 'id')\n        || E'\\\n' || (cl.payload -> 'subject' -> 'content' -> 'environment' ->> 'id')\n    ELSE cl.predicate\n        || E'\\\n' || (cl.payload -> 'subject' ->> 'id')\n  END                                      AS stage,\n  an.node_id                               AS artifact_id,\n  gn.node_type                             AS entity_type,\n  cl.payload -> 'subject' ->> 'id'         AS entity_id,\n  cl.payload -> 'subject' -> 'content' -> 'environment' ->> 'id' AS environment_id\nFROM artifact_nodes an\nJOIN cdviz.graph_edges ge\n  ON ge.to_node_id = an.node_id\n  AND ge.relation != 'derivedFrom'\nJOIN cdviz.graph_nodes gn ON gn.node_id = ge.from_node_id\nJOIN cdviz.cdevents_lake cl\n  ON cl.subject = gn.node_type\n  AND cl.payload -> 'subject' ->> 'id' = ge.from_node_id\n  AND cl.subject NOT IN ('pipelinerun', 'taskrun', 'testcaserun', 'testsuiterun')\n  AND (\n    cl.payload -> 'subject' -> 'content' ->> 'artifactId' = an.node_id\n    OR EXISTS (\n      SELECT 1\n      FROM jsonb_array_elements(\n        COALESCE(cl.payload -> 'customData' -> 'links', '[]'::jsonb)\n      ) AS lnk(v)\n      WHERE lnk.v -> 'subject' ->> 'id' = an.node_id\n    )\n  )\nWHERE $__timeFilter(cl.timestamp)\n\nUNION ALL\n\n-- Part 3: run-type events (pipelinerun, taskrun, testcaserun, testsuiterun)\n-- Stage uses the definition name so all runs of the same pipeline/task/test share\n-- one Y-axis row. Only the last event per definition per artifact is shown.\nSELECT\n  timestamp,\n  action,\n  relation || E'\\\n' || run_def_name       AS stage,\n  artifact_id,\n  entity_type,\n  entity_id,\n  environment_id\nFROM (\n  SELECT\n    *,\n    ROW_NUMBER() OVER (\n      PARTITION BY artifact_id, entity_id\n      ORDER BY timestamp DESC\n    )                                      AS rn\n  FROM run_events_raw\n) ranked\nWHERE rn = 1",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -97,5 +97,5 @@
       }
     }
   ],
-  "version": 2026040117
+  "version": 2026060914
 }

@@ -30,9 +30,9 @@ CDviz Grafana provides a comprehensive visualization layer for continuous delive
 
 - Grafana version: 12+
 - Required Grafana Plugins:
-  - **volkovlabs-echarts-panel**
-  - **volkovlabs-form-panel**
-  - **volkovlabs-table-panel**
+  - **volkovlabs-echarts-panel** (Business Charts)
+  - **volkovlabs-form-panel** (Business Forms)
+  - **volkovlabs-table-panel** (Business Table)
   - **cdviz-executiontable-panel** (custom unsigned plugin — install from [GitHub releases](https://github.com/cdviz-dev/cdviz-executiontable-panel/releases))
 - Database credentials with read access to a CDviz Database instance
 
@@ -40,7 +40,7 @@ CDviz Grafana provides a comprehensive visualization layer for continuous delive
 
 1. Install the required plugins and allow loading unsigned plugins (`cdviz-executiontable-panel`) via `GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=cdviz-executiontable-panel`
 2. Create a PostgreSQL datasource in Grafana to connect to the CDviz Database:
-   - Type: `grafana-postgresql-datasource`
+   - Type: `postgres`
    - Name: `cdviz-...` (the cdviz prefix is used for datasource identification in dashboards)
    - TimescaleDB: `enabled`
 3. Import dashboards by copying JSON definitions from the [CDviz GitHub repository](https://github.com/cdviz-dev/cdviz/tree/main/cdviz-grafana/dashboards)

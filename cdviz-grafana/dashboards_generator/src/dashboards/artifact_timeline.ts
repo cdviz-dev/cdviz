@@ -19,7 +19,7 @@ export async function buildDashboard(): Promise<Dashboard> {
   ]);
 
   const datasource = {
-    type: "grafana-postgresql-datasource",
+    type: "postgres",
     // biome-ignore lint/suspicious/noTemplateCurlyInString: template for grafana
     uid: "${datasource}",
   };

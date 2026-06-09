@@ -16,7 +16,7 @@
         "auto": false,
         "auto_min": "10s",
         "auto_count": 30,
-        "query": "grafana-postgresql-datasource",
+        "query": "postgres",
         "regex": "cdviz.*",
         "hide": 3
       },
@@ -32,7 +32,7 @@
         "auto_count": 30,
         "label": "Incident",
         "datasource": {
-          "type": "grafana-postgresql-datasource",
+          "type": "postgres",
           "uid": "${datasource}"
         },
         "query": "SELECT DISTINCT COALESCE(NULLIF(payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') AS __value\nFROM cdviz.cdevents_lake\nWHERE $__timeFilter(timestamp)\nAND subject = 'incident'\nORDER BY __value",
@@ -88,7 +88,7 @@
       "repeatDirection": "h",
       "title": "Total Time to Resolve",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -96,7 +96,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(SUM(extract('epoch' from (resolved_at - detected_at))), 0) AS total_duration\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND resolved_at IS NOT NULL",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -131,7 +131,7 @@
       "repeatDirection": "h",
       "title": "Avg Resolution Time",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -139,7 +139,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (resolved_at - detected_at))), 0) AS avg_runtime\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND resolved_at IS NOT NULL",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -174,7 +174,7 @@
       "repeatDirection": "h",
       "title": "Avg Time to Report",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -182,7 +182,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(AVG(extract('epoch' from (reported_at - detected_at))), 0) AS avg_time_to_report\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND reported_at IS NOT NULL\n  AND detected_at IS NOT NULL",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -217,7 +217,7 @@
       "repeatDirection": "h",
       "title": "Resolution Rate",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -225,7 +225,7 @@
           "format": "table",
           "rawSql": "SELECT\n  COALESCE(\n    100.0 * COUNT(*) FILTER (WHERE resolved_at IS NOT NULL) / NULLIF(COUNT(*), 0),\n    0\n  ) AS resolution_rate\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -268,7 +268,7 @@
       "repeatDirection": "h",
       "title": "Incident Total Duration per Day",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -276,7 +276,7 @@
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', resolved_at) AS time,\n  SUM(extract('epoch' from (resolved_at - detected_at))) AS total_duration\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\n  AND resolved_at IS NOT NULL\nGROUP BY time\nORDER BY time",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -362,7 +362,7 @@
       "repeatDirection": "h",
       "title": "Incident Total Number of Run per Day",
       "datasource": {
-        "type": "grafana-postgresql-datasource",
+        "type": "postgres",
         "uid": "${datasource}"
       },
       "targets": [
@@ -370,7 +370,7 @@
           "format": "time_series",
           "rawSql": "SELECT\n  time_bucket('1 day', COALESCE(resolved_at, detected_at)) AS time,\n  CASE\n    WHEN resolved_at IS NOT NULL THEN 'resolved'\n    WHEN reported_at IS NOT NULL THEN 'reported'\n    WHEN detected_at IS NOT NULL THEN 'detected'\n    ELSE 'unknown'\n  END AS status,\n  COUNT(*) AS count\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nGROUP BY time, status\nORDER BY time, status",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "editorMode": "code",
@@ -567,7 +567,7 @@
           "repeatDirection": "h",
           "title": "$selected_value - Summary",
           "datasource": {
-            "type": "grafana-postgresql-datasource",
+            "type": "postgres",
             "uid": "${datasource}"
           },
           "targets": [
@@ -575,7 +575,7 @@
               "format": "table",
               "rawSql": "SELECT\n  COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') AS \"Environment\",\n  subject_id AS \"ID\",\n  detected_at AS \"Started\",\n  resolved_at AS \"Completed\",\n  extract('epoch' from (resolved_at - detected_at)) AS \"Duration\",\n  CASE WHEN resolved_at IS NOT NULL THEN 'resolved' ELSE 'open' END AS \"Status\",\n  COALESCE(last_payload -> 'subject' -> 'content' ->> 'uri', last_payload -> 'subject' -> 'content' ->> 'url') AS \"URL\"\nFROM cdviz.incident\nWHERE\n  ($__timeFilter(detected_at) OR $__timeFilter(resolved_at))\n  AND COALESCE(NULLIF(last_payload -> 'subject' -> 'content' -> 'environment' ->> 'id', ''), 'unknown') = ANY(ARRAY[${selected_value:sqlstring}]::text[])\nORDER BY resolved_at DESC NULLS FIRST\nLIMIT ${limit}",
               "datasource": {
-                "type": "grafana-postgresql-datasource",
+                "type": "postgres",
                 "uid": "${datasource}"
               },
               "editorMode": "code",
@@ -616,5 +616,5 @@
       }
     }
   ],
-  "version": 2026033017
+  "version": 2026060914
 }
