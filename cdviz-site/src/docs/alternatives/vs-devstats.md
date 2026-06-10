@@ -9,6 +9,12 @@ head:
 
 # CDviz vs DevStats (commercial)
 
+## What is DevStats?
+
+DevStats (DevStats.com) is a commercial SaaS platform for engineering metrics. It connects to GitHub, GitLab, and Bitbucket via API polling to surface cycle time, PR review analytics, deployment frequency, and DORA metrics for engineering leadership. DevStats is a fully-hosted service — there is no self-hosted option.
+
+DevStats serves software engineering teams and managers who want git-centric metrics without managing infrastructure. It is distinct from [CNCF DevStats](./vs-devstats-cncf), the open-source tool for tracking contributor activity on public open-source projects.
+
 ::: tip Two products share the DevStats name
 This page covers **DevStats.com**, the commercial SaaS product for enterprise engineering metrics. If you're looking for the open-source CNCF tooling used to track contributor activity on public GitHub repositories, see [CDviz vs CNCF DevStats](./vs-devstats-cncf).
 :::

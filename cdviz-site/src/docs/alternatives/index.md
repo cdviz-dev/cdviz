@@ -7,7 +7,7 @@ head:
     - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Middleware","url":"https://middlewarehq.com"},{"@type":"ListItem","position":10,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":11,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":12,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":13,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
 ---
 
-# CI/CD Observability Tools & DevLake Alternatives
+# SDLC Observability Tools: CDviz vs Swarmia, LinearB, DevLake & More
 
 CDviz is an open-source, self-hosted alternative to commercial SDLC observability tools. Unlike polling-based platforms such as Apache DevLake or proprietary tools like Datadog CI Visibility, CDviz uses a real-time event-push model based on the CDEvents standard, giving teams both observability and the foundation for event-driven automation — observe your pipelines before acting on them.
 

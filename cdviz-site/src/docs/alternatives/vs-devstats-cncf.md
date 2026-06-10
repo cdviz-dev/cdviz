@@ -11,6 +11,12 @@ head:
 
 > _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-devstats-cncf.md)._
 
+## What is CNCF DevStats?
+
+CNCF DevStats (`devstats.cncf.io`, `github.com/cncf/devstats`) is an open-source analytics tool maintained by the Cloud Native Computing Foundation (CNCF). It tracks contributor activity, PR review times, company attribution, and community health metrics for public open-source projects hosted on GitHub. CNCF DevStats is deployed at `devstats.cncf.io` and powers dashboards for over 200 CNCF projects.
+
+CNCF DevStats is a read-only, batch-based analytics platform (hourly sync from GitHub Archive). It does not support private repositories, does not trigger workflows, and is unrelated to [DevStats.com](./vs-devstats), the commercial SaaS product for enterprise engineering metrics.
+
 ::: tip Don't confuse the two DevStats products
 **CNCF DevStats** (`devstats.cncf.io`, `github.com/cncf/devstats`) is a CNCF-maintained open-source tool for tracking contributor activity on public GitHub repositories. It is unrelated to [DevStats.com](./vs-devstats), the commercial SaaS product for enterprise engineering metrics. This page compares CDviz with the CNCF version.
 :::

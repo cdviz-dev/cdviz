@@ -1,5 +1,15 @@
 ---
-description: "DORA metrics with CDviz and Grafana: measure deployment frequency, lead time for changes, change failure rate, and MTTR from CDEvents."
+title: "DORA Metrics Dashboard | CDviz Grafana"
+description: "DORA metrics dashboard built on CDEvents: deployment frequency, lead time for changes, change failure rate, and time to restore — visualized in Grafana."
+faq:
+  - q: What is a DORA metrics dashboard?
+    a: A DORA metrics dashboard visualizes the four key DevOps Research and Assessment (DORA) indicators — Deployment Frequency, Lead Time for Changes, Change Failure Rate, and Time to Restore Service — in a single view. These metrics help engineering teams benchmark and improve their software delivery performance.
+  - q: How do I build a DORA metrics dashboard in Grafana?
+    a: CDviz provides a pre-built Grafana dashboard for DORA metrics powered by CDEvents. Install CDviz Collector to emit events from your CI/CD pipelines and deployments, connect a PostgreSQL datasource, and import the CDviz DORA Metrics dashboard JSON. The dashboard auto-populates deployment frequency, lead time, change failure rate, and MTTR panels.
+  - q: What CDEvents are required for DORA metrics?
+    a: "The CDviz DORA dashboard requires: service.deployed and service.upgraded for Deployment Frequency and Lead Time; incident.detected and incident.resolved for Time to Restore; service.rolledback for Change Failure Rate; and artifact.published (with artifactId) for the full Lead Time chain."
+  - q: What is the difference between MTTR and FDRT in DORA?
+    a: In the 2023 DORA report, Mean Time to Restore (MTTR) was renamed to Failed Deployment Recovery Time (FDRT), scoping it specifically to incidents caused by a deployment. CDviz tracks all incidents as a proxy since not all incident tools emit deployment-linked events.
 ---
 
 # DORA Metrics Dashboard

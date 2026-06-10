@@ -1,6 +1,6 @@
 ---
-title: "CDviz vs LinearB: Open-Source Engineering Metrics"
-description: "Self-hosted LinearB alternative for engineering metrics. CDviz vs LinearB: open-source, CDEvents-native, no per-seat pricing."
+title: "CDviz vs LinearB: Open-Source LinearB Alternatives"
+description: "Looking for LinearB alternatives? CDviz is a free, self-hosted open-source alternative to LinearB — CDEvents-native, no per-contributor pricing, full data ownership."
 head:
   - - script
     - type: application/ld+json
