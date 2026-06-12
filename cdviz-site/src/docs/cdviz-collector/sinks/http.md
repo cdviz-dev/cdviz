@@ -4,7 +4,7 @@ description: "CDviz Collector HTTP sink: forward CDEvents to external webhooks a
 
 # HTTP Sink
 
-Forwards CDEvents to an external HTTP endpoint via POST request. Use for webhooks, external APIs, and any HTTP-based service.
+Forwards CDEvents to an external HTTP endpoint via POST request. Use for webhooks, external APIs, notification services, and any HTTP-based system that accepts JSON events.
 
 ## Configuration
 
@@ -33,22 +33,29 @@ url = "https://example.com/webhook"
 
 ## Authentication
 
+### Bearer token
+
 ```toml
-# Static bearer token
 [[sinks.webhook.headers]]
 header = "Authorization"
 [sinks.webhook.headers.rule]
 type = "static"
 value = "Bearer your-api-token"
+```
 
-# Token from environment variable
+### API key from environment variable
+
+```toml
 [[sinks.webhook.headers]]
 header = "X-API-Key"
 [sinks.webhook.headers.rule]
 type = "secret"
-value = "API_KEY_ENV_VAR"
+value = "API_KEY_ENV_VAR"  # reads from $API_KEY_ENV_VAR at runtime
+```
 
-# HMAC signature
+### HMAC signature (for webhook receivers that verify signatures)
+
+```toml
 [[sinks.webhook.headers]]
 header = "X-Hub-Signature-256"
 [sinks.webhook.headers.rule]
@@ -61,30 +68,41 @@ signature_encoding = "hex"
 
 **[→ Complete Header Authentication Guide](../header-authentication.md)**
 
-## Examples
+## Common Use Cases
 
 ```toml
-# Simple webhook
-[sinks.notify]
+# Slack notification on deployment
+[sinks.slack]
 enabled = true
 type = "http"
 url = "https://hooks.slack.com/services/T00/B00/XXX"
 
-# Authenticated API
-[sinks.api]
+# Forward to authenticated internal API
+[sinks.internal_api]
 enabled = true
 type = "http"
-url = "https://api.company.com/events"
+url = "https://platform.company.com/api/events"
 
-[[sinks.api.headers]]
+[[sinks.internal_api.headers]]
 header = "Authorization"
-[sinks.api.headers.rule]
+[sinks.internal_api.headers.rule]
 type = "secret"
-value = "API_TOKEN"
+value = "Bearer PLATFORM_API_TOKEN"
 
-# Multiple HTTP sinks receive every event simultaneously
-[sinks.backup]
+# Fan-out: multiple HTTP sinks all receive every event
+[sinks.backup_receiver]
 enabled = true
 type = "http"
-url = "https://backup-webhook.company.com/events"
+url = "https://backup-collector.company.com/webhook/events"
 ```
+
+## Error Handling
+
+Failed requests (non-2xx responses, network errors, timeouts) are logged at ERROR level. Processing continues — the event is not retried. For guaranteed delivery, use the [Kafka sink](./kafka.md) or [NATS sink](./nats.md) with a durable consumer.
+
+## Related
+
+- [Kafka Sink](./kafka.md) — durable, high-throughput event delivery
+- [NATS Sink](./nats.md) — lightweight publish-subscribe delivery
+- [Header Authentication](../header-authentication.md) — configure outgoing request headers
+- [Database Sink](./db.md) — store CDEvents for analytics and dashboards

@@ -6,6 +6,8 @@ description: "CDviz Collector webhook source: receive CI/CD events via HTTP POST
 
 Receives events via HTTP POST requests, creating endpoints that accept JSON payloads from CI/CD pipelines and external services.
 
+The webhook source is the primary way to receive **push-based events** from GitHub, GitLab, Jenkins, ArgoCD, and other systems that support outgoing webhooks.
+
 ## Configuration
 
 ```toml
@@ -30,6 +32,8 @@ headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 POST /webhook/{id}
 ```
 
+The collector exposes one endpoint per webhook source. Configure the external service to send POST requests to `https://your-collector:8080/webhook/{id}`.
+
 ## Response Codes
 
 | Code             | Condition                     |
@@ -41,15 +45,21 @@ POST /webhook/{id}
 
 ## Security
 
+Always validate webhook signatures to prevent unauthorized event injection.
+
+### API key validation
+
 ```toml
-# API key validation
 [[sources.my_webhook.extractor.headers]]
 header = "X-API-Key"
 [sources.my_webhook.extractor.headers.rule]
 type = "equals"
 value = "my-secret-api-key"
+```
 
-# HMAC signature
+### HMAC signature (GitHub, Jenkins, Gitea)
+
+```toml
 [[sources.github_webhook.extractor.headers]]
 header = "X-Hub-Signature-256"
 [sources.github_webhook.extractor.headers.rule]
@@ -62,7 +72,9 @@ signature_encoding = "hex"
 
 **[→ Complete Header Validation Guide](../header-validation.md)**
 
-## Example
+## Integration Examples
+
+### GitHub Actions / GitHub webhooks
 
 ```toml
 [sources.github_events]
@@ -73,4 +85,64 @@ transformer_refs = ["github_to_cdevents"]
 type = "webhook"
 id = "github"
 headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
+
+[[sources.github_events.extractor.headers]]
+header = "X-Hub-Signature-256"
+[sources.github_events.extractor.headers.rule]
+type = "signature"
+token = "GITHUB_WEBHOOK_SECRET"
+signature_prefix = "sha256="
+signature_on = "body"
+signature_encoding = "hex"
 ```
+
+Configure in GitHub: Settings → Webhooks → Add webhook → `https://collector:8080/webhook/github`
+
+### GitLab webhooks
+
+```toml
+[sources.gitlab_events]
+enabled = true
+transformer_refs = ["gitlab_to_cdevents"]
+
+[sources.gitlab_events.extractor]
+type = "webhook"
+id = "gitlab"
+headers_to_keep = ["X-Gitlab-Event", "X-Gitlab-Event-UUID"]
+
+[[sources.gitlab_events.extractor.headers]]
+header = "X-Gitlab-Token"
+[sources.gitlab_events.extractor.headers.rule]
+type = "equals"
+value = "GITLAB_WEBHOOK_TOKEN"
+```
+
+### Multiple independent webhook sources
+
+Define one source per external system to apply different transformers:
+
+```toml
+[sources.github]
+enabled = true
+transformer_refs = ["github_to_cdevents"]
+
+[sources.github.extractor]
+type = "webhook"
+id = "github"
+
+[sources.argocd]
+enabled = true
+transformer_refs = ["argocd_to_cdevents"]
+
+[sources.argocd.extractor]
+type = "webhook"
+id = "argocd"
+```
+
+## Related
+
+- [GitHub Integration](../integrations/github.md) — complete setup guide for GitHub webhooks
+- [GitLab Integration](../integrations/gitlab.md) — complete setup guide for GitLab webhooks
+- [Header Validation](../header-validation.md) — validate and authenticate incoming requests
+- [SSE Source](./sse.md) — alternative for services that support event streaming
+- [Transformers](../transformers.md) — convert webhook payloads to CDEvents

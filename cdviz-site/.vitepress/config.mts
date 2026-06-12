@@ -292,45 +292,6 @@ export default defineConfig({
             {
               text: "Parsers",
               link: "/docs/cdviz-collector/parsers/",
-              collapsed: true,
-              items: [
-                {
-                  text: "Auto",
-                  link: "/docs/cdviz-collector/parsers/auto",
-                },
-                {
-                  text: "JSON",
-                  link: "/docs/cdviz-collector/parsers/json",
-                },
-                {
-                  text: "JSON Lines",
-                  link: "/docs/cdviz-collector/parsers/jsonl",
-                },
-                {
-                  text: "CSV Row",
-                  link: "/docs/cdviz-collector/parsers/csv_row",
-                },
-                {
-                  text: "XML",
-                  link: "/docs/cdviz-collector/parsers/xml",
-                },
-                {
-                  text: "TAP",
-                  link: "/docs/cdviz-collector/parsers/tap",
-                },
-                {
-                  text: "Text",
-                  link: "/docs/cdviz-collector/parsers/text",
-                },
-                {
-                  text: "Text Line",
-                  link: "/docs/cdviz-collector/parsers/text_line",
-                },
-                {
-                  text: "Metadata",
-                  link: "/docs/cdviz-collector/parsers/metadata",
-                },
-              ],
             },
             {
               text: "Troubleshooting",
@@ -480,6 +441,12 @@ export default defineConfig({
   ],
   sitemap: {
     hostname: "https://cdviz.dev",
+    transformItems(items) {
+      const noindexPrefixes = ["compliance", "contact", "pro/"];
+      return items.filter(
+        (item) => !noindexPrefixes.some((prefix) => item.url.startsWith(prefix)),
+      );
+    },
   },
 
   transformHead({ pageData }) {
