@@ -23,7 +23,7 @@ headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 | ----------------- | ------ | ------- | --------------------------------------------------------------------------- |
 | `id`              | string | —       | Unique identifier used in the URL path (`/webhook/{id}`)                    |
 | `headers_to_keep` | array  | `[]`    | HTTP header names to preserve through the pipeline                          |
-| `headers`         | array  | `[]`    | Header validation rules for incoming requests                               |
+| `headers`         | table  | `{}`    | Header validation rules for incoming requests                               |
 | `metadata`        | object | —       | Static metadata for all events; `context.source` is auto-populated if unset |
 
 ## URL Structure
@@ -50,24 +50,15 @@ Always validate webhook signatures to prevent unauthorized event injection.
 ### API key validation
 
 ```toml
-[[sources.my_webhook.extractor.headers]]
-header = "X-API-Key"
-[sources.my_webhook.extractor.headers.rule]
-type = "equals"
-value = "my-secret-api-key"
+[sources.my_webhook.extractor.headers]
+"x-api-key" = { type = "secret", value = "my-secret-api-key" }
 ```
 
 ### HMAC signature (GitHub, Jenkins, Gitea)
 
 ```toml
-[[sources.github_webhook.extractor.headers]]
-header = "X-Hub-Signature-256"
-[sources.github_webhook.extractor.headers.rule]
-type = "signature"
-token = "github-webhook-secret"
-signature_prefix = "sha256="
-signature_on = "body"
-signature_encoding = "hex"
+[sources.github_webhook.extractor.headers]
+"x-hub-signature-256" = { type = "signature", token = "github-webhook-secret", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 **[→ Complete Header Validation Guide](../header-validation.md)**
@@ -86,14 +77,8 @@ type = "webhook"
 id = "github"
 headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 
-[[sources.github_events.extractor.headers]]
-header = "X-Hub-Signature-256"
-[sources.github_events.extractor.headers.rule]
-type = "signature"
-token = "GITHUB_WEBHOOK_SECRET"
-signature_prefix = "sha256="
-signature_on = "body"
-signature_encoding = "hex"
+[sources.github_events.extractor.headers]
+"x-hub-signature-256" = { type = "signature", token = "GITHUB_WEBHOOK_SECRET", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 Configure in GitHub: Settings → Webhooks → Add webhook → `https://collector:8080/webhook/github`
@@ -110,11 +95,8 @@ type = "webhook"
 id = "gitlab"
 headers_to_keep = ["X-Gitlab-Event", "X-Gitlab-Event-UUID"]
 
-[[sources.gitlab_events.extractor.headers]]
-header = "X-Gitlab-Token"
-[sources.gitlab_events.extractor.headers.rule]
-type = "equals"
-value = "GITLAB_WEBHOOK_TOKEN"
+[sources.gitlab_events.extractor.headers]
+"x-gitlab-token" = { type = "secret", value = "GITLAB_WEBHOOK_TOKEN" }
 ```
 
 ### Multiple independent webhook sources

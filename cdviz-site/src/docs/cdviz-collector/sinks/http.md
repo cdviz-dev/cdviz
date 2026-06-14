@@ -22,7 +22,7 @@ url = "https://example.com/webhook"
 | `type`    | string  | —       | Must be `"http"`                                  |
 | `url`     | string  | —       | Destination endpoint URL                          |
 | `enabled` | boolean | `true`  | Enable/disable this sink                          |
-| `headers` | array   | `[]`    | Outgoing request headers (auth, signatures, etc.) |
+| `headers` | table   | `{}`    | Outgoing request headers (auth, signatures, etc.) |
 
 ## Request Format
 
@@ -36,34 +36,30 @@ url = "https://example.com/webhook"
 ### Bearer token
 
 ```toml
-[[sinks.webhook.headers]]
-header = "Authorization"
-[sinks.webhook.headers.rule]
-type = "static"
-value = "Bearer your-api-token"
+[sinks.webhook.headers]
+"authorization" = { type = "secret", value = "Bearer your-api-token" }
 ```
 
-### API key from environment variable
+### API key (secret value)
+
+Keep the secret out of the config file — use the `_file` suffix to read it from a mounted file:
 
 ```toml
-[[sinks.webhook.headers]]
-header = "X-API-Key"
-[sinks.webhook.headers.rule]
-type = "secret"
-value = "API_KEY_ENV_VAR"  # reads from $API_KEY_ENV_VAR at runtime
+[sinks.webhook.headers]
+"x-api-key" = { type = "secret", value_file = "/run/secrets/api_key" }
+```
+
+Or override at runtime via environment variable (see [Configuration — Environment Overrides](../configuration.md#environment-overrides)):
+
+```bash
+CDVIZ_COLLECTOR__SINKS__WEBHOOK__HEADERS__X_API_KEY__VALUE="actual-api-key"
 ```
 
 ### HMAC signature (for webhook receivers that verify signatures)
 
 ```toml
-[[sinks.webhook.headers]]
-header = "X-Hub-Signature-256"
-[sinks.webhook.headers.rule]
-type = "signature"
-token = "WEBHOOK_HMAC_SECRET"
-signature_prefix = "sha256="
-signature_on = "body"
-signature_encoding = "hex"
+[sinks.webhook.headers]
+"x-hub-signature-256" = { type = "signature", token_file = "/run/secrets/hmac_secret", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 **[→ Complete Header Authentication Guide](../header-authentication.md)**
@@ -83,11 +79,8 @@ enabled = true
 type = "http"
 url = "https://platform.company.com/api/events"
 
-[[sinks.internal_api.headers]]
-header = "Authorization"
-[sinks.internal_api.headers.rule]
-type = "secret"
-value = "Bearer PLATFORM_API_TOKEN"
+[sinks.internal_api.headers]
+"authorization" = { type = "secret", value = "Bearer PLATFORM_API_TOKEN" }
 
 # Fan-out: multiple HTTP sinks all receive every event
 [sinks.backup_receiver]

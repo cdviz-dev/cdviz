@@ -167,11 +167,8 @@ type = "webhook"
 id = "github"
 headers_to_keep = ["X-GitHub-Event"]
 
-[[sources.github.extractor.headers]]
-header = "X-Hub-Signature-256"
-[sources.github.extractor.headers.rule]
-type = "signature"
-# token from environment
+[sources.github.extractor.headers]
+"x-hub-signature-256" = { type = "signature" } # token from environment
 
 [transformers.github_events]
 type = "vrl"

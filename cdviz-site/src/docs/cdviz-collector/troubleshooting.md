@@ -104,18 +104,21 @@ id = "test"
 additional_param = "value"
 ```
 
-#### ❌ Wrong: Single brackets for arrays
+#### ❌ Wrong: Old array-of-tables syntax
 
 ```toml
-[sources.webhook.extractor.headers]  # Creates single table
+[[sources.webhook.extractor.headers]]
 header = "Authorization"
+[sources.webhook.extractor.headers.rule]
+type = "static"
+value = "Bearer your-api-token"
 ```
 
-#### ✅ Correct: Double brackets for arrays
+#### ✅ Correct: Table with lowercase header key and inline value
 
 ```toml
-[[sources.webhook.extractor.headers]]  # Creates array of tables
-header = "Authorization"
+[sources.webhook.extractor.headers]
+"authorization" = { type = "secret", value = "Bearer your-api-token" }
 ```
 
 ### Environment Variable Override Test

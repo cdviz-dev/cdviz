@@ -35,22 +35,20 @@ max_retries = 10
 ### Bearer token
 
 ```toml
-[[sources.api_events.extractor.headers]]
-header = "Authorization"
-[sources.api_events.extractor.headers.rule]
-type = "static"
-value = "Bearer your-api-token"
+[sources.api_events.extractor.headers]
+"authorization" = { type = "secret", value = "Bearer your-api-token" }
 ```
 
-### API key from environment variable
+### API key (secret value)
+
+Keep the secret out of the config file — use the `_file` suffix to read it from a mounted file:
 
 ```toml
-[[sources.api_events.extractor.headers]]
-header = "X-API-Key"
-[sources.api_events.extractor.headers.rule]
-type = "secret"
-value = "API_KEY_ENV_VAR"  # reads from $API_KEY_ENV_VAR at runtime
+[sources.api_events.extractor.headers]
+"x-api-key" = { type = "secret", value_file = "/run/secrets/api_key" }
 ```
+
+Or override at runtime via environment variable (see [Configuration — Environment Overrides](../configuration.md#environment-overrides)).
 
 **[→ Complete Header Authentication Guide](../header-authentication.md)**
 
@@ -69,11 +67,8 @@ transformer_refs = ["jenkins_to_cdevents"]
 type = "sse"
 url = "https://jenkins.company.com/sse/builds"
 
-[[sources.jenkins_builds.extractor.headers]]
-header = "Authorization"
-[sources.jenkins_builds.extractor.headers.rule]
-type = "secret"
-value = "JENKINS_API_TOKEN"
+[sources.jenkins_builds.extractor.headers]
+"authorization" = { type = "secret", value_file = "/run/secrets/jenkins_api_token" }
 ```
 
 ### Consume from another CDviz Collector via SSE sink
@@ -102,11 +97,8 @@ transformer_refs = ["platform_to_cdevents"]
 type = "sse"
 url = "https://platform.company.com/api/events/stream"
 
-[[sources.platform_events.extractor.headers]]
-header = "Authorization"
-[sources.platform_events.extractor.headers.rule]
-type = "static"
-value = "Bearer eyJhbGciOiJSUzI1..."
+[sources.platform_events.extractor.headers]
+"authorization" = { type = "secret", value = "Bearer eyJhbGciOiJSUzI1..." }
 ```
 
 ## Reconnection Behavior

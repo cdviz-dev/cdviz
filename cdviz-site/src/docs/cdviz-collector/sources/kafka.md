@@ -30,7 +30,7 @@ group_id = "cdviz-collector"
 - **`poll_timeout`** (duration): Polling timeout (default: `1s`)
 - **`auto_commit`** (boolean): Commit offsets automatically (default: `true`)
 - **`rdkafka_config`** (object): Additional rdkafka consumer configuration
-- **`headers`** (array): Header validation rules for incoming messages
+- **`headers`** (table): Header validation rules for incoming messages
 - **`metadata`** (object): Static metadata for all events; `context.source` is auto-populated if unset
 
 ## Security

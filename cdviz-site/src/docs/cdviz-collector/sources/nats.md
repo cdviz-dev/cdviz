@@ -29,7 +29,7 @@ subject = "cdevents.>"
 - **`credentials`** (string): Path to a NATS credentials file (`.creds`) for NKey/JWT authentication
 - **`token`** (string): Token for NATS token authentication
 - **`username`** / **`password`** (string): User/password authentication
-- **`headers`** (array): Header validation rules for incoming messages
+- **`headers`** (table): Header validation rules for incoming messages
 - **`metadata`** (object): Static metadata for all events; `context.source` is auto-populated if unset
 - **`jetstream`** (object): JetStream consumer configuration (see [JetStream](#jetstream))
 

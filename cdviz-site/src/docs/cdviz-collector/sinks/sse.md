@@ -24,7 +24,7 @@ Endpoint accessible at: `http://{host}:{port}/sse/{id}`
 | `type`    | string  | —       | Must be `"sse"`                                  |
 | `id`      | string  | —       | URL path identifier                              |
 | `enabled` | boolean | `true`  | Enable/disable this sink                         |
-| `headers` | array   | `[]`    | Header validation rules for incoming connections |
+| `headers` | table   | `{}`    | Header validation rules for incoming connections |
 
 ## Authentication
 

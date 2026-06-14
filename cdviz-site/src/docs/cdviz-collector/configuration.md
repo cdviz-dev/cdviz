@@ -88,17 +88,14 @@ CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true"
 ```
 
 ```toml
-# TOML config path: sources.github.extractor.headers[0].rule.token
-[[sources.github.extractor.headers]]
-header = "X-Hub-Signature-256"
-[sources.github.extractor.headers.rule]
-type = "signature"
-token = "secret"
+# TOML config path: sources.github.extractor.headers["x-hub-signature-256"].token
+[sources.github.extractor.headers]
+"x-hub-signature-256" = { type = "signature", token = "secret" }
 ```
 
 ```bash
-# Environment variable (array index 0 for first header)
-CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__0__RULE__TOKEN="github-secret"
+# Environment variable
+CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X_HUB_SIGNATURE_256__TOKEN="github-secret"
 ```
 
 ```toml
@@ -123,9 +120,9 @@ CDVIZ_COLLECTOR__HTTP__PORT="8080"
 CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://prod:pass@host:5432/cdviz"
 CDVIZ_COLLECTOR__SOURCES__WEBHOOK__ENABLED="true"
 
-# Deep nesting (headers, rules, etc.)
-CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__0__RULE__TOKEN="secret"
-CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__0__RULE__VALUE="Bearer token123"
+# Deep nesting (headers)
+CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X_HUB_SIGNATURE_256__TOKEN="secret"
+CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__AUTHORIZATION__VALUE="Bearer token123"
 
 # Multiple overrides
 CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED="false" \
@@ -184,7 +181,7 @@ id = "github"
 
 # Headers with signature validation
 [sources.github.extractor.headers]
-"X-Hub-Signature-256" = { type = "signature" token = "github-webhook-secret"  } # Set actual value or use env overrides
+"x-hub-signature-256" = { type = "signature", token = "github-webhook-secret" } # Set actual value or use env overrides
 ```
 
 see [Header Authentication](./header-authentication) & [Header Validation](./header-validation).
