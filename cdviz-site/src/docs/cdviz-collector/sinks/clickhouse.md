@@ -89,7 +89,19 @@ parseDateTime64BestEffort(timestamp) AS ts
 
 :::
 
-## Credentials via Environment Variables
+## Keeping Credentials Out of Config
+
+Use the `_file` suffix to read sensitive values from mounted files (Kubernetes Secret, Docker volume, etc.):
+
+```toml
+[sinks.clickhouse]
+enabled = true
+type = "clickhouse"
+url_file = "/run/secrets/clickhouse_url"
+password_file = "/run/secrets/clickhouse_password"
+```
+
+Or set via environment variables (no TOML entry needed):
 
 ```bash
 export CDVIZ_COLLECTOR__SINKS__CLICKHOUSE__URL="https://host:8443"

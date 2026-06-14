@@ -56,9 +56,18 @@ url = "postgresql://user:pass@host:5432/cdviz?sslmode=require"
 url = "postgresql://user:pass@host:5432/cdviz?sslmode=require&sslcert=client.pem&sslkey=client.key&sslrootcert=ca.pem"
 ```
 
-Keep credentials out of config files using environment variables:
+Keep credentials out of config files using the `_file` suffix (read from a mounted file) or by setting via environment variable (the key need not exist in TOML):
+
+```toml
+# Read connection URL from a mounted file (Kubernetes Secret, Docker volume, etc.)
+[sinks.database]
+enabled = true
+type = "db"
+url_file = "/run/secrets/db_url"
+```
 
 ```bash
+# Or set via environment variable (no TOML entry needed):
 export CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://user:pass@prod-db:5432/cdviz"
 ```
 

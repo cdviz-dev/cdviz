@@ -33,24 +33,30 @@ Use fixed string values for headers:
 "User-Agent" = { type = "static", value = "cdviz-collector/1.0" }
 ```
 
-### Environment Secrets
+### Secret Values
 
-Retrieve values from environment variables (recommended for sensitive data):
+The `value` field holds the secret as a static string in TOML. To keep secrets out of the config file, use one of these approaches:
+
+**Read from a file** (recommended — mount a Kubernetes Secret or Docker volume):
 
 ```toml
 [sources.events.extractor.headers]
-"X-API-Key" = { type = "secret", value = "API_KEY_ENV_VAR" }
+"X-API-Key" = { type = "secret", value_file = "/run/secrets/api_key" }
 ```
 
-#### Environment Variable Override Patterns
-
-The configuration format affects how environment variables can override header settings:
+**Set via environment variable** (hyphens in header names must be preserved — bash cannot `export` names with hyphens):
 
 ```bash
-# Can be overridden:
-export CDVIZ_COLLECTOR__SOURCES__MYAPI__EXTRACTOR__HEADERS__X_API_KEY__TYPE="secret"
-export CDVIZ_COLLECTOR__SOURCES__MYAPI__EXTRACTOR__HEADERS__X_API_KEY__VALUE="NEW_API_KEY_VAR"
+# Preferred: --set flag handles hyphens cleanly
+cdviz-collector connect --config config.toml \
+  --set 'sources.myapi.extractor.headers."x-api-key".value = "actual-api-key"'
+
+# Or via env wrapper:
+env 'CDVIZ_COLLECTOR__SOURCES__MYAPI__EXTRACTOR__HEADERS__X-API-KEY__VALUE=actual-api-key' \
+  cdviz-collector connect --config config.toml
 ```
+
+Kubernetes `env[].name` and GitHub Actions `env:` support hyphens natively. See [Configuration — Environment Variables](./configuration.md#environment-variables) for the naming convention.
 
 ### HMAC Signature Generation
 
@@ -80,7 +86,7 @@ type = "sse"
 url = "https://api.example.com/events"
 
 [sources.api_events.extractor.headers]
-"X-API-Key" = { type = "secret", value = "MY_API_KEY" }
+"X-API-Key" = { type = "secret", value_file = "/run/secrets/api_key" }
 ```
 
 ### Bearer Token Authentication
@@ -104,8 +110,8 @@ type = "sse"
 url = "https://enterprise.example.com/events"
 
 [sources.enterprise_sse.extractor.headers]
-"X-Client-ID" = { type = "secret", value = "CLIENT_ID" }
-"X-Client-Secret" = { type = "secret", value = "CLIENT_SECRET" }
+"X-Client-ID" = { type = "secret", value = "your-client-id" }
+"X-Client-Secret" = { type = "secret", value_file = "/run/secrets/client_secret" }
 "Accept" = { type = "static", value = "text/event-stream" }
 ```
 
@@ -117,7 +123,7 @@ url = "https://enterprise.example.com/events"
 url = "https://partner.example.com/events"
 
 [sinks.signed_webhook.configuration.headers]
-"X-Webhook-Signature" = { type = "signature", token = "PARTNER_WEBHOOK_SECRET", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
+"X-Webhook-Signature" = { type = "signature", token_file = "/run/secrets/webhook_token", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 ## Multi-Header Authentication
@@ -130,8 +136,8 @@ type = "sse"
 url = "https://api.example.com/events"
 
 [sources.multi_auth.extractor.headers]
-"Authorization" = { type = "secret", value = "BEARER_TOKEN" }
-"X-API-Key" = { type = "secret", value = "API_KEY" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/bearer_token" }
+"X-API-Key" = { type = "secret", value_file = "/run/secrets/api_key" }
 "User-Agent" = { type = "static", value = "cdviz-collector/1.0" }
 ```
 
@@ -145,7 +151,7 @@ type = "sse"
 url = "https://api.github.com/events"
 
 [sources.github_events.extractor.headers]
-"Authorization" = { type = "secret", value = "GITHUB_TOKEN" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/github_token" }
 "Accept" = { type = "static", value = "application/vnd.github.v3+json" }
 ```
 
@@ -171,15 +177,15 @@ url = "https://custom.example.com/events"
 
 # Basic auth converted to header
 [sources.custom_service.extractor.headers]
-"Authorization" = { type = "secret", value = "BASIC_AUTH_HEADER" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/basic_auth_header" }
 
 # API key
 [sources.custom_service.extractor.headers]
-"X-API-Key" = { type = "secret", value = "CUSTOM_API_KEY" }
+"X-API-Key" = { type = "secret", value_file = "/run/secrets/api_key" }
 
 # Request signing
 [sources.custom_service.extractor.headers]
-"X-Request-Signature" = { type = "signature", token = "CUSTOM_SIGNING_SECRET", signature_prefix = "sig=", signature_on = "body", signature_encoding = "hex" }
+"X-Request-Signature" = { type = "signature", token_file = "/run/secrets/signing_secret", signature_prefix = "sig=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 ## Security Best Practices
@@ -191,7 +197,7 @@ Use tokens with minimal required permissions:
 ```toml
 # Use read-only tokens when possible
 [sources.monitoring.extractor.headers]
-"Authorization" = { type = "secret", value = "READONLY_MONITOR_TOKEN" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/monitor_token" }
 ```
 
 ### HTTPS Only
@@ -204,7 +210,7 @@ type = "sse"
 url = "https://secure-api.company.com/events"  # HTTPS required
 
 [sources.secure_events.extractor.headers]
-"Authorization" = { type = "secret", value = "SECURE_API_TOKEN" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/api_token" }
 ```
 
 ### Connection Security
@@ -220,7 +226,7 @@ timeout = "30s"
 max_retries = 5
 
 [sources.secure_connection.extractor.headers]
-"Authorization" = { type = "secret", value = "API_TOKEN" }
+"Authorization" = { type = "secret", value_file = "/run/secrets/api_token" }
 ```
 
 ## Testing Header Authentication

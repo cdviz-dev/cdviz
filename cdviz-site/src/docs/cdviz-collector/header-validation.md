@@ -51,14 +51,17 @@ Simply require that a header is present:
 "X-Request-ID" = { type = "exists" }
 ```
 
-### Environment Secrets
+### Secret Values
 
-Compare against values from environment variables:
+Compare against a secret value. Keep the secret out of the config file using the `_file` suffix or by setting it via an environment variable:
 
 ```toml
+# Read expected value from a mounted file (Kubernetes Secret, Docker volume, etc.)
 [sources.webhook.extractor.headers]
-"X-API-Key" = { type = "secret", value = "EXPECTED_API_KEY" }
+"x-api-key" = { type = "secret", value_file = "/run/secrets/expected_api_key" }
 ```
+
+See [Configuration — Environment Variables](./configuration.md#environment-variables) for the naming convention.
 
 ### HMAC Signature Verification
 
@@ -88,7 +91,7 @@ id = "github"
 
 # GitHub signature validation
 [sources.github_webhook.extractor.headers]
-"X-Hub-Signature-256" = { type = "signature", token = "GITHUB_WEBHOOK_SECRET", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
+"x-hub-signature-256" = { type = "signature", token_file = "/run/secrets/github_webhook_secret", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 ### GitLab Token Validation
@@ -100,7 +103,7 @@ id = "gitlab"
 
 # GitLab token validation
 [sources.gitlab_webhook.extractor.headers]
-"X-Gitlab-Token" = { type = "secret", value = "GITLAB_WEBHOOK_TOKEN" }
+"x-gitlab-token" = { type = "secret", value_file = "/run/secrets/gitlab_webhook_token" }
 ```
 
 ### API Key + Content Type Validation
@@ -111,8 +114,8 @@ type = "webhook"
 id = "api"
 
 [sources.secure_api.extractor.headers]
-"X-API-Key" = { type = "secret", value = "API_SECRET_KEY" }
-"Content-Type" = { type = "equals", value = "application/json", case_sensitive = false }
+"x-api-key" = { type = "secret", value_file = "/run/secrets/api_key" }
+"content-type" = { type = "equals", value = "application/json", case_sensitive = false }
 ```
 
 ### Custom Signature Validation
@@ -124,7 +127,7 @@ id = "custom"
 
 # Custom signature format
 [sources.custom_webhook.extractor.headers]
-"X-Custom-Signature" = { type = "signature", token = "CUSTOM_SECRET", signature_prefix = "custom=", signature_on = "body", signature_encoding = "base64" }
+"x-custom-signature" = { type = "signature", token_file = "/run/secrets/signing_secret", signature_prefix = "custom=", signature_on = "body", signature_encoding = "base64" }
 ```
 
 ## Multi-Header Validation
@@ -137,9 +140,9 @@ type = "webhook"
 id = "enterprise"
 
 [sources.enterprise.extractor.headers]
-"X-API-Key" = { type = "secret", value = "ENTERPRISE_API_KEY" }
-"Content-Type" = { type = "equals", value = "application/json", case_sensitive = false }
-"User-Agent" = { type = "matches", pattern = "^MyApp/[0-9]+\\.[0-9]+.*" }
+"x-api-key" = { type = "secret", value_file = "/run/secrets/enterprise_api_key" }
+"content-type" = { type = "equals", value = "application/json", case_sensitive = false }
+"user-agent" = { type = "matches", pattern = "^MyApp/[0-9]+\\.[0-9]+.*" }
 ```
 
 ## Security Best Practices

@@ -121,7 +121,7 @@ value = "Bearer your-api-token"
 "authorization" = { type = "secret", value = "Bearer your-api-token" }
 ```
 
-### Environment Variable Override Test
+### Environment Variable Test
 
 ```bash
 # Test if environment override works

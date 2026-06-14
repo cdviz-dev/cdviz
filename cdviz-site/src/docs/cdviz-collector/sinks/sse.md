@@ -37,10 +37,10 @@ type = "sse"
 id = "events"
 
 [sinks.events_stream.headers]
-"Authorization" = { type = "matches", pattern = "^Bearer [\\w-]+$" }
+"authorization" = { type = "matches", pattern = "^Bearer [\\w-]+$" }
 
-# Or a static API key from an environment variable
-"X-API-Key" = { type = "secret", value = "SSE_API_KEY_ENV_VAR" }
+# Or a static API key (use value_file to keep it out of the config)
+"x-api-key" = { type = "secret", value_file = "/run/secrets/sse_api_key" }
 ```
 
 **[→ Complete Header Validation Guide](../header-validation.md)**

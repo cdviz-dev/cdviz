@@ -150,7 +150,7 @@ If your CDEvents endpoint requires authentication, use custom headers:
       algorithm = "sha256"
       prefix = "sha256="
     env:
-      CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X_SIGNATURE_256__TOKEN: ${{ secrets.CDEVENTS_ENDPOINT_TOKEN }}
+      CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__X-SIGNATURE-256__TOKEN: ${{ secrets.CDEVENTS_ENDPOINT_TOKEN }}
 ```
 
 ## Configuration

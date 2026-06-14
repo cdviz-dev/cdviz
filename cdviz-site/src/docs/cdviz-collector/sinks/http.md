@@ -49,11 +49,19 @@ Keep the secret out of the config file — use the `_file` suffix to read it fro
 "x-api-key" = { type = "secret", value_file = "/run/secrets/api_key" }
 ```
 
-Or override at runtime via environment variable (see [Configuration — Environment Overrides](../configuration.md#environment-overrides)):
+Or set at runtime — hyphens in header names must be preserved (see [Configuration — Environment Variables](../configuration.md#environment-variables)):
 
 ```bash
-CDVIZ_COLLECTOR__SINKS__WEBHOOK__HEADERS__X_API_KEY__VALUE="actual-api-key"
+# Preferred: --set flag handles hyphens cleanly
+cdviz-collector connect --config config.toml \
+  --set 'sinks.webhook.headers."x-api-key".value = "actual-api-key"'
+
+# Or via env wrapper (bash cannot export names with hyphens directly):
+env 'CDVIZ_COLLECTOR__SINKS__WEBHOOK__HEADERS__X-API-KEY__VALUE=actual-api-key' \
+  cdviz-collector connect --config config.toml
 ```
+
+Kubernetes `env[].name` and GitHub Actions `env:` support hyphens natively.
 
 ### HMAC signature (for webhook receivers that verify signatures)
 

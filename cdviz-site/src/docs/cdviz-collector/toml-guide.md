@@ -1,5 +1,5 @@
 ---
-description: "TOML configuration guide for CDviz Collector: syntax, inheritance, environment variable substitution, and configuration file structure."
+description: "TOML configuration guide for CDviz Collector: syntax, dotted key paths, tables, arrays, and configuration file structure."
 ---
 
 # TOML Configuration Guide
@@ -54,6 +54,31 @@ port = 5432
 max_size = 10
 timeout = "30s"
 ```
+
+### Dotted Key Paths
+
+Set a single deeply-nested value on one line using a fully-qualified key path. Useful for one-off overrides (e.g. the [`--set` flag](./configuration.md#set-flag)):
+
+```toml
+# Equivalent to writing a [table] header then the key below it
+sinks.database.url = "postgresql://prod:pass@host:5432/cdviz"
+```
+
+Quote any key segment that contains hyphens or other special characters:
+
+```toml
+sources.github.extractor.headers."x-hub-signature-256".token = "secret"
+```
+
+This is identical to:
+
+```toml
+[sources.github.extractor.headers."x-hub-signature-256"]
+token = "secret"
+```
+
+> [!NOTE]
+> A dotted key path and a `[table]` header for the same path cannot appear in the same TOML file — choose one form per path.
 
 ## Arrays
 
@@ -284,5 +309,5 @@ port = 8080       # HTTP port
 host = "localhost"
 port = 5432
 username = "app_user"
-password = "secret"  # Set via environment variable
+password = "secret"  # keep secrets out of TOML — see Configuration guide
 ```

@@ -1,10 +1,10 @@
 ---
-description: "CDviz Collector configuration reference: TOML structure, environment variable overrides, sources, transformers, sinks, and HTTP server settings."
+description: "CDviz Collector configuration reference: TOML structure, environment variable configuration, sources, transformers, sinks, and HTTP server settings."
 ---
 
 # Configuration
 
-CDviz Collector uses TOML configuration files with environment variable overrides.
+CDviz Collector uses TOML configuration files. Environment variables can set or override any value at runtime.
 
 📚 **TOML Help:** See [TOML Syntax Guide](./toml-guide.md) for configuration file format.
 
@@ -59,9 +59,9 @@ For example, with `root_url = "https://cdviz.example.com"` and a source named `g
 https://cdviz.example.com/?source=github_webhook
 ```
 
-## Environment Overrides
+## Environment Variables
 
-Override any TOML config value at runtime using environment variables:
+Set or override any config value at runtime using environment variables — the key does **not** need to exist in the TOML file.
 
 **Pattern:** `CDVIZ_COLLECTOR__<PATH_TO_KEY>`
 
@@ -70,8 +70,8 @@ Environment variables take precedence over values in the TOML file.
 ### Building Environment Variable Names
 
 1. **Start with prefix:** `CDVIZ_COLLECTOR__`
-2. **Add TOML path:** Convert each level to UPPERCASE
-3. **Use double underscores:** `__` separates each TOML section/key
+2. **Add config path:** Convert each level to UPPERCASE
+3. **Use double underscores:** `__` separates each section/key
 4. **Array elements:** Use index numbers for arrays
 
 **Examples:**
@@ -94,9 +94,15 @@ CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true"
 ```
 
 ```bash
-# Environment variable
-CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X_HUB_SIGNATURE_256__TOKEN="github-secret"
+# Environment variable — hyphens in header names must stay as hyphens (underscores create a different key)
+CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN="github-secret"
 ```
+
+> [!NOTE] Bash limitation for hyphenated names
+> Bash does not allow `export` for names containing hyphens. Alternatives:
+> - **Preferred**: use [`--set`](#set-flag) — no quoting tricks needed
+> - `env` wrapper: `env 'CDVIZ_COLLECTOR__...X-HUB-SIGNATURE-256__TOKEN=secret' cdviz-collector connect --config config.toml`
+> - Kubernetes `env[].name` and GitHub Actions `env:` support hyphens natively
 
 ```toml
 # TOML config path: http.port
@@ -120,14 +126,48 @@ CDVIZ_COLLECTOR__HTTP__PORT="8080"
 CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://prod:pass@host:5432/cdviz"
 CDVIZ_COLLECTOR__SOURCES__WEBHOOK__ENABLED="true"
 
-# Deep nesting (headers)
-CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X_HUB_SIGNATURE_256__TOKEN="secret"
+# Deep nesting (headers) — preserve hyphens in header names
+CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN="secret"
 CDVIZ_COLLECTOR__SINKS__HTTP__HEADERS__AUTHORIZATION__VALUE="Bearer token123"
 
 # Multiple overrides
 CDVIZ_COLLECTOR__SINKS__DEBUG__ENABLED="false" \
 CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true" \
 cdviz-collector connect --config config.toml
+```
+
+## `--set` Flag
+
+The `connect`, `send`, and `config` subcommands accept `--set` to inject raw TOML fragments at runtime. Can be repeated; fragments are merged in order.
+
+```
+--set <SET>    Override config with a raw TOML fragment. Can be repeated; fragments are concatenated.
+```
+
+**When to prefer `--set` over environment variables:**
+
+- Header names contain hyphens — no bash quoting tricks needed
+- Setting multiple typed values at once (booleans, integers, arrays)
+- Quick variations without creating extra TOML files
+
+**Examples:**
+
+```bash
+# Set a hyphenated header key — no env workaround needed
+cdviz-collector connect --config config.toml \
+  --set '[sources.github.extractor.headers."x-hub-signature-256"]
+token = "my-secret"'
+
+# Enable a sink and set URL in one fragment
+cdviz-collector connect --config config.toml \
+  --set '[sinks.database]
+enabled = true
+url = "postgresql://prod:pass@host:5432/cdviz"'
+
+# Multiple --set flags (applied in order)
+cdviz-collector connect --config config.toml \
+  --set 'sinks.debug.enabled = false' \
+  --set 'sinks.database.enabled = true'
 ```
 
 ## File Loading
@@ -170,7 +210,7 @@ parameters = { root = "./dev-events" }
 [sinks.database]
 enabled = true
 type = "db"
-url = "postgresql://user:pass@host:5432/cdviz"  # Set actual values or use env overrides
+url = "postgresql://user:pass@host:5432/cdviz"  # or set via env: CDVIZ_COLLECTOR__SINKS__DATABASE__URL
 
 [sources.github]
 enabled = true
@@ -181,7 +221,7 @@ id = "github"
 
 # Headers with signature validation
 [sources.github.extractor.headers]
-"x-hub-signature-256" = { type = "signature", token = "github-webhook-secret" } # Set actual value or use env overrides
+"x-hub-signature-256" = { type = "signature", token = "github-webhook-secret" } # or set via env: CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
 ```
 
 see [Header Authentication](./header-authentication) & [Header Validation](./header-validation).

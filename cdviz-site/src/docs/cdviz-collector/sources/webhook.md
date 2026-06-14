@@ -78,7 +78,7 @@ id = "github"
 headers_to_keep = ["X-GitHub-Event", "X-GitHub-Delivery"]
 
 [sources.github_events.extractor.headers]
-"x-hub-signature-256" = { type = "signature", token = "GITHUB_WEBHOOK_SECRET", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
+"x-hub-signature-256" = { type = "signature", token_file = "/run/secrets/github_webhook_secret", signature_prefix = "sha256=", signature_on = "body", signature_encoding = "hex" }
 ```
 
 Configure in GitHub: Settings → Webhooks → Add webhook → `https://collector:8080/webhook/github`
@@ -96,7 +96,7 @@ id = "gitlab"
 headers_to_keep = ["X-Gitlab-Event", "X-Gitlab-Event-UUID"]
 
 [sources.gitlab_events.extractor.headers]
-"x-gitlab-token" = { type = "secret", value = "GITLAB_WEBHOOK_TOKEN" }
+"x-gitlab-token" = { type = "secret", value_file = "/run/secrets/gitlab_webhook_token" }
 ```
 
 ### Multiple independent webhook sources

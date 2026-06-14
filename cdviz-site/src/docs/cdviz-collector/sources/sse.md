@@ -48,7 +48,7 @@ Keep the secret out of the config file — use the `_file` suffix to read it fro
 "x-api-key" = { type = "secret", value_file = "/run/secrets/api_key" }
 ```
 
-Or override at runtime via environment variable (see [Configuration — Environment Overrides](../configuration.md#environment-overrides)).
+Or set via environment variable (see [Configuration — Environment Variables](../configuration.md#environment-variables)).
 
 **[→ Complete Header Authentication Guide](../header-authentication.md)**
 

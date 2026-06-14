@@ -103,10 +103,10 @@ See [Installation](./install.md) for Helm chart configuration.
 
 ## Environment Variable Configuration
 
-All configuration values can be overridden via environment variables using the pattern `CDVIZ_COLLECTOR__<SECTION>__<KEY>`:
+Any config value can be set or overridden via environment variables using the pattern `CDVIZ_COLLECTOR__<SECTION>__<KEY>` — the key does not need to exist in the TOML file:
 
 ```bash
-# Override database URL
+# Set database URL (no TOML entry needed)
 CDVIZ_COLLECTOR__SINKS__DATABASE__URL="postgresql://prod-db:5432/cdviz" \
   cdviz-collector connect --config config.toml
 
