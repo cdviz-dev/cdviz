@@ -152,10 +152,8 @@ Remote transformers use [OpenDAL](https://opendal.apache.org/) for storage acces
 ```toml
 # Configure remote GitHub repository
 [remote.transformers-community]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-community"
-# token = "ghp_..."  # Optional: GitHub token for private repositories
+type = "github://cdviz-dev/transformers-community"
+# token = "ghp_..."  # GitHub token for private repositories
 
 # Use remote transformer
 [transformers.github_events]

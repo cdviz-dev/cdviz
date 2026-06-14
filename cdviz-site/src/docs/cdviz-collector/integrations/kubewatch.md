@@ -48,9 +48,7 @@ Setting up `cdviz-collector.toml` to receive GitHub events involves defining a w
 ```toml
 # Remote transformers repository configuration
 [remote.transformers-community]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-community"
+type = "github://cdviz-dev/transformers-community"
 
 [sources.kubewatch_webhook]
 enabled = true

@@ -148,15 +148,11 @@ configFiles:
     metadata.environment_id = "/cluster/A-dev"
 
     [remote.transformers-community]
-    type = "github"
-    owner = "cdviz-dev"
-    repo = "transformers-community"
+    type = "github://cdviz-dev/transformers-community"
     # token = "gh...."  # Optional: github token
 
     # [remote.transformers-pro]
-    # type = "github"
-    # owner = "cdviz-dev"
-    # repo = "transformers-pro"
+    # type = "github://cdviz-dev/transformers-pro"
     # # token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO__TOKEN'
 
     [transformers]

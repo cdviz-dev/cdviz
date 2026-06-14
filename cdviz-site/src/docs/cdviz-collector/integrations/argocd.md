@@ -45,9 +45,7 @@ Setting up `cdviz-collector.toml` to receive ArgoCD notification webhooks involv
 ```toml
 # Remote transformers repository configuration
 [remote.transformers-community]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-community"
+type = "github://cdviz-dev/transformers-community"
 
 [sources.argocd_webhook]
 enabled = true

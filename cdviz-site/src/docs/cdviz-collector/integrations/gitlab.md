@@ -81,9 +81,7 @@ headers_to_keep = ["X-Gitlab-Event"]
 
 # Transformer from transformers-pro repository
 [remote.transformers-pro]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-pro"
+type = "github://cdviz-dev/transformers-pro"
 # token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO'
 
 [transformers]

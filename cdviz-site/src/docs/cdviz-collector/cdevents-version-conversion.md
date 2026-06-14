@@ -35,9 +35,7 @@ The pipeline chain runs **after** per-source `transformer_refs`. This means:
 transformer_refs = ["cdevents_v0_3_to_v0_4", "cdevents_v0_4_to_v0_5"]
 
 [remote.transformers-community]
-type = "github"
-owner = "cdviz-dev"
-repo = "transformers-community"
+type = "github://cdviz-dev/transformers-community"
 
 [transformers]
 cdevents_v0_3_to_v0_4 = { type = "vrl", template_rfile = "transformers-community:///cdevents/cdevents_v0_3/to_v0_4.vrl" }
