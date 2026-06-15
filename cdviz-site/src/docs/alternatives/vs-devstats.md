@@ -47,7 +47,7 @@ CDviz is an open-source, event-driven SDLC observability platform. DevStats is a
 ## Key differences
 
 - **Open source vs SaaS-only**: CDviz is Apache 2.0 — you can run it on your own infrastructure, inspect the code, and contribute. DevStats is a hosted commercial service with no self-hosted option.
-- **Event-driven vs polling**: CDviz collects events in real-time as they happen across your SDLC. DevStats polls git hosting APIs (GitHub, GitLab, Bitbucket) on a schedule to extract metrics. Polling is simpler to start but introduces latency and does not capture the full event stream.
+- **Event-driven vs polling**: CDviz collects events in real-time as they happen across your SDLC (and can also [poll](/docs/cdviz-collector/sources/http_polling) for backfill or webhook-less systems, normalizing everything to CDEvents). DevStats is polling-only against git hosting APIs (GitHub, GitLab, Bitbucket) on a schedule, into a proprietary model — simpler to start but introduces latency and does not capture the full event stream.
 - **Scope**: DevStats is focused on git and pull-request-centric metrics — cycle time, PR review time, deployment frequency derived from git tags/releases. CDviz ingests the broader SDLC event stream: repository events, CI pipeline outcomes, artifact publications, deployment events, service lifecycle changes.
 - **Observe and act**: CDviz events are not read-only. The same event stream used for observability can trigger downstream workflows. DevStats is dashboards and monitoring only.
 - **Data ownership**: With CDviz, your data stays in your infrastructure (or with CDviz on the SaaS waitlist). DevStats stores all your engineering data on their servers.
@@ -55,7 +55,7 @@ CDviz is an open-source, event-driven SDLC observability platform. DevStats is a
 
 ## When to choose CDviz
 
-- You want real-time SDLC events, not periodic polling snapshots.
+- You want real-time SDLC events (push-first), not a polling-only snapshot tool.
 - You need events to trigger downstream workflows — not just observe them.
 - Data ownership or privacy regulations make vendor-hosted SaaS unacceptable.
 - You need visibility beyond git: CI pipelines, artifact registries, deployment systems, service lifecycle.

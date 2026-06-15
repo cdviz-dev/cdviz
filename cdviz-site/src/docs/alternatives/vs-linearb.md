@@ -37,7 +37,7 @@ Both platforms surface engineering metrics for software delivery teams. They sol
 
 ## Key differences
 
-- **Event-driven vs poll-based**: CDviz receives events in real-time as they happen (push model). LinearB periodically polls your git provider and issue tracker APIs — simpler to onboard but introduces latency and heavier API load.
+- **Event-driven vs poll-based**: CDviz receives events in real-time as they happen (push-first), and can also [poll](/docs/cdviz-collector/sources/http_polling) for backfill or webhook-less systems — all normalized to CDEvents. LinearB is polling-only against your git provider and issue tracker APIs, into a proprietary model — simpler to onboard but introduces latency and heavier API load.
 - **Scope of observability**: LinearB excels at git and PR-centric metrics — cycle time, PR review depth, merge frequency. CDviz covers the full delivery pipeline including deployments, incidents, artifact promotion, and Kubernetes events via CDEvents.
 - **Open standard vs proprietary model**: CDviz stores events using the open [CDEvents specification](https://cdevents.dev/), keeping your data vendor-neutral and portable. LinearB's data model is proprietary and tied to its platform.
 - **Data ownership**: With CDviz, your SDLC data stays in your infrastructure (or with CDviz via the SaaS waitlist). LinearB stores all data on its own servers.

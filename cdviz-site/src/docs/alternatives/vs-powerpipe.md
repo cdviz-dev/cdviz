@@ -68,7 +68,7 @@ These tools solve different problems. Powerpipe visualizes current cloud state (
 
 **Is Powerpipe free?** Powerpipe is open-source under AGPL v3. Note: AGPL requires source disclosure for networked deployments, which may affect enterprise use. CDviz uses the more permissive Apache 2.0 license.
 
-**Can CDviz query cloud APIs like Powerpipe?** No. CDviz receives push events from your SDLC toolchain. Powerpipe queries cloud APIs on demand via Steampipe.
+**Can CDviz query cloud APIs like Powerpipe?** Not on demand. CDviz receives push events from your SDLC toolchain and can periodically [poll HTTP/SDLC APIs](/docs/cdviz-collector/sources/http_polling) (e.g. Jenkins), storing the results as CDEvents. Powerpipe instead runs on-demand SQL over live cloud state via Steampipe — current-state querying, not a historical event store.
 
 **Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
 

@@ -8,7 +8,7 @@ import InsideCollector from '../../../components/diagrams/InsideCollector.vue'
 
 # CDviz Collector
 
-CDviz Collector is an open-source event ingestion agent written in Rust. It receives software delivery events from webhooks, Kafka, NATS, SSE, and file sources, normalizes them to the CDEvents standard, and routes them to configured sinks including PostgreSQL, ClickHouse, and HTTP endpoints.
+CDviz Collector is an open-source event ingestion agent written in Rust. It receives software delivery events from webhooks, Kafka, NATS, SSE, file, and HTTP polling sources, normalizes them to the CDEvents standard, and routes them to configured sinks including PostgreSQL, ClickHouse, and HTTP endpoints.
 
 <InsideCollector />
 

@@ -9,7 +9,7 @@ head:
 
 # SDLC Observability Tools: CDviz vs Swarmia, LinearB, DevLake & More
 
-CDviz is an open-source, self-hosted alternative to commercial SDLC observability tools. Unlike polling-based platforms such as Apache DevLake or proprietary tools like Datadog CI Visibility, CDviz uses a real-time event-push model based on the CDEvents standard, giving teams both observability and the foundation for event-driven automation — observe your pipelines before acting on them.
+CDviz is an open-source, self-hosted alternative to commercial SDLC observability tools. Where platforms such as Apache DevLake or proprietary tools like Datadog CI Visibility are built on a polling-only, proprietary data model, CDviz is built on the open CDEvents standard — every input is normalized to CDEvents, whether **pushed** in real time (webhooks, Kafka, NATS, SSE) or **pulled** when push isn't available (HTTP polling, file inputs). This gives teams both observability and the foundation for event-driven automation — observe your pipelines before acting on them.
 
 The comparisons below cover architecture, integrations, data ownership, and when to choose each tool.
 
@@ -32,6 +32,10 @@ The comparisons below cover architecture, integrations, data ownership, and when
 | [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
 
 _CDviz is free and open-source (Apache 2.0). Commercial support is available as an optional add-on._
+
+The "data model" column reflects how each tool **stores** data, not just how it collects it: CDviz normalizes both pushed and pulled inputs to CDEvents — [HTTP polling](/docs/cdviz-collector/sources/http_polling) covers historical backfill and webhook-less systems (Jenkins Remote API, legacy CI) — while the polling-only tools below are tied to a proprietary domain model.
+
+CDviz ships with fewer ready-made integrations than the larger SaaS platforms, but it is a **toolkit** rather than a closed product: the collector, database, and dashboards each work standalone and are customizable and extensible. You add the integrations you need — custom sources, transformers, and storage backends — instead of depending on a fixed catalog.
 
 ## Detailed comparisons
 

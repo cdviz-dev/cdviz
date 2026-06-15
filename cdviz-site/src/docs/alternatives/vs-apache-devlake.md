@@ -35,10 +35,10 @@ Both are open-source platforms for engineering metrics and SDLC visibility. They
 ## Key differences
 
 - **Standard vs custom model**: CDviz uses the open [CDEvents specification](https://cdevents.dev/) as its event schema. DevLake uses a proprietary domain model. CDviz data is inherently portable; DevLake data is optimized for its own dashboards.
-- **Push vs pull**: CDviz collects events in real-time as they happen. DevLake polls APIs on a schedule — simpler to start but introduces latency and heavier API load.
+- **Push-native, pull-capable**: CDviz collects events in real-time as they happen, and can also **poll** APIs ([HTTP polling source](/docs/cdviz-collector/sources/http_polling)) for historical backfill or systems without webhooks — including the Jenkins Remote API and legacy CI servers. Either way, inputs are normalized to CDEvents. DevLake is polling-only against a proprietary domain model — simpler to start but introduces latency and heavier API load, and no portable event schema.
 - **Observe and act**: CDviz events are not read-only. The same event stream used for observability can trigger downstream workflows — making it an event-driven SDLC backbone, not just a dashboard. DevLake is monitoring-only.
 - **Customization depth**: CDviz lets you enrich events at ingestion (add context, normalize fields), route to different storage backends (PostgreSQL, ClickHouse…), and visualize in any tool — Grafana, BI platforms, AI agents, MCP-connected tools, Internal Developer Platforms.
-- **Ecosystem breadth**: DevLake has significantly more ready-made integrations today. CDviz relies on webhooks and community-contributed transformers.
+- **Ecosystem breadth vs composability**: DevLake has significantly more ready-made integrations today; CDviz relies on webhooks, HTTP polling, and community-contributed transformers. But CDviz is a **toolkit** — collector, database, and dashboards each work standalone and are customizable and extensible, so you wire in exactly the integrations you need (custom sources, transformers, storage backends) rather than depending on a fixed integration catalog.
 - **Commercial support**: CDviz offers commercial support, making total cost of ownership lower than self-managing an unsupported open-source stack.
 
 ## When to choose CDviz
@@ -53,7 +53,7 @@ Both are open-source platforms for engineering metrics and SDLC visibility. They
 
 ## When to choose Apache DevLake
 
-- You need broad out-of-the-box integrations (Jira, Jenkins, PagerDuty, SonarQube…) without writing custom collectors.
+- You need broad out-of-the-box integrations (Jira, Jenkins, PagerDuty, SonarQube…) without writing custom collectors. (CDviz can pull from many of these via [HTTP polling](/docs/cdviz-collector/sources/http_polling) — e.g. the Jenkins Remote API — but ships fewer ready-made collectors today.)
 - Your team prefers a batteries-included setup with less configuration.
 - Monitoring and dashboards are sufficient — no need to trigger workflows.
 
@@ -70,6 +70,8 @@ DevLake is the safer "broad coverage" choice for pure metrics and dashboards. CD
 **Which has more out-of-the-box integrations?** Apache DevLake (50+). CDviz covers GitHub, GitLab, ArgoCD, and Kubernetes today; more via webhooks.
 
 **Does Apache DevLake support CDEvents?** No. DevLake uses a proprietary domain model optimized for its own dashboards.
+
+**Does CDviz only support push?** No. Push (webhooks, Kafka, NATS, SSE) is the real-time default, but the collector can also **pull** via [HTTP polling](/docs/cdviz-collector/sources/http_polling) and file/object-storage sources — for historical backfill and APIs without webhooks (Jenkins, legacy CI). All inputs are normalized to CDEvents.
 
 **Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
 

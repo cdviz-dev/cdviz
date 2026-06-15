@@ -38,7 +38,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 
 ## Key differences
 
-- **Data model**: Middleware polls GitHub, GitLab, and Jira APIs on a schedule to compute metrics. CDviz receives events pushed from your pipeline tools in real time using the CDEvents open standard — no polling delays, no API rate-limit gaps.
+- **Data model**: Middleware polls GitHub, GitLab, and Jira APIs on a schedule into a proprietary model. CDviz receives events pushed from your pipeline tools in real time using the CDEvents open standard — avoiding polling delays for live data — and can still [poll](/docs/cdviz-collector/sources/http_polling) for backfill or webhook-less systems, normalizing everything to CDEvents.
 - **DORA calculation**: Middleware derives DORA metrics from PR merge history and deployment annotations pulled from your VCS. CDviz derives DORA metrics from CDEvents emitted directly by your CI/CD toolchain at the moment they happen.
 - **Scope**: Middleware extends beyond CI/CD into sprint health — blocked work, spilled stories, Jira flow metrics, and AI-generated sprint summaries. CDviz focuses on the full SDLC event stream (build, test, artifact, deploy, incident) with less emphasis on issue-tracker analytics.
 - **Event standard**: CDviz is built on the [CDEvents](https://cdevents.dev) specification — a [CD Foundation](https://cd.foundation) project for interoperable CI/CD events. Middleware uses a proprietary data model tied to its own integrations.
@@ -48,7 +48,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 
 ## When to choose CDviz
 
-- You want real-time metrics without polling delays or API rate limits.
+- You want real-time metrics from a push-first event stream, not schedule-bound polling.
 - Data ownership or privacy regulations make vendor-hosted SaaS unacceptable.
 - You are adopting the CDEvents open standard for interoperability across your toolchain.
 - You need events to trigger downstream workflows — not just observe them.

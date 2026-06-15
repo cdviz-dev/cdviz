@@ -37,7 +37,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Sleuth is a 
 ## Key differences
 
 - **Deployment model**: Sleuth tracks deployments via explicit "deploy sources" tied to VCS branches or PR merges — each environment is tracked separately. CDviz ingests the full SDLC event stream across all systems (CI, CD, artifact registries, incident managers) using the CDEvents standard, not just deployments.
-- **DORA calculation**: Sleuth derives DORA metrics from deployment annotations on your PR commit history. CDviz derives DORA metrics from push events emitted by your pipeline toolchain — no polling, real-time as they happen.
+- **DORA calculation**: Sleuth derives DORA metrics from deployment annotations on your PR commit history. CDviz derives DORA metrics from events emitted by your pipeline toolchain in real time as they happen — push-first, with [polling](/docs/cdviz-collector/sources/http_polling) available for backfill or webhook-less systems.
 - **Data sovereignty**: With CDviz, your SDLC event data stays in your infrastructure. Sleuth stores all data on Sleuth servers.
 - **Observe and act**: CDviz events can trigger downstream workflows — the same event stream drives both observability and automation. Sleuth is monitoring-only.
 - **Cost model**: CDviz self-hosted is free (infra costs only), with optional commercial support. Sleuth's per-user SaaS pricing scales linearly with team size.
