@@ -224,7 +224,7 @@ id = "github"
 "x-hub-signature-256" = { type = "signature", token = "github-webhook-secret" } # or set via env: CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
 ```
 
-see [Header Authentication](./header-authentication) & [Header Validation](./header-validation).
+see [Header Authentication](./header-authentication.md) & [Header Validation](./header-validation.md).
 
 ### Kubernetes ConfigMap + Secrets
 

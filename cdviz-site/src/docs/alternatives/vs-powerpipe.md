@@ -74,5 +74,5 @@ These tools solve different problems. Powerpipe visualizes current cloud state (
 
 ## Related comparisons
 
-- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source engineering metrics platform
-- [All alternatives](./index)
+- [CDviz vs Apache DevLake](./vs-apache-devlake.md) — open-source engineering metrics platform
+- [All alternatives](./)

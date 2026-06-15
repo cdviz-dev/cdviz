@@ -77,7 +77,7 @@ Datadog CI is the fastest zero-ops path if you are already in the Datadog ecosys
 
 ## Related comparisons
 
-- [CDviz vs Splunk](./vs-splunk) — another enterprise data platform
-- [CDviz vs Sleuth](./vs-sleuth) — SaaS-native DORA metrics alternative
-- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source alternative
-- [All alternatives](./index)
+- [CDviz vs Splunk](./vs-splunk.md) — another enterprise data platform
+- [CDviz vs Sleuth](./vs-sleuth.md) — SaaS-native DORA metrics alternative
+- [CDviz vs Apache DevLake](./vs-apache-devlake.md) — open-source alternative
+- [All alternatives](./)

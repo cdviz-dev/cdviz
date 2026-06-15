@@ -82,8 +82,8 @@ Middleware and CDviz are both open-source Apache 2.0 tools, but they solve adjac
 
 ## Related comparisons
 
-- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source engineering metrics with 50+ integrations
-- [CDviz vs LinearB](./vs-linearb) — engineering metrics with PR analytics
-- [CDviz vs Sleuth](./vs-sleuth) — DORA metrics SaaS platform
-- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
-- [All alternatives](./index)
+- [CDviz vs Apache DevLake](./vs-apache-devlake.md) — open-source engineering metrics with 50+ integrations
+- [CDviz vs LinearB](./vs-linearb.md) — engineering metrics with PR analytics
+- [CDviz vs Sleuth](./vs-sleuth.md) — DORA metrics SaaS platform
+- [CDviz vs Swarmia](./vs-swarmia.md) — engineering effectiveness platform
+- [All alternatives](./)

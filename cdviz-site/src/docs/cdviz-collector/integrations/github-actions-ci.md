@@ -144,7 +144,7 @@ jobs:
 ```
 
 > [!TIP]
-> Branch (`$GITHUB_REF_NAME`) and commit (`$GITHUB_SHA`) are detected automatically by `ci_env_detection` — omit `--metadata branch=...` and `--metadata commit=...`.
+> Branch (`$GITHUB_REF_NAME`) and commit (`$GITHUB_SHA`) are detected automatically by [`ci_env_detection`](../send-run.md#ci-env-detection) — omit `--metadata branch=...` and `--metadata commit=...`.
 
 ## Options Reference
 

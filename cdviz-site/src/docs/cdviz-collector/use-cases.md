@@ -6,8 +6,13 @@ description: "CDviz Collector use cases: DORA metrics collection, multi-tool CI/
 
 Common scenarios and complete configurations for real-world deployments.
 
-> [!WARNING] CDEvents Transformation Disclaimer
-> VRL templates in these examples may be incomplete, outdated, or incorrect. For production use: consult the [CDEvents specification](https://cdevents.dev/) and use provided transformers from [transformers-community](https://github.com/cdviz-dev/transformers-community) (GitHub, etc.).
+> [!NOTE] About the VRL snippets
+> The configurations on this page are validated patterns you can adapt. The inline VRL
+> snippets, however, are illustrative excerpts focused on the option being shown — they are
+> not always complete, production-ready transformers. For production use, prefer the
+> maintained transformers from [transformers-community](https://github.com/cdviz-dev/transformers-community)
+> (GitHub, ArgoCD, Kubewatch, …) and validate event shapes against the
+> [CDEvents specification](https://cdevents.dev/).
 
 ## Development & Testing
 

@@ -80,7 +80,7 @@ Swarmia is a polished fit for engineering teams focused on developer effectivene
 
 ## Related comparisons
 
-- [CDviz vs LinearB](./vs-linearb) — PR-centric engineering metrics
-- [CDviz vs Sleuth](./vs-sleuth) — DORA-focused SaaS
-- [CDviz vs GetDX](./vs-getdx) — developer experience platform
-- [All alternatives](./index)
+- [CDviz vs LinearB](./vs-linearb.md) — PR-centric engineering metrics
+- [CDviz vs Sleuth](./vs-sleuth.md) — DORA-focused SaaS
+- [CDviz vs GetDX](./vs-getdx.md) — developer experience platform
+- [All alternatives](./)

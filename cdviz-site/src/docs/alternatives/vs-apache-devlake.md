@@ -75,7 +75,7 @@ DevLake is the safer "broad coverage" choice for pure metrics and dashboards. CD
 
 ## Related comparisons
 
-- [CDviz vs Powerpipe](./vs-powerpipe) — another open-source DevOps visibility tool
-- [CDviz vs Datadog CI Visibility](./vs-datadog-ci) — commercial SaaS alternative
-- [CDviz vs DevStats](./vs-devstats) — commercial SaaS for git-centric metrics
-- [All alternatives](./index)
+- [CDviz vs Powerpipe](./vs-powerpipe.md) — another open-source DevOps visibility tool
+- [CDviz vs Datadog CI Visibility](./vs-datadog-ci.md) — commercial SaaS alternative
+- [CDviz vs DevStats](./vs-devstats.md) — commercial SaaS for git-centric metrics
+- [All alternatives](./)

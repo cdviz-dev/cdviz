@@ -154,13 +154,18 @@ Guidelines:
 
 ### Use metadata for transformer chaining
 
-- Use `metadata` to transfer information between transformers
-- Use `metadata` from extractors to initialize information (not available with the `transform` subcommand)
-- Use the first transformer to initialize information when:
-  - Not possible via extractor (pre-0.19 or `transform` subcommand)
-  - Sharing information/transformers between multiple sources and transformer chains
+- Use `metadata` to transfer information between transformers in a chain.
+- **Since v0.19 (recommended):** initialize shared information in the extractor's `metadata`
+  block, so every message enters the chain pre-populated. This is the simplest path and keeps
+  initialization out of the transformers.
+- **For earlier versions, or the `transform` subcommand** (which has no extractor): initialize
+  the information in the **first transformer** of the chain instead. Do the same — even on
+  recent versions — when you want to share one initialization transformer across multiple
+  sources and chains.
 
-Example of "first" transformer:
+Example of a "first" transformer that initializes `.metadata`. It guards against a missing or
+non-object `.metadata` with `object(.metadata) ?? {}`, then merges in the new keys so existing
+metadata is preserved:
 
 ```toml
 [transformers.init_metadata]

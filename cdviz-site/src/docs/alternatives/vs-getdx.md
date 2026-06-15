@@ -81,6 +81,6 @@ GetDX is a strong fit for organizations running formal developer experience prog
 
 ## Related comparisons
 
-- [CDviz vs Jellyfish](./vs-jellyfish) — engineering management intelligence
-- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
-- [All alternatives](./index)
+- [CDviz vs Jellyfish](./vs-jellyfish.md) — engineering management intelligence
+- [CDviz vs Swarmia](./vs-swarmia.md) — engineering effectiveness platform
+- [All alternatives](./)

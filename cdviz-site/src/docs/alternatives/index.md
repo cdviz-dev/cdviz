@@ -40,14 +40,14 @@ _CDviz is free and open-source (Apache 2.0). Commercial support is available as 
 Open-source engineering metrics platform (Apache Incubating). Ingests data from 50+ tools
 (Jira, GitHub, Jenkins…) via polling. Uses a proprietary domain model, not CDEvents.
 
-→ [CDviz vs Apache DevLake](./vs-apache-devlake)
+→ [CDviz vs Apache DevLake](./vs-apache-devlake.md)
 
 ### Datadog CI Visibility {#datadog-ci}
 
 Fully-managed SaaS pipeline and test observability. Best when already using Datadog for
 APM/infra. Proprietary, vendor-hosted data model.
 
-→ [CDviz vs Datadog CI Visibility](./vs-datadog-ci)
+→ [CDviz vs Datadog CI Visibility](./vs-datadog-ci.md)
 
 ### DevStats (commercial) {#devstats}
 
@@ -55,7 +55,7 @@ Commercial SaaS platform for engineering metrics. Pulls data from GitHub, GitLab
 Bitbucket via API polling. Focused on git and PR-centric metrics (cycle time, DORA, PR
 review time) with built-in dashboards for engineering leadership. No self-hosted option.
 
-→ [CDviz vs DevStats](./vs-devstats)
+→ [CDviz vs DevStats](./vs-devstats.md)
 
 ### CNCF DevStats {#cncf-devstats}
 
@@ -64,7 +64,7 @@ Ingests GitHub Archive data (hourly) to track contributor activity, company attr
 PR review times, and SIG workload for public open-source projects. Uses PostgreSQL + Grafana.
 Not designed for private pipelines or SDLC observability. Unrelated to the commercial DevStats SaaS.
 
-→ [CDviz vs CNCF DevStats](./vs-devstats-cncf)
+→ [CDviz vs CNCF DevStats](./vs-devstats-cncf.md)
 
 ### LinearB {#linearb}
 
@@ -72,7 +72,7 @@ Commercial SaaS platform for engineering metrics. Focuses on git and PR-centric 
 cycle time, PR review depth, merge frequency, DORA — by polling GitHub, GitLab, and Jira.
 Offers AI-powered PR review routing and automation. No self-hosted option.
 
-→ [CDviz vs LinearB](./vs-linearb)
+→ [CDviz vs LinearB](./vs-linearb.md)
 
 ### Splunk {#splunk}
 
@@ -81,7 +81,7 @@ configured for CI/CD pipeline visibility and DORA metrics, but requires signific
 Available as self-hosted (Splunk Enterprise) or SaaS (Splunk Cloud). Volume-based pricing
 (GB/day).
 
-→ [CDviz vs Splunk](./vs-splunk)
+→ [CDviz vs Splunk](./vs-splunk.md)
 
 ### GetDX {#getdx}
 
@@ -89,7 +89,7 @@ Commercial SaaS platform that combines quantitative engineering metrics (DORA, P
 with qualitative developer experience surveys based on the SPACE and DX Core frameworks.
 Targets engineering leaders running formal Developer Experience programs. No self-hosted option.
 
-→ [CDviz vs GetDX](./vs-getdx)
+→ [CDviz vs GetDX](./vs-getdx.md)
 
 ### Jellyfish {#jellyfish}
 
@@ -97,7 +97,7 @@ Commercial SaaS platform for engineering management intelligence. Focuses on map
 engineering investment to business initiatives via Jira and GitHub data. Primary buyers
 are VPs and engineering directors. No self-hosted option.
 
-→ [CDviz vs Jellyfish](./vs-jellyfish)
+→ [CDviz vs Jellyfish](./vs-jellyfish.md)
 
 ### Middleware {#middleware}
 
@@ -106,14 +106,14 @@ Jira to compute DORA metrics, PR review analytics, and sprint flow insights. Off
 sprint reports and Slack automation on paid tiers. Available as self-hosted Docker or SaaS
 ($39/user/month Standard). Uses a proprietary data model, not CDEvents.
 
-→ [CDviz vs Middleware](./vs-middleware)
+→ [CDviz vs Middleware](./vs-middleware.md)
 
 ### Powerpipe {#powerpipe}
 
 Open-source dashboarding tool from Turbot. Visualizes cloud configurations and security
 posture. Can be extended for DevOps metrics. Pull-based, query-driven model.
 
-→ [CDviz vs Powerpipe](./vs-powerpipe)
+→ [CDviz vs Powerpipe](./vs-powerpipe.md)
 
 ### Sleuth {#sleuth}
 
@@ -121,7 +121,7 @@ Commercial SaaS DORA metrics platform. Tracks deployments, change failure rates,
 lead time by connecting to GitHub, GitLab, Jira, and Slack. Focused on deployment
 observability with a polished, low-setup experience. No self-hosted option.
 
-→ [CDviz vs Sleuth](./vs-sleuth)
+→ [CDviz vs Sleuth](./vs-sleuth.md)
 
 ### Swarmia {#swarmia}
 
@@ -129,7 +129,7 @@ Commercial SaaS engineering effectiveness platform. Tracks DORA metrics, PR cycl
 code review quality, and engineering investment distribution. Lets teams set working
 agreements. No self-hosted option.
 
-→ [CDviz vs Swarmia](./vs-swarmia)
+→ [CDviz vs Swarmia](./vs-swarmia.md)
 
 ::: tip Get started with CDviz
 [Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
@@ -142,4 +142,4 @@ CDviz focuses on SDLC event observability. For adjacent DevOps needs, the Turbot
 - [steampipe](https://steampipe.io/) — query cloud APIs with SQL
 - [flowpipe](https://flowpipe.io) — workflow automation for DevOps
 - [tailpipe](https://tailpipe.io) — open-source SIEM for log insights (DuckDB-powered)
-- [powerpipe](https://powerpipe.io) — dashboards over current cloud state ([see comparison](./vs-powerpipe))
+- [powerpipe](https://powerpipe.io) — dashboards over current cloud state ([see comparison](./vs-powerpipe.md))

@@ -80,6 +80,6 @@ Splunk is the right choice when you already run it for security or operations an
 
 ## Related comparisons
 
-- [CDviz vs Datadog CI Visibility](./vs-datadog-ci) — commercial SaaS pipeline monitoring
-- [CDviz vs Apache DevLake](./vs-apache-devlake) — open-source engineering metrics
-- [All alternatives](./index)
+- [CDviz vs Datadog CI Visibility](./vs-datadog-ci.md) — commercial SaaS pipeline monitoring
+- [CDviz vs Apache DevLake](./vs-apache-devlake.md) — open-source engineering metrics
+- [All alternatives](./)

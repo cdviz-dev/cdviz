@@ -82,7 +82,7 @@ LinearB is the fastest path to PR-centric engineering metrics and AI-powered cod
 
 ## Related comparisons
 
-- [CDviz vs DevStats](./vs-devstats) — similar git-centric scope
-- [CDviz vs Sleuth](./vs-sleuth) — DORA-focused SaaS
-- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
-- [All alternatives](./index)
+- [CDviz vs DevStats](./vs-devstats.md) — similar git-centric scope
+- [CDviz vs Sleuth](./vs-sleuth.md) — DORA-focused SaaS
+- [CDviz vs Swarmia](./vs-swarmia.md) — engineering effectiveness platform
+- [All alternatives](./)

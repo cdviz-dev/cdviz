@@ -77,7 +77,7 @@ Sleuth is a fast, polished SaaS for teams that want DORA metrics with minimal se
 
 ## Related comparisons
 
-- [CDviz vs LinearB](./vs-linearb) — engineering metrics with PR analytics
-- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
-- [CDviz vs DevStats](./vs-devstats) — git-centric engineering metrics
-- [All alternatives](./index)
+- [CDviz vs LinearB](./vs-linearb.md) — engineering metrics with PR analytics
+- [CDviz vs Swarmia](./vs-swarmia.md) — engineering effectiveness platform
+- [CDviz vs DevStats](./vs-devstats.md) — git-centric engineering metrics
+- [All alternatives](./)

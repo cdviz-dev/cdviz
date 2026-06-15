@@ -76,17 +76,52 @@ observability data (logs and metrics) in a safe and performant manner. It featur
 functions tailored specifically to observability use cases. It is built for transformation in [Vector by Datadog](https://vector.dev/),
 a lightweight, ultra-fast tool for building observability pipelines.
 
-The VRL transformer processes messages by:
+The input message is available as the variable `.`. Read its parts with:
 
-- If the template evaluates to `null`, pass through the original message unchanged (clearer meaning of skip)
-- If the template evaluates to `[]`, discard the message (nothing sent downstream)
-- If the template evaluates to an array of messages (with metadata, headers, body), send each one downstream
+- `.metadata` — metadata of the message (used to pass information between transformers)
+- `.headers` — headers of the message
+- `.body` — body of the message
 
-The input message is available as the variable `.`. The output is an array of messages.
+### Return value — three behaviors
 
-- `.metadata` to read the metadata of the message
-- `.headers` to read the headers of the message
-- `.body` to read the body of the message
+The value the template evaluates to (its last expression) decides what happens next. A returned
+message is a full object: any of `metadata`, `headers`, or `body` you omit is **not** carried
+over from the input — only the fields you put in the object are kept. Echo `.metadata` /
+`.headers` explicitly when you want to preserve them.
+
+| Returned value          | Behavior                                                                 |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `null`                  | **Passthrough** — the original message is forwarded unchanged.           |
+| `[]`                    | **Discard** — nothing is sent downstream (drops/filters the message).    |
+| `[{ … }, { … }]`        | **Replace** — each object in the array is sent downstream as a message.  |
+
+```toml
+[transformers.three_cases]
+type = "vrl"
+template = """
+# 1. Passthrough: keep the message exactly as received
+if .body.kind == "ignore_me_keep_as_is" {
+    null
+} else if .body.kind == "drop_me" {
+    # 2. Discard: emit nothing
+    []
+} else {
+    # 3. Replace: build the outgoing message; fields not listed here are dropped,
+    #    so re-attach .metadata and .headers to preserve them.
+    [{
+        "metadata": .metadata,
+        "headers": .headers,
+        "body": {
+            "context": { "type": "dev.cdevents.service.deployed.0.1.1", "id": "0" },
+            "subject": { "id": .body.id, "type": "service" }
+        }
+    }]
+}
+"""
+```
+
+Returning a single transformed message is the array form with one element — `[.]` re-emits the
+current message after in-place edits (see the example below).
 
 You can specify the VRL template directly in the config:
 

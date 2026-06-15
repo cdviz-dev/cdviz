@@ -27,15 +27,27 @@ For non-test steps (build, deploy) where you only need exit-code observability, 
 > [!NOTE]
 > `testsuiterun_junit` and `testsuiterun_tap` require the `parser_xml` and `parser_tap` feature flags. Verify with `cdviz-collector --version`.
 
-## CI Auto-Detection
+## CI Auto-Detection {#ci-env-detection}
 
-The built-in `ci_env_detection` transformer automatically populates context fields from standard CI environment variables. **No `--metadata` flags are needed for branch, commit, or job name.**
+`ci_env_detection` is a built-in transformer included by default in the `send` and `send --run`
+chains. It inspects standard CI environment variables and populates the message `metadata` so
+your CDEvent carries the branch, commit, job name, and pipeline/run identifier without any manual
+flags. **No `--metadata` flags are needed for branch, commit, or job name.**
 
-| CI system      | Variables read automatically                                               |
-| -------------- | -------------------------------------------------------------------------- |
-| GitHub Actions | `GITHUB_REF_NAME`, `GITHUB_SHA`, `GITHUB_JOB`, `GITHUB_RUN_ID`             |
-| GitLab CI      | `CI_COMMIT_REF_NAME`, `CI_COMMIT_SHA`, `CI_JOB_NAME`, `CI_PIPELINE_ID`     |
-| Jenkins        | `JENKINS_URL`, `JOB_BASE_NAME`, `BUILD_NUMBER`, `GIT_BRANCH`, `GIT_COMMIT` |
+It sets the following `metadata` fields when the corresponding variables are present:
+
+| `metadata` field | GitHub Actions     | GitLab CI            | Jenkins                       |
+| ---------------- | ------------------ | -------------------- | ----------------------------- |
+| `branch`         | `GITHUB_REF_NAME`  | `CI_COMMIT_REF_NAME` | `GIT_BRANCH`                  |
+| `commit`         | `GITHUB_SHA`       | `CI_COMMIT_SHA`      | `GIT_COMMIT`                  |
+| `job`            | `GITHUB_JOB`       | `CI_JOB_NAME`        | `JOB_BASE_NAME`               |
+| pipeline / run   | `GITHUB_RUN_ID`    | `CI_PIPELINE_ID`     | `BUILD_NUMBER` (`JENKINS_URL`) |
+
+**When variables are absent** — for example running locally or in an unrecognized CI — the
+detector leaves those fields unset; nothing fails. Supply the missing values yourself with
+`--metadata branch=… --metadata commit=…`, which is also how you set fields the detector does
+not cover (e.g. `tested_artifact_id`). Downstream transformers read these fields from `.metadata`
+to build the CDEvent.
 
 ## `customData.links` — Cross-Referencing
 

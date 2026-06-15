@@ -78,7 +78,7 @@ Jellyfish is a strong fit for engineering leaders who need investment allocation
 
 ## Related comparisons
 
-- [CDviz vs GetDX](./vs-getdx) — developer experience metrics platform
-- [CDviz vs Swarmia](./vs-swarmia) — engineering effectiveness platform
-- [CDviz vs LinearB](./vs-linearb) — PR-centric engineering metrics
-- [All alternatives](./index)
+- [CDviz vs GetDX](./vs-getdx.md) — developer experience metrics platform
+- [CDviz vs Swarmia](./vs-swarmia.md) — engineering effectiveness platform
+- [CDviz vs LinearB](./vs-linearb.md) — PR-centric engineering metrics
+- [All alternatives](./)

@@ -16,10 +16,16 @@ faq:
       with zero pipeline changes. Active integration for custom metadata is optional.
   - q: What DORA metrics does CDviz track?
     a: |
-      CDviz collects event data to calculate all four DORA metrics: Deployment Frequency
-      (from service.deployed events), Lead Time for Changes (from pipeline and deployment
-      events), Change Failure Rate (from incident events), and Mean Time to Recovery
-      (from incident.detected and incident.resolved events).
+      CDviz surfaces all four DORA metrics from CDEvents: Deployment Frequency
+      (from service.deployed / service.upgraded events), Lead Time for Changes,
+      Change Failure Rate (from service.rolledback events), and Time to Restore
+      (from incident.detected / incident.resolved events). These are best-effort
+      approximations, not exact measures — Lead Time is computed as two proxies
+      (Artifact→Deploy and Pipeline Duration) since the full commit→production
+      chain depends on which events your tools emit, and Time to Restore covers
+      all incidents, not only deployment-induced failures. See the
+      [DORA Metrics dashboard](/docs/cdviz-grafana/dora_metrics) for the formulas,
+      required events, and known limitations of each metric.
   - q: What is the difference between CDviz and CDEvents?
     a: |
       CDEvents is a Continuous Delivery Foundation specification — a standardized JSON
