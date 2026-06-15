@@ -91,7 +91,7 @@ wait_for = [":create"]
 
 [tools]
 ctlptl = "0.9.4"
-kind = "0.31.0"
+kind = "0.32.0"
 kubectl = "1.36.1"
 
 [tools."github:helmwave/helmwave"]
