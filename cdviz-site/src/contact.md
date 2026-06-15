@@ -7,8 +7,9 @@ head:
       content: noindex, follow
 ---
 
-<script setup>
-import ContactForm from '../components/ContactForm.vue'
-</script>
-<h1 style="opacity:0; margin:0; padding:0">Contact us</h1>
-<ContactForm />
+# Contact us
+
+For commercial support, the managed offer, or any sales enquiry, email us at
+[contact@cdviz.dev](mailto:contact@cdviz.dev).
+
+We typically reply within two business days.

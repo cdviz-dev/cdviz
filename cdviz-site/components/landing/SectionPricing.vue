@@ -329,8 +329,8 @@ onMounted(() => {
       <p>
         All prices are in Euro (€) and exclude VAT. The Community edition is free forever. The
         Enterprise plan is currently in free beta — pricing will apply when the beta period ends.
-        For more information or custom requests, please
-        <a href="/contact" class="text-primary hover:underline">contact us</a>.
+        For more information or custom requests, email us at
+        <a href="mailto:contact@cdviz.dev" class="text-primary hover:underline">contact@cdviz.dev</a>.
       </p>
     </div>
   </section>

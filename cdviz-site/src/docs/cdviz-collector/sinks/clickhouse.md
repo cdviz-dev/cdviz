@@ -10,7 +10,7 @@ description: "CDviz Collector ClickHouse sink: forward CDEvents to ClickHouse fo
 > or SQL queries targeting ClickHouse are provided.
 >
 > If your organisation relies on ClickHouse and would like to sponsor the development of
-> ClickHouse-native CDviz dashboards, please [get in touch](/contact).
+> ClickHouse-native CDviz dashboards, please email us at [contact@cdviz.dev](mailto:contact@cdviz.dev).
 
 Stores CDEvents in [ClickHouse](https://clickhouse.com/) using a user-defined INSERT query template.
 

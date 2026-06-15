@@ -61,7 +61,7 @@ CDviz is an open-source, event-driven SDLC observability platform. DevStats is a
 - You need visibility beyond git: CI pipelines, artifact registries, deployment systems, service lifecycle.
 - Your organization is adopting the CDEvents open standard.
 - You need flexible storage (PostgreSQL, ClickHouse) or reporting (BI, AI agents, MCP, IDP integrations).
-- You want commercial support without vendor lock-in ([contact us](/pricing)).
+- You want commercial support without vendor lock-in (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
 
 ## When to choose DevStats
 

@@ -53,7 +53,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 - You are adopting the CDEvents open standard for interoperability across your toolchain.
 - You need events to trigger downstream workflows — not just observe them.
 - You want flexible storage, reporting, or integration with BI tools, AI agents, or IDPs.
-- Team size makes per-seat pricing expensive; you prefer a flat per-org cost ([contact us](/pricing)).
+- Team size makes per-seat pricing expensive; you prefer a flat per-org cost (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
 
 ## When to choose Middleware
 

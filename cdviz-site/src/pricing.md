@@ -76,7 +76,7 @@ faq:
       We are developing a SaaS plan but don't have final details on features
       and pricing yet. We're open to discussions and partnerships.
       <br/>
-      If you're interested in SaaS, please <a href="/contact">contact us</a>.
+      If you're interested in SaaS, email us <a href="mainto:contact@cdviz.dev">contact@cdviz.dev</a>.
   - q: Can I continue using CDviz after my commercial subscription expires?
     a: |
       Yes. You can always use the open source components under Apache License v2.

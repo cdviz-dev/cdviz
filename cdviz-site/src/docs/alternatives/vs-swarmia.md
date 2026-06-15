@@ -52,7 +52,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a
 - You want events to trigger workflows — not just observe them.
 - Your organization is adopting the CDEvents open standard.
 - You need flexible storage or reporting (BI, AI agents, MCP, IDP integrations).
-- You want commercial support without vendor lock-in ([contact us](/pricing)).
+- You want commercial support without vendor lock-in (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
 
 ## When to choose Swarmia
 
