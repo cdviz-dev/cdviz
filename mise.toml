@@ -23,7 +23,7 @@ experimental = true
 CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
 
 [tools]
-yq = "4.53.2"                            # used by build to update / normalize dashboards / release
+yq = "4.53.3"                            # used by build to update / normalize dashboards / release
 git-cliff = "2.13.1"
 "github:updatecli/updatecli" = "0.118.0"
 
