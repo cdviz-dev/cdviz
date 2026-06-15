@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@grafana/grafana-foundation-sdk": "0.0.16",
+    "@grafana/grafana-foundation-sdk": "0.0.18",
     "dedent": "1.7.2"
   },
   "devDependencies": {
