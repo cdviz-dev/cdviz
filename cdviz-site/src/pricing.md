@@ -95,7 +95,7 @@ faq_off:
       For more information please see our <a href="compliance">Compliance Page</a>.
   - q: Is support included with the subscription?
     a: |
-      A commercial subscription includes direct-to-engineering support delivered through ???TBD???.
+      A commercial subscription includes direct-to-engineering support.
 ---
 
 <script setup>

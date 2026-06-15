@@ -65,15 +65,15 @@ First, you'll need to get the CDviz demo environment up and running on your loca
 
    ![Initial Filled Dashboard View](/quickstart/metrics_filled.png)
 
-5. Filter by service `my_app` (not listed, as it didn't exist yet) to have like the Empty Dashboard
+5. Filter by service `my_app` (not listed, as it didn't exist yet) to see the Empty Dashboard.
 
    ![Initial Empty Dashboard View](/quickstart/metrics_empty.png)
 
 ## 2. Sending Your First Events
 
-Now that your local environment is running, let's send manually some events and see them appear on the dashboard.
+Now that your local environment is running, let's manually send some events and watch them appear on the dashboard.
 
-We send events to simulate your ticket system, CI tools, registries,... reporting's forms.
+The demo provides forms that simulate events from your ticket system, CI tools, and artifact registries.
 
 ### Service Deployment Events
 

@@ -5,10 +5,6 @@ description: "CDviz Database: PostgreSQL + TimescaleDB schema for CDEvents stora
 import DbConceptual from '../../../components/diagrams/DbConceptual.vue'
 </script>
 
-# Sources
-
-Sources collect events from external systems and feed them into the CDviz pipeline.
-
 # CDviz Database
 
 CDviz Database is the persistence layer for CDEvents. It stores normalized delivery events in a PostgreSQL + TimescaleDB hypertable with a JSONB payload column, enabling time-series queries for DORA metrics, deployment timelines, and incident tracking.
@@ -28,7 +24,7 @@ The conceptual architecture of the CDviz database is as follows:
 - a stored procedure for event ingestion (used by the collector service or other event sources): `cdviz.store_cdevent`
 - an hypertable for raw CDEvents storage `cdviz.cdevents_lake`
 - a set of views for data retrieval, analytics and pre-computed metrics
-- 3 roles for data access (TODO):
+- 3 roles for data access (recommanded, not provisioned by the migrations):
   - `cdviz` - for administrative tasks (owner of the database)
   - `cdviz_collector` - for event ingestion
   - `cdviz_reader` - for read-only access to the data

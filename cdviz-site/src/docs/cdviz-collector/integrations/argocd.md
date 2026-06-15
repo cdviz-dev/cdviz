@@ -55,9 +55,8 @@ transformer_refs = ["argocd_notifications"]
 type = "webhook"
 id = "000-argocd"
 headers_to_keep = []
-# Metadata to injects environment_id from ArgoCD destination
+# Metadata to inject environment_id from ArgoCD destination
 metadata.environment_id = "/production/eu-1"
-"""
 
 # Main transformer from transformers-community repository
 [transformers.argocd_notifications]
