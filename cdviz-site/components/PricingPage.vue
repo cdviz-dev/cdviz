@@ -2,6 +2,7 @@
 import Faq from "./landing/SectionFaq.vue";
 import Plans from "./landing/SectionPlans.vue";
 import Pricing from "./landing/SectionPricing.vue";
+import Services from "./landing/SectionServices.vue";
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import Pricing from "./landing/SectionPricing.vue";
   >
     <Pricing />
     <Plans />
+    <Services />
     <Faq />
     <section class="my-xl md:my-2xl">
       <!-- End & Last CTA -->

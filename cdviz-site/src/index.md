@@ -5,28 +5,27 @@ layout: home
 markdownStyles: false
 
 faq:
-  - q: What is CDviz and how does it work?
+  - q: Is it really free to use?
     a: |
-      CDviz is an open-source CI/CD observability platform built on CDEvents,
-      the CD Foundation-backed standard for software delivery. It collects events
-      from your pipelines (GitHub, GitLab, Kubernetes, and more), stores them in
-      PostgreSQL or ClickHouse, and surfaces DORA metrics, deployment timelines,
-      and test results in Grafana dashboards. The same event stream can then
-      trigger automated workflows — observe first, automate when you're ready.
-  - q: Is it free to use?
+      Yes. The open-source components — collector, database schemas, and Grafana dashboards —
+      are free forever under Apache 2.0 and free to self-host. Self-hosting involves your own
+      infrastructure costs. <a href="/pricing">See all pricing options →</a>
+  - q: What's the difference between Cloud and Pro?
     a: |
-      Yes. CDviz is open-source (Apache 2.0) and free to self-host.
-      Pro and Enterprise features are also free during the current beta.
-      <br/>
-      A commercial support plan is available for teams that want help with
-      setup, maintenance, or custom integrations. Subscriptions help fund
-      ongoing development. <a href="/pricing">See pricing details →</a>
-  - q: What is CDviz's commitment to Open Source?
+      <strong>Cloud</strong> is a hosted, managed service for small teams who don't want to run
+      infrastructure — focused on cross-repo pipeline visibility at €20/month.
+      <strong>Pro</strong> is for organizations that want to self-host with professional support
+      and additional integrations (GitLab, Jenkins, ...) at €200/month.
+  - q: What is CDviz's commitment to open source?
     a: |
-      At CDviz, we firmly believe in Open Source and collaborative development.
-      The cdviz-collector is licensed under Apache License v2 (from v0.15+). The database and
-      Grafana components are under Apache License v2. For details, see our
-      <a href="/compliance">Compliance Page</a>.
+      The collector (from v0.15+), database schemas, and Grafana components are all licensed
+      under Apache 2.0. You can always keep using the open-source components — even if a
+      commercial subscription ends. No lock-in.
+  - q: How does it relate to CDEvents?
+    a: |
+      CDviz is built on <a href="https://cdevents.dev">CDEvents</a>, the CD Foundation standard
+      for software delivery events. The team is an active member of the CDEvents working group,
+      so your event data follows an open, portable standard.
 
 # hero:
 #   name: VitePress

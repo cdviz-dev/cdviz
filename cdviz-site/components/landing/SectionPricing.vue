@@ -6,6 +6,11 @@ import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
 import H3 from "./H3.vue";
 
+const props = defineProps({
+  only: { type: Array, default: null },
+  showToggle: { type: Boolean, default: true },
+});
+
 const isYearly = ref(true);
 const isToggling = ref(false);
 
@@ -21,11 +26,9 @@ const pricingPlans = [
     features: [
       { icon: "icon-[lucide--workflow]", text: "Collector (ASL v2)" },
       { icon: "icon-[lucide--database]", text: "Database schemas (ASL v2)" },
-      {
-        icon: "icon-[lucide--bar-chart-3]",
-        text: "Grafana components (ASL v2)",
-      },
-      { icon: "icon-[lucide--users]", text: "Community Support" },
+      { icon: "icon-[lucide--bar-chart-3]", text: "Grafana components (ASL v2)" },
+      { icon: "icon-[lucide--github]", text: "GitHub, Kubernetes, ArgoCD, webhooks" },
+      { icon: "icon-[lucide--users]", text: "Community support" },
     ],
     button: {
       text: "Get Started",
@@ -37,67 +40,64 @@ const pricingPlans = [
     disabled: false,
   },
   {
-    id: "enterprise",
-    title: "Enterprise",
-    subtitle: "Free during beta",
-    badge: "Beta",
+    id: "cloud",
+    title: "Cloud",
+    subtitle: "Managed for small teams. Nothing to run.",
     pricing: {
-      monthly: 0,
-      yearly: 0,
+      monthly: 20,
+      yearly: 216,
     },
     features: [
-      { icon: "icon-[lucide--building]", text: "On-premise" },
-      { icon: "icon-[lucide--workflow]", text: "Optional Commercial License" },
-      { icon: "icon-[lucide--plug]", text: "Additional integrations" },
-      { icon: "icon-[lucide--headphones]", text: "Professional support" },
+      { icon: "icon-[lucide--cloud]", text: "Hosted & managed — zero infrastructure" },
+      { icon: "icon-[lucide--git-branch]", text: "Cross-repo pipeline reliability & trends" },
+      { icon: "icon-[lucide--history]", text: "30-day history import on connect" },
+      { icon: "icon-[lucide--github]", text: "GitHub & GitLab" },
+      { icon: "icon-[lucide--headphones]", text: "Email & Discord support" },
+      { icon: "icon-[lucide--users]", text: "For teams of 1–5" },
     ],
     button: {
-      text: "Join Beta",
-      href: "/contact",
+      text: "Available July 2026",
+      href: "https://app.cdviz.dev",
       primary: true,
+      disabled: true,
     },
     colorScheme: "primary",
     highlighted: true,
     disabled: false,
-    note: "Beta is free. Regular price: €109/month (or €1,100/year) when beta ends.",
+    note: "Cloud launches July 2026.",
   },
   {
-    id: "saas",
-    title: "SaaS",
-    subtitle: "",
+    id: "pro",
+    title: "Pro",
+    subtitle: "Self-host with more integrations & support.",
     pricing: {
-      monthly: 129,
-      yearly: 1390,
+      monthly: 200,
+      yearly: 2160,
     },
     features: [
-      {
-        icon: "icon-[lucide--workflow]",
-        text: "Same features than Enterprise",
-      },
-      { icon: "icon-[lucide--cloud]", text: "Collector on our infrastructure" },
+      { icon: "icon-[lucide--check]", text: "Everything in Community" },
+      { icon: "icon-[lucide--plug]", text: "GitLab, Jenkins, Jira, ..." },
+      { icon: "icon-[lucide--building]", text: "On-premise deployment" },
+      { icon: "icon-[lucide--workflow]", text: "Optional commercial license" },
+      { icon: "icon-[lucide--headphones]", text: "Email & Discord support · 2 business days" },
     ],
+    // Creem TEST checkout URLs — swap for live (non-test) URLs after promoting the
+    // products in Creem. The monthly/yearly toggle picks the URL (see getButtonHref).
     button: {
-      text: "Express Interest", // was "Join Waitlist"
-      href: "/contact",
+      text: "Get Pro",
+      hrefMonthly: "https://www.creem.io/payment/prod_1FWhmjmG6cdnqkmJoPD6Z7",
+      hrefYearly: "https://www.creem.io/payment/prod_4hmNTsupXMOtBWw07SpMVO",
       primary: false,
     },
     colorScheme: "secondary",
     highlighted: false,
-    disabled: true,
-    //badge: "Coming Soon",
-    note: "Interested? Let us know — your feedback directly shapes when this ships.",
+    disabled: false,
   },
 ];
 
-// const getSubscriptionUrl = (tier) => {
-//   if (tier === "enterprise") {
-//     if (isYearly.value) {
-//       return "https://www.creem.io/payment/prod_1OwS2VDgI2cwcPSB7xiJpA";
-//     }
-//     return "https://www.creem.io/payment/prod_1PYPUFjff96gSIKvovlkKk";
-//   }
-//   return "";
-// };
+// Cloud Creem TEST products (wired in July 2026 when the Cloud CTA is enabled):
+//   monthly: https://creem.io/test/product/prod_6TgrLkMy0rdNZnhnFsxSAw
+//   yearly:  https://creem.io/test/product/prod_56csAKRs3WAysASjgUcg2a
 
 const getPrice = (plan) => {
   if (isYearly.value) {
@@ -114,16 +114,16 @@ const getDiscount = (plan) => {
 };
 
 const getDiscountMax = () => {
-  return pricingPlans.reduce((max, plan) => {
+  return displayedPlans.value.reduce((max, plan) => {
     const discount = getDiscount(plan);
     return discount > max ? discount : max;
   }, 0);
 };
 
 const getButtonHref = (plan) => {
-  // if (plan.id === "enterprise") {
-  //   return getSubscriptionUrl("enterprise");
-  // }
+  if (plan.button.hrefMonthly && plan.button.hrefYearly) {
+    return isYearly.value ? plan.button.hrefYearly : plan.button.hrefMonthly;
+  }
   return plan.button.href;
 };
 
@@ -134,10 +134,26 @@ const getCardClasses = (plan) => {
     plan.colorScheme === "primary"
       ? "border-2 border-primary/30 bg-primary/5"
       : "border-2 border-secondary/20 bg-secondary/5";
-  const highlightClasses = plan.highlighted ? "transform md:scale-105 md:shadow-xl md:z-10" : "";
+  // Scale-up emphasis only makes sense among sibling cards; for a single
+  // displayed plan it overflows its layout box and overlaps the footer.
+  const highlightClasses =
+    plan.highlighted && displayedPlans.value.length > 1
+      ? "transform md:scale-105 md:shadow-xl md:z-10"
+      : "";
 
   return `${baseClasses} ${colorClasses} ${highlightClasses}`;
 };
+
+const displayedPlans = computed(() =>
+  props.only ? pricingPlans.filter((plan) => props.only.includes(plan.id)) : pricingPlans,
+);
+
+const gridClass = computed(() => {
+  const count = displayedPlans.value.length;
+  if (count === 1) return "grid gap-6 max-w-[520px] mx-auto";
+  if (count === 2) return "grid gap-6 md:grid-cols-2 max-w-3xl mx-auto";
+  return "grid gap-6 md:grid-cols-3 max-w-5xl mx-auto";
+});
 
 const togglePricing = () => {
   isToggling.value = true;
@@ -170,14 +186,19 @@ onMounted(() => {
     class="space-section bg-gradient-to-br from-secondary/2 to-secondary/6 rounded-2xl shadow-sm"
   >
     <a id="pricing"></a>
-    <H2>Pricing & Plans</H2>
-    <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
-      Start free with open source, scale with enterprise features. Built for teams that value
-      transparency and control.
-    </div>
+    <slot name="header">
+      <H2>Pricing & Plans</H2>
+      <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
+        Start free with open source, scale with enterprise features. Built for teams that value
+        transparency and control.
+      </div>
+    </slot>
 
     <!-- Pricing Toggle -->
-    <div class="flex flex-col sm:flex-row items-center justify-center my-xl gap-4 sm:gap-0">
+    <div
+      v-if="showToggle"
+      class="flex flex-col sm:flex-row items-center justify-center my-xl gap-4 sm:gap-0"
+    >
       <div class="flex items-center gap-3 sm:gap-4">
         <span
           class="text-base sm:text-lg font-medium transition-colors duration-200"
@@ -217,27 +238,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Early Adopter Offer Banner -->
-    <div class="max-w-5xl mx-auto mb-8 bg-primary/8 border border-primary/20 rounded-xl p-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div class="flex-1">
-          <p class="text-base font-semibold text-primary mb-1">
-            Early Adopter Offer — Getting started with CDviz?
-          </p>
-          <p class="text-sm text-current/80">
-            We offer a free onboarding call + async support (Discord/email) to help you set up and
-            tune CDviz for your stack — available to Community and Enterprise early adopters.
-          </p>
-        </div>
-        <Btn href="/contact" :primary="false" class="shrink-0">
-          Get free setup support →
-        </Btn>
-      </div>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+    <div :class="gridClass">
       <div
-        v-for="plan in pricingPlans"
+        v-for="plan in displayedPlans"
         :key="plan.id"
         :data-animate-pricing="true"
         :class="getCardClasses(plan)"
@@ -319,20 +322,23 @@ onMounted(() => {
         <Btn
           :href="getButtonHref(plan)"
           :primary="plan.button.primary"
+          :disabled="plan.button.disabled"
           :aria-label="plan.button.text"
         >
           {{ plan.button.text }}
         </Btn>
       </div>
     </div>
-    <div class="text-center mt-12 text-current/90">
-      <p>
-        All prices are in Euro (€) and exclude VAT. The Community edition is free forever. The
-        Enterprise plan is currently in free beta — pricing will apply when the beta period ends.
-        For more information or custom requests, email us at
-        <a href="mailto:contact@cdviz.dev" class="text-primary hover:underline">contact@cdviz.dev</a>.
-      </p>
-    </div>
+    <slot name="footer">
+      <div class="text-center mt-12 text-current/90">
+        <p>
+          All prices are in Euro (€) and exclude VAT · per organization, not per seat · cancel
+          anytime. For bespoke work or custom integrations, please
+          <a href="mailto:contact@cdviz.dev" class="text-primary hover:underline"
+          >contact@cdviz.dev</a>.
+        </p>
+      </div>
+    </slot>
   </section>
 </template>
 

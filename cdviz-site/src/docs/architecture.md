@@ -18,27 +18,27 @@ CDviz is an event-driven CI/CD platform built on the CDEvents standard. Its four
 
 1. **Visualization Layer** - [CDviz Grafana](./cdviz-grafana/)
 
-    A comprehensive dashboard solution for visualizing, analyzing, and generating alerts by combining existing runtime and business metrics with SDLC metrics. While built on Grafana, the implementation can be adapted to alternative visualization platforms.
+   A comprehensive dashboard solution for visualizing, analyzing, and generating alerts by combining existing runtime and business metrics with SDLC metrics. While built on Grafana, the implementation can be adapted to alternative visualization platforms.
 
-    <CdvizArchitecturePart01 aria-label="CDviz Visualization Layer: Grafana dashboards displaying DORA metrics, deployment frequency, artifact timelines, and CDEvents activity feeds"/>
+   <CdvizArchitecturePart01 aria-label="CDviz Visualization Layer: Grafana dashboards displaying DORA metrics, deployment frequency, artifact timelines, and CDEvents activity feeds"/>
 
 2. **Data Persistence** - [CDviz Database](./cdviz-db/)
 
-    An optimized data storage solution for metrics and events, built on PostgreSQL with specialized extensions for time-series analytics.
+   An optimized data storage solution for metrics and events, built on PostgreSQL with specialized extensions for time-series analytics.
 
-    <CdvizArchitecturePart02 aria-label="CDviz Data Persistence Layer: CDviz Collector sends normalized CDEvents to PostgreSQL database with TimescaleDB extension for time-series storage and analytics"/>
+   <CdvizArchitecturePart02 aria-label="CDviz Data Persistence Layer: CDviz Collector sends normalized CDEvents to PostgreSQL database with TimescaleDB extension for time-series storage and analytics"/>
 
 3. **Data Acquisition** - [CDviz Collector](./cdviz-collector/)
 
-    A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources into the database, event processor,...
+   A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources into the database, event processor,...
 
-    <CdvizArchitecturePart03 aria-label="CDviz Data Acquisition Layer: CDviz Collector ingesting events from GitHub, GitLab, ArgoCD, Kubernetes webhooks, Kafka, and NATS sources, then normalizing them to CDEvents format"/>
+   <CdvizArchitecturePart03 aria-label="CDviz Data Acquisition Layer: CDviz Collector ingesting events from GitHub, GitLab, ArgoCD, Kubernetes webhooks, Kafka, and NATS sources, then normalizing them to CDEvents format"/>
 
 4. **Event Processing**
 
-    An optional reaction layer that turns the same CDEvents stream into automated actions. Instead of (or in addition to) storing events for visualization, the CDviz Collector can route them to its sinks — HTTP endpoints, Kafka, or NATS — so external systems react in real time: notifying a chat channel on a failed deployment, opening a ticket on an incident, triggering a downstream pipeline, or updating an internal developer portal. Because reactions consume the same normalized events that feed the database and dashboards, observability and automation stay in sync without a separate integration layer. This layer is wired through Collector sink and transformer configuration rather than a dedicated component.
+   An optional reaction layer that turns the same CDEvents stream into automated actions. Instead of (or in addition to) storing events for visualization, the CDviz Collector can route them to its sinks — HTTP endpoints, Kafka, or NATS — so external systems react in real time: notifying a chat channel on a failed deployment, opening a ticket on an incident, triggering a downstream pipeline, or updating an internal developer portal. Because reactions consume the same normalized events that feed the database and dashboards, observability and automation stay in sync without a separate integration layer. This layer is wired through Collector sink and transformer configuration rather than a dedicated component.
 
-    <CdvizArchitecture/>
+   <CdvizArchitecture/>
 
 ## Data Flow
 

@@ -1,101 +1,41 @@
 ---
 title: Pricing & Plans
-description: Transparent pricing for CDviz. Start free with open source, scale with enterprise features.
+description: Transparent pricing for CDviz. Community free forever, Cloud at €20/month, Pro at €200/month. No "contact us" to get started.
 layout: home
 markdownStyles: false
 
 faq:
-  - q: "Getting Started & Product Overview"
-    a: ""
-  - q: What is CDviz and how does it work?
+  - q: Which plan should I pick?
     a: |
-      CDviz is a collection of components designed to provide visibility into deployed
-      service versions, associated environments, testing activities, and related information.
-      It collects events from your CI/CD pipeline, stores them in a database, and provides
-      dashboards and analytics to help you understand your software delivery process.
-  - q: What is the relationship between CDviz and CDEvents?
+      If you have no devops and want it to just work, start with <strong>Cloud</strong> —
+      hosted, focused on cross-repo pipeline reliability, free for 14 days.
+      If you want to self-host and need extra integrations (GitLab, Jenkins, ...)
+      plus support, choose <strong>Pro</strong>.
+      If you're a hands-on team happy to self-host the open-source stack,
+      <strong>Community</strong> is free forever.
+  - q: Why is there no "contact us" to buy?
     a: |
-      CDviz is built upon CDEvents, the CD foundation standard for delivery events.
-      The CDviz team is an active member of the CDEvents community, ensuring
-      compatibility with the industry standard for continuous delivery event data.
-  - q: Is it free to use?
+      Because every plan is a defined package with a price you can see and purchase directly.
+      We only ask you to talk to us for genuinely bespoke work — custom development or
+      consulting — which lives under Services, not the plans.
+  - q: Can I keep using CDviz if I cancel?
     a: |
-      Yes. The open-source components (collector, database schemas, Grafana dashboards)
-      are free forever under Apache 2.0.
-      <br/>
-      The Enterprise plan is also <strong>free during the current beta</strong> — including
-      professional support and additional integrations. You'll be notified before
-      any billing begins. <a href="#pricing-plans">See what's included →</a>
-      <br/>
-      Self-hosting involves your own infrastructure costs. A commercial support plan
-      is available for teams that want help with setup or custom integrations —
-      subscriptions also fund ongoing open-source development.
-
-  - q: "Technical Architecture"
-    a: ""
-  - q: Why do dashboard tools like Grafana access the database directly instead of through an API?
+      Yes. The open-source components (collector, database schemas, Grafana components) are
+      Apache 2.0 and yours to keep forever. Cancelling a paid plan ends managed hosting (Cloud)
+      or support and the optional commercial license (Pro) — never your access to the open source.
+  - q: What does Cloud actually show me?
     a: |
-      <ul class="list-disc pl-4">
-        <li>Your data is the value, not the service layer.</li>
-        <li>
-          Dashboards can use the full power of SQL to query data and integrate
-          with any analytics tools without limitations of a custom API.
-        </li>
-        <li>
-          DataOps teams can easily scale with read-only replicas and
-          standard database optimization techniques.
-        </li>
-      </ul>
-
-  - q: "Licensing & Business Model"
-    a: ""
-  - q: What is CDviz's commitment to Open Source?
+      A cross-repo view of which pipelines fail, which fail repeatedly, and whether reliability
+      is trending worse — across all your connected GitHub and GitLab repos. On connect, we
+      import ~30 days of history so the dashboard is useful immediately.
+  - q: How does this relate to CDEvents?
     a: |
-      At CDviz, we firmly believe in Open Source and collaborative development.
-      The cdviz-collector is licensed under Apache License v2 (from v0.15+). The database and
-      Grafana components are under Apache License v2. For details, see our
-      <a href="/compliance">Compliance Page</a>.
-  - q: When should I consider a Commercial subscription?
-    a: |
-      Consider a commercial subscription if you need enterprise features,
-      professional support, or want to support the ongoing development of CDviz.
-      The subscription provides access to additional functionality, our support services,
-      and helps fund the maintenance and enhancement of all CDviz components, including open source.
-      <br/>
-      Note: All open source components use Apache License v2, so no licensing fees are required.
-
-  - q: "Pricing & Plans"
-    a: ""
-  - q: What will Enterprise cost after the beta?
-    a: |
-      The Enterprise plan is priced at €109/month (or €1,100/year, billed in advance) —
-      per organization, not per seat. During the beta, it is completely free.
-      You'll be notified before billing begins.
-  - q: What is the roadmap for SaaS?
-    a: |
-      We are developing a SaaS plan but don't have final details on features
-      and pricing yet. We're open to discussions and partnerships.
-      <br/>
-      If you're interested in SaaS, email us <a href="mainto:contact@cdviz.dev">contact@cdviz.dev</a>.
-  - q: Can I continue using CDviz after my commercial subscription expires?
-    a: |
-      Yes. You can always use the open source components under Apache License v2.
-      However, access to enterprise features and professional support requires an active subscription.
+      CDviz is built on <a href="https://cdevents.dev">CDEvents</a>, the CD Foundation standard
+      for delivery events. Your event data follows an open, portable standard — no lock-in.
   - q: Are prices inclusive of taxes?
     a: |
-      Prices exclude applicable sales tax, VAT, and withholdings.
-      These obligations are the buyer's responsibility.
-
-faq_off:
-  - q: What licensing is used for cdviz-collector?
-    a: |
-      cdviz-collector uses Apache License v2 (from v0.15+), which is a permissive open source license.
-      No commercial license is needed - you can use it freely for any purpose, including commercial use.
-      <br/>
-      For more information please see our <a href="compliance">Compliance Page</a>.
-  - q: Is support included with the subscription?
-    a: |
-      A commercial subscription includes direct-to-engineering support.
+      Prices exclude VAT and applicable sales tax. Cloud and Pro are billed per organization,
+      not per seat.
 ---
 
 <script setup>
