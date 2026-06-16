@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.9] - 2026-06-16
+
+### Changed
+
+- Docs: updated GitHub remote provider syntax from multi-field format to ([2131b24](2131b240c6b54997e56b55d604992aa57c509858))
+
+### Fixed
+
+- Bump kind in charts/cdviz-collector/mise.toml ([77d4a05](77d4a05b779e9bba04a3002ff2ceba9cdc85c971))
+- Bump kubectl in charts/cdviz-collector/mise.toml ([0cf907d](0cf907d164b568ad280b9f2ae12aa2b9e95ab6bc))
+- Bump cdviz-collector to 0.41.0 (#504) ([ef07f67](ef07f6722fb86018b4cc81dfcea677f8294445a3))
+
 ## [1.2.8] - 2026-06-05
 
 ### Fixed

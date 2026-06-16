@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.6] - 2026-06-16
+
+### Changed
+
+- Docs(seo): add few titles, descriptions and sentence to help SEO and ([a8e4bdd](a8e4bdddb3d199ab20668f6881630acbc669dbff))
+
+### Fixed
+
+- Bump npm dependencies in cdviz-grafana (#502) ([a4bf7ae](a4bf7ae45db1a5c4149d7d88f938f48d07989b07))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([14596ee](14596ee236f80c148f1af8c935e203d11813b5b5))
+- Bump yq in cdviz-grafana/mise.toml ([f30aa72](f30aa72f6982183a25e7f6bcb87cd7c376ed1486))
+
 ## [1.11.5] - 2026-06-09
 
 ### Fixed
