@@ -24,11 +24,15 @@ onMounted(() => {
   //timeline.to(`#${p}g3`, { autoAlpha: 1, duration: 0.5 }, "+=0.2");
 
   // Sinks appear one by one (each wrapper contains icon + arrow)
-  timeline.to(`.${p}sink-group`, {
-    autoAlpha: 1,
-    duration: 0.4,
-    stagger: 0.45,
-  }, "+=0.2");
+  timeline.to(
+    `.${p}sink-group`,
+    {
+      autoAlpha: 1,
+      duration: 0.4,
+      stagger: 0.45,
+    },
+    "+=0.2",
+  );
 });
 
 onUnmounted(() => {
@@ -40,6 +44,6 @@ onUnmounted(() => {
 </script>
 <template>
   <div ref="componentRoot">
-    <PanelSvg class="h-full w-full text-primary" fill="currentColor"/>
+    <PanelSvg class="h-full w-full text-primary" fill="currentColor" />
   </div>
 </template>

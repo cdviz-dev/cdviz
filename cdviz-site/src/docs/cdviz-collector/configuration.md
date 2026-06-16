@@ -100,6 +100,7 @@ CDVIZ_COLLECTOR__SOURCES__GITHUB__EXTRACTOR__HEADERS__X-HUB-SIGNATURE-256__TOKEN
 
 > [!NOTE] Bash limitation for hyphenated names
 > Bash does not allow `export` for names containing hyphens. Alternatives:
+>
 > - **Preferred**: use [`--set`](#set-flag) — no quoting tricks needed
 > - `env` wrapper: `env 'CDVIZ_COLLECTOR__...X-HUB-SIGNATURE-256__TOKEN=secret' cdviz-collector connect --config config.toml`
 > - Kubernetes `env[].name` and GitHub Actions `env:` support hyphens natively

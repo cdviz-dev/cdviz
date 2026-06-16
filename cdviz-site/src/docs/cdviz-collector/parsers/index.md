@@ -14,17 +14,17 @@ Parsers convert file contents into JSON messages for the CDviz pipeline.
 
 ## Quick Reference
 
-| Parser      | Format      | Output     | Auto-detected extensions | Use Case                            |
-| ----------- | ----------- | ---------- | ------------------------ | ----------------------------------- |
-| `auto`      | Auto-detect | Varies     | —                        | Default — detects by file extension |
-| `json`      | JSON        | 1 message  | `.json`                  | Single JSON object per file         |
-| `jsonl`     | JSON Lines  | N messages | `.jsonl`, `.ndjson`      | One message per line                |
-| `csv_row`   | CSV         | N messages | `.csv`                   | One message per row (header as keys)|
-| `text`      | Plain text  | 1 message  | —                        | Entire file as `{"text": "..."}`    |
-| `text_line` | Plain text  | N messages | `.txt`, `.log`           | One message per non-empty line      |
-| `xml`       | XML         | 1 message  | `.xml` *(feature flag)*  | XML converted to JSON structure     |
-| `tap`       | TAP format  | 1 message  | `.tap` *(feature flag)*  | Test Anything Protocol results      |
-| `metadata`  | Any         | 1 message  | —                        | File metadata only (no content)     |
+| Parser      | Format      | Output     | Auto-detected extensions | Use Case                             |
+| ----------- | ----------- | ---------- | ------------------------ | ------------------------------------ |
+| `auto`      | Auto-detect | Varies     | —                        | Default — detects by file extension  |
+| `json`      | JSON        | 1 message  | `.json`                  | Single JSON object per file          |
+| `jsonl`     | JSON Lines  | N messages | `.jsonl`, `.ndjson`      | One message per line                 |
+| `csv_row`   | CSV         | N messages | `.csv`                   | One message per row (header as keys) |
+| `text`      | Plain text  | 1 message  | —                        | Entire file as `{"text": "..."}`     |
+| `text_line` | Plain text  | N messages | `.txt`, `.log`           | One message per non-empty line       |
+| `xml`       | XML         | 1 message  | `.xml` _(feature flag)_  | XML converted to JSON structure      |
+| `tap`       | TAP format  | 1 message  | `.tap` _(feature flag)_  | Test Anything Protocol results       |
+| `metadata`  | Any         | 1 message  | —                        | File metadata only (no content)      |
 
 ## Feature Flags
 

@@ -34,17 +34,17 @@ parameters = { root = "/path/to/events" }
 
 ## Parsers
 
-| Parser                                       | Format      | Output     | Notes                               |
-| -------------------------------------------- | ----------- | ---------- | ----------------------------------- |
-| [`auto`](../parsers/#auto)                   | Auto-detect | Varies     | Default — detects by extension      |
-| [`json`](../parsers/#json)                   | JSON        | 1 message  | Single JSON object                  |
-| [`jsonl`](../parsers/#jsonl)                 | JSON Lines  | N messages | One per line                        |
-| [`csv_row`](../parsers/#csv_row)             | CSV         | N messages | One per row                         |
-| [`text`](../parsers/#text)                   | Plain text  | 1 message  | Complete file                       |
-| [`text_line`](../parsers/#text_line)         | Plain text  | N messages | One per line                        |
-| [`xml`](../parsers/#xml)                     | XML         | 1 message  | XML to JSON (`parser_xml` feature)  |
-| [`tap`](../parsers/#tap)                     | TAP         | 1 message  | Test results (`parser_tap` feature) |
-| [`metadata`](../parsers/#metadata)           | Any         | 1 message  | File metadata only                  |
+| Parser                               | Format      | Output     | Notes                               |
+| ------------------------------------ | ----------- | ---------- | ----------------------------------- |
+| [`auto`](../parsers/#auto)           | Auto-detect | Varies     | Default — detects by extension      |
+| [`json`](../parsers/#json)           | JSON        | 1 message  | Single JSON object                  |
+| [`jsonl`](../parsers/#jsonl)         | JSON Lines  | N messages | One per line                        |
+| [`csv_row`](../parsers/#csv_row)     | CSV         | N messages | One per row                         |
+| [`text`](../parsers/#text)           | Plain text  | 1 message  | Complete file                       |
+| [`text_line`](../parsers/#text_line) | Plain text  | N messages | One per line                        |
+| [`xml`](../parsers/#xml)             | XML         | 1 message  | XML to JSON (`parser_xml` feature)  |
+| [`tap`](../parsers/#tap)             | TAP         | 1 message  | Test results (`parser_tap` feature) |
+| [`metadata`](../parsers/#metadata)   | Any         | 1 message  | File metadata only                  |
 
 **[→ Complete Parsers Documentation](../parsers/index.md)**
 

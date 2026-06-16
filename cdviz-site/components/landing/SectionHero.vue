@@ -192,7 +192,7 @@ onMounted(() => {
           primary
         >Try Live Demo</Btn>
         <Btn href="/docs">Get Started Free</Btn>
-        <Btn href="#how">See How It Works</Btn>
+        <Btn href="/cloud">Want it managed? → CDviz Cloud</Btn>
       </div>
       <div
         id="hero-social-proof"
@@ -255,8 +255,12 @@ onMounted(() => {
 
 /* CDEvents badge glow — opacity animation (GPU-composited) */
 @keyframes badge-pulse-glow {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0.95; }
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.95;
+  }
 }
 
 .cdevents-badge-glow {

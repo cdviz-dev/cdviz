@@ -107,13 +107,13 @@
 
 /* ─── CDviz raw palette ──────────────────────────────────────────────── */
 :root {
-  --cdviz-orange: oklch(74.22% 0.166 64.29);   /* #f29107 */
+  --cdviz-orange: oklch(74.22% 0.166 64.29); /* #f29107 */
   --cdviz-orange-dim: oklch(64% 0.14 64.29);
-  --cdviz-purple: oklch(69.49% 0.068 298.56);  /* secondary */
+  --cdviz-purple: oklch(69.49% 0.068 298.56); /* secondary */
   --cdviz-purple-deep: oklch(49.68% 0.104 307.15); /* accent */
-  --cdviz-black: oklch(10.5% 0.01 244);        /* #0e151b page bg */
-  --cdviz-ink: oklch(15% 0.012 244);           /* #111820 raised surfaces */
-  --cdviz-fog: oklch(80.5% 0.019 255.54);      /* #c9d2de body text */
+  --cdviz-black: oklch(10.5% 0.01 244); /* #0e151b page bg */
+  --cdviz-ink: oklch(15% 0.012 244); /* #111820 raised surfaces */
+  --cdviz-fog: oklch(80.5% 0.019 255.54); /* #c9d2de body text */
 }
 
 /* ─── Override VitePress vars with CDviz values (dark-first) ─────── */
@@ -745,7 +745,6 @@ hr {
   transform: rotate(0deg) scale(1);
 }
 
-
 /* GPU-accelerated animations */
 .transform-gpu {
   transform: translateZ(0);
@@ -1042,7 +1041,6 @@ img[src$=".svg"] {
 .animate-rotate-in {
   animation: rotate-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-
 
 /* Card hover animations - User-friendly version */
 .card-hover {
@@ -1860,8 +1858,12 @@ details > *:not(summary) {
 }
 
 @keyframes cdviz-gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1877,7 +1879,10 @@ details > *:not(summary) {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: var(--spacing-lg);
-  transition: border-color 160ms var(--ease-ui), box-shadow 160ms var(--ease-ui), transform 160ms var(--ease-ui);
+  transition:
+    border-color 160ms var(--ease-ui),
+    box-shadow 160ms var(--ease-ui),
+    transform 160ms var(--ease-ui);
 }
 
 .cdviz-card:hover {
@@ -1910,21 +1915,35 @@ details > *:not(summary) {
   box-shadow: 0 4px 15px color-mix(in oklch, var(--cdviz-orange) 25%, transparent);
 }
 
-.cdviz-btn-primary:hover { transform: scale(1.05); box-shadow: var(--shadow-primary-glow); }
-.cdviz-btn-primary:active { transform: scale(0.97); }
+.cdviz-btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-primary-glow);
+}
+.cdviz-btn-primary:active {
+  transform: scale(0.97);
+}
 
 .cdviz-btn-secondary {
   background: var(--secondary);
   color: var(--text);
 }
 
-.cdviz-btn-secondary:hover { transform: scale(1.05); box-shadow: var(--shadow-card-hover); }
-.cdviz-btn-secondary:active { transform: scale(0.97); }
+.cdviz-btn-secondary:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-card-hover);
+}
+.cdviz-btn-secondary:active {
+  transform: scale(0.97);
+}
 
 /* Float animation — marketing only */
 @keyframes cdviz-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .cdviz-float {
@@ -1933,8 +1952,12 @@ details > *:not(summary) {
 
 /* Glow via ::after opacity (GPU-composited, no box-shadow animation) */
 @keyframes cdviz-glow-fade {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .cdviz-glow {

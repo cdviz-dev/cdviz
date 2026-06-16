@@ -36,12 +36,12 @@ flags. **No `--metadata` flags are needed for branch, commit, or job name.**
 
 It sets the following `metadata` fields when the corresponding variables are present:
 
-| `metadata` field | GitHub Actions     | GitLab CI            | Jenkins                       |
-| ---------------- | ------------------ | -------------------- | ----------------------------- |
-| `branch`         | `GITHUB_REF_NAME`  | `CI_COMMIT_REF_NAME` | `GIT_BRANCH`                  |
-| `commit`         | `GITHUB_SHA`       | `CI_COMMIT_SHA`      | `GIT_COMMIT`                  |
-| `job`            | `GITHUB_JOB`       | `CI_JOB_NAME`        | `JOB_BASE_NAME`               |
-| pipeline / run   | `GITHUB_RUN_ID`    | `CI_PIPELINE_ID`     | `BUILD_NUMBER` (`JENKINS_URL`) |
+| `metadata` field | GitHub Actions    | GitLab CI            | Jenkins                        |
+| ---------------- | ----------------- | -------------------- | ------------------------------ |
+| `branch`         | `GITHUB_REF_NAME` | `CI_COMMIT_REF_NAME` | `GIT_BRANCH`                   |
+| `commit`         | `GITHUB_SHA`      | `CI_COMMIT_SHA`      | `GIT_COMMIT`                   |
+| `job`            | `GITHUB_JOB`      | `CI_JOB_NAME`        | `JOB_BASE_NAME`                |
+| pipeline / run   | `GITHUB_RUN_ID`   | `CI_PIPELINE_ID`     | `BUILD_NUMBER` (`JENKINS_URL`) |
 
 **When variables are absent** — for example running locally or in an unrecognized CI — the
 detector leaves those fields unset; nothing fails. Supply the missing values yourself with

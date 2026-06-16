@@ -89,11 +89,11 @@ message is a full object: any of `metadata`, `headers`, or `body` you omit is **
 over from the input — only the fields you put in the object are kept. Echo `.metadata` /
 `.headers` explicitly when you want to preserve them.
 
-| Returned value          | Behavior                                                                 |
-| ----------------------- | ------------------------------------------------------------------------ |
-| `null`                  | **Passthrough** — the original message is forwarded unchanged.           |
-| `[]`                    | **Discard** — nothing is sent downstream (drops/filters the message).    |
-| `[{ … }, { … }]`        | **Replace** — each object in the array is sent downstream as a message.  |
+| Returned value   | Behavior                                                                |
+| ---------------- | ----------------------------------------------------------------------- |
+| `null`           | **Passthrough** — the original message is forwarded unchanged.          |
+| `[]`             | **Discard** — nothing is sent downstream (drops/filters the message).   |
+| `[{ … }, { … }]` | **Replace** — each object in the array is sent downstream as a message. |
 
 ```toml
 [transformers.three_cases]

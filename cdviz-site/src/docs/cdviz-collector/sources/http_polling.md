@@ -88,19 +88,19 @@ With `polling_interval = "1m"` and no `ts_after` configured (so it starts at `Ti
 consecutive polls walk the window forward. Each successful poll sets the next `ts_after` to the
 previous `ts_before`, and `ts_before` to `now − 1 s`:
 
-| Poll | Clock (`now`) | Window requested (`ts_after` … `ts_before`) | Outcome | Next `ts_after` |
-| ---- | ------------- | -------------------------------------------- | ------- | --------------- |
-| #1   | `12:00:00`    | `MIN` … `11:59:59`                           | 2xx     | `11:59:59`      |
-| #2   | `12:01:00`    | `11:59:59` … `12:00:59`                      | 2xx     | `12:00:59`      |
-| #3   | `12:02:00`    | `12:00:59` … `12:01:59`                      | failure | `11:59:59` *(unchanged from #2)* — re-requested next poll |
-| #4   | `12:03:00`    | `12:00:59` … `12:02:59`                      | 2xx     | `12:02:59`      |
+| Poll | Clock (`now`) | Window requested (`ts_after` … `ts_before`) | Outcome | Next `ts_after`                                           |
+| ---- | ------------- | ------------------------------------------- | ------- | --------------------------------------------------------- |
+| #1   | `12:00:00`    | `MIN` … `11:59:59`                          | 2xx     | `11:59:59`                                                |
+| #2   | `12:01:00`    | `11:59:59` … `12:00:59`                     | 2xx     | `12:00:59`                                                |
+| #3   | `12:02:00`    | `12:00:59` … `12:01:59`                     | failure | `11:59:59` _(unchanged from #2)_ — re-requested next poll |
+| #4   | `12:03:00`    | `12:00:59` … `12:02:59`                     | 2xx     | `12:02:59`                                                |
 
 Notes on edges:
 
 - **Exclusive bounds** (`ts_after` and `ts_before` are both exclusive) mean an event whose
   timestamp equals a boundary lands in exactly one window — no double-counting across polls.
 - **The `now − 1 s` cap** intentionally lags the present by one second. Events created in the
-  current second are picked up by the *next* poll rather than risking a partial read; this trades
+  current second are picked up by the _next_ poll rather than risking a partial read; this trades
   one second of latency for not missing late-arriving events at the boundary.
 - A failed poll (see below) does **not** advance the window, so poll #4 simply widens the range
   to re-cover everything poll #3 missed. The endpoint must therefore tolerate overlapping/repeated
@@ -119,7 +119,7 @@ connection errors, or timeouts — is treated as a failure for that poll.
 - **No fast-fail / no crash.** A failing endpoint does not stop the source; it keeps polling on
   its interval, so the source self-heals once the endpoint recovers.
 - **Persisted state only moves forward on success.** When `[state]` is configured, the `ts_after`
-  checkpoint is written *after* a successful poll, so a restart during an outage resumes from the
+  checkpoint is written _after_ a successful poll, so a restart during an outage resumes from the
   last good window rather than skipping ahead.
 - **An invalid `request_vrl`** (e.g. failing to set `.url`) is a configuration error surfaced at
   request build time, not a transient failure — fix the script.

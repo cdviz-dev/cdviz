@@ -93,6 +93,7 @@ CDVIZ_COLLECTOR__SINKS__DATABASE__ENABLED="true" cdviz-collector connect --confi
 ## Pool Sizing
 
 For production deployments:
+
 - `pool_connections_min = 2` keeps warm connections available during quiet periods
 - `pool_connections_max` should not exceed your PostgreSQL `max_connections` divided by the number of collector instances
 - For most deployments, the defaults (`min=1, max=10`) are sufficient

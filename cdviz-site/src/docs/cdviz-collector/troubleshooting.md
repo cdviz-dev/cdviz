@@ -436,11 +436,11 @@ cdviz-collector config --config your-config.toml --check
 
 **Root cause:**
 
-`cdviz-collector` uses [figment](https://docs.rs/figment) with `Env::prefixed("CDVIZ_COLLECTOR__").split("__")`. Double underscores are key-path separators; single underscores are **preserved as literal characters**. HTTP header names use hyphens (`x-hub-signature-256`), so an env var with underscores creates a *second* map entry missing the required `type` field:
+`cdviz-collector` uses [figment](https://docs.rs/figment) with `Env::prefixed("CDVIZ_COLLECTOR__").split("__")`. Double underscores are key-path separators; single underscores are **preserved as literal characters**. HTTP header names use hyphens (`x-hub-signature-256`), so an env var with underscores creates a _second_ map entry missing the required `type` field:
 
-| Env var segment | figment key segment |
-| --- | --- |
-| `X_HUB_SIGNATURE_256` | `x_hub_signature_256` (underscore — no match) |
+| Env var segment       | figment key segment                               |
+| --------------------- | ------------------------------------------------- |
+| `X_HUB_SIGNATURE_256` | `x_hub_signature_256` (underscore — no match)     |
 | `X-HUB-SIGNATURE-256` | `x-hub-signature-256` (hyphen — matches TOML key) |
 
 **Option A — Keep hyphens in the env var name (simplest)**
@@ -475,11 +475,11 @@ Mount the Kubernetes Secret as a volume — secret values stay out of `kubectl d
 
 **Summary:**
 
-| Approach | Env var key | TOML key | Match? |
-| --- | --- | --- | --- |
-| ❌ Wrong | `X_HUB_SIGNATURE_256` (underscore) | `x-hub-signature-256` (hyphen) | No → two map entries, missing `type` |
-| ✅ Option A | `X-HUB-SIGNATURE-256` (hyphen) | `x-hub-signature-256` (hyphen) | Yes |
-| ✅ Option B | _(no env var)_ | `x-hub-signature-256` + `token_file` | Yes (file-based) |
+| Approach    | Env var key                        | TOML key                             | Match?                               |
+| ----------- | ---------------------------------- | ------------------------------------ | ------------------------------------ |
+| ❌ Wrong    | `X_HUB_SIGNATURE_256` (underscore) | `x-hub-signature-256` (hyphen)       | No → two map entries, missing `type` |
+| ✅ Option A | `X-HUB-SIGNATURE-256` (hyphen)     | `x-hub-signature-256` (hyphen)       | Yes                                  |
+| ✅ Option B | _(no env var)_                     | `x-hub-signature-256` + `token_file` | Yes (file-based)                     |
 
 ## Performance Troubleshooting
 

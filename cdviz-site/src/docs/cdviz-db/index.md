@@ -1,6 +1,7 @@
 ---
 description: "CDviz Database: PostgreSQL + TimescaleDB schema for CDEvents storage. Hypertable, JSONB payload, DORA metrics views, and event ingestion API."
 ---
+
 <script setup>
 import DbConceptual from '../../../components/diagrams/DbConceptual.vue'
 </script>

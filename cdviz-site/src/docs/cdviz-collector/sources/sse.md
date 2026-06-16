@@ -104,6 +104,7 @@ url = "https://platform.company.com/api/events/stream"
 ## Reconnection Behavior
 
 The SSE extractor implements automatic reconnection with exponential backoff:
+
 - Retry 1: wait 2s
 - Retry 2: wait 4s
 - Retry 3: wait 8s

@@ -131,6 +131,7 @@ export default defineConfig({
       { text: "Get Started", link: "/docs/getting-started" },
       { text: "Docs", link: "/docs/" },
       { text: "Blog", link: "/blog/" },
+      { text: "Cloud", link: "/cloud" },
       { text: "Pricing", link: "/pricing" },
     ],
     sidebar: {
@@ -446,9 +447,7 @@ export default defineConfig({
     hostname: "https://cdviz.dev",
     transformItems(items) {
       const noindexPrefixes = ["compliance", "contact", "pro/"];
-      return items.filter(
-        (item) => !noindexPrefixes.some((prefix) => item.url.startsWith(prefix)),
-      );
+      return items.filter((item) => !noindexPrefixes.some((prefix) => item.url.startsWith(prefix)));
     },
   },
 
@@ -597,7 +596,10 @@ export default defineConfig({
       }
     }
 
-    if (pageData.relativePath.startsWith("docs/") && pageData.relativePath !== "docs/getting-started.md") {
+    if (
+      pageData.relativePath.startsWith("docs/") &&
+      pageData.relativePath !== "docs/getting-started.md"
+    ) {
       const docArticleSchema = {
         "@context": "https://schema.org",
         "@type": "TechArticle",
@@ -710,6 +712,15 @@ export default defineConfig({
               "./components/landing/SectionPricing.vue",
               "./components/landing/SectionPlans.vue",
               "./components/landing/SectionFaq.vue",
+              "./components/landing/SectionServices.vue",
+            ],
+            cloud: [
+              "./components/landing/SectionCloudHero.vue",
+              "./components/landing/SectionCloudProblem.vue",
+              "./components/landing/SectionCloudHow.vue",
+              "./components/landing/SectionCloudFeatures.vue",
+              "./components/landing/SectionCloudPricing.vue",
+              "./components/landing/SectionCloudTrust.vue",
             ],
           },
         },
