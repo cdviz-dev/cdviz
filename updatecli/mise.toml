@@ -1,5 +1,5 @@
 [tools]
-"github:updatecli/updatecli" = "0.117.1"
+"github:updatecli/updatecli" = "0.118.0"
 "github:chris48s/v8r" = "6.1.0"
 
 [tasks."diff"]
