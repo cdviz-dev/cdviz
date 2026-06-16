@@ -12,6 +12,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 sources:
   kubewatch:
@@ -26,7 +29,7 @@ sources:
 
 targets:
   kubewatchVersion:
-    name: "charts/cdviz-collector/Chart.yaml kubewatch dependency version"
+    name: "bump kubewatch in charts/cdviz-collector/Chart.yaml"
     kind: file
     sourceid: kubewatch
     scmid: default
@@ -42,6 +45,6 @@ actions:
     targets:
       - kubewatchVersion
     spec:
-      title: 'fix(deps): Bump kubewatch to {{ source "kubewatch" }}'
+      title: 'fix(deps): bump kubewatch to {{ source "kubewatch" }}'
       labels:
         - dependencies

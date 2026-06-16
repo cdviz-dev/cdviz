@@ -18,6 +18,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 sources:
   grafanaOss:
@@ -31,7 +34,7 @@ sources:
 
 targets:
   composeGrafana:
-    name: "demos/stack-compose grafana/grafana-oss image tag"
+    name: "bump grafana/grafana-oss in demos/stack-compose/docker-compose.yaml"
     kind: file
     sourceid: grafanaOss
     scmid: default
@@ -47,6 +50,6 @@ actions:
     targets:
       - composeGrafana
     spec:
-      title: 'fix(deps): Bump grafana/grafana-oss to {{ source "grafanaOss" }}'
+      title: 'fix(deps): bump grafana/grafana-oss to {{ source "grafanaOss" }}'
       labels:
         - dependencies

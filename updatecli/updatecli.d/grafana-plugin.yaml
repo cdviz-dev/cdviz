@@ -15,6 +15,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 sources:
   pluginVersion:
@@ -31,7 +34,7 @@ sources:
 
 targets:
   dockerCompose:
-    name: "demos/stack-compose cdviz-executiontable-panel plugin version"
+    name: "bump cdviz-executiontable-panel in demos/stack-compose/docker-compose.yaml"
     kind: file
     sourceid: pluginVersion
     scmid: default
@@ -47,6 +50,6 @@ actions:
     targets:
       - dockerCompose
     spec:
-      title: 'fix(deps): Bump cdviz-executiontable-panel to {{ source "pluginVersion" }}'
+      title: 'fix(deps): bump cdviz-executiontable-panel to {{ source "pluginVersion" }}'
       labels:
         - dependencies

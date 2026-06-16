@@ -21,6 +21,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 sources:
   collectorVersion:
@@ -37,7 +40,7 @@ sources:
 
 targets:
   valuesTag:
-    name: "charts/cdviz-collector/values.yaml image.tag"
+    name: "bump cdviz-collector in charts/cdviz-collector/values.yaml"
     kind: file
     sourceid: collectorVersion
     scmid: default
@@ -67,18 +70,18 @@ targets:
   #     matchpattern: 'version: [0-9]+\.[0-9]+\.[0-9]+'
   #     replacepattern: 'version: {{ source "collectorVersion" }}'
 
-  docsQuickStartUrl:
-    name: "docs quick-start.md installer URL"
-    kind: file
-    sourceid: collectorVersion
-    scmid: default
-    spec:
-      file: cdviz-site/src/docs/cdviz-collector/quick-start.md
-      matchpattern: 'releases/download/v?[0-9]+\.[0-9]+\.[0-9]+/'
-      replacepattern: 'releases/download/{{ source "collectorVersion" }}/'
+  # docsQuickStartUrl:
+  #   name: "bump cdviz-collector in cdviz-site/src/docs/cdviz-collector/quick-start.md"
+  #   kind: file
+  #   sourceid: collectorVersion
+  #   scmid: default
+  #   spec:
+  #     file: cdviz-site/src/docs/cdviz-collector/quick-start.md
+  #     matchpattern: 'releases/download/v?[0-9]+\.[0-9]+\.[0-9]+/'
+  #     replacepattern: 'releases/download/{{ source "collectorVersion" }}/'
 
   miseUseCases:
-    name: "demos/use_cases/mise.toml cdviz-collector version"
+    name: "bump cdviz-collector in demos/use_cases/mise.toml"
     kind: file
     sourceid: collectorVersion
     scmid: default
@@ -88,7 +91,7 @@ targets:
       replacepattern: '"github:cdviz-dev/cdviz-collector" = "{{ source "collectorVersion" }}"'
 
   miseSite:
-    name: "cdviz-site/mise.toml cdviz-collector version"
+    name: "bump cdviz-collector in cdviz-site/mise.toml"
     kind: file
     sourceid: collectorVersion
     scmid: default
@@ -105,10 +108,10 @@ actions:
       - valuesTag
       # - chartAppVersion
       # - docsInstallVersion
-      - docsQuickStartUrl
+      # - docsQuickStartUrl
       - miseUseCases
       - miseSite
     spec:
-      title: 'fix(deps): Bump cdviz-collector to {{ source "collectorVersion" }}'
+      title: 'fix(deps): bump cdviz-collector to {{ source "collectorVersion" }}'
       labels:
         - dependencies

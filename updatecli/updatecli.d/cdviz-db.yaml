@@ -15,6 +15,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 sources:
   dbMigrationVersion:
@@ -30,7 +33,7 @@ sources:
 
 targets:
   chartImageTag:
-    name: "charts/cdviz-db/values.yaml image.tag"
+    name: "bump cdviz-db-migration in charts/cdviz-db/values.yaml"
     kind: file
     sourceid: dbMigrationVersion
     scmid: default
@@ -46,6 +49,6 @@ actions:
     targets:
       - chartImageTag
     spec:
-      title: 'fix(deps): Bump cdviz-db-migration to {{ source "dbMigrationVersion" }}'
+      title: 'fix(deps): bump cdviz-db-migration to {{ source "dbMigrationVersion" }}'
       labels:
         - dependencies

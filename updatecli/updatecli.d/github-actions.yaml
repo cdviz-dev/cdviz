@@ -13,6 +13,9 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 autodiscovery:
   scmid: default
@@ -26,6 +29,6 @@ autodiscovery:
           kind: github/pullrequest
           scmid: default
           spec:
-            title: "fix(deps): Bump GitHub Actions"
+            title: "fix(deps): bump GitHub Actions"
             labels:
               - dependencies

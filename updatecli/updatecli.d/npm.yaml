@@ -16,13 +16,16 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 actions:
   default:
     kind: github/pullrequest
     scmid: default
     spec:
-      title: "fix(deps): Bump npm devDependencies in cdviz-site"
+      title: "fix(deps): bump npm devDependencies in cdviz-site"
       labels:
         - dependencies
 
@@ -57,13 +60,16 @@ scms:
       owner: "{{ .github.owner }}"
       repository: "{{ .github.repository }}"
       branch: "{{ .github.branch }}"
+      commitmessage:
+        type: fix
+        scope: deps
 
 actions:
   default:
     kind: github/pullrequest
     scmid: default
     spec:
-      title: "fix(deps): Bump npm dependencies in cdviz-grafana"
+      title: "fix(deps): bump npm dependencies in cdviz-grafana"
       labels:
         - dependencies
 
