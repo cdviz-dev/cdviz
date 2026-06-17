@@ -24,9 +24,9 @@ const pricingPlans = [
       yearly: 0,
     },
     features: [
-      { icon: "icon-[lucide--workflow]", text: "Collector (ASL v2)" },
+      { icon: "icon-[lucide--antenna]", text: "Collector (ASL v2)" },
       { icon: "icon-[lucide--database]", text: "Database schemas (ASL v2)" },
-      { icon: "icon-[lucide--bar-chart-3]", text: "Grafana components (ASL v2)" },
+      { icon: "icon-[lucide--line-chart]", text: "Grafana components (ASL v2)" },
       { icon: "icon-[lucide--github]", text: "GitHub, Kubernetes, ArgoCD, webhooks" },
       { icon: "icon-[lucide--users]", text: "Community support" },
     ],

@@ -14,7 +14,7 @@ const processSteps = [
   {
     id: 1,
     title: "Event Collection",
-    icon: "icon-[lucide--workflow]",
+    icon: "icon-[lucide--antenna]",
     description:
       "Collect events from GitHub, GitLab, Kubernetes, and 20+ sources. CDviz normalizes everything to the open CDEvents standard automatically.",
     tools: [
@@ -45,7 +45,7 @@ const processSteps = [
   {
     id: 3,
     title: "Event Monitoring",
-    icon: "icon-[lucide--bar-chart-3]",
+    icon: "icon-[lucide--line-chart]",
     description:
       "Pre-built Grafana dashboards surface DORA metrics, deployment timelines, and incident data. Extend and customize them to fit your team's workflow.",
     tools: [{ icon: "icon-[simple-icons--grafana]", title: "Grafana" }, { text: "+more" }],
@@ -179,7 +179,7 @@ const selectComponent = async (componentName) => {
             ]'
             @click='selectComponent("collector")'
           >
-            <span class="icon-[lucide--workflow] h-6 w-6 text-primary mx-auto mb-2 block"></span>
+            <span class="icon-[lucide--antenna] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Collector</div>
             <div class="text-xs text-text/70">Event Processing</div>
           </button>
@@ -207,7 +207,7 @@ const selectComponent = async (componentName) => {
             ]'
             @click='selectComponent("grafana")'
           >
-            <span class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary mx-auto mb-2 block"></span>
+            <span class="icon-[lucide--line-chart] h-6 w-6 text-primary mx-auto mb-2 block"></span>
             <div class="text-sm font-medium text-primary">Dashboards</div>
             <div class="text-xs text-text/70">Visualization</div>
           </button>
@@ -249,7 +249,7 @@ const selectComponent = async (componentName) => {
           <!-- Collector Details -->
           <div v-if='activeComponent === "collector"'>
             <div class="flex items-center gap-3 mb-4">
-              <span class="icon-[lucide--workflow] h-6 w-6 text-primary"></span>
+              <span class="icon-[lucide--antenna] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
                 CDviz Collector
               </h4>
@@ -336,7 +336,7 @@ const selectComponent = async (componentName) => {
           <!-- Grafana Details -->
           <div v-if='activeComponent === "grafana"'>
             <div class="flex items-center gap-3 mb-4">
-              <span class="icon-[lucide--bar-chart-3] h-6 w-6 text-primary"></span>
+              <span class="icon-[lucide--line-chart] h-6 w-6 text-primary"></span>
               <h4 class="text-lg font-semibold text-primary">
                 Grafana Dashboards
               </h4>
