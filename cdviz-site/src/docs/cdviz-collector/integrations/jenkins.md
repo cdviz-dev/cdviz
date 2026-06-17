@@ -173,3 +173,70 @@ pipeline {
 | `--fail-on-collector-error`            | Fail the stage if the collector sink is unreachable         |
 
 See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.
+
+## Polling the Jenkins Remote API (no plugin, no pipeline changes)
+
+`send --run` is a **push** integration: you add it inside your pipeline scripts. As an
+alternative, the collector can **pull** build data directly from the
+[Jenkins Remote API](https://www.jenkins.io/doc/book/using/remote-access-api/) using the
+[`http_polling`](../sources/http_polling.md) source — **no Jenkins plugin to install and no
+changes to your pipelines**. The collector just needs network access and a read-only
+credential.
+
+This suits teams who cannot (or prefer not to) modify every job, want to onboard an existing
+Jenkins instance without touching it, or need to ingest builds that already ran.
+
+A multi-pass driver lists a job's builds, then fetches each build's detail, polling on an
+interval:
+
+```toml
+[sources.jenkins_api]
+enabled = true
+transformer_refs = ["jenkins_builds"]
+
+[sources.jenkins_api.extractor]
+type             = "http_polling"
+polling_interval = "1m"
+parser           = "json"
+min_request_interval = "200ms"
+# ts_after        = "2024-12-01T00:00:00Z"   # optional: also backfill from this date
+# ts_before_limit = "2025-01-01T00:00:00Z"   # optional: stop after this window (one-shot)
+
+driver_vrl = """
+if .response == null {
+    # pass 1: list builds for the pipeline, feed back
+    .requests = [{
+        "url": "https://jenkins.example.com/job/my-pipeline/api/json",
+        "query": { "tree": "builds[number,url]" },
+        "route": "feedback"
+    }]
+} else {
+    # pass 2: fetch each build's detail
+    reqs = []
+    for_each(array!(.response.body.builds)) -> |_index, build| {
+        reqs = push(reqs, {
+            "url": string!(build.url) + "api/json",
+            "route": "pipeline"
+        })
+    }
+    .requests = reqs
+}
+"""
+
+[sources.jenkins_api.extractor.headers]
+Authorization = { type = "secret", value = "Basic BASE64_ENCODED_CREDENTIALS" }
+```
+
+> [!NOTE] Requires cdviz-collector >= 0.42
+> The `http_polling` driver (`driver_vrl`) is available from cdviz-collector 0.42.
+
+Push and poll are complementary:
+
+| Approach            | Setup                          | Latency            | Best for                                     |
+| ------------------- | ------------------------------ | ------------------ | -------------------------------------------- |
+| `send --run` (push) | Edit each pipeline             | Real-time          | Rich events (JUnit results, custom metadata) |
+| API polling (pull)  | One collector source, no edits | `polling_interval` | Zero-touch onboarding, un-instrumented jobs  |
+
+Set `ts_after` / `ts_before_limit` on the same source to also backfill a bounded historical
+window. See the [HTTP Polling Source reference](../sources/http_polling.md) for the routing
+model, time window, and rate-limit handling.

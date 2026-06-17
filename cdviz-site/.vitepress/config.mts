@@ -322,6 +322,10 @@ export default defineConfig({
                       text: "Actions CI",
                       link: "/docs/cdviz-collector/integrations/github-actions-ci",
                     },
+                    {
+                      text: "REST API (Polling)",
+                      link: "/docs/cdviz-collector/integrations/github-rest-api",
+                    },
                   ],
                 },
                 {
