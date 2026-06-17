@@ -131,6 +131,7 @@ export default defineConfig({
       { text: "Get Started", link: "/docs/getting-started" },
       { text: "Docs", link: "/docs/" },
       { text: "Blog", link: "/blog/" },
+      { text: "Use Cases", link: "/use-cases" },
       { text: "Cloud", link: "/cloud" },
       { text: "Pricing", link: "/pricing" },
     ],
