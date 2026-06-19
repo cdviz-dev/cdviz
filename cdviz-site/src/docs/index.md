@@ -6,9 +6,9 @@ description: CDviz platform documentation — collector, database, and Grafana d
 
 CDviz is an open-source SDLC observability platform that collects, stores, and visualizes software delivery events using the [CDEvents](https://cdevents.dev/) standard. It answers operational questions like "What version is running in production?", "When did we last deploy service X?", and "What is our deployment frequency?" — without manually correlating data across CI/CD tools.
 
-CDviz comprises three components: a **Collector** that ingests events from GitHub, GitLab, ArgoCD, Kubernetes, and custom webhooks; a **Database** built on PostgreSQL/TimescaleDB for event storage (ClickHouse is also available as a collector sink, though the Grafana dashboards currently require PostgreSQL); and **Grafana dashboards** for deployment tracking, DORA metrics, incidents, and artifact timelines.
+CDviz comprises three components: a **Collector** that ingests events from GitHub, GitLab, ArgoCD, Kubernetes, custom webhooks, and HTTP polling (for systems without push support); a **Database** built on PostgreSQL/TimescaleDB for event storage (ClickHouse is also available as a collector sink, though the Grafana dashboards currently require PostgreSQL); and **Grafana dashboards** for deployment tracking, DORA metrics, incidents, and artifact timelines.
 
-Unlike polling-based tools (such as Apache DevLake), CDviz uses a push/event-driven model. The same event stream that powers dashboards can also trigger downstream automation via NATS, Kafka, or HTTP — making CDviz both an observability platform and an event-driven SDLC backbone.
+CDviz favors a push/event-driven model — lower overhead, and the same event stream can trigger downstream automation via NATS, Kafka, or HTTP — but it also pulls data via polling for systems that can't push (unlike polling-only tools such as Apache DevLake). This makes CDviz both an observability platform and an event-driven SDLC backbone.
 
 ## Key Capabilities
 

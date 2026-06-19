@@ -267,6 +267,7 @@ const selectComponent = async (componentName) => {
                   <div>• Jenkins, Tekton</div>
                   <div>• Kubernetes, S3</div>
                   <div>• Custom webhooks</div>
+                  <div>• HTTP polling</div>
                 </div>
               </div>
               <div>
