@@ -6,7 +6,7 @@
     "@iconify/tailwind4": "1.2.3",
     "@tailwindcss/vite": "4.3.1",
     "@types/bun": "1.3.14",
-    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it": "14.1.2",
     "@types/node": "26.0.0",
     "gsap": "3.15.0",
     "markdown-it": "14.2.0",
