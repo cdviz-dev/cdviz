@@ -1,7 +1,57 @@
 <script setup>
+import { gsap } from "gsap";
+import { onMounted } from "vue";
 import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
 import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWithLegend.vue";
+
+const executionShots = [
+  {
+    src: "/screenshots/grafana_dashboard_pipeline_executions-20260213.png",
+    alt: "Pipeline execution dashboard showing overview stats, time series charts, and execution table",
+    width: 1613,
+    height: 1185,
+  },
+  {
+    src: "/screenshots/cloud_pipelines_dashboards-20260705.png",
+    alt: "CDviz Cloud pipelines dashboard — the managed equivalent view",
+    width: 1160,
+    height: 1200,
+  },
+];
+
+let executionShotIndex = 0;
+
+function cycleExecutionShot() {
+  const items = Array.from(document.querySelectorAll(".execution-shot"));
+  if (items.length < 2) return;
+
+  const current = items[executionShotIndex];
+  const nextIndex = (executionShotIndex + 1) % executionShots.length;
+  const next = items[nextIndex];
+  executionShotIndex = nextIndex;
+
+  gsap.to(current, {
+    opacity: 0,
+    duration: 0.5,
+    ease: "power2.in",
+  });
+  gsap.to(next, {
+    opacity: 1,
+    duration: 0.5,
+    ease: "power2.out",
+    onComplete() {
+      gsap.delayedCall(4, cycleExecutionShot);
+    },
+  });
+}
+
+onMounted(() => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) return;
+
+  gsap.delayedCall(3, cycleExecutionShot);
+});
 </script>
 <template>
   <section class="space-section">
@@ -44,13 +94,21 @@ import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWith
           href="/docs/cdviz-grafana/execution_dashboards.html"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
-          <div class="md:col-span-3 md:order-1 p-md flex items-center">
+          <div
+            class="md:col-span-3 md:order-1 p-md relative"
+            :style='{ aspectRatio: `${executionShots[0].width} / ${executionShots[0].height}` }'
+          >
             <img
-              src="/screenshots/grafana_dashboard_pipeline_executions-20260213.png"
-              alt="Pipeline execution dashboard showing overview stats, time series charts, and execution table"
-              class="w-full h-auto rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+              v-for="(shot, i) in executionShots"
+              :key="shot.src"
+              class="execution-shot absolute inset-0 w-full h-full object-contain rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+              :src="shot.src"
+              :alt="shot.alt"
+              :width="shot.width"
+              :height="shot.height"
               loading="lazy"
               decoding="async"
+              :style='{ opacity: i === 0 ? 1 : 0 }'
             />
           </div>
           <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
