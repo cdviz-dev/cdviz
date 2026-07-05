@@ -110,7 +110,7 @@ const comparisonRows = [
               <div class="flex flex-col items-center">
                 <span class="text-lg text-primary">Cloud</span>
                 <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded mt-1"
-                >Available July 2026</span>
+                >14-day free trial</span>
               </div>
             </th>
             <th class="text-center p-6 font-semibold text-gray-900 border-b border-gray-200 border-l">

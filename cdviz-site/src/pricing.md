@@ -8,7 +8,8 @@ faq:
   - q: Which plan should I pick?
     a: |
       If you have no devops and want it to just work, start with <strong>Cloud</strong> —
-      hosted, focused on cross-repo pipeline reliability, free for 14 days.
+      hosted, focused on cross-repo pipeline reliability, free for 14 days —
+      no credit card required.
       If you want to self-host and need extra integrations (GitLab, Jenkins, ...)
       plus support, choose <strong>Pro</strong>.
       If you're a hands-on team happy to self-host the open-source stack,

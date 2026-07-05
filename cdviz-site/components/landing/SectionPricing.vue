@@ -56,15 +56,15 @@ const pricingPlans = [
       { icon: "icon-[lucide--users]", text: "For teams of 1–5" },
     ],
     button: {
-      text: "Available July 2026",
+      text: "Start free trial",
       href: "https://app.cdviz.dev",
       primary: true,
-      disabled: true,
+      disabled: false,
     },
     colorScheme: "primary",
     highlighted: true,
     disabled: false,
-    note: "Cloud launches July 2026.",
+    note: "14-day free trial · No credit card required",
   },
   {
     id: "pro",
@@ -94,10 +94,6 @@ const pricingPlans = [
     disabled: false,
   },
 ];
-
-// Cloud Creem TEST products (wired in July 2026 when the Cloud CTA is enabled):
-//   monthly: https://creem.io/test/product/prod_6TgrLkMy0rdNZnhnFsxSAw
-//   yearly:  https://creem.io/test/product/prod_56csAKRs3WAysASjgUcg2a
 
 const getPrice = (plan) => {
   if (isYearly.value) {

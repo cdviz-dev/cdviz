@@ -28,13 +28,11 @@ const repos = [
       place that shows where your pipelines fail, how often, and whether it's getting worse.
     </div>
     <div class="flex flex-col sm:flex-row gap-4 justify-center mb-sm">
-      <Btn href="https://app.cdviz.dev" primary disabled>Available July 2026</Btn>
-      <Btn href="https://demo.cdviz.dev/grafana" target="_blank" rel="noopener">
-        Try the Live Demo →
-      </Btn>
+      <Btn href="https://app.cdviz.dev" primary>Start free trial</Btn>
     </div>
     <p class="cdviz-mono text-text/40 text-xs">
-      Connect in minutes · <span class="text-text/60 font-medium">No devops needed</span> ·
+      Connect in minutes ·
+      <span class="text-text/60 font-medium">14-day free trial, no credit card</span> ·
       Open-source under the hood, no lock-in
     </p>
 
