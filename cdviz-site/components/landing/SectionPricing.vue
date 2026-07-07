@@ -11,7 +11,7 @@ const props = defineProps({
   showToggle: { type: Boolean, default: true },
 });
 
-const isYearly = ref(true);
+const isYearly = ref(false);
 const isToggling = ref(false);
 
 const pricingPlans = [
@@ -268,6 +268,7 @@ onMounted(() => {
             >
               <AnimatedCounter
                 :end="getPrice(plan)"
+                :duration="1300"
                 prefix="€"
                 :suffix='plan.pricing.monthly > 0 ? "/month" : ""'
                 class="font-bold"
