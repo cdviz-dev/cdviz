@@ -705,30 +705,6 @@ export default defineConfig({
           if (warning.code === "UNUSED_EXTERNAL_IMPORT" && warning.exporter === "vue") return;
           warn(warning);
         },
-        output: {
-          // Split landing page and pricing page components into separate chunks
-          manualChunks: {
-            landing: [
-              "./components/landing/SectionHero.vue",
-              "./components/landing/SectionHow.vue",
-              "./components/landing/SectionWhy.vue",
-            ],
-            pricing: [
-              "./components/landing/SectionPricing.vue",
-              "./components/landing/SectionPlans.vue",
-              "./components/landing/SectionFaq.vue",
-              "./components/landing/SectionServices.vue",
-            ],
-            cloud: [
-              "./components/landing/SectionCloudHero.vue",
-              "./components/landing/SectionCloudProblem.vue",
-              "./components/landing/SectionCloudHow.vue",
-              "./components/landing/SectionCloudFeatures.vue",
-              "./components/landing/SectionCloudPricing.vue",
-              "./components/landing/SectionCloudTrust.vue",
-            ],
-          },
-        },
       },
       // Enable compression for smaller bundles
       minify: true,
