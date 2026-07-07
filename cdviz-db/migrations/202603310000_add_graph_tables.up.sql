@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS "cdviz"."graph_edges" (
     "source_event_id" TEXT NOT NULL,
     CONSTRAINT "graph_edges_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "graph_edges_unique" UNIQUE ("from_node_id", "to_node_id", "relation"),
-    CONSTRAINT "graph_edges_from_fk" FOREIGN KEY ("from_node_id") REFERENCES "cdviz"."graph_nodes" ("node_id"),
-    CONSTRAINT "graph_edges_to_fk" FOREIGN KEY ("to_node_id") REFERENCES "cdviz"."graph_nodes" ("node_id")
+    CONSTRAINT "graph_edges_from_fk" FOREIGN KEY ("from_node_id") REFERENCES "cdviz"."graph_nodes"("node_id"),
+    CONSTRAINT "graph_edges_to_fk" FOREIGN KEY ("to_node_id") REFERENCES "cdviz"."graph_nodes"("node_id")
 );
 
 -- Indexes on both FK columns are essential: graph traversal filters on either direction.
