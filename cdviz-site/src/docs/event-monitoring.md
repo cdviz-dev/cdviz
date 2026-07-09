@@ -19,6 +19,10 @@ Every CDEvent stored in the [event store](./cdviz-db/index.md) is available for 
 | [CDEvents Activity](./cdviz-grafana/cdevents_activity.md)        | Raw event stream and activity overview                                |
 | [Incidents & Tickets](./cdviz-grafana/incidents_tickets.md)      | Open incidents, MTTR, change cycle time                               |
 
+## Annotate Your Own Dashboards
+
+Events aren't limited to CDviz's own dashboards. Any Grafana time series panel — even one backed by Prometheus, Datadog, or CloudWatch — can show deployment and incident markers pulled straight from the event store. See [Annotate Runtime Metrics with Events](./cdviz-grafana/annotations.md).
+
 ## Viewers
 
 - **[Grafana](./cdviz-grafana/index.md)** — the reference viewer: pre-built dashboards over a PostgreSQL datasource, self-hosted. See the [setup guide](./cdviz-grafana/index.md). Try it live at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana).

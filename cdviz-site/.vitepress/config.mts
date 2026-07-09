@@ -408,6 +408,10 @@ export default defineConfig({
                   text: "Incidents & Tickets",
                   link: "/docs/cdviz-grafana/incidents_tickets",
                 },
+                {
+                  text: "Annotate Runtime Metrics",
+                  link: "/docs/cdviz-grafana/annotations",
+                },
               ],
             },
             {
