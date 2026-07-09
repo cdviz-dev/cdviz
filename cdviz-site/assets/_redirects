@@ -13,6 +13,10 @@
 /docs/cdviz-collector/integrations/*    /docs/integrations/:splat    301
 
 # Specific path changes (must be before generic rules — first match wins)
+/docs/cdviz-grafana/execution_dashboards        /docs/cdviz-grafana/pipeline_runs    301
+/docs/cdviz-grafana/execution_dashboards.html   /docs/cdviz-grafana/pipeline_runs    301
+
+
 /docs/vs-apache-devlake        /docs/alternatives/vs-apache-devlake    301
 /docs/vs-datadog-ci            /docs/alternatives/vs-datadog-ci         301
 /docs/vs-devstats              /docs/alternatives/vs-devstats           301

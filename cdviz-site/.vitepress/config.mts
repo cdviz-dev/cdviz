@@ -397,8 +397,12 @@ export default defineConfig({
                   link: "/docs/cdviz-grafana/artifact_timeline",
                 },
                 {
-                  text: "Execution Performance",
-                  link: "/docs/cdviz-grafana/execution_dashboards",
+                  text: "Pipeline & Task Runs",
+                  link: "/docs/cdviz-grafana/pipeline_runs",
+                },
+                {
+                  text: "Test Results",
+                  link: "/docs/cdviz-grafana/test_results",
                 },
                 {
                   text: "CDEvents Activity",

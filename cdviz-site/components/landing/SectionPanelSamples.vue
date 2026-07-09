@@ -89,14 +89,14 @@ onMounted(() => {
           </div>
         </a>
 
-        <!-- Execution Performance — alternated: image left, text right -->
+        <!-- Pipeline & Test Runs — alternated: image left, text right -->
         <a
-          href="/docs/cdviz-grafana/execution_dashboards.html"
+          href="/docs/cdviz-grafana/pipeline_runs.html"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div
             class="md:col-span-3 md:order-1 p-md relative"
-            :style='{ aspectRatio: `${executionShots[0].width} / ${executionShots[0].height}` }'
+            :style="{ aspectRatio: `${executionShots[0].width} / ${executionShots[0].height}` }"
           >
             <img
               v-for="(shot, i) in executionShots"
@@ -108,16 +108,16 @@ onMounted(() => {
               :height="shot.height"
               loading="lazy"
               decoding="async"
-              :style='{ opacity: i === 0 ? 1 : 0 }'
+              :style="{ opacity: i === 0 ? 1 : 0 }"
             />
           </div>
           <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
             <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
-              Execution Performance
+              Pipeline &amp; Test Runs
             </h3>
             <p class="text-sm text-text/70">
-              Monitor pipeline runs, task executions, and test results — and spot trends over time.
-              Customize the metrics and thresholds that matter to your team.
+              Spot slow pipelines, flaky tests, and rising failure rates — duration, queue time, and
+              pass/fail history for every pipeline, task, and test.
             </p>
           </div>
         </a>

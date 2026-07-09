@@ -11,13 +11,14 @@ Every CDEvent stored in the [event store](./cdviz-db/index.md) is available for 
 
 ## Dashboards
 
-| Dashboard                                                        | Answers                                                               |
-| ---------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [DORA Metrics](./cdviz-grafana/dora_metrics.md)                  | Deployment frequency, lead time, time to restore, change failure rate |
-| [Artifact Timeline](./cdviz-grafana/artifact_timeline.md)        | Which version is deployed where, and since when                       |
-| [Execution Performance](./cdviz-grafana/execution_dashboards.md) | Pipeline runs, task executions, test results                          |
-| [CDEvents Activity](./cdviz-grafana/cdevents_activity.md)        | Raw event stream and activity overview                                |
-| [Incidents & Tickets](./cdviz-grafana/incidents_tickets.md)      | Open incidents, MTTR, change cycle time                               |
+| Dashboard                                                   | Answers                                                               |
+| ----------------------------------------------------------- | --------------------------------------------------------------------- |
+| [DORA Metrics](./cdviz-grafana/dora_metrics.md)             | Deployment frequency, lead time, time to restore, change failure rate |
+| [Artifact Timeline](./cdviz-grafana/artifact_timeline.md)   | Which version is deployed where, and since when                       |
+| [Pipeline & Task Runs](./cdviz-grafana/pipeline_runs.md)    | Which pipelines are slow or flaky, where runs wait in queue           |
+| [Test Results](./cdviz-grafana/test_results.md)             | Which tests are flaky, which suites got slower                        |
+| [CDEvents Activity](./cdviz-grafana/cdevents_activity.md)   | Raw event stream and activity overview                                |
+| [Incidents & Tickets](./cdviz-grafana/incidents_tickets.md) | Open incidents, MTTR, change cycle time                               |
 
 ## Annotate Your Own Dashboards
 
