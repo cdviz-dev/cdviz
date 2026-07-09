@@ -1,5 +1,4 @@
 ---
-version: 0.30.0
 description: "Install CDviz Collector via shell script, Homebrew, mise, Docker, or Helm chart on Kubernetes."
 ---
 
@@ -12,7 +11,7 @@ description: "Install CDviz Collector via shell script, Homebrew, mise, Docker, 
 Install prebuilt binaries via shell script
 
 ```bash
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/{{ $params.version }}/cdviz-collector-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/%%COLLECTOR_VERSION%%/cdviz-collector-installer.sh | sh
 ```
 
 Install prebuilt binaries via Homebrew
@@ -88,7 +87,7 @@ releases:
     namespace: cdviz-dev
     chart:
       name: oci://ghcr.io/cdviz-dev/charts/cdviz-collector
-      version: 0.30.0-4-g62e72d1
+      version: x.y.z
     <<: *options
     create_namespace: false
     values:

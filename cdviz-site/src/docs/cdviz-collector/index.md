@@ -84,7 +84,7 @@ Concepts and design decisions:
 
 ```bash
 # Quick install
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/v0.6.4/cdviz-collector-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cdviz-dev/cdviz-collector/releases/download/%%COLLECTOR_VERSION%%/cdviz-collector-installer.sh | sh
 
 # Verify
 cdviz-collector --version

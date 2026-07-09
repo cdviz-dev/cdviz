@@ -11,6 +11,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "../src/blog");
 const isDev = process.env.NODE_ENV !== "production";
 
+// Single source of truth for the cdviz-collector version shown in docs.
+// Use %%COLLECTOR_VERSION%% in any markdown (works inside code blocks).
+// Bumped automatically by updatecli (updatecli/updatecli.d/cdviz-collector.yaml).
+const COLLECTOR_VERSION = "0.48.1";
+
 function getDraftExcludes(): string[] {
   if (isDev) return [];
   return getBlogPosts(blogDir, true)
@@ -765,6 +770,15 @@ export default defineConfig({
       chunkSizeWarningLimit: 700,
     },
     plugins: [
+      {
+        name: "inject-versions",
+        enforce: "pre" as const,
+        transform(code: string, id: string) {
+          if (id.endsWith(".md") && code.includes("%%COLLECTOR_VERSION%%")) {
+            return code.replaceAll("%%COLLECTOR_VERSION%%", COLLECTOR_VERSION);
+          }
+        },
+      },
       tailwindcss() as any,
       // https://iconvectors.io/tutorials/use-svg-icons-in-vue-3-with-vite.html
       svgLoader({
