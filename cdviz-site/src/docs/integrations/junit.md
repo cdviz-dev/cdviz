@@ -15,32 +15,130 @@ JUnit XML is the de-facto interchange format for test results — Maven Surefire
 
 ## Setup
 
-### Maven
+Wrap your test command; the collector picks up the report after the process exits. The built-in glob matches `**/TEST-*.xml` and `**/*.xml` — pass `--data <path-or-glob>` when the report lives elsewhere or unrelated XML files could match. Full flags shown once here, shortened in the per-tool examples below:
 
 ```bash
-# Maven generates TEST-*.xml under target/surefire-reports/
 cdviz-collector send --run testsuiterun_junit \
   --metadata "tested_artifact_id=pkg:oci/my-app@sha256:$IMAGE_SHA" \
   --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
-  -- mvn test
-```
-
-### Any JUnit XML producer
-
-The built-in glob picks up `**/TEST-*.xml` and `**/*.xml`. If your tool writes elsewhere, point at the report explicitly:
-
-```bash
-cdviz-collector send --run testsuiterun_junit \
-  --data build/test-results/test/*.xml \
-  --url "$CDVIZ_URL" \
-  -- ./gradlew test
+  -- <your test command>
 ```
 
 Branch, commit, and job name are auto-detected from CI environment variables — see [CI auto-detection](../cdviz-collector/send-run.md#ci-env-detection). Use `--metadata tested_artifact_id=…` to link results to the artifact under test.
 
 > [!NOTE]
 > `testsuiterun_junit` requires the `parser_xml` feature flag. Verify with `cdviz-collector --version`.
+
+## Examples by Ecosystem
+
+### Java — Maven
+
+```bash
+# Surefire writes TEST-*.xml under target/surefire-reports/ (matches the default glob)
+cdviz-collector send --run testsuiterun_junit \
+  --url "$CDVIZ_URL" \
+  -- mvn test
+```
+
+### Java / Kotlin — Gradle
+
+```bash
+# Gradle writes JUnit XML under build/test-results/test/
+cdviz-collector send --run testsuiterun_junit \
+  --data "build/test-results/test/*.xml" \
+  --url "$CDVIZ_URL" \
+  -- ./gradlew test
+```
+
+### Python — pytest
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --url "$CDVIZ_URL" \
+  -- pytest --junit-xml=TEST-results.xml
+```
+
+See the [pytest integration](./pytest.md) for the full walkthrough.
+
+### JavaScript / TypeScript — Bun
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data TEST-results.xml \
+  --url "$CDVIZ_URL" \
+  -- bun test --reporter=junit --reporter-outfile=TEST-results.xml
+```
+
+### JavaScript / TypeScript — Vitest
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data TEST-results.xml \
+  --url "$CDVIZ_URL" \
+  -- npx vitest run --reporter=junit --outputFile=TEST-results.xml
+```
+
+### JavaScript / TypeScript — Jest
+
+Jest needs the [`jest-junit`](https://www.npmjs.com/package/jest-junit) reporter package (writes `junit.xml` by default):
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data junit.xml \
+  --url "$CDVIZ_URL" \
+  -- npx jest --ci --reporters=default --reporters=jest-junit
+```
+
+### Node.js — built-in test runner
+
+Node 21+ ships a `junit` reporter (older versions can use the [TAP reporter](../cdviz-collector/send-run.md) with `--run testsuiterun_tap` instead):
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data TEST-results.xml \
+  --url "$CDVIZ_URL" \
+  -- node --test --test-reporter=junit --test-reporter-destination=TEST-results.xml
+```
+
+### Rust — cargo-nextest
+
+`cargo test` has no JUnit output; [cargo-nextest](https://nexte.st/) does, via a profile:
+
+```toml
+# .config/nextest.toml
+[profile.ci.junit]
+path = "junit.xml" # written under target/nextest/ci/
+```
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data target/nextest/ci/junit.xml \
+  --url "$CDVIZ_URL" \
+  -- cargo nextest run --profile ci
+```
+
+### Go — gotestsum
+
+`go test` has no JUnit output; [gotestsum](https://github.com/gotestyourself/gotestsum) wraps it:
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data TEST-results.xml \
+  --url "$CDVIZ_URL" \
+  -- gotestsum --junitfile TEST-results.xml ./...
+```
+
+### .NET
+
+With the [JunitXml.TestLogger](https://www.nuget.org/packages/JunitXml.TestLogger) NuGet package:
+
+```bash
+cdviz-collector send --run testsuiterun_junit \
+  --data TEST-results.xml \
+  --url "$CDVIZ_URL" \
+  -- dotnet test --logger "junit;LogFilePath=TEST-results.xml"
+```
 
 ## Related
 
