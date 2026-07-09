@@ -389,10 +389,6 @@ export default defineConfig({
               link: "/docs/event-monitoring",
               items: [
                 {
-                  text: "Grafana Setup",
-                  link: "/docs/cdviz-grafana/",
-                },
-                {
                   text: "DORA Metrics",
                   link: "/docs/cdviz-grafana/dora_metrics",
                 },
@@ -753,7 +749,7 @@ export default defineConfig({
       // Enable compression for smaller bundles
       minify: true,
       // Local search index is a lazily-loaded data chunk that legitimately exceeds 500 kB
-      chunkSizeWarningLimit: 650,
+      chunkSizeWarningLimit: 700,
     },
     plugins: [
       tailwindcss() as any,
