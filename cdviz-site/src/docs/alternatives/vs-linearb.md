@@ -13,34 +13,34 @@ Evaluating LinearB alternatives for engineering metrics? This page compares CDvi
 
 Both platforms surface engineering metrics for software delivery teams. They solve different problems with fundamentally different approaches.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-linearb.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-linearb.md)._
 
 ## At a glance
 
-|                                           |               **CDviz**                |           **LinearB**            |
-| ----------------------------------------- | :------------------------------------: | :------------------------------: |
-| License                                   |               Apache 2.0               |           Proprietary            |
-| Self-hosted                               |                   ✅                   |                ❌                |
-| SaaS option                               |              ⏳ waitlist               |                ✅                |
-| Free tier                                 |              ✅ self-host              |    ✅ (up to 8 contributors)     |
-| Commercial support                        |                   ✅                   |          ✅ (included)           |
-| Data ownership                            |                ✅ full                 |         ❌ vendor-hosted         |
-| [CDEvents](https://cdevents.dev) standard |               ✅ native                |                ❌                |
-| Data model                                |          Event-driven (push)           |       Pull-based (polling)       |
-| DORA metrics                              |                   ✅                   |                ✅                |
-| PR / cycle time analytics                 |               ⏳ planned               |        ✅ (core strength)        |
-| Beyond monitoring: trigger workflows      |                   ✅                   | ✅ (PR automations / AI actions) |
-| Built-in integrations                     |  GitHub, GitLab, ArgoCD, Kubernetes…   |  GitHub, GitLab, Jira, Linear…   |
-| Customizable storage backends             |      ✅ (PostgreSQL, ClickHouse…)      |                ❌                |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP tools |       built-in dashboards        |
-| Pricing model                             |        Infra + optional support        | ~$420–$549 per contributor/year  |
+|                                           |                    **CDviz**                     |           **LinearB**            |
+| ----------------------------------------- | :----------------------------------------------: | :------------------------------: |
+| License                                   |                    Apache 2.0                    |           Proprietary            |
+| Self-hosted                               |                        ✅                        |                ❌                |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |                ✅                |
+| Free tier                                 |                   ✅ self-host                   |    ✅ (up to 8 contributors)     |
+| Commercial support                        |                        ✅                        |          ✅ (included)           |
+| Data ownership                            |                     ✅ full                      |         ❌ vendor-hosted         |
+| [CDEvents](https://cdevents.dev) standard |                    ✅ native                     |                ❌                |
+| Data model                                |               Event-driven (push)                |       Pull-based (polling)       |
+| DORA metrics                              |                        ✅                        |                ✅                |
+| PR / cycle time analytics                 |                    ⏳ planned                    |        ✅ (core strength)        |
+| Beyond monitoring: trigger workflows      |                        ✅                        | ✅ (PR automations / AI actions) |
+| Built-in integrations                     |       GitHub, GitLab, ArgoCD, Kubernetes…        |  GitHub, GitLab, Jira, Linear…   |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |                ❌                |
+| Visualization                             |      Grafana, BI, AI agents, MCP, IDP tools      |       built-in dashboards        |
+| Pricing model                             |   Free self-host · Cloud €20/mo · Pro €200/mo    | ~$420–$549 per contributor/year  |
 
 ## Key differences
 
 - **Event-driven vs poll-based**: CDviz receives events in real-time as they happen (push-first), and can also [poll](/docs/cdviz-collector/sources/http_polling) for backfill or webhook-less systems — all normalized to CDEvents. LinearB is polling-only against your git provider and issue tracker APIs, into a proprietary model — simpler to onboard but introduces latency and heavier API load.
 - **Scope of observability**: LinearB excels at git and PR-centric metrics — cycle time, PR review depth, merge frequency. CDviz covers the full delivery pipeline including deployments, incidents, artifact promotion, and Kubernetes events via CDEvents.
 - **Open standard vs proprietary model**: CDviz stores events using the open [CDEvents specification](https://cdevents.dev/), keeping your data vendor-neutral and portable. LinearB's data model is proprietary and tied to its platform.
-- **Data ownership**: With CDviz, your SDLC data stays in your infrastructure (or with CDviz via the SaaS waitlist). LinearB stores all data on its own servers.
+- **Data ownership**: With CDviz, your SDLC data stays in your infrastructure (or hosted by CDviz on the [Cloud plan](/pricing)). LinearB stores all data on its own servers.
 - **Automation scope**: LinearB's workflow automation is focused on PR lifecycle — routing reviews, auto-merging low-risk changes, AI code context. CDviz's event-driven approach lets you trigger any downstream system (Slack, incident tools, deployment pipelines, etc.) based on any SDLC event.
 - **Visualization flexibility**: LinearB provides opinionated built-in dashboards aimed at engineering managers. CDviz connects to any visualization layer — Grafana, BI platforms, AI agents, MCP-connected tools, Internal Developer Platforms.
 - **Cost at scale**: LinearB pricing grows linearly with contributor count ($420–$549/contributor/year). CDviz self-hosted costs scale with infrastructure, not headcount.
@@ -68,9 +68,7 @@ Both platforms surface engineering metrics for software delivery teams. They sol
 
 LinearB is the fastest path to PR-centric engineering metrics and AI-powered code review workflows for teams already using GitHub/GitLab and Jira. CDviz is the right choice when you need full-pipeline observability beyond git, data ownership, an open event standard, real-time event streaming, or cost efficiency at scale — with commercial support available to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -78,7 +76,7 @@ LinearB is the fastest path to PR-centric engineering metrics and AI-powered cod
 
 **Does LinearB support CDEvents?** No. LinearB uses a proprietary polling-based data model tied to its own platform.
 
-**Is CDviz free?** Yes — Apache 2.0. No per-contributor pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only), with no per-contributor pricing. [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support — billed per organization, not per seat.
 
 ## Related comparisons
 

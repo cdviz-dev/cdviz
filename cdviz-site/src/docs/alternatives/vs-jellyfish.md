@@ -13,27 +13,27 @@ Looking for a self-hosted or open-source Jellyfish alternative? This page compar
 
 CDviz is an open-source platform with self-hosted and SaaS options. Jellyfish is a fully-managed commercial SaaS focused on engineering management intelligence. They target different buyers and different constraints.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-jellyfish.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-jellyfish.md)._
 
 ## At a glance
 
-|                                           |            **CDviz**             |        **Jellyfish**         |
-| ----------------------------------------- | :------------------------------: | :--------------------------: |
-| License                                   |            Apache 2.0            |         Proprietary          |
-| Self-hosted                               |                ✅                |              ❌              |
-| SaaS option                               |           ⏳ waitlist            |              ✅              |
-| Commercial support                        |                ✅                |        ✅ (included)         |
-| Data ownership                            |             ✅ full              |       ❌ vendor-hosted       |
-| [CDEvents](https://cdevents.dev) standard |                ✅                |              ❌              |
-| DORA metrics                              |                ✅                |              ✅              |
-| Engineering investment reporting          |                ⏳                |          ✅ (core)           |
-| Jira / sprint allocation tracking         |                ❌                |              ✅              |
-| Pipeline / CI-CD observability            |                ✅                |           limited            |
-| Beyond monitoring: trigger workflows      |                ✅                |              ❌              |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |              ❌              |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP |     built-in dashboards      |
-| Primary buyer                             |     Platform / DevOps teams      | Engineering leadership / VPs |
-| Cost                                      |     Infra + optional support     |   Enterprise SaaS contract   |
+|                                           |                    **CDviz**                     |        **Jellyfish**         |
+| ----------------------------------------- | :----------------------------------------------: | :--------------------------: |
+| License                                   |                    Apache 2.0                    |         Proprietary          |
+| Self-hosted                               |                        ✅                        |              ❌              |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |              ✅              |
+| Commercial support                        |                        ✅                        |        ✅ (included)         |
+| Data ownership                            |                     ✅ full                      |       ❌ vendor-hosted       |
+| [CDEvents](https://cdevents.dev) standard |                        ✅                        |              ❌              |
+| DORA metrics                              |                        ✅                        |              ✅              |
+| Engineering investment reporting          |                        ⏳                        |          ✅ (core)           |
+| Jira / sprint allocation tracking         |                        ❌                        |              ✅              |
+| Pipeline / CI-CD observability            |                        ✅                        |           limited            |
+| Beyond monitoring: trigger workflows      |                        ✅                        |              ❌              |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |              ❌              |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         |     built-in dashboards      |
+| Primary buyer                             |             Platform / DevOps teams              | Engineering leadership / VPs |
+| Cost                                      |   Free self-host · Cloud €20/mo · Pro €200/mo    |   Enterprise SaaS contract   |
 
 ## Key differences
 
@@ -51,7 +51,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Jellyfish is
 - You want events to trigger workflows — not just observe them.
 - Your organization is adopting the CDEvents open standard.
 - You need flexible storage or reporting (BI, AI agents, MCP, IDP integrations).
-- You want commercial support without vendor lock-in (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
+- You want commercial support without vendor lock-in — the [Pro plan](/pricing) includes it (€200/month per organization).
 
 ## When to choose Jellyfish
 
@@ -64,9 +64,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Jellyfish is
 
 Jellyfish is a strong fit for engineering leaders who need investment allocation reporting and visibility into how engineering effort maps to business priorities. CDviz is the right choice for platform and DevOps teams who need CI/CD pipeline observability, open standards, event-driven automation, and data ownership — with commercial support available to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -74,7 +72,7 @@ Jellyfish is a strong fit for engineering leaders who need investment allocation
 
 **Can I self-host Jellyfish?** No. Jellyfish is an enterprise SaaS product with contract-based pricing.
 
-**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
 ## Related comparisons
 

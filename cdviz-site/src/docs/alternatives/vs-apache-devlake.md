@@ -13,24 +13,24 @@ Looking for an open-source Apache DevLake alternative? This page compares CDviz 
 
 Both are open-source platforms for engineering metrics and SDLC visibility. They take different approaches.
 
-> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-apache-devlake.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-apache-devlake.md)._
 
 ## At a glance
 
-|                                           |               **CDviz**                |             **Apache DevLake**             |
-| ----------------------------------------- | :------------------------------------: | :----------------------------------------: |
-| License                                   |               Apache 2.0               |                 Apache 2.0                 |
-| Self-hosted                               |                   ✅                   |                     ✅                     |
-| SaaS option                               |              ⏳ waitlist               |                     ❌                     |
-| Commercial support                        |                   ✅                   |                     ❌                     |
-| [CDEvents](https://cdevents.dev) standard |               ✅ native                |                     ❌                     |
-| Data model                                |          Event-driven (push)           |            Pull-based (polling)            |
-| Beyond monitoring: trigger workflows      |                   ✅                   |                     ❌                     |
-| DORA metrics                              |                   ✅                   |                     ✅                     |
-| Built-in integrations                     |  GitHub, GitLab, ArgoCD, Kubernetes…   | 50+ (Jira, Jenkins, PagerDuty, SonarQube…) |
-| Customizable storage backends             |      ✅ (PostgreSQL, ClickHouse…)      |                     ❌                     |
-| Visualization                             | Grafana, any analytics / AI / IDP tool |        built-in Grafana dashboards         |
-| Maturity                                  |              Early stage               |            Incubating @ Apache             |
+|                                           |                    **CDviz**                     |             **Apache DevLake**             |
+| ----------------------------------------- | :----------------------------------------------: | :----------------------------------------: |
+| License                                   |                    Apache 2.0                    |                 Apache 2.0                 |
+| Self-hosted                               |                        ✅                        |                     ✅                     |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |                     ❌                     |
+| Commercial support                        |                        ✅                        |                     ❌                     |
+| [CDEvents](https://cdevents.dev) standard |                    ✅ native                     |                     ❌                     |
+| Data model                                |               Event-driven (push)                |            Pull-based (polling)            |
+| Beyond monitoring: trigger workflows      |                        ✅                        |                     ❌                     |
+| DORA metrics                              |                        ✅                        |                     ✅                     |
+| Built-in integrations                     |   GitHub, GitLab, Jenkins, ArgoCD, Kubernetes…   | 50+ (Jira, Jenkins, PagerDuty, SonarQube…) |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |                     ❌                     |
+| Visualization                             |      Grafana, any analytics / AI / IDP tool      |        built-in Grafana dashboards         |
+| Maturity                                  |                   Early stage                    |            Incubating @ Apache             |
 
 ## Key differences
 
@@ -49,7 +49,7 @@ Both are open-source platforms for engineering metrics and SDLC visibility. They
 - You already run Grafana and want to add SDLC visibility to existing dashboards.
 - You need flexible storage (ClickHouse, PostgreSQL) or reporting (BI, AI, MCP, IDP).
 - You want commercial support without building and maintaining everything yourself.
-- You prefer a managed SaaS option (join the [waitlist](/pricing)).
+- You prefer a managed option — the [Cloud plan](/pricing) hosts it for you (€20/mo, 14-day free trial).
 
 ## When to choose Apache DevLake
 
@@ -61,19 +61,17 @@ Both are open-source platforms for engineering metrics and SDLC visibility. They
 
 DevLake is the safer "broad coverage" choice for pure metrics and dashboards. CDviz is the right bet if open standards, real-time events, event-driven automation, and composable tooling matter to your team — or if you want commercial support to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
-**Which has more out-of-the-box integrations?** Apache DevLake (50+). CDviz covers GitHub, GitLab, ArgoCD, and Kubernetes today; more via webhooks.
+**Which has more out-of-the-box integrations?** Apache DevLake (50+). CDviz covers GitHub, GitLab, Jenkins, ArgoCD, and Kubernetes today; more via webhooks and custom transformers.
 
 **Does Apache DevLake support CDEvents?** No. DevLake uses a proprietary domain model optimized for its own dashboards.
 
 **Does CDviz only support push?** No. Push (webhooks, Kafka, NATS, SSE) is the real-time default, but the collector can also **pull** via [HTTP polling](/docs/cdviz-collector/sources/http_polling) and file/object-storage sources — for historical backfill and APIs without webhooks (Jenkins, legacy CI). All inputs are normalized to CDEvents.
 
-**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
 ## Related comparisons
 

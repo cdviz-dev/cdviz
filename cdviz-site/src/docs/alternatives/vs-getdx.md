@@ -13,28 +13,28 @@ Looking for a self-hosted or open-source GetDX alternative? This page compares C
 
 CDviz is an open-source platform with self-hosted and SaaS options. GetDX is a fully-managed commercial SaaS that combines quantitative engineering metrics with developer experience surveys. They target overlapping goals but serve different needs.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-getdx.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-getdx.md)._
 
 ## At a glance
 
-|                                           |            **CDviz**             |             **GetDX**             |
-| ----------------------------------------- | :------------------------------: | :-------------------------------: |
-| License                                   |            Apache 2.0            |            Proprietary            |
-| Self-hosted                               |                ✅                |                ❌                 |
-| SaaS option                               |           ⏳ waitlist            |                ✅                 |
-| Commercial support                        |                ✅                |           ✅ (included)           |
-| Data ownership                            |             ✅ full              |         ❌ vendor-hosted          |
-| [CDEvents](https://cdevents.dev) standard |                ✅                |                ❌                 |
-| DORA metrics                              |                ✅                |                ✅                 |
-| Pipeline / CI-CD observability            |                ✅                |              limited              |
-| Developer experience surveys (SPACE/DX)   |                ❌                |             ✅ (core)             |
-| Qualitative + quantitative correlation    |                ❌                |                ✅                 |
-| PR / code review analytics                |                ⏳                |                ✅                 |
-| Beyond monitoring: trigger workflows      |                ✅                |                ❌                 |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |                ❌                 |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP |        built-in dashboards        |
-| Primary buyer                             |     Platform / DevOps teams      | Engineering leadership / DX teams |
-| Cost                                      |     Infra + optional support     |     Enterprise SaaS contract      |
+|                                           |                    **CDviz**                     |             **GetDX**             |
+| ----------------------------------------- | :----------------------------------------------: | :-------------------------------: |
+| License                                   |                    Apache 2.0                    |            Proprietary            |
+| Self-hosted                               |                        ✅                        |                ❌                 |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |                ✅                 |
+| Commercial support                        |                        ✅                        |           ✅ (included)           |
+| Data ownership                            |                     ✅ full                      |         ❌ vendor-hosted          |
+| [CDEvents](https://cdevents.dev) standard |                        ✅                        |                ❌                 |
+| DORA metrics                              |                        ✅                        |                ✅                 |
+| Pipeline / CI-CD observability            |                        ✅                        |              limited              |
+| Developer experience surveys (SPACE/DX)   |                        ❌                        |             ✅ (core)             |
+| Qualitative + quantitative correlation    |                        ❌                        |                ✅                 |
+| PR / code review analytics                |                        ⏳                        |                ✅                 |
+| Beyond monitoring: trigger workflows      |                        ✅                        |                ❌                 |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |                ❌                 |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         |        built-in dashboards        |
+| Primary buyer                             |             Platform / DevOps teams              | Engineering leadership / DX teams |
+| Cost                                      |   Free self-host · Cloud €20/mo · Pro €200/mo    |     Enterprise SaaS contract      |
 
 ## Key differences
 
@@ -53,7 +53,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. GetDX is a f
 - You want events to trigger workflows — not just observe them.
 - Your organization is adopting the CDEvents open standard.
 - You need flexible storage or reporting (BI, AI agents, MCP, IDP integrations).
-- You want commercial support without vendor lock-in (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
+- You want commercial support without vendor lock-in — the [Pro plan](/pricing) includes it (€200/month per organization).
 
 ## When to choose GetDX
 
@@ -67,9 +67,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. GetDX is a f
 
 GetDX is a strong fit for organizations running formal developer experience programs that need to combine quantitative pipeline metrics with qualitative developer sentiment surveys. CDviz is the right choice for platform and DevOps teams who need CI/CD pipeline observability, open standards, event-driven automation, and data ownership — with commercial support available to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -77,7 +75,7 @@ GetDX is a strong fit for organizations running formal developer experience prog
 
 **Can I self-host GetDX?** No. GetDX is an enterprise SaaS product.
 
-**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
 ## Related comparisons
 

@@ -47,3 +47,4 @@ Reshaping can even replace a destination that only acts as a 1-to-1 translator: 
 - [Argo Workflows integration](./integrations/argo-workflows.md) — full setup: HTTP sink + `WorkflowEventBinding`
 - [Sinks reference](./cdviz-collector/sinks/index.md) — all sink types and options
 - [Architecture](./architecture.md) — where reaction fits in the CDviz pipeline
+- [CDviz vs Kargo](./alternatives/vs-kargo.md) — how event reaction compares to a dedicated promotion control plane

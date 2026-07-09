@@ -13,27 +13,27 @@ Looking for a self-hosted or open-source Swarmia alternative? This page compares
 
 CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a fully-managed commercial SaaS focused on engineering effectiveness. They target overlapping use cases but differ on data model, extensibility, and deployment.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-swarmia.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-swarmia.md)._
 
 ## At a glance
 
-|                                           |            **CDviz**             |     **Swarmia**     |
-| ----------------------------------------- | :------------------------------: | :-----------------: |
-| License                                   |            Apache 2.0            |     Proprietary     |
-| Self-hosted                               |                ✅                |         ❌          |
-| SaaS option                               |           ⏳ waitlist            |         ✅          |
-| Commercial support                        |                ✅                |    ✅ (included)    |
-| Data ownership                            |             ✅ full              |  ❌ vendor-hosted   |
-| [CDEvents](https://cdevents.dev) standard |                ✅                |         ❌          |
-| DORA metrics                              |                ✅                |         ✅          |
-| PR / code review analytics                |                ⏳                |         ✅          |
-| Engineering investment tracking           |                ⏳                |         ✅          |
-| Working agreements / team norms           |                ❌                |         ✅          |
-| Pipeline / CI-CD observability            |                ✅                |       limited       |
-| Beyond monitoring: trigger workflows      |                ✅                |         ❌          |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |         ❌          |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP | built-in dashboards |
-| Cost                                      |     Infra + optional support     |  Per-user pricing   |
+|                                           |                    **CDviz**                     |     **Swarmia**     |
+| ----------------------------------------- | :----------------------------------------------: | :-----------------: |
+| License                                   |                    Apache 2.0                    |     Proprietary     |
+| Self-hosted                               |                        ✅                        |         ❌          |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |         ✅          |
+| Commercial support                        |                        ✅                        |    ✅ (included)    |
+| Data ownership                            |                     ✅ full                      |  ❌ vendor-hosted   |
+| [CDEvents](https://cdevents.dev) standard |                        ✅                        |         ❌          |
+| DORA metrics                              |                        ✅                        |         ✅          |
+| PR / code review analytics                |                        ⏳                        |         ✅          |
+| Engineering investment tracking           |                        ⏳                        |         ✅          |
+| Working agreements / team norms           |                        ❌                        |         ✅          |
+| Pipeline / CI-CD observability            |                        ✅                        |       limited       |
+| Beyond monitoring: trigger workflows      |                        ✅                        |         ❌          |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |         ❌          |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         | built-in dashboards |
+| Cost                                      |   Free self-host · Cloud €20/mo · Pro €200/mo    |  Per-user pricing   |
 
 ## Key differences
 
@@ -52,7 +52,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a
 - You want events to trigger workflows — not just observe them.
 - Your organization is adopting the CDEvents open standard.
 - You need flexible storage or reporting (BI, AI agents, MCP, IDP integrations).
-- You want commercial support without vendor lock-in (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
+- You want commercial support without vendor lock-in — the [Pro plan](/pricing) includes it (€200/month per organization).
 
 ## When to choose Swarmia
 
@@ -66,9 +66,7 @@ CDviz is an open-source platform with self-hosted and SaaS options. Swarmia is a
 
 Swarmia is a polished fit for engineering teams focused on developer effectiveness, PR analytics, and working agreements without operational overhead. CDviz is the right choice when data ownership, open standards, CI/CD pipeline observability, event-driven automation, and cost control matter — with commercial support available to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -76,7 +74,7 @@ Swarmia is a polished fit for engineering teams focused on developer effectivene
 
 **Can I self-host Swarmia?** No. Swarmia is a SaaS-only product.
 
-**Is CDviz free?** Yes — Apache 2.0. No per-developer pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only), with no per-developer pricing. [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support — billed per organization, not per seat.
 
 ## Related comparisons
 

@@ -21,7 +21,7 @@ CNCF DevStats is a read-only, batch-based analytics platform (hourly sync from G
 
 CDviz and CNCF DevStats share a similar technical stack — both use PostgreSQL and Grafana — but they solve entirely different problems for entirely different audiences. CDviz is built for enterprise software delivery observability and event-driven CI/CD automation. CNCF DevStats is built for tracking community health and contributor activity in public open-source projects.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-devstats-cncf.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-devstats-cncf.md)._
 
 ## At a glance
 
@@ -29,7 +29,7 @@ CDviz and CNCF DevStats share a similar technical stack — both use PostgreSQL 
 | ----------------------------------------- | :---------------------------------------------: | :----------------------------------: |
 | License                                   |                   Apache 2.0                    |              Apache 2.0              |
 | Self-hosted                               |                       ✅                        |           ✅ (Helm chart)            |
-| Hosted public instance                    |             ⏳ waitlist (cdviz.dev)             | ✅ free at devstats.cncf.io (public) |
+| Hosted public instance                    |   ✅ [Cloud](/pricing) — private to your org    | ✅ free at devstats.cncf.io (public) |
 | Commercial support                        |                       ✅                        |                  ❌                  |
 | Data sources                              | Webhooks, Kafka, NATS, SSE, files, HTTP polling |   GitHub Archive + GitHub API only   |
 | Private repositories                      |                       ✅                        |     ❌ public GitHub repos only      |
@@ -79,9 +79,7 @@ CDviz and CNCF DevStats share a similar technical stack — both use PostgreSQL 
 
 CNCF DevStats and CDviz overlap only in their technology choices (PostgreSQL + Grafana). Their scope, audience, and purpose are completely different. If you run a public open-source project and want to understand who is contributing and how the community is growing, CNCF DevStats is purpose-built for that. If you need to observe and automate a software delivery pipeline — tracking deployments, incidents, CI outcomes, and artifact lifecycles — CDviz is the right tool.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 

@@ -1,10 +1,10 @@
 ---
 title: "CDviz Alternatives & Comparisons: SDLC Observability Tools"
-description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, Jellyfish, Swarmia, GetDX, and other SDLC observability tools. Built on the open CDEvents standard.
+description: Compare CDviz with Apache DevLake, Datadog CI Visibility, Sleuth, Jellyfish, Swarmia, GetDX, Kargo, and other SDLC observability tools. Built on the open CDEvents standard.
 head:
   - - script
     - type: application/ld+json
-    - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Middleware","url":"https://middlewarehq.com"},{"@type":"ListItem","position":10,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":11,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":12,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":13,"name":"Swarmia","url":"https://www.swarmia.com"}]}'
+    - '{"@context":"https://schema.org","@type":"ItemList","name":"SDLC Observability Tools Compared","itemListElement":[{"@type":"ListItem","position":1,"name":"CDviz","url":"https://cdviz.dev"},{"@type":"ListItem","position":2,"name":"Apache DevLake","url":"https://devlake.apache.org"},{"@type":"ListItem","position":3,"name":"Datadog CI Visibility","url":"https://www.datadoghq.com/product/ci-cd-monitoring/"},{"@type":"ListItem","position":4,"name":"DevStats","url":"https://www.devstats.com"},{"@type":"ListItem","position":5,"name":"CNCF DevStats","url":"https://devstats.cncf.io"},{"@type":"ListItem","position":6,"name":"GetDX","url":"https://getdx.com"},{"@type":"ListItem","position":7,"name":"Jellyfish","url":"https://jellyfish.co"},{"@type":"ListItem","position":8,"name":"LinearB","url":"https://linearb.io"},{"@type":"ListItem","position":9,"name":"Middleware","url":"https://middlewarehq.com"},{"@type":"ListItem","position":10,"name":"Powerpipe","url":"https://powerpipe.io"},{"@type":"ListItem","position":11,"name":"Sleuth","url":"https://www.sleuth.io"},{"@type":"ListItem","position":12,"name":"Splunk","url":"https://www.splunk.com"},{"@type":"ListItem","position":13,"name":"Swarmia","url":"https://www.swarmia.com"},{"@type":"ListItem","position":14,"name":"Kargo","url":"https://kargo.io"}]}'
 ---
 
 # SDLC Observability Tools: CDviz vs Swarmia, LinearB, DevLake & More
@@ -15,23 +15,24 @@ The comparisons below cover architecture, integrations, data ownership, and when
 
 ## CDviz vs. similar tools
 
-| Tool                              | License     | Self-hosted | CDEvents  | Commercial support | Data model           |
-| --------------------------------- | ----------- | ----------- | --------- | ------------------ | -------------------- |
-| **CDviz**                         | Apache 2.0  | ✅          | ✅ native | ✅                 | Event-driven (push)  |
-| [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
-| [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)   |
-| [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [CNCF DevStats](#cncf-devstats)   | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
-| [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
-| [Middleware](#middleware)         | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling) |
-| [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling) |
-| [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)   |
-| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion |
-| [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling) |
+| Tool                              | License     | Self-hosted | CDEvents  | Commercial support | Data model              |
+| --------------------------------- | ----------- | ----------- | --------- | ------------------ | ----------------------- |
+| **CDviz**                         | Apache 2.0  | ✅          | ✅ native | ✅                 | Event-driven (push)     |
+| [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
+| [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)      |
+| [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
+| [CNCF DevStats](#cncf-devstats)   | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
+| [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
+| [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
+| [Kargo](#kargo)                   | Apache 2.0  | ✅          | ❌        | ✅ (Akuity)        | Promotion control plane |
+| [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
+| [Middleware](#middleware)         | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling)    |
+| [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
+| [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)      |
+| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion    |
+| [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
 
-_CDviz is free and open-source (Apache 2.0). Commercial support is available as an optional add-on._
+_CDviz is free and open-source (Apache 2.0) — the Community plan is free forever. [Cloud](/pricing) (€20/month) adds managed hosting with a 14-day free trial; [Pro](/pricing) (€200/month) adds extra integrations and commercial support. Both are billed per organization, not per seat._
 
 The "data model" column reflects how each tool **stores** data, not just how it collects it: CDviz normalizes both pushed and pulled inputs to CDEvents — [HTTP polling](/docs/cdviz-collector/sources/http_polling) covers historical backfill and webhook-less systems (Jenkins Remote API, legacy CI) — while the polling-only tools below are tied to a proprietary domain model.
 
@@ -135,9 +136,17 @@ agreements. No self-hosted option.
 
 → [CDviz vs Swarmia](./vs-swarmia.md)
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+### Kargo {#kargo}
+
+Open-source (Apache 2.0) continuous-promotion control plane from Akuity, the creators of Argo.
+Orchestrates multi-stage promotion of container images, Git commits, and Helm charts across
+environments for Kubernetes / GitOps (Argo CD) delivery. A different, largely complementary
+category: Kargo executes promotions inside its own model, CDviz observes your whole toolchain
+and can trigger promotions via [event reaction](/docs/event-reaction) — without replacing any tool.
+
+→ [CDviz vs Kargo](./vs-kargo.md)
+
+<!--@include: ./parts/get-started-cta.md-->
 
 ## Turbot companion tools
 

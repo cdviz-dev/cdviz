@@ -13,27 +13,27 @@ Looking for a Splunk alternative for CI/CD observability? This page compares CDv
 
 CDviz is built specifically for SDLC observability using the CDEvents standard. Splunk is a general-purpose data platform used for log aggregation, SIEM, and operational monitoring that can be configured for CI/CD pipeline visibility. They are different tools solving different primary problems.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-splunk.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-splunk.md)._
 
 ## At a glance
 
-|                                           |            **CDviz**             |             **Splunk**              |
-| ----------------------------------------- | :------------------------------: | :---------------------------------: |
-| License                                   |            Apache 2.0            |             Proprietary             |
-| Primary purpose                           |        SDLC observability        | Log aggregation / SIEM / monitoring |
-| Self-hosted                               |                ✅                |       ✅ (Splunk Enterprise)        |
-| SaaS option                               |           ⏳ waitlist            |     ✅ (Splunk Cloud Platform)      |
-| Commercial support                        |                ✅                |            ✅ (included)            |
-| Data ownership                            |             ✅ full              |        ✅ (self-hosted only)        |
-| [CDEvents](https://cdevents.dev) standard |            ✅ native             |                 ❌                  |
-| Data model                                |       Event-driven (push)        |     Log/metric ingestion (push)     |
-| DORA metrics (out of the box)             |                ✅                |     ⚠️ possible, requires setup      |
-| Beyond monitoring: trigger workflows      |                ✅                |    ✅ (via Splunk SOAR / alerts)    |
-| Deployment & artifact tracking            |                ✅                |     ⚠️ possible, requires setup      |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |  ✅ (Splunk indexes / SmartStore)   |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP |   Splunk dashboards / Grafana OSS   |
-| Pricing model                             |     Infra + optional support     |  Volume (GB/day) or workload-based  |
-| SDLC-specific setup effort                |              ✅ low              |               ⚠️ high                |
+|                                           |                    **CDviz**                     |             **Splunk**              |
+| ----------------------------------------- | :----------------------------------------------: | :---------------------------------: |
+| License                                   |                    Apache 2.0                    |             Proprietary             |
+| Primary purpose                           |                SDLC observability                | Log aggregation / SIEM / monitoring |
+| Self-hosted                               |                        ✅                        |       ✅ (Splunk Enterprise)        |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |     ✅ (Splunk Cloud Platform)      |
+| Commercial support                        |                        ✅                        |            ✅ (included)            |
+| Data ownership                            |                     ✅ full                      |        ✅ (self-hosted only)        |
+| [CDEvents](https://cdevents.dev) standard |                    ✅ native                     |                 ❌                  |
+| Data model                                |               Event-driven (push)                |     Log/metric ingestion (push)     |
+| DORA metrics (out of the box)             |                        ✅                        |     ⚠️ possible, requires setup      |
+| Beyond monitoring: trigger workflows      |                        ✅                        |    ✅ (via Splunk SOAR / alerts)    |
+| Deployment & artifact tracking            |                        ✅                        |     ⚠️ possible, requires setup      |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |  ✅ (Splunk indexes / SmartStore)   |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         |   Splunk dashboards / Grafana OSS   |
+| Pricing model                             |   Free self-host · Cloud €20/mo · Pro €200/mo    |  Volume (GB/day) or workload-based  |
+| SDLC-specific setup effort                |                      ✅ low                      |               ⚠️ high                |
 
 ## Key differences
 
@@ -66,9 +66,7 @@ CDviz is built specifically for SDLC observability using the CDEvents standard. 
 
 Splunk is the right choice when you already run it for security or operations and want to extend it to DevOps log analysis — leveraging existing investment and expertise. CDviz is the right choice when SDLC observability is the primary goal: it delivers purpose-built DORA dashboards, real-time CDEvents pipelines, and workflow automation out of the box, at lower cost and setup complexity, without volume-based pricing.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -76,7 +74,7 @@ Splunk is the right choice when you already run it for security or operations an
 
 **Does Splunk support CDEvents?** No. Splunk uses a proprietary index and query language (SPL).
 
-**Is CDviz free?** Yes — Apache 2.0. No volume-based pricing; infrastructure costs only when self-hosted. Optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only), with no volume-based pricing. [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support — billed per organization, not per seat.
 
 ## Related comparisons
 

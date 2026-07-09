@@ -11,30 +11,33 @@ head:
 
 Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC observability and DORA metrics. The core difference is the data model: Middleware polls your tools (GitHub, GitLab, Jira) on a schedule; CDviz ingests a real-time event stream from your pipeline using the CDEvents standard.
 
-> _Last updated March 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-middleware.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-middleware.md)._
 
 ## At a glance
 
-|                                           |            **CDviz**             |         **Middleware**         |
-| ----------------------------------------- | :------------------------------: | :----------------------------: |
-| License                                   |            Apache 2.0            |           Apache 2.0           |
-| Self-hosted                               |                ✅                |               ✅               |
-| SaaS option                               |           ⏳ waitlist            |               ✅               |
-| Commercial support                        |                ✅                |      ✅ (paid tiers only)      |
-| Data ownership                            |             ✅ full              | ✅ self-hosted / ❌ SaaS cloud |
-| [CDEvents](https://cdevents.dev) standard |                ✅                |               ❌               |
-| Data model                                |  Event-driven (push, real-time)  |      Pull-based (polling)      |
-| DORA metrics                              |                ✅                |               ✅               |
-| Sprint / project flow insights            |                ❌                |               ✅               |
-| PR review analytics                       |                ✅                |               ✅               |
-| AI-powered reports                        |                ❌                |         ✅ (Standard+)         |
-| Beyond monitoring: trigger workflows      |                ✅                |               ❌               |
-| Jira integration                          |                ✅                |               ✅               |
-| Slack integration                         |                ✅                |         ✅ (Standard+)         |
-| Customizable storage backends             |   ✅ (PostgreSQL, ClickHouse…)   |               ❌               |
-| Visualization                             | Grafana, BI, AI agents, MCP, IDP |      built-in dashboards       |
-| Cost (self-hosted)                        |     Infra + optional support     |         Free community         |
-| Cost (SaaS)                               |   ⏳ waitlist (per org/month)    |   $39/user/month (Standard)    |
+|                                           |                    **CDviz**                     |         **Middleware**         |
+| ----------------------------------------- | :----------------------------------------------: | :----------------------------: |
+| License                                   |                    Apache 2.0                    |           Apache 2.0           |
+| Self-hosted                               |                        ✅                        |               ✅               |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |               ✅               |
+| Commercial support                        |                        ✅                        |      ✅ (paid tiers only)      |
+| Data ownership                            |                     ✅ full                      | ✅ self-hosted / ❌ SaaS cloud |
+| [CDEvents](https://cdevents.dev) standard |                        ✅                        |               ❌               |
+| Data model                                |          Event-driven (push, real-time)          |      Pull-based (polling)      |
+| DORA metrics                              |                        ✅                        |               ✅               |
+| Sprint / project flow insights            |                        ❌                        |               ✅               |
+| PR review analytics                       |                    ⏳ planned                    |               ✅               |
+| AI-powered reports                        |                        ❌                        |         ✅ (Standard+)         |
+| Beyond monitoring: trigger workflows      |                        ✅                        |               ❌               |
+| Jira integration                          |                       ✅ ¹                       |               ✅               |
+| Slack integration                         |                       ✅ ²                       |         ✅ (Standard+)         |
+| Customizable storage backends             |           ✅ (PostgreSQL, ClickHouse…)           |               ❌               |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         |      built-in dashboards       |
+| Cost (self-hosted)                        |      Free (Community) · Pro €200/mo per org      |         Free community         |
+| Cost (SaaS)                               |             Cloud €20/month per org              |   $39/user/month (Standard)    |
+
+_¹ Jira issue/version webhooks are mapped to CDEvents by a beta transformer in the [Pro plan](/pricing), or via a [custom webhook mapping](/docs/integrations/custom) on any plan._\
+_² Slack notifications work through the [HTTP sink](/docs/cdviz-collector/sinks/http) plus a workflow tool (n8n, Make, Zapier…) or a custom webhook — there is no ready-made Slack app._
 
 ## Key differences
 
@@ -53,7 +56,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 - You are adopting the CDEvents open standard for interoperability across your toolchain.
 - You need events to trigger downstream workflows — not just observe them.
 - You want flexible storage, reporting, or integration with BI tools, AI agents, or IDPs.
-- Team size makes per-seat pricing expensive; you prefer a flat per-org cost (email us [contact@cdviz.dev](mailto:contact@cdviz.dev)).
+- Team size makes per-seat pricing expensive; you prefer a flat per-org cost ([Cloud €20/mo, Pro €200/mo](/pricing)).
 
 ## When to choose Middleware
 
@@ -66,9 +69,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 
 Middleware and CDviz are both open-source Apache 2.0 tools, but they solve adjacent problems. Middleware is a strong choice for engineering managers who want sprint health, Jira flow, and AI-assisted reporting alongside DORA metrics — with a polished built-in UI and a free self-hosted tier. CDviz is the right choice when you need a real-time event-push model, CDEvents interoperability, event-driven automation, and flexible visualization — with flat per-org commercial support available to reduce operational risk.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -76,9 +77,9 @@ Middleware and CDviz are both open-source Apache 2.0 tools, but they solve adjac
 
 **Does Middleware support CDEvents?** No. Middleware uses a proprietary data model based on polling GitHub/GitLab/Jira APIs. CDEvents integration is not supported.
 
-**Does CDviz support Jira?** Yes — CDviz can ingest Jira-sourced events (e.g., issue state changes) via the CDviz Collector, though sprint-level flow metrics are not a current focus.
+**Does CDviz support Jira?** Yes — a Jira webhook transformer (beta, [Pro plan](/pricing)) maps issue and version events to CDEvents (`ticket.*`, `artifact.published`); on any plan you can ingest Jira webhooks via a [custom mapping](/docs/integrations/custom). Sprint-level flow metrics are not a current focus.
 
-**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing) is billed per organization, not per seat.
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
 ## Related comparisons
 

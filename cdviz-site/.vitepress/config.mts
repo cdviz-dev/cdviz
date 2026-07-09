@@ -107,7 +107,7 @@ export default defineConfig({
   ],
   // base: "/docs/",
   srcDir: "./src",
-  srcExclude: getDraftExcludes(),
+  srcExclude: [...getDraftExcludes(), "**/parts/*.md"],
   markdown: {
     languages: [
       // VRL (Vector Remap Language) has no Shiki grammar; register as stub to avoid fallback warnings
@@ -458,6 +458,7 @@ export default defineConfig({
             { text: "CDviz vs CNCF DevStats", link: "/docs/alternatives/vs-devstats-cncf" },
             { text: "CDviz vs GetDX", link: "/docs/alternatives/vs-getdx" },
             { text: "CDviz vs Jellyfish", link: "/docs/alternatives/vs-jellyfish" },
+            { text: "CDviz vs Kargo", link: "/docs/alternatives/vs-kargo" },
             { text: "CDviz vs LinearB", link: "/docs/alternatives/vs-linearb" },
             { text: "CDviz vs Middleware", link: "/docs/alternatives/vs-middleware" },
             { text: "CDviz vs Powerpipe", link: "/docs/alternatives/vs-powerpipe" },

@@ -13,24 +13,24 @@ Looking for Powerpipe alternatives for pipeline observability? This page compare
 
 Both are open-source, self-hosted tools for engineering visibility — but they solve different problems with different data models.
 
-> _Last updated February 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-powerpipe.md)._
+> _Last updated July 2026. [Corrections welcome](https://github.com/cdviz-dev/cdviz/edit/main/cdviz-site/src/docs/alternatives/vs-powerpipe.md)._
 
 ## At a glance
 
-|                                           |                **CDviz**                 |           **Powerpipe**           |
-| ----------------------------------------- | :--------------------------------------: | :-------------------------------: |
-| License                                   |                Apache 2.0                |              AGPL v3              |
-| Self-hosted                               |                    ✅                    |                ✅                 |
-| SaaS option                               |               ⏳ waitlist                |                ❌                 |
-| Commercial support                        |                    ✅                    |                ❌                 |
-| [CDEvents](https://cdevents.dev) standard |                    ✅                    |                ❌                 |
-| Data model                                |     Event-driven (push, historical)      | Query-driven (SQL, current state) |
-| DORA metrics                              |                    ✅                    |          community mods           |
-| SDLC pipeline visibility                  |                    ✅                    |      ❌ (not primary focus)       |
-| Beyond monitoring: trigger workflows      |                    ✅                    |                ❌                 |
-| Cloud config / security posture           |                    ❌                    |                ✅                 |
-| Visualization                             |     Grafana, BI, AI agents, MCP, IDP     |     built-in (HCL dashboards)     |
-| Storage                                   | PostgreSQL + TimescaleDB (+ ClickHouse…) |   Steampipe (in-memory + cache)   |
+|                                           |                    **CDviz**                     |           **Powerpipe**           |
+| ----------------------------------------- | :----------------------------------------------: | :-------------------------------: |
+| License                                   |                    Apache 2.0                    |              AGPL v3              |
+| Self-hosted                               |                        ✅                        |                ✅                 |
+| SaaS option                               | ✅ [Cloud](/pricing) (€20/mo, 14-day free trial) |                ❌                 |
+| Commercial support                        |                        ✅                        |                ❌                 |
+| [CDEvents](https://cdevents.dev) standard |                        ✅                        |                ❌                 |
+| Data model                                |         Event-driven (push, historical)          | Query-driven (SQL, current state) |
+| DORA metrics                              |                        ✅                        |          community mods           |
+| SDLC pipeline visibility                  |                        ✅                        |      ❌ (not primary focus)       |
+| Beyond monitoring: trigger workflows      |                        ✅                        |                ❌                 |
+| Cloud config / security posture           |                        ❌                        |                ✅                 |
+| Visualization                             |         Grafana, BI, AI agents, MCP, IDP         |     built-in (HCL dashboards)     |
+| Storage                                   |     PostgreSQL + TimescaleDB (+ ClickHouse…)     |   Steampipe (in-memory + cache)   |
 
 ## Key differences
 
@@ -48,7 +48,7 @@ Both are open-source, self-hosted tools for engineering visibility — but they 
 - You want events to trigger downstream workflows, not just be observed.
 - You need flexible reporting — Grafana, BI tools, AI agents, MCP, IDP integrations.
 - You are adopting the CDEvents open standard.
-- You want commercial support or a managed SaaS option ([waitlist](/pricing)).
+- You want commercial support ([Pro plan](/pricing)) or a managed option ([Cloud plan](/pricing), €20/mo, 14-day free trial).
 
 ## When to choose Powerpipe
 
@@ -60,9 +60,7 @@ Both are open-source, self-hosted tools for engineering visibility — but they 
 
 These tools solve different problems. Powerpipe visualizes current cloud state (resource inventories, compliance benchmarks); CDviz tracks what happened in your delivery pipeline over time and routes events to trigger downstream automation. If your primary need is SDLC observability, CDviz is purpose-built for it — Powerpipe fills a separate cloud infrastructure gap.
 
-::: tip Get started with CDviz
-[Self-host CDviz](/docs/getting-started) — free, Apache 2.0. Or [join the SaaS waitlist](/pricing).
-:::
+<!--@include: ./parts/get-started-cta.md-->
 
 ## FAQ
 
@@ -70,7 +68,7 @@ These tools solve different problems. Powerpipe visualizes current cloud state (
 
 **Can CDviz query cloud APIs like Powerpipe?** Not on demand. CDviz receives push events from your SDLC toolchain and can periodically [poll HTTP/SDLC APIs](/docs/cdviz-collector/sources/http_polling) (e.g. Jenkins), storing the results as CDEvents. Powerpipe instead runs on-demand SQL over live cloud state via Steampipe — current-state querying, not a historical event store.
 
-**Is CDviz free?** Yes — Apache 2.0. Infrastructure costs only when self-hosted; optional [commercial support](/pricing).
+**Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
 ## Related comparisons
 
