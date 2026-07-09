@@ -6,9 +6,10 @@ description: |
   <li>Integrate CDEvents into your CI/CD pipelines without webhooks or external infrastructure.</li>
   <li>Send custom CDEvents directly from your GitHub Actions workflows to any CDEvents consumer or HTTP endpoint.</li>
   </ul>
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/github.svg
   type: action/direct
@@ -31,7 +32,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -350,7 +351,7 @@ jobs:
 
 ## Complementary: GitHub Webhook Integration
 
-For comprehensive GitHub activity tracking, you can use the **[GitHub Webhook integration](/docs/cdviz-collector/integrations/github)** alongside this GitHub Action.
+For comprehensive GitHub activity tracking, you can use the **[GitHub Webhook integration](/docs/integrations/github)** alongside this GitHub Action.
 
 **These approaches can be used together** for complete event coverage:
 
@@ -370,11 +371,11 @@ For comprehensive GitHub activity tracking, you can use the **[GitHub Webhook in
 
 **Example combined use case**: Use webhooks to track all repository activity automatically, while adding GitHub Actions to specific deployment workflows to send detailed deployment context and custom metrics.
 
-For step-by-step webhook setup instructions, see the [GitHub Webhook Integration Guide](/docs/cdviz-collector/integrations/github).
+For step-by-step webhook setup instructions, see the [GitHub Webhook Integration Guide](/docs/integrations/github).
 
 ## Advanced Configuration
 
-As the action is a wrapper over [`cdviz-collector send`](../send.md), you can configure it to use:
+As the action is a wrapper over [`cdviz-collector send`](../cdviz-collector/send.md), you can configure it to use:
 
 - transformers
 - all kind of sinks, except those running in server mode (like SSE) and when available (Kafka, NATS, ...)

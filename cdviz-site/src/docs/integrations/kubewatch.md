@@ -8,9 +8,10 @@ description: |
   </ul>
   A CDEvent "service" is created for each containers defined in Kubernetes resource (deployment, statefulset, daemonset) that is created, updated, or deleted.
   Using the container allows to link with packages'events (e.g. from GitHub, GitLab, etc.) that are related to the container.
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/kubewatch.svg
   type: source/webhook
@@ -31,7 +32,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -70,7 +71,7 @@ The `template_rfile` references the VRL (Vector Remap Language) file from the [t
 
 The `kubewatch_metadata` transformer is used to add metadata to the events, such as the environment ID. You can customize the `environment_id` field to match your environment.
 
-For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 ### Setting Up Kubewatch's side
 

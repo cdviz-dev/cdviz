@@ -32,11 +32,11 @@ Practical solutions for specific tasks:
 
 **Integrations:**
 
-- **[GitHub](./integrations/github.md)** - Repository events with signatures
-- **[GitHub Actions](./integrations/github-action.md)** - CI/CD workflow events
-- **[GitLab](./integrations/gitlab.md)** - Repository and pipeline events
-- **[ArgoCD](./integrations/argocd.md)** - GitOps deployment events
-- **[Kubernetes](./integrations/kubewatch.md)** - Cluster events via Kubewatch
+- **[GitHub](../integrations/github.md)** - Repository events with signatures
+- **[GitHub Actions](../integrations/github-action.md)** - CI/CD workflow events
+- **[GitLab](../integrations/gitlab.md)** - Repository and pipeline events
+- **[ArgoCD](../integrations/argocd.md)** - GitOps deployment events
+- **[Kubernetes](../integrations/kubewatch.md)** - Cluster events via Kubewatch
 
 **Common Tasks:**
 

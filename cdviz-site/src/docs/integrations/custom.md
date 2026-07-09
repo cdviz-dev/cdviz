@@ -4,16 +4,16 @@ description: |
   cdviz-collector is open source (Apache 2.0) and extensible.
   Build custom integrations by writing VRL transformer scripts, configuring custom sources and sinks,
   or contributing new connectors back to the project.
-editions:
+plans:
   - community
-  - enterprise
+  - pro
 integration:
   icon: /logos/cdviz.svg
   type: custom
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -24,7 +24,7 @@ cdviz-collector is open source under the [Apache 2.0 license](https://github.com
 
 ## Option 1 — Custom Transformers
 
-The most common path for custom integrations is writing a [VRL (Vector Remap Language)](../transformers.md) transformer script. A transformer receives raw incoming events from any source and maps them to valid CDEvents.
+The most common path for custom integrations is writing a [VRL (Vector Remap Language)](../cdviz-collector/transformers.md) transformer script. A transformer receives raw incoming events from any source and maps them to valid CDEvents.
 
 Steps:
 
@@ -46,13 +46,13 @@ type = "vrl"
 template_file = "/path/to/my_tool_transformer.vrl"
 ```
 
-See the [Transformers documentation](../transformers.md) for the full VRL API and examples from existing integrations in the [transformers-community repository](https://github.com/cdviz-dev/transformers-community).
+See the [Transformers documentation](../cdviz-collector/transformers.md) for the full VRL API and examples from existing integrations in the [transformers-community repository](https://github.com/cdviz-dev/transformers-community).
 
 ## Option 2 — Custom Source or Sink Configuration
 
 cdviz-collector supports multiple source and sink types out of the box (webhooks, polling, message queues, etc.). You may only need to configure an existing type with the right parameters for your tool.
 
-Refer to the [collector configuration documentation](../configuration.md) for the full list of available source and sink types and their options.
+Refer to the [collector configuration documentation](../cdviz-collector/configuration.md) for the full list of available source and sink types and their options.
 
 ## Option 3 — Contribute
 

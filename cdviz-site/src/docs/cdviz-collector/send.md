@@ -132,9 +132,9 @@ Supply your own TOML config with `--config my-run.toml` to define additional `[s
 
 For real-world CI/CD usage see the integration guides:
 
-- **[GitHub Actions CI](./integrations/github-actions-ci.md)**
-- **[GitLab CI](./integrations/gitlab-ci.md)**
-- **[Jenkins](./integrations/jenkins.md)**
+- **[GitHub Actions CI](../integrations/github-actions-ci.md)**
+- **[GitLab CI](../integrations/gitlab-ci.md)**
+- **[Jenkins](../integrations/jenkins.md)**
 
 ## Examples
 

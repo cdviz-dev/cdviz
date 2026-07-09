@@ -92,7 +92,7 @@ Install the binary once, then wrap each step:
       -- npm test
 ```
 
-Add `CDVIZ_URL` and `CDVIZ_TOKEN` as repository secrets (**Settings → Secrets and variables → Actions**). See the [GitLab CI](/docs/cdviz-collector/integrations/gitlab-ci) and [Jenkins](/docs/cdviz-collector/integrations/jenkins) guides for equivalent setups.
+Add `CDVIZ_URL` and `CDVIZ_TOKEN` as repository secrets (**Settings → Secrets and variables → Actions**). See the [GitLab CI](/docs/integrations/gitlab-ci) and [Jenkins](/docs/integrations/jenkins) guides for equivalent setups.
 
 ## Cross-Reference with an Artifact (Optional)
 

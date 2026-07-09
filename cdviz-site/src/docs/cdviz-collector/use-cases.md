@@ -180,7 +180,7 @@ type = "vrl"
 template_file = "/etc/cdviz-collector/transformers/github_events.vrl"
 ```
 
-**Use:** Standard GitHub webhook integration. See [GitHub Integration](./integrations/github.md).
+**Use:** Standard GitHub webhook integration. See [GitHub Integration](../integrations/github.md).
 
 ### Kubernetes Cluster Events
 
@@ -210,7 +210,7 @@ template = '''
 '''
 ```
 
-**Use:** Kubernetes cluster monitoring. See [Kubernetes Integration](./integrations/kubewatch.md).
+**Use:** Kubernetes cluster monitoring. See [Kubernetes Integration](../integrations/kubewatch.md).
 
 ### Build Artifact Processing
 

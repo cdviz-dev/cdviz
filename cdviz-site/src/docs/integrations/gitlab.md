@@ -6,7 +6,8 @@ description: |
   <li>GitLab tracks all changes to repositories, issues, merge requests, releases, pipelines, jobs, and more. And it notifies a webhook about these changes.</li>
   <li>cdviz-collector transforms these events to cdevents, and sends them to the database, listeners,...</li>
   </ul>
-editions:
+plans:
+  - cloud
   - pro
 integration:
   icon: /icons/gitlab.svg
@@ -54,7 +55,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -90,7 +91,7 @@ gitlab_events = { type = "vrl", template_rfile = "transformers-pro:///gitlab_eve
 
 Replace `"token-changeme"` with your actual secret token configured in GitLab webhook settings.
 
-The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro). For more details on remote transformers, see the [Transformers documentation](../transformers.md#using-remote-transformers).
+The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 ### Testing the access to the webhook
 
@@ -142,7 +143,7 @@ To verify webhook reception before transformation:
 transformer_refs = ["log", "discard_all"]  # Log payloads without processing
 ```
 
-For webhook troubleshooting, see the [Webhook Extractor documentation](../sources/webhook.md#testing).
+For webhook troubleshooting, see the [Webhook Extractor documentation](../cdviz-collector/sources/webhook.md#testing).
 
 ## Event Mapping
 

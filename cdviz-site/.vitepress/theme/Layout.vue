@@ -4,6 +4,7 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 
 import Comments from "../../components/Comments.vue";
+import PlanBadges from "../../components/PlanBadges.vue";
 import { useExternalLinkTracking } from "../../composables/useExternalLinkTracking";
 
 const { Layout } = DefaultTheme;
@@ -20,6 +21,7 @@ const showBlogMeta = computed(
 <template>
   <Layout>
     <template #doc-before>
+      <PlanBadges />
       <div v-if="showBlogMeta" class="blog-meta">
         <time v-if="frontmatter.date" :datetime="frontmatter.date">{{ frontmatter.date }}</time>
         <span v-if="frontmatter.author">

@@ -6,9 +6,10 @@ description: |
   <li>ArgoCD tracks application deployments, sync operations, and health status.</li>
   <li>cdviz-collector transforms these events to CDEvents, and sends them to the database, listeners,...</li>
   </ul>
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/argocd.svg
   type: source/webhook
@@ -31,7 +32,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -66,7 +67,7 @@ template_rfile = "transformers-community:///argocd_notifications/transformer.vrl
 
 The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting ArgoCD notification events into CDEvents. The source code can be found at [argocd_notifications/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/argocd_notifications/transformer.vrl).
 
-For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 ### Setting Up ArgoCD Notifications
 

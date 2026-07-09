@@ -154,7 +154,7 @@ cdviz-collector send --run testsuiterun_sarif \
 
 ### Using signature instead of Bearer token
 
-see examples from [GitLab CI](./integrations/gitlab-ci.md)
+see examples from [GitLab CI](../integrations/gitlab-ci.md)
 
 ## Custom Run Types
 
@@ -188,6 +188,6 @@ The `--config` file is merged on top of the built-in `send.base.toml`, so built-
 
 ## CI Integration Guides
 
-- **[GitHub Actions CI](./integrations/github-actions-ci.md)**
-- **[GitLab CI](./integrations/gitlab-ci.md)**
-- **[Jenkins](./integrations/jenkins.md)**
+- **[GitHub Actions CI](../integrations/github-actions-ci.md)**
+- **[GitLab CI](../integrations/gitlab-ci.md)**
+- **[Jenkins](../integrations/jenkins.md)**

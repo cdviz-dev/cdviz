@@ -6,9 +6,10 @@ description: |
   <li>Wrap test steps to emit testSuiteRun CDEvents with JUnit XML or TAP results automatically parsed.</li>
   <li>Wrap non-test steps (build, deploy) with taskRun events — no changes to your existing scripts.</li>
   </ul>
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/github.svg
   type: action/direct
@@ -33,7 +34,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -44,7 +45,7 @@ Use `cdviz-collector send --run` to wrap individual steps in your GitHub Actions
 
 Branch, commit, and job name are read automatically from GitHub Actions environment variables — **no `--metadata` needed for those**. Use `--metadata` to cross-reference the artifact or environment under test.
 
-This complements the [GitHub Webhook integration](/docs/cdviz-collector/integrations/github) (which tracks repository events) and the [GitHub Action](/docs/cdviz-collector/integrations/github-action) (which sends hand-crafted CDEvents).
+This complements the [GitHub Webhook integration](/docs/integrations/github) (which tracks repository events) and the [GitHub Action](/docs/integrations/github-action) (which sends hand-crafted CDEvents).
 
 ## Quick Start
 
@@ -144,7 +145,7 @@ jobs:
 ```
 
 > [!TIP]
-> Branch (`$GITHUB_REF_NAME`) and commit (`$GITHUB_SHA`) are detected automatically by [`ci_env_detection`](../send-run.md#ci-env-detection) — omit `--metadata branch=...` and `--metadata commit=...`.
+> Branch (`$GITHUB_REF_NAME`) and commit (`$GITHUB_SHA`) are detected automatically by [`ci_env_detection`](../cdviz-collector/send-run.md#ci-env-detection) — omit `--metadata branch=...` and `--metadata commit=...`.
 
 ## Options Reference
 
@@ -162,7 +163,7 @@ jobs:
 | `--header "..."`                       | Additional HTTP header (repeatable)                         |
 | `--fail-on-collector-error`            | Fail the step if the collector sink is unreachable          |
 
-See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.
+See the [send --run reference](../cdviz-collector/send-run.md) and [send command reference](../cdviz-collector/send.md) for the full option list.
 
 ## Related Integrations
 

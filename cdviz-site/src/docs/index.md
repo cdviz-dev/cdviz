@@ -36,13 +36,14 @@ CDviz is built on top of the **[CDEvents](https://cdevents.dev/)** specification
 
 To get an overview of how CDviz components collaborate, check out our **[Architecture](./architecture.md)** documentation.
 
-## Components
+## From Events to Insight in 4 Steps
 
-CDviz is a modular platform with three main components:
+CDviz follows the same four steps end to end:
 
-- **[CDviz Collector](./cdviz-collector/index.md):** A flexible data pipeline for acquiring, transforming, and forwarding data from diverse sources.
-- **[CDviz Database](./cdviz-db/index.md):** An optimized data storage solution for metrics and events.
-- **[CDviz Grafana](./cdviz-grafana/index.md):** A comprehensive dashboard solution for visualizing, analyzing, and generating alerts.
+1. **Event Collection** — the **[CDviz Collector](./cdviz-collector/index.md)** ingests events from GitHub, GitLab, Jenkins, ArgoCD, Kubernetes, and more, and normalizes them into CDEvents. Start from the **[Integrations catalog](./integrations/index.md)**.
+2. **Event Store** — the **[CDviz Database](./cdviz-db/index.md)** (PostgreSQL + TimescaleDB) persists every event for time-series analytics.
+3. **Event Monitoring** — **[CDviz Grafana dashboards](./cdviz-grafana/index.md)** surface DORA metrics, deployment timelines, and incidents.
+4. **Event Reaction** — the same event stream **[triggers automation](./event-reaction.md)** via webhooks (n8n, ArgoCD), Kafka, NATS, or SSE.
 
 ## Other Resources
 

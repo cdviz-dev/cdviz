@@ -6,9 +6,8 @@ description: |
   <li>Wrap sh/bat steps in Declarative or Scripted pipelines to emit testSuiteRun CDEvents with JUnit XML results.</li>
   <li>Wrap non-test stages (build, deploy) with taskRun events — no changes to your existing scripts.</li>
   </ul>
-editions:
-  - community
-  - enterprise
+plans:
+  - pro
 integration:
   icon: /icons/jenkins.svg
   type: action/direct
@@ -35,7 +34,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -172,14 +171,14 @@ pipeline {
 | `--header "..."`                       | Additional HTTP header (repeatable)                         |
 | `--fail-on-collector-error`            | Fail the stage if the collector sink is unreachable         |
 
-See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.
+See the [send --run reference](../cdviz-collector/send-run.md) and [send command reference](../cdviz-collector/send.md) for the full option list.
 
 ## Polling the Jenkins Remote API (no plugin, no pipeline changes)
 
 `send --run` is a **push** integration: you add it inside your pipeline scripts. As an
 alternative, the collector can **pull** build data directly from the
 [Jenkins Remote API](https://www.jenkins.io/doc/book/using/remote-access-api/) using the
-[`http_polling`](../sources/http_polling.md) source — **no Jenkins plugin to install and no
+[`http_polling`](../cdviz-collector/sources/http_polling.md) source — **no Jenkins plugin to install and no
 changes to your pipelines**. The collector just needs network access and a read-only
 credential.
 
@@ -238,5 +237,5 @@ Push and poll are complementary:
 | API polling (pull)  | One collector source, no edits | `polling_interval` | Zero-touch onboarding, un-instrumented jobs  |
 
 Set `ts_after` / `ts_before_limit` on the same source to also backfill a bounded historical
-window. See the [HTTP Polling Source reference](../sources/http_polling.md) for the routing
+window. See the [HTTP Polling Source reference](../cdviz-collector/sources/http_polling.md) for the routing
 model, time window, and rate-limit handling.

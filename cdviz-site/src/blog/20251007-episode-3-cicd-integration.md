@@ -282,7 +282,7 @@ jobs:
 
 **Adaptation for other platforms**: Check if your platform has a native CDEvents plugin (see Platform Compatibility Matrix). If not, use Pattern A or B.
 
-**[→ send-cdevents action documentation](/docs/cdviz-collector/integrations/github-action)**
+**[→ send-cdevents action documentation](/docs/integrations/github-action)**
 
 ## Complete Multi-Event Workflow Example
 
@@ -633,7 +633,7 @@ Direct CI/CD integration gives you full control over CDEvents generation. These 
 
 ## Resources
 
-- [send-cdevents GitHub Action](/docs/cdviz-collector/integrations/github-action) - Complete action reference
+- [send-cdevents GitHub Action](/docs/integrations/github-action) - Complete action reference
 - [cdviz-collector send documentation](/docs/cdviz-collector/send) - CLI command reference
 - [Episode #2: Send Your First CDEvent](./20251001-episode-2-send-first-cdevent) - Foundation for these patterns
 - [CDEvents Specification](https://cdevents.dev) - Complete event standard reference

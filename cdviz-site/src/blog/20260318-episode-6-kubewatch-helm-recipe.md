@@ -51,7 +51,7 @@ That single flag (`kubewatch.enabled=true`) deploys [kubewatch](https://github.c
 - cdviz-collector receives kubewatch CloudEvents and transforms them to CDEvents
 - RBAC is configured automatically (read-only ClusterRole)
 
-See [Kubernetes (via Kubewatch) Integration](/docs/cdviz-collector/integrations/kubewatch) for details.
+See [Kubernetes (via Kubewatch) Integration](/docs/integrations/kubewatch) for details.
 
 ## Verify It Works
 

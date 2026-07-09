@@ -138,260 +138,300 @@ export default defineConfig({
     sidebar: {
       "/docs/": [
         {
-          text: "Overview",
-          link: "/docs/",
+          text: "Getting Started",
           items: [
+            { text: "What is CDviz?", link: "/docs/" },
             { text: "Getting Started", link: "/docs/getting-started" },
+            {
+              text: "🚀 Collector Quick Start",
+              link: "/docs/cdviz-collector/quick-start",
+            },
+          ],
+        },
+        {
+          text: "Integrations",
+          link: "/docs/integrations/",
+          items: [
+            {
+              text: "GitHub",
+              collapsed: true,
+              items: [
+                { text: "Webhook", link: "/docs/integrations/github" },
+                {
+                  text: "GitHub Action",
+                  link: "/docs/integrations/github-action",
+                },
+                {
+                  text: "Actions CI",
+                  link: "/docs/integrations/github-actions-ci",
+                },
+                {
+                  text: "REST API (Polling)",
+                  link: "/docs/integrations/github-rest-api",
+                },
+              ],
+            },
+            {
+              text: "GitLab",
+              collapsed: true,
+              items: [
+                { text: "Webhook", link: "/docs/integrations/gitlab" },
+                { text: "GitLab CI", link: "/docs/integrations/gitlab-ci" },
+              ],
+            },
+            { text: "Jenkins", link: "/docs/integrations/jenkins" },
+            { text: "ArgoCD", link: "/docs/integrations/argocd" },
+            {
+              text: "Kubernetes (via Kubewatch)",
+              link: "/docs/integrations/kubewatch",
+            },
+            {
+              text: "Testing & Quality",
+              collapsed: true,
+              items: [
+                { text: "pytest", link: "/docs/integrations/pytest" },
+                { text: "JUnit Reports", link: "/docs/integrations/junit" },
+                {
+                  text: "SARIF (Linters & Scanners)",
+                  link: "/docs/integrations/sarif",
+                },
+              ],
+            },
+            { text: "Grafana", link: "/docs/integrations/grafana" },
+            { text: "PostgreSQL", link: "/docs/integrations/postgresql" },
+            { text: "ClickHouse", link: "/docs/integrations/clickhouse" },
+            { text: "Custom", link: "/docs/integrations/custom" },
+          ],
+        },
+        {
+          text: "Concepts",
+          items: [
             { text: "Architecture", link: "/docs/architecture" },
             { text: "CDEvents", link: "/docs/cdevents" },
           ],
         },
         {
-          text: "Collector",
-          collapsed: true,
-          link: "/docs/cdviz-collector/",
+          text: "Reference",
           items: [
             {
-              text: "🚀 Quick Start",
-              link: "/docs/cdviz-collector/quick-start",
-            },
-            {
-              text: "Installation",
-              link: "/docs/cdviz-collector/install",
-            },
-            {
-              text: "Usage",
-              link: "/docs/cdviz-collector/usage",
+              text: "Event Collection",
               collapsed: true,
+              link: "/docs/cdviz-collector/",
               items: [
                 {
-                  text: "connect",
-                  link: "/docs/cdviz-collector/connect",
+                  text: "Installation",
+                  link: "/docs/cdviz-collector/install",
                 },
                 {
-                  text: "send",
-                  link: "/docs/cdviz-collector/send",
+                  text: "CLI Usage",
+                  link: "/docs/cdviz-collector/usage",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "connect",
+                      link: "/docs/cdviz-collector/connect",
+                    },
+                    {
+                      text: "send",
+                      link: "/docs/cdviz-collector/send",
+                    },
+                    {
+                      text: "send --run (test reporting)",
+                      link: "/docs/cdviz-collector/send-run",
+                    },
+                    {
+                      text: "transform",
+                      link: "/docs/cdviz-collector/transform",
+                    },
+                  ],
                 },
                 {
-                  text: "send --run (test reporting)",
-                  link: "/docs/cdviz-collector/send-run",
+                  text: "Configuration",
+                  link: "/docs/cdviz-collector/configuration",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "TOML Guide",
+                      link: "/docs/cdviz-collector/toml-guide",
+                    },
+                    {
+                      text: "Use Cases",
+                      link: "/docs/cdviz-collector/use-cases",
+                    },
+                    {
+                      text: "Header Validation",
+                      link: "/docs/cdviz-collector/header-validation",
+                    },
+                    {
+                      text: "Header Authentication",
+                      link: "/docs/cdviz-collector/header-authentication",
+                    },
+                  ],
                 },
                 {
-                  text: "transform",
-                  link: "/docs/cdviz-collector/transform",
+                  text: "Sources",
+                  link: "/docs/cdviz-collector/sources/",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "Noop",
+                      link: "/docs/cdviz-collector/sources/noop",
+                    },
+                    {
+                      text: "WebHook",
+                      link: "/docs/cdviz-collector/sources/webhook",
+                    },
+                    {
+                      text: "SSE",
+                      link: "/docs/cdviz-collector/sources/sse",
+                    },
+                    {
+                      text: "OpenDAL / Files",
+                      link: "/docs/cdviz-collector/sources/opendal",
+                    },
+                    {
+                      text: "Kafka",
+                      link: "/docs/cdviz-collector/sources/kafka",
+                    },
+                    {
+                      text: "NATS",
+                      link: "/docs/cdviz-collector/sources/nats",
+                    },
+                    {
+                      text: "HTTP Polling",
+                      link: "/docs/cdviz-collector/sources/http_polling",
+                    },
+                  ],
+                },
+                {
+                  text: "Transformers",
+                  link: "/docs/cdviz-collector/transformers",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "Transformers & CDEvents Rules",
+                      link: "/docs/cdviz-collector/transformers-rules",
+                    },
+                    {
+                      text: "CDEvents Version Conversion",
+                      link: "/docs/cdviz-collector/cdevents-version-conversion",
+                    },
+                  ],
+                },
+                {
+                  text: "Sinks",
+                  link: "/docs/cdviz-collector/sinks/",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "Debug",
+                      link: "/docs/cdviz-collector/sinks/debug",
+                    },
+                    {
+                      text: "Database",
+                      link: "/docs/cdviz-collector/sinks/db",
+                    },
+                    {
+                      text: "ClickHouse",
+                      link: "/docs/cdviz-collector/sinks/clickhouse",
+                    },
+                    {
+                      text: "HTTP",
+                      link: "/docs/cdviz-collector/sinks/http",
+                    },
+                    {
+                      text: "Folder",
+                      link: "/docs/cdviz-collector/sinks/folder",
+                    },
+                    {
+                      text: "SSE",
+                      link: "/docs/cdviz-collector/sinks/sse",
+                    },
+                    {
+                      text: "Kafka",
+                      link: "/docs/cdviz-collector/sinks/kafka",
+                    },
+                    {
+                      text: "NATS",
+                      link: "/docs/cdviz-collector/sinks/nats",
+                    },
+                  ],
+                },
+                {
+                  text: "Parsers",
+                  link: "/docs/cdviz-collector/parsers/",
+                },
+                {
+                  text: "Troubleshooting",
+                  link: "/docs/cdviz-collector/troubleshooting",
                 },
               ],
             },
             {
-              text: "Configuration",
-              link: "/docs/cdviz-collector/configuration",
+              text: "Event Store",
               collapsed: true,
+              link: "/docs/cdviz-db/",
               items: [
+                { text: "Hosting", link: "/docs/cdviz-db/hosting" },
                 {
-                  text: "TOML Guide",
-                  link: "/docs/cdviz-collector/toml-guide",
-                },
-                {
-                  text: "Use Cases",
-                  link: "/docs/cdviz-collector/use-cases",
-                },
-                {
-                  text: "Header Validation",
-                  link: "/docs/cdviz-collector/header-validation",
-                },
-                {
-                  text: "Header Authentication",
-                  link: "/docs/cdviz-collector/header-authentication",
-                },
-              ],
-            },
-            {
-              text: "Sources",
-              link: "/docs/cdviz-collector/sources/",
-              collapsed: true,
-              items: [
-                {
-                  text: "Noop",
-                  link: "/docs/cdviz-collector/sources/noop",
-                },
-                {
-                  text: "WebHook",
-                  link: "/docs/cdviz-collector/sources/webhook",
-                },
-                {
-                  text: "SSE",
-                  link: "/docs/cdviz-collector/sources/sse",
-                },
-                {
-                  text: "OpenDAL / Files",
-                  link: "/docs/cdviz-collector/sources/opendal",
-                },
-                {
-                  text: "Kafka",
-                  link: "/docs/cdviz-collector/sources/kafka",
-                },
-                {
-                  text: "NATS",
-                  link: "/docs/cdviz-collector/sources/nats",
-                },
-                {
-                  text: "HTTP Polling",
-                  link: "/docs/cdviz-collector/sources/http_polling",
-                },
-              ],
-            },
-            {
-              text: "Transformers",
-              link: "/docs/cdviz-collector/transformers",
-              collapsed: true,
-              items: [
-                {
-                  text: "Transformers & CDEvents Rules",
-                  link: "/docs/cdviz-collector/transformers-rules",
-                },
-                {
-                  text: "CDEvents Version Conversion",
-                  link: "/docs/cdviz-collector/cdevents-version-conversion",
-                },
-              ],
-            },
-            {
-              text: "Sinks",
-              link: "/docs/cdviz-collector/sinks/",
-              collapsed: true,
-              items: [
-                {
-                  text: "Debug",
-                  link: "/docs/cdviz-collector/sinks/debug",
-                },
-                {
-                  text: "Database",
+                  text: "Database Sink",
                   link: "/docs/cdviz-collector/sinks/db",
                 },
                 {
-                  text: "ClickHouse",
+                  text: "ClickHouse Sink",
                   link: "/docs/cdviz-collector/sinks/clickhouse",
                 },
+              ],
+            },
+            {
+              text: "Event Monitoring",
+              collapsed: true,
+              link: "/docs/cdviz-grafana/",
+              items: [
                 {
-                  text: "HTTP",
+                  text: "DORA Metrics",
+                  link: "/docs/cdviz-grafana/dora_metrics",
+                },
+                {
+                  text: "Artifact Timeline",
+                  link: "/docs/cdviz-grafana/artifact_timeline",
+                },
+                {
+                  text: "Execution Performance",
+                  link: "/docs/cdviz-grafana/execution_dashboards",
+                },
+                {
+                  text: "CDEvents Activity",
+                  link: "/docs/cdviz-grafana/cdevents_activity",
+                },
+                {
+                  text: "Incidents & Tickets",
+                  link: "/docs/cdviz-grafana/incidents_tickets",
+                },
+              ],
+            },
+            {
+              text: "Event Reaction",
+              collapsed: true,
+              link: "/docs/event-reaction",
+              items: [
+                {
+                  text: "HTTP / Webhooks Sink",
                   link: "/docs/cdviz-collector/sinks/http",
                 },
                 {
-                  text: "Folder",
-                  link: "/docs/cdviz-collector/sinks/folder",
-                },
-                {
-                  text: "SSE",
+                  text: "SSE Sink",
                   link: "/docs/cdviz-collector/sinks/sse",
                 },
                 {
-                  text: "Kafka",
+                  text: "Kafka Sink",
                   link: "/docs/cdviz-collector/sinks/kafka",
                 },
                 {
-                  text: "NATS",
+                  text: "NATS Sink",
                   link: "/docs/cdviz-collector/sinks/nats",
                 },
               ],
-            },
-            {
-              text: "Parsers",
-              link: "/docs/cdviz-collector/parsers/",
-            },
-            {
-              text: "Troubleshooting",
-              link: "/docs/cdviz-collector/troubleshooting",
-            },
-            {
-              text: "Integrations",
-              collapsed: true,
-              items: [
-                {
-                  text: "GitHub",
-                  collapsed: false,
-                  items: [
-                    {
-                      text: "Webhook",
-                      link: "/docs/cdviz-collector/integrations/github",
-                    },
-                    {
-                      text: "GitHub Action",
-                      link: "/docs/cdviz-collector/integrations/github-action",
-                    },
-                    {
-                      text: "Actions CI",
-                      link: "/docs/cdviz-collector/integrations/github-actions-ci",
-                    },
-                    {
-                      text: "REST API (Polling)",
-                      link: "/docs/cdviz-collector/integrations/github-rest-api",
-                    },
-                  ],
-                },
-                {
-                  text: "GitLab",
-                  collapsed: false,
-                  items: [
-                    {
-                      text: "Webhook",
-                      link: "/docs/cdviz-collector/integrations/gitlab",
-                    },
-                    {
-                      text: "GitLab CI",
-                      link: "/docs/cdviz-collector/integrations/gitlab-ci",
-                    },
-                  ],
-                },
-                {
-                  text: "Jenkins",
-                  link: "/docs/cdviz-collector/integrations/jenkins",
-                },
-                {
-                  text: "ArgoCD",
-                  link: "/docs/cdviz-collector/integrations/argocd",
-                },
-                {
-                  text: "Kubernetes (via Kubewatch)",
-                  link: "/docs/cdviz-collector/integrations/kubewatch",
-                },
-                {
-                  text: "Custom",
-                  link: "/docs/cdviz-collector/integrations/custom",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          text: "Database",
-          collapsed: true,
-          link: "/docs/cdviz-db/",
-          items: [{ text: "Hosting", link: "/docs/cdviz-db/hosting" }],
-        },
-        {
-          text: "Grafana",
-          collapsed: true,
-          link: "/docs/cdviz-grafana/",
-          items: [
-            {
-              text: "Artifact Timeline",
-              link: "/docs/cdviz-grafana/artifact_timeline",
-            },
-            {
-              text: "Execution Performance",
-              link: "/docs/cdviz-grafana/execution_dashboards",
-            },
-            {
-              text: "CDEvents Activity",
-              link: "/docs/cdviz-grafana/cdevents_activity",
-            },
-            {
-              text: "DORA Metrics",
-              link: "/docs/cdviz-grafana/dora_metrics",
-            },
-            {
-              text: "Incidents & Tickets",
-              link: "/docs/cdviz-grafana/incidents_tickets",
             },
           ],
         },

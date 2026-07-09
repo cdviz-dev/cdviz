@@ -9,6 +9,9 @@
 /docs/cdviz-collector/parsers/tap       /docs/cdviz-collector/parsers/    301
 /docs/cdviz-collector/parsers/metadata  /docs/cdviz-collector/parsers/    301
 
+# Integrations promoted to top-level /docs/integrations/
+/docs/cdviz-collector/integrations/*    /docs/integrations/:splat    301
+
 # Specific path changes (must be before generic rules — first match wins)
 /docs/vs-apache-devlake        /docs/alternatives/vs-apache-devlake    301
 /docs/vs-datadog-ci            /docs/alternatives/vs-datadog-ci         301

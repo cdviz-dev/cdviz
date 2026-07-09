@@ -7,9 +7,10 @@ description: |
   <li>Ingest GitHub activity in environments where webhooks are not available (no inbound endpoint, GitHub Enterprise behind a firewall).</li>
   <li>Multi-pass discovery: list an org's repositories/packages, then fan out to fetch each one's resources — no per-repo configuration.</li>
   </ul>
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/github.svg
   type: source/http_polling
@@ -36,7 +37,7 @@ references:
   - title: HTTP Polling Source reference
     url: /docs/cdviz-collector/sources/http_polling
   - title: GitHub Webhook Integration (real-time)
-    url: /docs/cdviz-collector/integrations/github
+    url: /docs/integrations/github
   - title: github_rest_api transformers (source + example config)
     url: https://github.com/cdviz-dev/transformers-community/tree/main/github_rest_api
   - title: GitHub REST API documentation
@@ -44,13 +45,13 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
 
 > [!NOTE] Requires cdviz-collector >= 0.42
-> This integration uses the [`http_polling`](../sources/http_polling.md) source with
+> This integration uses the [`http_polling`](../cdviz-collector/sources/http_polling.md) source with
 > the `driver_vrl` multi-pass driver. Earlier releases (single-pass `request_vrl`)
 > are not compatible.
 
@@ -72,7 +73,7 @@ then track live activity with webhooks.
 
 ## How It Works
 
-Each source uses the [`http_polling`](../sources/http_polling.md) extractor with a
+Each source uses the [`http_polling`](../cdviz-collector/sources/http_polling.md) extractor with a
 single inline `driver_vrl` script that builds a worklist of requests. Responses are
 **routed**:
 
@@ -209,7 +210,7 @@ cdviz-collector connect --config github_backfill.toml
 ```
 
 Re-running is safe: state checkpoints are saved after each successful window (see
-[State Persistence](../sources/http_polling.md#state-persistence)), and duplicate events
+[State Persistence](../cdviz-collector/sources/http_polling.md#state-persistence)), and duplicate events
 are deduplicated downstream by content-based `context.id`. Once the backfill completes,
 switch to the [GitHub Webhook integration](./github.md) for live tracking.
 

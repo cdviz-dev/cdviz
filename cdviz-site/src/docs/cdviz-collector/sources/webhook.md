@@ -123,8 +123,8 @@ id = "argocd"
 
 ## Related
 
-- [GitHub Integration](../integrations/github.md) — complete setup guide for GitHub webhooks
-- [GitLab Integration](../integrations/gitlab.md) — complete setup guide for GitLab webhooks
+- [GitHub Integration](../../integrations/github.md) — complete setup guide for GitHub webhooks
+- [GitLab Integration](../../integrations/gitlab.md) — complete setup guide for GitLab webhooks
 - [Header Validation](../header-validation.md) — validate and authenticate incoming requests
 - [SSE Source](./sse.md) — alternative for services that support event streaming
 - [Transformers](../transformers.md) — convert webhook payloads to CDEvents

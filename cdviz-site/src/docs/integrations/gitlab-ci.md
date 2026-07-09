@@ -6,9 +6,9 @@ description: |
   <li>Wrap test jobs to emit testSuiteRun CDEvents with JUnit XML or TAP results automatically parsed.</li>
   <li>Wrap non-test jobs (build, deploy) with taskRun events — no changes to your existing scripts.</li>
   </ul>
-editions:
-  - community
-  - enterprise
+plans:
+  - cloud
+  - pro
 integration:
   icon: /icons/gitlab.svg
   type: action/direct
@@ -33,7 +33,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -44,7 +44,7 @@ Use `cdviz-collector send --run` to wrap commands inside GitLab CI jobs. For tes
 
 Branch, commit SHA, and job name are read automatically from GitLab CI environment variables — **no `--metadata` needed for those**. Use `--metadata` to cross-reference the artifact or environment under test.
 
-This complements the [GitLab Webhook integration](/docs/cdviz-collector/integrations/gitlab), which passively tracks repository and pipeline events.
+This complements the [GitLab Webhook integration](/docs/integrations/gitlab), which passively tracks repository and pipeline events.
 
 ## Quick Start
 
@@ -183,7 +183,7 @@ deploy:
 | `--header "..."`                       | Additional HTTP header (repeatable)                         |
 | `--fail-on-collector-error`            | Fail the job if the collector sink is unreachable           |
 
-See the [send --run reference](../send-run.md) and [send command reference](../send.md) for the full option list.
+See the [send --run reference](../cdviz-collector/send-run.md) and [send command reference](../cdviz-collector/send.md) for the full option list.
 
 ## Related Integrations
 

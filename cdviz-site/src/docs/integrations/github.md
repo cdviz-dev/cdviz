@@ -6,9 +6,10 @@ description: |
   <li>Github tracks all changes to repositories, issues, pull requests, releases, workflows, and more. And it notifies a webhook about these changes.</li>
   <li>cdviz-collector transforms these events to cdevents, and sends them to the database, listeners,...</li>
   </ul>
-editions:
+plans:
   - community
-  - enterprise
+  - cloud
+  - pro
 integration:
   icon: /icons/github.svg
   type: source/webhook
@@ -53,7 +54,7 @@ references:
 ---
 
 <script setup>
-import IntegrationCard from '../../../../components/IntegrationCard.vue'
+import IntegrationCard from '../../../components/IntegrationCard.vue'
 </script>
 
 <IntegrationCard />
@@ -92,7 +93,7 @@ The `signature` field is used to verify the authenticity of the webhook payload.
 
 The `template_rfile` references the VRL (Vector Remap Language) file from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community) that contains the transformation logic for converting GitHub webhook events into CDEvents. The source code can be found at [github_events/transformer.vrl](https://github.com/cdviz-dev/transformers-community/blob/main/github_events/transformer.vrl).
 
-For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../transformers.md#using-remote-transformers).
+For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 ### Setting Up GitHub Webhook
 
@@ -120,7 +121,7 @@ To configure the GitHub integration, you need to set up a webhook in your GitHub
 
 ## Complementary: GitHub Action Integration
 
-For enhanced control and custom events, you can also use the **[GitHub Action integration](/docs/cdviz-collector/integrations/github-action)** alongside or instead of webhooks.
+For enhanced control and custom events, you can also use the **[GitHub Action integration](/docs/integrations/github-action)** alongside or instead of webhooks.
 
 **These approaches can be used together** for comprehensive event coverage:
 
@@ -140,4 +141,4 @@ For enhanced control and custom events, you can also use the **[GitHub Action in
 
 **Example combined use case**: Use webhooks to track all repository activity automatically, while adding GitHub Actions to specific deployment workflows to send detailed deployment context and custom metrics.
 
-For step-by-step instructions, see the [GitHub Action Integration Guide](/docs/cdviz-collector/integrations/github-action).
+For step-by-step instructions, see the [GitHub Action Integration Guide](/docs/integrations/github-action).
