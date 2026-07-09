@@ -1,6 +1,9 @@
 ---
 title: "CDviz Grafana Dashboards: DORA Metrics & SDLC Observability"
 description: "Pre-built Grafana dashboards for DORA metrics, deployment frequency, and CI/CD pipeline observability. Provisioned via GF_PLUGINS_PREINSTALL_SYNC with PostgreSQL datasource."
+plans:
+  - community
+  - pro
 ---
 
 # CDviz Grafana

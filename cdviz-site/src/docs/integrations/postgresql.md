@@ -10,7 +10,7 @@ plans:
 
 # PostgreSQL Integration
 
-PostgreSQL (with the TimescaleDB extension) is the primary event store for CDviz. The collector writes every CDEvent into the `cdviz.cdevents_lake` hypertable; views on top of it power the [Grafana dashboards](./grafana.md) and your own analytics.
+PostgreSQL (with the TimescaleDB extension) is the primary event store for CDviz. The collector writes every CDEvent into the `cdviz.cdevents_lake` hypertable; views on top of it power the [Grafana dashboards](../cdviz-grafana/index.md) and your own analytics.
 
 ## Setup
 

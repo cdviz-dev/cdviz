@@ -13,7 +13,7 @@ plans:
 ClickHouse is an alternative analytics store for CDEvents, suited to very large event volumes or organizations already standardized on ClickHouse. The collector writes events through the ClickHouse sink.
 
 > [!NOTE]
-> The pre-built [Grafana dashboards](./grafana.md) currently require the [PostgreSQL event store](./postgresql.md). With ClickHouse you bring your own dashboards and queries.
+> The pre-built [Grafana dashboards](../cdviz-grafana/index.md) currently require the [PostgreSQL event store](./postgresql.md). With ClickHouse you bring your own dashboards and queries.
 
 ## Setup
 

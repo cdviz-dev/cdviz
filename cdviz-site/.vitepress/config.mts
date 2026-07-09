@@ -197,7 +197,7 @@ export default defineConfig({
                 },
               ],
             },
-            { text: "Grafana", link: "/docs/integrations/grafana" },
+            { text: "Grafana", link: "/docs/cdviz-grafana/" },
             { text: "PostgreSQL", link: "/docs/integrations/postgresql" },
             { text: "ClickHouse", link: "/docs/integrations/clickhouse" },
             { text: "Custom", link: "/docs/integrations/custom" },
@@ -386,8 +386,12 @@ export default defineConfig({
             {
               text: "Event Monitoring",
               collapsed: true,
-              link: "/docs/cdviz-grafana/",
+              link: "/docs/event-monitoring",
               items: [
+                {
+                  text: "Grafana Setup",
+                  link: "/docs/cdviz-grafana/",
+                },
                 {
                   text: "DORA Metrics",
                   link: "/docs/cdviz-grafana/dora_metrics",

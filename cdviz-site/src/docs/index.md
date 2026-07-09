@@ -42,7 +42,7 @@ CDviz follows the same four steps end to end:
 
 1. **Event Collection** — the **[CDviz Collector](./cdviz-collector/index.md)** ingests events from GitHub, GitLab, Jenkins, ArgoCD, Kubernetes, and more, and normalizes them into CDEvents. Start from the **[Integrations catalog](./integrations/index.md)**.
 2. **Event Store** — the **[CDviz Database](./cdviz-db/index.md)** (PostgreSQL + TimescaleDB) persists every event for time-series analytics.
-3. **Event Monitoring** — **[CDviz Grafana dashboards](./cdviz-grafana/index.md)** surface DORA metrics, deployment timelines, and incidents.
+3. **Event Monitoring** — **[dashboards](./event-monitoring.md)** surface DORA metrics, deployment timelines, and incidents — in Grafana, CDviz Cloud, or your own analytics stack.
 4. **Event Reaction** — the same event stream **[triggers automation](./event-reaction.md)** via webhooks (n8n, ArgoCD), Kafka, NATS, or SSE.
 
 ## Other Resources
