@@ -3,7 +3,7 @@ title: Integrations
 description: |
   Connect your SDLC tools to CDviz: collect events from GitHub, GitLab, Jenkins, ArgoCD, and Kubernetes;
   report test and quality results from pytest, JUnit, and SARIF; store and visualize with PostgreSQL,
-  ClickHouse, and Grafana.
+  ClickHouse, and Grafana; trigger automation with Argo Workflows.
 ---
 
 # Integrations
@@ -37,6 +37,12 @@ Emit `testSuiteRun` CDEvents from any CI job with [`cdviz-collector send --run`]
 - **[PostgreSQL](./postgresql.md)** — the CDviz event store (TimescaleDB hypertable, DORA views)
 - **[ClickHouse](./clickhouse.md)** — alternative analytics storage via the ClickHouse sink
 - **[Grafana](../cdviz-grafana/index.md)** — pre-built dashboards for DORA metrics, deployments, and incidents
+
+## Trigger Automation
+
+React to the event stream — see [Event Reaction](../event-reaction.md) for all patterns:
+
+- **[Argo Workflows](./argo-workflows.md)** — submit workflows from CDEvents (post-deployment tests, environment promotion, artifact validation)
 
 ## Something Else?
 

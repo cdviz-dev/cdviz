@@ -197,6 +197,10 @@ export default defineConfig({
                 },
               ],
             },
+            {
+              text: "Argo Workflows",
+              link: "/docs/integrations/argo-workflows",
+            },
             { text: "Grafana", link: "/docs/cdviz-grafana/" },
             { text: "PostgreSQL", link: "/docs/integrations/postgresql" },
             { text: "ClickHouse", link: "/docs/integrations/clickhouse" },

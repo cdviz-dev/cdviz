@@ -23,6 +23,7 @@ url = "https://example.com/webhook"
 | `url`     | string  | —       | Destination endpoint URL                          |
 | `enabled` | boolean | `true`  | Enable/disable this sink                          |
 | `headers` | table   | `{}`    | Outgoing request headers (auth, signatures, etc.) |
+| `transformer_refs` | array | `[]` | **(beta)** [Transformers](../transformers.md) applied to events before this sink sends them |
 
 ## Request Format
 
@@ -71,6 +72,44 @@ Kubernetes `env[].name` and GitHub Actions `env:` support hyphens natively.
 ```
 
 **[→ Complete Header Authentication Guide](../header-authentication.md)**
+
+## Transformers <Badge type="warning" text="beta" />
+
+The HTTP sink accepts `transformer_refs`: a chain of [transformers](../transformers.md) applied to events just before this sink sends them, without affecting other sinks. Two main uses:
+
+- **Filter** which events are sent — a transformer that outputs an empty list (`[]`) drops the event for this sink only
+- **Reshape** the body into the JSON the destination expects — the output does not have to be a CDEvent
+
+Reshaping lets the destination consume the payload as-is, and can replace an intermediate service whose only job is translating events 1-to-1 into another system's API call. For example, instead of routing through an Argo Workflows template that only converts the event into a GitHub `repository_dispatch` call, a sink transformer can build that payload and the sink posts it to the GitHub API directly:
+
+```toml
+[sinks.github_dispatch]
+enabled = true
+type = "http"
+url = "https://api.github.com/repos/my-org/my-repo/dispatches"
+transformer_refs = ["service_deployed_to_dispatch"]
+
+[sinks.github_dispatch.headers]
+"authorization" = { type = "secret", value = "Bearer GITHUB_TOKEN" }
+"accept" = { type = "static", value = "application/vnd.github+json" }
+
+[transformers.service_deployed_to_dispatch]
+type = "vrl"
+template = '''
+if !contains(string!(.body.context.type), "service.deployed") {
+    []  # drop: this sink only reacts to deployments
+} else {
+    .body = {
+        "event_type": "test-deployed-service",
+        "client_payload": {
+            "artifactId": .body.subject.content.artifactId,
+            "environment": .body.subject.content.environment.id,
+        },
+    }
+    [.]
+}
+'''
+```
 
 ## Common Use Cases
 
