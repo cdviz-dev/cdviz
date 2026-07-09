@@ -186,6 +186,7 @@ export default defineConfig({
             },
             { text: "Jenkins", link: "/docs/integrations/jenkins" },
             { text: "ArgoCD", link: "/docs/integrations/argocd" },
+            { text: "Jira", link: "/docs/integrations/jira" },
             {
               text: "Kubernetes (via Kubewatch)",
               link: "/docs/integrations/kubewatch",

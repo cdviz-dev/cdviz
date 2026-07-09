@@ -23,6 +23,7 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 - **[Jenkins](./jenkins.md)** — job and pipeline events
 - **[ArgoCD](./argocd.md)** — GitOps deployment events via notifications
 - **[Kubernetes (via Kubewatch)](./kubewatch.md)** — cluster deployment events
+- **[Jira](./jira.md)** — ticket and version events (Pro plan, beta)
 
 ## Report Test & Quality Results
 
