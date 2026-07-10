@@ -40,6 +40,11 @@ This guide walks you through running CDviz locally using a demo Docker Compose s
 
 If you're new to CDviz, we recommend reading the [CDviz Platform Overview](/docs/) to understand its core concepts and components.
 
+::: tip Prefer not to run anything?
+[CDviz Cloud](/cloud) connects to GitHub or GitLab in minutes — managed hosting,
+14-day free trial, no credit card. This guide covers the self-hosted open-source stack.
+:::
+
 ## 1. Local Environment Setup
 
 First, you'll need to get the CDviz demo environment up and running on your local machine.
@@ -130,3 +135,4 @@ Congratulations! You've successfully sent your first CDEvents and visualized the
 - **Explore the CDEvents Activity dashboard:** This dashboard provides a more detailed view of all the CDEvents that have been collected. You can access it at [http://localhost:3000/d/cdevents-activity/cdevents-activity](http://localhost:3000/d/cdevents-activity/cdevents-activity).
 - **Submit raw JSON events:** For more advanced use cases, you can use the "Raw JSON" form to submit CDEvents in their raw JSON format.
 - **Explore other dashboards:** and look at `cdviz/demos/uses_cases` to see how data was injected (`csv -> cdviz-collector (transformers) -> database`)
+- **Skip the infrastructure:** try [CDviz Cloud](/cloud) — the managed version with a 14-day free trial.

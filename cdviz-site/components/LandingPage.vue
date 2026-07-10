@@ -7,7 +7,6 @@ import PanelSamples from "./landing/SectionPanelSamples.vue";
 import Problem from "./landing/SectionProblem.vue";
 import Stats from "./landing/SectionStats.vue";
 import Why from "./landing/SectionWhy.vue";
-import SoftwareCatalogs from "./landing/SectionSoftwareCatalogs.vue";
 </script>
 
 <template>
@@ -31,7 +30,6 @@ import SoftwareCatalogs from "./landing/SectionSoftwareCatalogs.vue";
     <Why />
     <How />
     <Faq />
-    <SoftwareCatalogs />
     <End />
   </main>
 </template>

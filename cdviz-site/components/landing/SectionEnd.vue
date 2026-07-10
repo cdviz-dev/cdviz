@@ -1,3 +1,13 @@
+<script setup>
+const props = defineProps({
+  // Main landing routes trial-seekers through /cloud (sets expectations first);
+  // the cloud page links straight to the app.
+  trialHref: { type: String, default: "/cloud" },
+});
+
+const trialIsExternal = props.trialHref.startsWith("http");
+</script>
+
 <template>
   <section class="space-section w-full" aria-labelledby="end-heading">
     <a id="end"></a>
@@ -6,12 +16,32 @@
         Ready to See Your Pipeline?
       </h2>
       <p class="text-base sm:text-lg text-text/80 mb-lg leading-relaxed">
-        Self-host free — Pro features included during beta.<br />
-        Open-source, no lock-in, actively developed.
+        Self-host free forever — open-source, no lock-in.<br />
+        Or let us run it: CDviz Cloud, 14-day free trial, no credit card.
       </p>
 
       <!-- Primary CTA row -->
       <div class="flex flex-wrap justify-center gap-4 mb-lg">
+        <a
+          :href="trialHref"
+          :target='trialIsExternal ? "_blank" : undefined'
+          :rel='trialIsExternal ? "noopener noreferrer" : undefined'
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-background font-semibold hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-200"
+          aria-label="Start CDviz Cloud free trial"
+        >
+          <span class="icon-[lucide--rocket] h-5 w-5" aria-hidden="true"></span>
+          Start Free Trial
+        </a>
+        <a
+          href="https://demo.cdviz.dev/grafana"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-text font-semibold hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
+          aria-label="Open CDviz live demo"
+        >
+          <span class="icon-[lucide--eye] h-5 w-5" aria-hidden="true"></span>
+          Try Live Demo
+        </a>
         <a
           href="https://github.com/cdviz-dev/cdviz"
           target="_blank"
@@ -24,29 +54,6 @@
             aria-hidden="true"
           ></span>
           Star on GitHub
-        </a>
-        <a
-          href="https://demo.cdviz.dev/grafana"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-background font-semibold hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-200"
-          aria-label="Open CDviz live demo"
-        >
-          <span class="icon-[lucide--eye] h-5 w-5" aria-hidden="true"></span>
-          Try Live Demo
-        </a>
-        <a
-          href="https://github.com/cdviz-dev/cdviz/discussions"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-text font-semibold hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
-          aria-label="Send feedback on GitHub Discussions"
-        >
-          <span
-            class="icon-[lucide--message-circle] h-5 w-5"
-            aria-hidden="true"
-          ></span>
-          Send Feedback
         </a>
       </div>
 

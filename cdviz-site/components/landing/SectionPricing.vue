@@ -81,7 +81,6 @@ const pricingPlans = [
       { icon: "icon-[lucide--workflow]", text: "Optional commercial license" },
       { icon: "icon-[lucide--headphones]", text: "Email & Discord support · 2 business days" },
     ],
-    // Creem TEST checkout URLs — swap for live (non-test) URLs after promoting the
     // products in Creem. The monthly/yearly toggle picks the URL (see getButtonHref).
     button: {
       text: "Get Pro",
@@ -185,8 +184,8 @@ onMounted(() => {
     <slot name="header">
       <H2>Pricing & Plans</H2>
       <div class="text-base sm:text-lg lg:text-xl text-center my-lg max-w-5xl mx-auto text-text/90">
-        Start free with open source, scale with enterprise features. Built for teams that value
-        transparency and control.
+        Start free with open source. Go managed with Cloud, or self-host with Pro support. No
+        "contact us" to get started.
       </div>
     </slot>
 

@@ -6,6 +6,7 @@ import CloudPricing from "./landing/SectionCloudPricing.vue";
 import CloudProblem from "./landing/SectionCloudProblem.vue";
 import CloudTrust from "./landing/SectionCloudTrust.vue";
 import End from "./landing/SectionEnd.vue";
+import Faq from "./landing/SectionFaq.vue";
 </script>
 
 <template>
@@ -26,6 +27,7 @@ import End from "./landing/SectionEnd.vue";
     <CloudFeatures />
     <CloudPricing />
     <CloudTrust />
-    <End />
+    <Faq />
+    <End trial-href="https://app.cdviz.dev" />
   </main>
 </template>

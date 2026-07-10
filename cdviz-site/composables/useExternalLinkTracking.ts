@@ -2,6 +2,7 @@ import { onMounted, onUnmounted } from "vue";
 
 const CATEGORY_MAP: Record<string, string> = {
   "github.com": "github",
+  "app.cdviz.dev": "cloud_app",
   "demo.cdviz.dev": "demo",
   "youtube.com": "youtube",
   "youtu.be": "youtube",
