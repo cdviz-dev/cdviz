@@ -31,6 +31,11 @@
 /docs/vs-powerpipe.html        /docs/alternatives/vs-powerpipe          301
 /docs/vs-splunk.html           /docs/alternatives/vs-splunk             301
 
+# Stable legal URLs, independent of the /pro/ section layout
+/terms      /pro/terms      301
+/privacy    /pro/privacy    301
+/legal      /pro/legal      301
+
 # Generic /index suffix redirects (covers any current and future path)
 /index          /               301
 /*/index        /:splat/        301

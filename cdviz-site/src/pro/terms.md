@@ -8,13 +8,13 @@ head:
 
 # Terms and Conditions
 
-**Last Updated:** July 1, 2025
+**Last Updated:** July 10, 2026
 
-**Effective Date:** September 12, 2025
+**Effective Date:** August 10, 2026
 
-Alchim312 have developed and market a SDLC monitoring software solution, "CDviz enterprise", “CDviz Saas” which are its exclusive ownership excluding explicit parts under other Licenses (Apache-2.0,...), related Maintenance services and related services. "CDviz saas" software solution is available as a Software-as-a-Service (SaaS).
+Alchim312 has developed and markets a SDLC observability software solution under the CDviz brand, which is its exclusive ownership excluding explicit parts under other licenses (Apache-2.0,...), together with related Maintenance services and related services. It is commercialized through the Offers, either as a managed service (Software-as-a-Service) or as a self-hosted edition, whatever their commercial names, which may change over time.
 
-By creating a user account and an organization or by purchasing a subscription to the saas offers or to the enterprise offers, Client agrees upon the following terms and conditions without any restriction, modification, alteration or reservation, unless otherwise agreed in writing between the Parties. CDviz may change these Terms & Conditions.
+By creating a user account and an organization or by purchasing a subscription to an Offer, Client agrees upon the following terms and conditions without any restriction, modification, alteration or reservation, unless otherwise agreed in writing between the Parties. Alchim312 may change these Terms & Conditions.
 
 Alchim312 reserves the right to revise the terms of this Agreement at any time with 30 days' prior notice. However, Alchim312 may modify these terms with reduced notice periods in the following circumstances: (i) 15 days' notice for changes required by applicable law or regulation; (ii) 7 days' notice for changes necessary to address security vulnerabilities or threats; (iii) immediate effect for changes required to comply with court orders or governmental directives; and (iv) 15 days' notice for changes to pricing or service levels during periods of economic instability or force majeure events. By using the Software after the applicable notice period, Client accepts Alchim312's Amendments.
 
@@ -24,7 +24,7 @@ Alchim312 reserves the right to revise the terms of this Agreement at any time w
 
 **Amendment**: any change to the Agreement after the Effective Date in accordance with the terms of the Agreement.
 
-**Application(s)**: the web application program(s) of Client, that may be tested by using the Software.
+**Application(s)**: the systems, applications and pipelines of Client, that may be monitored by using the Software.
 
 **Blocking Error**: any Error making the use of the Software impossible.
 
@@ -32,13 +32,15 @@ Alchim312 reserves the right to revise the terms of this Agreement at any time w
 
 **Business Hours**: the Business Days, from 9:00 AM to 6:00 PM (Paris time, France).
 
+**CDviz**: the brand under which Alchim312 markets the Software.
+
 **Corrective Maintenance**: the provision of the technical support relating to the Software.
 
 **Data**: all types of data and contents collected and/or produced by Client as part of the use of the Software.
 
-**Documentation**: the English version of the documentation, which describes the main processes and guidelines to facilitate the installation and use of the Software, and its Update if any, as provided to Client by CDviz on the media selected by CDviz.
+**Documentation**: the English version of the documentation, which describes the main processes and guidelines to facilitate the installation and use of the Software, and its Update if any, as provided to Client by Alchim312 on the media selected by Alchim312.
 
-**Effective Date**: the effective date of the Agreement, starting at the earliest date, either at the creation of the user account or the purchase of a subscription of a cloud offer.
+**Effective Date**: the effective date of the Agreement, starting at the earliest date, either at the creation of the user account or the purchase of a subscription of an Offer.
 
 **Error**: any bug or malfunction of the Software reproducible by Alchim312, when used in accordance with the terms of the Agreement and the Documentation.
 
@@ -54,11 +56,13 @@ Alchim312 reserves the right to revise the terms of this Agreement at any time w
 
 **Minor Error**: any Error which does not prevent the use of the Software in all its functionalities, even if such use is done by means of a workaround solution.
 
+**Offer(s)**: the commercial offers of the Software published on the Websites (<https://cdviz.dev/pricing>) or defined in a quote sent by Alchim312 for custom offers, regardless of their commercial names, which may change over time. Offers are either **Managed Offers** — the Software operated by Alchim312 as a Software-as-a-Service (SaaS) — or **Self-Hosted Offers** — the Software deployed and operated by Client.
+
 **Scope**: the extent of the right of use for which the License is granted, provided to Client, in consideration for the payment of the corresponding Fees. The Scope, defined by the Subscription, includes limitations of use and may exclude features.
 
-**Software**: the English version of the standard computer program(s) executable as a Software-as-a-Service (SaaS) and the offline "enterprise" edition, for which the License is granted to Client under the Agreement, with the limitations of the Scope.
+**Software**: the English version of the standard computer program(s), provided as a Managed Offer and/or as a Self-Hosted Offer, for which the License is granted to Client under the Agreement, with the limitations of the Scope.
 
-**Subscription**: the purchase of a cloud offer by Client on CDviz’s website or upon acceptance of a quote sent by Alchim312 for custom offers, with a specific Scope defined on our website or in the quote. The subscription can be on a monthly or yearly basis.
+**Subscription**: the purchase of an Offer by Client on the Websites or upon acceptance of a quote sent by Alchim312 for custom offers, with a specific Scope defined on the Websites or in the quote. The subscription can be on a monthly or yearly basis.
 
 **Term**: the term for which the License is granted, provided under the Agreement.
 
@@ -68,11 +72,13 @@ Alchim312 reserves the right to revise the terms of this Agreement at any time w
 
 **Upgrade Maintenance**: the provision of the Updates as they become available.
 
+**Websites**: the website cdviz.dev and its subdomains, including app.cdviz.dev and demo.cdviz.dev.
+
 ## 2 - PURPOSE OF THE AGREEMENT
 
 ### 2.1 The Agreement defines the terms and conditions under which Alchim312:
 
-Grants Client the personal, non-exclusive, non-assignable and non-transferable right to access and use the Software under the License, and provides Client with the Maintenance, in consideration for the payment of the Fees defined in the Purchase Order.
+Grants Client the personal, non-exclusive, non-assignable and non-transferable right to access and use the Software under the License, and provides Client with the Maintenance, in consideration for the payment of the Fees defined in the Subscription.
 
 The License is strictly limited to the rights expressly granted under the Agreement, and shall in no event be construed as a contract of sale. Alchim312 shall retain the exclusive property of the Software.
 
@@ -123,7 +129,7 @@ Generally, Client shall:
 
 Under the Corrective Maintenance, Alchim312 shall provide Client with a technical support in English or French language available during the Business Hours.
 
-Client acknowledges and agrees that only requests for the Corrective Maintenance assistance with respect to the Errors by creating a ticket on CDviz ticketing system which comprise the following information needed to analyze the Error - notably the precise path which leads to the Error and the concerned screenshots - shall be taken into account by Alchim312. Client’s authorized contact under Corrective Maintenance shall be able to reproduce the Error exactly and be perfectly aware of the conditions of its occurrence. Alchim312 takes into account the Errors identified as such by Client, depending on their priority levels.
+Client acknowledges and agrees that only requests for the Corrective Maintenance assistance with respect to the Errors by creating a ticket on Alchim312’s ticketing system which comprise the following information needed to analyze the Error - notably the precise path which leads to the Error and the concerned screenshots - shall be taken into account by Alchim312. Client’s authorized contact under Corrective Maintenance shall be able to reproduce the Error exactly and be perfectly aware of the conditions of its occurrence. Alchim312 takes into account the Errors identified as such by Client, depending on their priority levels.
 
 Errors will be processed by Alchim312’s technicians according to the following priority levels and response time, defined in the Subscription.
 
@@ -133,7 +139,7 @@ Response time means the receipt by Alchim312 of the Error report. The response t
 
 Alchim312 shall take reasonable care and skill and use all reasonable endeavors to answer, correct and/or circumvent the Errors identified as such by Alchim312 within the best delays; it being specified that:
 
-- The severity level of an Error may be requalified by Alchim312, it being agreed that Client will be expressly informed by Client as soon as possible of such requalification;
+- The severity level of an Error may be requalified by Alchim312, it being agreed that Client will be expressly informed by Alchim312 as soon as possible of such requalification;
 - In the event that Alchim312 has corrected an Error in a more recent version of the Software than the version used by Client and that Alchim312 provided such version to Client, Alchim312 shall not be held liable under the Corrective Maintenance.
 
 Alchim312 will address to Client, a report of its interventions by any means of its choice, at the term of its intervention under a Blocking Error or a Major Error.
@@ -171,7 +177,7 @@ In the event of a final court decision having the force of res judicata, Alchim3
 
 - the Software is combined with other software, hardware or third-party equipment, where the alleged infringement results from such a combination;
 - Client continues the infringing activity despite the signing of a settlement agreement or the notification of the res judicata of a final court decision having the force of res judicata;
-- Client has not implemented the modifications recommended by Alchim312 and/or Client uses a version of the Software which is not the Current Version, that would have prevented the qualification of infringement, or infringement results from the failure of Client to strictly comply with the Documentation and the provisions of the Agreement.
+- Client has not implemented the modifications recommended by Alchim312 and/or Client uses a version of the Software which is not the most recent version made available by Alchim312, that would have prevented the qualification of infringement, or infringement results from the failure of Client to strictly comply with the Documentation and the provisions of the Agreement.
 
 In the event of any such claim from a third-party against Client and/or Alchim312, or threat of action or if Alchim312 deems it likely to happen, Alchim312 may, at its sole discretion, and subject to the conditions referred to above, choose:
 
@@ -187,7 +193,7 @@ Client ensures that it owns the necessary intellectual property rights and/or ri
 
 ### 6.1 Data property
 
-Client is the owner of the Data and in particular the test results obtained by using the Software.
+Client is the owner of the Data and in particular the monitoring results obtained by using the Software.
 
 ### 6.2 Personal Data
 
@@ -197,9 +203,9 @@ Client and Alchim312 expressly acknowledge that they have fulfilled all the nece
 
 ### 7.1 Fees and payment terms
 
-**7.1.1** Client shall pay to Alchim312 the Fees for the Term and the Scope, in accordance with the terms defined in the Subscription. The Fees are defined on our website or on a quote sent by Alchim312 for custom offers. The amounts are in Euros and exclusive of Value Added Tax and/or any similar sales tax and customs duties taxes.
+**7.1.1** Client shall pay to Alchim312 the Fees for the Term and the Scope, in accordance with the terms defined in the Subscription. The Fees are defined on the Websites or on a quote sent by Alchim312 for custom offers. The amounts are in Euros and exclusive of Value Added Tax and/or any similar sales tax and customs duties taxes.
 
-**7.1.2** Unless otherwise agreed, the invoices issued by Alchim312 (via its merchands) relating to the License are payable monthly in advance for monthly Subscriptions and yearly in advance for yearly Subscriptions, within thirty (30) days from the date of issuance.
+**7.1.2** Unless otherwise agreed, the invoices issued by Alchim312 (via its merchants of record) relating to the License are payable monthly in advance for monthly Subscriptions and yearly in advance for yearly Subscriptions, within thirty (30) days from the date of issuance.
 
 **7.1.3** Client’s commitment to pay the Fees pursuant to the Agreement is firm and irrevocable, and any payments due and/or made to Alchim312 under the Agreement shall be definitely due and/or kept by Alchim312, unless otherwise stated in the Agreement. Any payment by compensation is excluded, unless otherwise expressly stated in the Agreement.
 
@@ -220,7 +226,7 @@ In case of late payment within the delays defined in the Agreement of any amount
 
 ### 7.4 Price revision
 
-Alchim312 may at its sole discretion change the Fees and the Scope of the Subscriptions. These changes are made available on CDviz’s website. Alchim312 shall inform Client 30 days in advance before applying these changes when the Subscription is tacitly renewed. Client may terminate this Agreement during this 30-day notice period. Alchim312 may end any ongoing discount or promotional offer at any time.
+Alchim312 may at its sole discretion change the Fees and the Scope of the Subscriptions. These changes are made available on the Websites. Alchim312 shall inform Client 30 days in advance before applying these changes when the Subscription is tacitly renewed. Client may terminate this Agreement during this 30-day notice period. Alchim312 may end any ongoing discount or promotional offer at any time.
 
 ## 8 - WARRANTIES
 
@@ -250,9 +256,9 @@ It is expressly agreed that, in any event, any claim for damages against Alchim3
 Client is solely responsible for:
 
 - the choice of the Software and its use;
-- the verification and the analysis of the results of the test obtained with the Software; the use of the results being under Client's own and sole responsibility and risks;
+- the verification and the analysis of the monitoring results obtained with the Software; the use of the results being under Client's own and sole responsibility and risks;
 - its premises, Applications, computer equipment. Client shall comply with all Alchim312's instructions in this respect;
-- the information, configuration, scripts and custom code used for CDviz's purposes;
+- the information, configuration, scripts and custom code used with the Software;
 - the accuracy, completeness, and quality of all Data provided to or processed by the Software. Client warrants that all Data is accurate, complete, and lawfully obtained, and that Client has all necessary rights to provide such Data to Alchim312 for processing under this Agreement.
 
 ### 9.3 Prohibited Activities
@@ -304,7 +310,7 @@ Confidential Information does not include information, documents and/or tools wh
 - has been explicitly considered as non-confidential by the disclosing Party for the purpose of the Agreement;
 - is required to be disclosed by applicable law or judicial or administrative Court order.
 
-The undertaking provided in this section shall come into force as from the period of negotiations between the Parties and shall survive during five (5) years after the termination of the Agreement for any reason whatsoever, it being agreed that in any event, such undertaking - when it relates to any Confidential Information relating to the intellectual property rights of GATLING - shall remain valid during the term of the related intellectual property rights.
+The undertaking provided in this section shall come into force as from the period of negotiations between the Parties and shall survive during five (5) years after the termination of the Agreement for any reason whatsoever, it being agreed that in any event, such undertaking - when it relates to any Confidential Information relating to the intellectual property rights of Alchim312 - shall remain valid during the term of the related intellectual property rights.
 
 ## 13 - REFERENCE
 
@@ -314,7 +320,7 @@ Alchim312 may use name and logo of Client in promotional material, upon written 
 
 ### 14.1 Term
 
-The Agreement comes into force at the Effective Date and for the Term. At the end of such initial period and following contractual period if any, and unless otherwise stated in the Purchase Order or early termination of the Agreement in accordance with the terms of section 10 and 14.2 of the GTC, the License and the Maintenance shall be tacitly renewed, subject to the Price revision in accordance with section 7.4 of the GTC.
+The Agreement comes into force at the Effective Date and for the Term. At the end of such initial period and following contractual period if any, and unless otherwise stated in the Subscription or early termination of the Agreement in accordance with the terms of section 10 and 14.2 of the GTC, the License and the Maintenance shall be tacitly renewed, subject to the Price revision in accordance with section 7.4 of the GTC.
 
 Each Party may terminate the Agreement in writing by notice to the other Party by email (contact@alchim312.com), at least thirty (30) days before the termination of the ongoing Subscription period, for a yearly Subscription, and five (5) days for a monthly Subscription.
 
@@ -336,11 +342,11 @@ Furthermore, sections 5, 9.1, 12, 13, 14.3, 18 and 19 and all the provisions whi
 
 ## 15 - ASSIGNMENT
 
-## 15.1
+### 15.1
 
 Client shall not assign - whether in whole or in part, free of charge or against payment, for any reason and under any form whatsoever - any of its rights and obligations under the Agreement to any third party, without the prior written consent of Alchim312. In addition, Client shall expressly inform Alchim312 in the event of change of control of its share-capital.
 
-## 15.2
+### 15.2
 
 Alchim312 may transfer any of its rights and obligations under the Agreement to any third party; it being understood that as from the effective date of the transaction, Alchim312 shall not be held liable under the Agreement.
 
@@ -376,7 +382,7 @@ The Agreement constitutes the entire agreement between the Parties. It cancels a
 
 ### 18.3 Notice
 
-Except as may be expressly agreed otherwise, all notices pertaining to the Agreement shall be in writing and either personally delivered or sent via postage prepaid certified mail which can be tracked, addressed to Client’s representative as stated in the Purchase Order if Client is the recipient or addressed to Alchim312’s representative at Alchim312’s address set forth in the GTC if Alchim312 is the recipient. All notices shall be effective upon the following day of the first presentation of the notice to the recipient Party.
+Except as may be expressly agreed otherwise, all notices pertaining to the Agreement shall be in writing and sent either by e-mail — to Client’s account e-mail address if Client is the recipient, or to contact@alchim312.com if Alchim312 is the recipient — or personally delivered or sent via postage prepaid certified mail which can be tracked. All notices shall be effective upon the following day of the first presentation of the notice to the recipient Party.
 
 ### 18.4 Severability
 

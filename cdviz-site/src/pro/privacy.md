@@ -8,13 +8,13 @@ head:
 
 # Privacy Policy
 
-**Last Updated:** July 1, 2025
+**Last Updated:** July 10, 2026
 
-**Effective Date:** July 1, 2025
+**Effective Date:** July 10, 2026
 
 ## Who We Are
 
-Alchim312 operates CDviz Enterprise and CDviz SaaS services at cdviz.dev. This policy covers our commercial offerings only - our open-source CDviz Community edition operates independently.
+Alchim312 operates the CDviz commercial services — the managed offer and the self-hosted offer, whatever their current commercial names (as of this writing, "CDviz Cloud" and "CDviz Pro") — and the websites cdviz.dev, app.cdviz.dev, and demo.cdviz.dev. This policy covers these services and websites. The open-source CDviz Community edition, when self-hosted by you, operates independently and is not covered.
 
 **Contact us:** privacy@alchim312.com
 
@@ -32,7 +32,9 @@ Alchim312 operates CDviz Enterprise and CDviz SaaS services at cdviz.dev. This p
 - Technical data (IP address, browser type, usage patterns)
 - Cookies for authentication and functionality
 
-**We use analytics cookies only with your consent.**
+**Our analytics are cookieless and anonymized:** no analytics cookies are set and no personal profile is built, so no consent is requested.
+
+**Demo environment:** data submitted to demo.cdviz.dev is for evaluation only and may be reset or deleted at any time without notice.
 
 ## How We Use Your Information
 
@@ -41,16 +43,28 @@ Alchim312 operates CDviz Enterprise and CDviz SaaS services at cdviz.dev. This p
 - **Communicate:** Service updates, support responses, and marketing (with consent)
 - **Legal compliance:** When required by law
 
+## Legal Bases (GDPR)
+
+We process your data based on:
+
+- **Contract:** Account, billing, and service delivery
+- **Legitimate interest:** Service security, improvement, and support
+- **Legitimate interest (continued):** Anonymized, cookieless analytics
+- **Consent:** Marketing communications
+- **Legal obligation:** Billing records and lawful requests
+
 ## Who We Share Data With
 
 **Service providers we trust:**
 
-- **Supabase:** Database and authentication (EU servers)
+- **Neon:** Database (EU servers)
 - **Creem:** Payment processing (PCI DSS compliant)
 - **Hostinger:** Server hosting (EU servers)
 - **Cloudflare:** CDN, DNS, SSL/TLS, network and additional storage (EU/US servers)
 - **Google:** email (EU/US servers)
-- **Analytics:** Anonymized usage data for service improvement
+- **PostHog:** Anonymized, cookieless product analytics (EU servers)
+
+Authentication is handled directly by our own application — no third-party identity provider.
 
 **Legal requirements:** We may share data when required by law or to protect rights.
 
@@ -61,6 +75,8 @@ You can:
 - **Access** your data or request a copy
 - **Correct** inaccurate information
 - **Delete** your account and data
+- **Port** your data to another service (structured, machine-readable format)
+- **Restrict or object** to certain processing
 - **Opt-out** of marketing communications
 - **Control** cookies through your browser
 
@@ -83,10 +99,9 @@ We protect your data with:
 ## Cookies
 
 - **Essential cookies:** Required for login and security
-- **Analytics cookies:** Usage tracking (requires your consent)
 - **Preference cookies:** Remember your settings
 
-Manage cookies through your browser settings or our cookie banner.
+We set no analytics or advertising cookies. Manage cookies through your browser settings.
 
 ## Children's Privacy
 
@@ -108,4 +123,4 @@ We'll notify you 30 days before any major changes via email or website notice.
 
 ---
 
-**By using CDviz Enterprise or SaaS, you agree to this Privacy Policy.**
+**By using our commercial services or websites, you agree to this Privacy Policy.**
