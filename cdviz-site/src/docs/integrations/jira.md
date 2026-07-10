@@ -91,14 +91,14 @@ For webhook troubleshooting, see the [Webhook Extractor documentation](../cdviz-
 
 Event type detection is performed in VRL based on the `webhookEvent` field:
 
-| Jira Event                             | CDEvent Type                | Detection Logic                                                                |
-| --------------------------------------- | --------------------------- | -------------------------------------------------------------------------------- |
-| `jira:issue_created`                    | `ticket.created`             | `webhookEvent = "jira:issue_created"`                                          |
-| `jira:issue_updated` (status=done)       | `ticket.closed`              | `webhookEvent = "jira:issue_updated"` AND `status.statusCategory.key = "done"` |
-| `jira:issue_updated` (other status)      | `ticket.updated`             | `webhookEvent = "jira:issue_updated"` AND other status category                |
-| `jira:issue_deleted` (no resolution)     | `ticket.closed`              | `webhookEvent = "jira:issue_deleted"` AND `issue.fields.resolution` is null    |
-| `jira:issue_deleted` (with resolution)   | _(skipped)_                  | `webhookEvent = "jira:issue_deleted"` AND `issue.fields.resolution` is set     |
-| `jira:version_released`                 | `artifact.published`         | `webhookEvent = "jira:version_released"`                                       |
+| Jira Event                             | CDEvent Type         | Detection Logic                                                                |
+| -------------------------------------- | -------------------- | ------------------------------------------------------------------------------ |
+| `jira:issue_created`                   | `ticket.created`     | `webhookEvent = "jira:issue_created"`                                          |
+| `jira:issue_updated` (status=done)     | `ticket.closed`      | `webhookEvent = "jira:issue_updated"` AND `status.statusCategory.key = "done"` |
+| `jira:issue_updated` (other status)    | `ticket.updated`     | `webhookEvent = "jira:issue_updated"` AND other status category                |
+| `jira:issue_deleted` (no resolution)   | `ticket.closed`      | `webhookEvent = "jira:issue_deleted"` AND `issue.fields.resolution` is null    |
+| `jira:issue_deleted` (with resolution) | _(skipped)_          | `webhookEvent = "jira:issue_deleted"` AND `issue.fields.resolution` is set     |
+| `jira:version_released`                | `artifact.published` | `webhookEvent = "jira:version_released"`                                       |
 
 Deletion has no dedicated CDEvent type, so it maps to `ticket.closed`: if the issue already had a resolution (a `ticket.closed` was already emitted by the prior update), the delete is skipped; otherwise `resolution` is set to `"withdrawn"`.
 

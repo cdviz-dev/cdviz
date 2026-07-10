@@ -83,14 +83,14 @@ onMounted(() => {
     </div>
     <p class="cdviz-mono text-text/40 text-xs">
       Connect in minutes ·
-      <span class="text-text/60 font-medium">14-day free trial, no credit card</span> ·
-      Open-source under the hood, no lock-in
+      <span class="text-text/60 font-medium">14-day free trial, no credit card</span> · Open-source
+      under the hood, no lock-in
     </p>
 
     <!-- Dashboard screenshots -->
     <div
       class="max-w-[920px] mx-auto mt-2xl border border-secondary/20 rounded-2xl bg-gradient-to-b from-[var(--vp-c-bg-soft)] to-background shadow-[0_30px_80px_-30px_color-mix(in_oklch,var(--primary)_18%,transparent)] overflow-hidden relative"
-      :style='{ aspectRatio: `${screenshots[0].width} / ${screenshots[0].height}` }'
+      :style="{ aspectRatio: `${screenshots[0].width} / ${screenshots[0].height}` }"
       role="img"
       aria-label="CDviz Cloud dashboards showing pipeline home overview and execution details"
     >
@@ -98,7 +98,7 @@ onMounted(() => {
         v-for="(shot, i) in screenshots"
         :key="shot.key"
         class="cloud-hero-shot absolute inset-0 w-full h-full"
-        :class="i === 0 ? 'object-contain' : 'object-cover'"
+        :class='i === 0 ? "object-contain" : "object-cover"'
         :src="shot.src"
         :alt="shot.alt"
         :width="shot.width"
@@ -106,7 +106,7 @@ onMounted(() => {
         :aria-hidden="i !== 0"
         loading="lazy"
         decoding="async"
-        :style='{ opacity: i === 0 ? 1 : 0 }'
+        :style="{ opacity: i === 0 ? 1 : 0 }"
       />
     </div>
   </section>

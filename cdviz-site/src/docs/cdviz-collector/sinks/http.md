@@ -17,13 +17,13 @@ url = "https://example.com/webhook"
 
 ## Parameters
 
-| Parameter | Type    | Default | Description                                       |
-| --------- | ------- | ------- | ------------------------------------------------- |
-| `type`    | string  | —       | Must be `"http"`                                  |
-| `url`     | string  | —       | Destination endpoint URL                          |
-| `enabled` | boolean | `true`  | Enable/disable this sink                          |
-| `headers` | table   | `{}`    | Outgoing request headers (auth, signatures, etc.) |
-| `transformer_refs` | array | `[]` | **(beta)** [Transformers](../transformers.md) applied to events before this sink sends them |
+| Parameter          | Type    | Default | Description                                                                                 |
+| ------------------ | ------- | ------- | ------------------------------------------------------------------------------------------- |
+| `type`             | string  | —       | Must be `"http"`                                                                            |
+| `url`              | string  | —       | Destination endpoint URL                                                                    |
+| `enabled`          | boolean | `true`  | Enable/disable this sink                                                                    |
+| `headers`          | table   | `{}`    | Outgoing request headers (auth, signatures, etc.)                                           |
+| `transformer_refs` | array   | `[]`    | **(beta)** [Transformers](../transformers.md) applied to events before this sink sends them |
 
 ## Request Format
 
