@@ -610,6 +610,7 @@ export default defineConfig({
         name: "CDviz",
         url: "https://cdviz.dev",
         logo: "https://cdviz.dev/favicon.svg",
+        address: { "@type": "PostalAddress", addressCountry: "FR" },
         sameAs: ["https://github.com/cdviz-dev", "https://www.youtube.com/@CDviz"],
       };
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(orgSchema)]);

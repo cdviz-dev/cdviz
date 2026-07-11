@@ -5,6 +5,37 @@ layout: home
 markdownStyles: false
 
 faq:
+  - q: How does CDviz help improve software delivery?
+    a: |
+      CDviz gives you unified, real-time visibility across your CI/CD tools — GitHub, GitLab,
+      ArgoCD, Kubernetes, and more. See what version runs where, when it was deployed, and track
+      DORA metrics and deployment timelines in Grafana, without manually correlating data across
+      tools. The same event stream can also trigger downstream automation.
+      <a href="/docs/">Explore the docs →</a>
+  - q: What makes CDviz different from other engineering analytics platforms?
+    a: |
+      CDviz is event-driven (push) on the open <a href="https://cdevents.dev">CDEvents</a>
+      standard instead of polling proprietary APIs. It's open-source (Apache 2.0) and
+      self-hostable with no lock-in: your data stays in your own PostgreSQL, queryable with
+      plain SQL and Grafana. And it doubles as an automation backbone, not just dashboards.
+      <a href="/docs/alternatives/">Compare with alternatives →</a>
+  - q: What services does CDviz offer?
+    a: |
+      Three options: the <strong>open-source</strong> components (collector, database schema,
+      Grafana dashboards) — free to self-host; <strong>CDviz Cloud</strong>, a hosted, managed
+      service at €20/month; and <strong>CDviz Pro</strong>, self-hosted with professional
+      support and additional integrations at €200/month.
+      <a href="/pricing">See pricing →</a>
+  - q: What are the key features of CDviz?
+    a: |
+      Event collection from GitHub, GitLab, ArgoCD, Kubernetes, and custom webhooks;
+      normalization to CDEvents; storage in PostgreSQL + TimescaleDB; Grafana dashboards for
+      DORA metrics, deployments, incidents, and artifact timelines; and event-driven automation
+      via HTTP, NATS, or Kafka sinks. <a href="/docs/">Explore the docs →</a>
+  - q: Where is CDviz located?
+    a: |
+      CDviz is built by Alchim312, a French company. CDviz Cloud data is hosted and operated
+      in Europe — see our <a href="/pro/privacy">privacy policy</a>.
   - q: Is it really free to use?
     a: |
       Yes. The open-source components — collector, database schemas, and Grafana dashboards —
