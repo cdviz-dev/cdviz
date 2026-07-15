@@ -12,7 +12,7 @@ CDviz Grafana provides pre-built dashboards that visualize CDEvents collected by
 
 > [!TIP] Online Demo
 > Explore a live read-only instance of the CDviz Grafana dashboards at
-> **[demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana)** — no installation required.
+> **[demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana/)** — no installation required.
 
 > [!NOTE]
 > Dashboards, panels and SQL queries are provided for Grafana, but they can be adapted to your favorite dashboards & analytics system.

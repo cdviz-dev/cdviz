@@ -135,7 +135,7 @@ cases:
     solution: |
       CDviz ships ready-to-import Grafana dashboards (DORA metrics, deployment timelines) that
       query the event lake directly. Import the JSON, point it at PostgreSQL, and the panels
-      populate. Try the [live demo](https://demo.cdviz.dev/grafana).
+      populate. Try the [live demo](https://demo.cdviz.dev/grafana/).
 
   - id: deployment-drilldown
     title: Drill into deployments per service and environment

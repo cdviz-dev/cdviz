@@ -176,7 +176,7 @@ onMounted(() => {
       <div class="flex gap-4 justify-center mt-lg">
         <Btn href="/docs/cdviz-grafana/">Explore All Dashboards</Btn>
         <Btn
-          href="https://demo.cdviz.dev/grafana"
+          href="https://demo.cdviz.dev/grafana/"
           target="_blank"
           rel="noopener"
           primary

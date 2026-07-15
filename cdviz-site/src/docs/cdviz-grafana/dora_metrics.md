@@ -17,7 +17,7 @@ faq:
 ![DORA Metrics dashboard overview](/screenshots/grafana_dashboard_dora_metrics-20260222.png)
 
 > [!TIP] Online Demo
-> Explore a live read-only instance at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana) — search for the **DORA Metrics** dashboard.
+> Explore a live read-only instance at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana/) — search for the **DORA Metrics** dashboard.
 
 ## Overview
 

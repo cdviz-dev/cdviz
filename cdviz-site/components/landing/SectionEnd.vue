@@ -33,7 +33,7 @@ const trialIsExternal = props.trialHref.startsWith("http");
           Start Free Trial
         </a>
         <a
-          href="https://demo.cdviz.dev/grafana"
+          href="https://demo.cdviz.dev/grafana/"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-text font-semibold hover:bg-secondary/80 hover:scale-105 transition-all duration-200"

@@ -26,7 +26,7 @@ Events aren't limited to CDviz's own dashboards. Any Grafana time series panel �
 
 ## Viewers
 
-- **[Grafana](./cdviz-grafana/index.md)** — the reference viewer: pre-built dashboards over a PostgreSQL datasource, self-hosted. See the [setup guide](./cdviz-grafana/index.md). Try it live at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana).
+- **[Grafana](./cdviz-grafana/index.md)** — the reference viewer: pre-built dashboards over a PostgreSQL datasource, self-hosted. See the [setup guide](./cdviz-grafana/index.md). Try it live at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana/).
 - **[CDviz Cloud](/cloud)** — managed dashboards, built in, nothing to install.
 - **Others (Backstage, BI tools, …)** — the dashboards, panels, and queries are plain SQL against PostgreSQL: adapt them to your favorite analytics system. Dedicated guides are on the roadmap.
 

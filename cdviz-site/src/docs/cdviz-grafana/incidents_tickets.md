@@ -7,7 +7,7 @@ description: "CDviz Grafana incidents and tickets dashboard: correlate deploymen
 ![Incidents & Tickets dashboard overview](/screenshots/grafana_dashboard_incidents_tickets-20260222.png)
 
 > [!TIP] Online Demo
-> Explore a live read-only instance at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana) — search for the **Incidents & Tickets** dashboard.
+> Explore a live read-only instance at [demo.cdviz.dev/grafana](https://demo.cdviz.dev/grafana/) — search for the **Incidents & Tickets** dashboard.
 
 ## Overview
 

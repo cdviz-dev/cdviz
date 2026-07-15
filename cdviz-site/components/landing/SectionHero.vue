@@ -81,7 +81,7 @@ onMounted(() => {
       class="order-2 md:order-last flex items-center justify-center rounded-xl my-lg md:my-0"
     >
       <a
-        href="https://demo.cdviz.dev/grafana"
+        href="https://demo.cdviz.dev/grafana/"
         target="_blank"
         rel="noopener"
         class="group relative block"
@@ -186,7 +186,7 @@ onMounted(() => {
       >
         <!-- CTA: lowest friction first (demo), then the two adoption paths: managed trial, self-host -->
         <Btn
-          href="https://demo.cdviz.dev/grafana"
+          href="https://demo.cdviz.dev/grafana/"
           target="_blank"
           rel="noopener"
           primary

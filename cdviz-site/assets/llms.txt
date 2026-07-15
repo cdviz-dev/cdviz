@@ -48,7 +48,7 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [GitHub Organization](https://github.com/cdviz-dev): Source code for all CDviz components
 - [YouTube Channel](https://www.youtube.com/@CDviz): Videos and demos
 - [dev.to Articles](https://dev.to/davidb31): Blog posts and tutorials
-- [Live Demo](https://demo.cdviz.dev/grafana): Read-only Grafana dashboard instance
+- [Live Demo](https://demo.cdviz.dev/grafana/): Read-only Grafana dashboard instance
 
 ## Key facts
 
