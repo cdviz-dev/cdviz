@@ -15,22 +15,22 @@ The comparisons below cover architecture, integrations, data ownership, and when
 
 ## CDviz vs. similar tools
 
-| Tool                              | License     | Self-hosted | CDEvents  | Commercial support | Data model              |
-| --------------------------------- | ----------- | ----------- | --------- | ------------------ | ----------------------- |
-| **CDviz**                         | Apache 2.0  | ✅          | ✅ native | ✅                 | Event-driven (push)     |
-| [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
-| [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)      |
-| [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
-| [CNCF DevStats](#cncf-devstats)   | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
-| [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
-| [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
-| [Kargo](#kargo)                   | Apache 2.0  | ✅          | ❌        | ✅ (Akuity)        | Promotion control plane |
-| [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
-| [Middleware](#middleware)         | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling)    |
-| [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)    |
-| [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)      |
-| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion    |
-| [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)    |
+| Tool                              | License     | Self-hosted | CDEvents  | Commercial support | Data model                 |
+| --------------------------------- | ----------- | ----------- | --------- | ------------------ | -------------------------- |
+| **CDviz**                         | Apache 2.0  | ✅          | ✅ native | ✅                 | Event-driven (push + pull) |
+| [Apache DevLake](#apache-devlake) | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)       |
+| [Datadog CI](#datadog-ci)         | Proprietary | ❌          | ❌        | ✅ (included)      | Trace-based (push)         |
+| [DevStats](#devstats)             | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)       |
+| [CNCF DevStats](#cncf-devstats)   | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)       |
+| [GetDX](#getdx)                   | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)       |
+| [Jellyfish](#jellyfish)           | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)       |
+| [Kargo](#kargo)                   | Apache 2.0  | ✅          | ❌        | ✅ (Akuity)        | Promotion control plane    |
+| [LinearB](#linearb)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)       |
+| [Middleware](#middleware)         | Apache 2.0  | ✅          | ❌        | ✅ (paid tiers)    | Pull-based (polling)       |
+| [Powerpipe](#powerpipe)           | Apache 2.0  | ✅          | ❌        | ❌                 | Pull-based (polling)       |
+| [Sleuth](#sleuth)                 | Proprietary | ❌          | ❌        | ✅ (included)      | Event-based (push)         |
+| [Splunk](#splunk)                 | Proprietary | ✅/SaaS     | ❌        | ✅ (included)      | Log/metric ingestion       |
+| [Swarmia](#swarmia)               | Proprietary | ❌          | ❌        | ✅ (included)      | Pull-based (polling)       |
 
 _CDviz is free and open-source (Apache 2.0) — the Community plan is free forever. [Cloud](/pricing) (€20/month) adds managed hosting with a 14-day free trial; [Pro](/pricing) (€200/month) adds extra integrations and commercial support. Both are billed per organization, not per seat._
 
