@@ -109,7 +109,7 @@
 :root {
   --cdviz-orange: oklch(74.22% 0.166 64.29); /* #f29107 */
   --cdviz-orange-dim: oklch(64% 0.14 64.29);
-  --cdviz-purple: oklch(69.49% 0.068 298.56); /* secondary */
+  --cdviz-purple: oklch(66% 0.085 298.56); /* secondary */
   --cdviz-purple-deep: oklch(49.68% 0.104 307.15); /* accent */
   --cdviz-black: oklch(10.5% 0.01 244); /* #0e151b page bg */
   --cdviz-ink: oklch(15% 0.012 244); /* #111820 raised surfaces */
@@ -141,6 +141,8 @@ html:not(.dark) {
   /* Orange mirrored for contrast on light bg: keep H=64.29, C≈0.18, lower L to ~42% */
   --cdviz-orange: oklch(42% 0.185 64.29);
   --cdviz-orange-dim: oklch(52% 0.155 64.29);
+  /* Purple darkened for a stronger secondary/ghost-border presence on light bg */
+  --cdviz-purple: oklch(50% 0.11 298.56);
   /* Sidebar/nav bg: override dark ink to a light surface */
   --vp-sidebar-bg-color: oklch(95% 0.008 255);
   --vp-nav-bg-color: oklch(95% 0.008 255);
@@ -1903,6 +1905,8 @@ details > *:not(summary) {
   padding: 0.75rem 2rem;
   border-radius: 8px;
   border: none;
+  text-align: center;
+  line-height: 1.2;
   cursor: pointer;
   transition: transform 160ms var(--ease-ui), box-shadow 160ms var(--ease-ui);
   position: relative;
@@ -1923,14 +1927,17 @@ details > *:not(summary) {
   transform: scale(0.97);
 }
 
+/* Ghost variant — purple border, transparent fill (DESIGN.md: purple = borders/decorative) */
 .cdviz-btn-secondary {
-  background: var(--secondary);
+  background: transparent;
   color: var(--text);
+  border: 1px solid color-mix(in oklch, var(--secondary) 50%, transparent);
 }
 
 .cdviz-btn-secondary:hover {
   transform: scale(1.05);
-  box-shadow: var(--shadow-card-hover);
+  border-color: color-mix(in oklch, var(--primary) 50%, transparent);
+  background: color-mix(in oklch, var(--secondary) 10%, transparent);
 }
 .cdviz-btn-secondary:active {
   transform: scale(0.97);

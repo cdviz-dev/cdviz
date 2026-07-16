@@ -14,9 +14,9 @@ const isHovered = ref(false);
 
 const buttonClasses = computed(() => {
   const base = `
-    inline-flex items-center justify-center cursor-pointer
+    inline-flex items-center justify-center text-center leading-tight cursor-pointer
     font-semibold min-h-[44px] min-w-[44px] touch-manipulation
-    rounded-lg px-6 sm:px-8 py-3 sm:py-3 text-sm sm:text-base
+    rounded-lg px-5 sm:px-6 py-2.5 text-sm sm:text-base
     focus:outline-none focus:ring-2 focus:ring-offset-2
     transform-gpu transition-[transform,box-shadow] duration-[160ms] ease-[cubic-bezier(0.23,1,0.32,1)]
     relative overflow-hidden
@@ -45,14 +45,10 @@ const buttonClasses = computed(() => {
     return (
       base +
       `
-      bg-secondary text-text
-      hover:scale-105 hover:shadow-lg hover:bg-secondary/90
+      bg-transparent border border-secondary/50 text-text
+      hover:scale-105 hover:border-primary/50 hover:bg-secondary/10
       focus:ring-secondary focus:scale-105
-      active:scale-[0.97] active:shadow-sm
-      before:absolute before:inset-0 before:bg-gradient-to-r
-      before:from-transparent before:via-white/10 before:to-transparent
-      before:translate-x-[-100%] hover:before:translate-x-[100%]
-      before:transition-transform before:duration-700 before:ease-out
+      active:scale-[0.97]
     `
     );
   }

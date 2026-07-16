@@ -37,7 +37,7 @@ const trialIsExternal = props.trialHref.startsWith("http");
             href="https://demo.cdviz.dev/grafana/"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-text font-semibold hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-transparent border border-secondary/50 text-text font-semibold hover:border-primary/50 hover:bg-secondary/10 hover:scale-105 transition-all duration-200"
             aria-label="Open CDviz live demo"
           >
             <span class="icon-[lucide--eye] h-5 w-5" aria-hidden="true"></span>
@@ -47,7 +47,7 @@ const trialIsExternal = props.trialHref.startsWith("http");
             href="https://github.com/cdviz-dev/cdviz"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-text font-semibold hover:bg-secondary/80 hover:scale-105 transition-all duration-200"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-transparent border border-secondary/50 text-text font-semibold hover:border-primary/50 hover:bg-secondary/10 hover:scale-105 transition-all duration-200"
             aria-label="Star CDviz on GitHub"
           >
             <span
