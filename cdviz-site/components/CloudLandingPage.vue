@@ -1,11 +1,11 @@
 <script setup>
+import CloudEnd from "./landing/SectionCloudEnd.vue";
 import CloudFeatures from "./landing/SectionCloudFeatures.vue";
 import CloudHero from "./landing/SectionCloudHero.vue";
 import CloudHow from "./landing/SectionCloudHow.vue";
 import CloudPricing from "./landing/SectionCloudPricing.vue";
 import CloudProblem from "./landing/SectionCloudProblem.vue";
 import CloudTrust from "./landing/SectionCloudTrust.vue";
-import End from "./landing/SectionEnd.vue";
 import Faq from "./landing/SectionFaq.vue";
 </script>
 
@@ -22,12 +22,12 @@ import Faq from "./landing/SectionFaq.vue";
     id="main-content"
   >
     <CloudHero />
+    <CloudTrust />
     <CloudProblem />
     <CloudHow />
     <CloudFeatures />
     <CloudPricing />
-    <CloudTrust />
     <Faq />
-    <End trial-href="https://app.cdviz.dev" />
+    <CloudEnd />
   </main>
 </template>

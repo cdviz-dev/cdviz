@@ -4,6 +4,17 @@ description: Managed CI/CD observability for small teams. See which pipelines br
 layout: home
 markdownStyles: false
 faq:
+  - q: Why not just use the CI insights built into GitHub or GitLab?
+    a: |
+      They stop at the repo boundary. Both show you one project's runs at a time, so nothing tells
+      you which pipeline across your whole org fails most, or which one has been getting slower all
+      quarter. CDviz ranks reliability and duration across every repo you connect — and across
+      GitHub and GitLab together, if you use both.
+  - q: The Cloud plan says teams of 1–5. What if we're bigger?
+    a: |
+      The plan is sized for small teams, but the limit isn't a wall — if you need more seats,
+      more repos, or access for a wider org,
+      <a href="mailto:contact@cdviz.dev">contact us</a> and we'll sort it out.
   - q: What happens when the 14-day trial ends?
     a: |
       Nothing is charged — no credit card was taken. You pick the Cloud plan
@@ -30,5 +41,4 @@ faq:
 <script setup>
 import CloudLandingPage from '../components/CloudLandingPage.vue'
 </script>
-<h1 style="opacity:0; margin:0; padding:0">CDviz Cloud — managed CI/CD visibility for small teams</h1>
 <CloudLandingPage />

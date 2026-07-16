@@ -3,20 +3,14 @@ import H2 from "./H2.vue";
 
 const features = [
   {
-    badge: "Core",
-    badgeClass: "bg-primary/12 text-primary",
     title: "Cross-repo pipeline reliability",
     body: "Failure rates, chronically broken and intermittent pipelines, and trends — ranked across all your connected repos. The thing you came for.",
   },
   {
-    badge: "Core",
-    badgeClass: "bg-primary/12 text-primary",
     title: "Pipeline duration & trends",
     body: 'Spot which pipelines are slow and which are creeping slower over time, before "CI feels sluggish" becomes a sprint-killer.',
   },
   {
-    badge: "Included",
-    badgeClass: "bg-primary/12 text-primary",
     title: "Deployment & version visibility",
     body: "Know which version is running where, across services — without infra permissions or hunting through dashboards.",
   },
@@ -45,6 +39,7 @@ const features = [
         class="flex gap-5 items-start border border-secondary/20 rounded-xl p-lg bg-[var(--vp-c-bg-soft)]"
       >
         <span
+          v-if="f.badge"
           class="cdviz-mono text-[11px] font-semibold tracking-wider px-3 py-1 rounded-full whitespace-nowrap self-center shrink-0"
           :class="f.badgeClass"
         >{{ f.badge }}</span>

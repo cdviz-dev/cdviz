@@ -10,7 +10,7 @@ const steps = [
   {
     n: "2",
     title: "We read your pipeline history",
-    body: "CDviz pulls recent runs so your dashboards are populated from day one — not blank while you wait for the next push.",
+    body: "CDviz imports your last 30 days of runs, so your dashboards are populated from day one — not blank while you wait for the next push.",
   },
   {
     n: "3",

@@ -5,14 +5,6 @@
         Built on <strong class="text-text font-semibold">CDEvents</strong> — the CD Foundation
         standard
       </span>
-      <span class="border border-secondary/20 rounded-full px-4 py-1.5">
-        <strong class="text-text font-semibold">Open-source</strong> core — your data stays portable
-      </span>
-      <span class="border border-secondary/20 rounded-full px-4 py-1.5">
-        Works with <strong class="text-text font-semibold">GitHub</strong> &amp; <strong
-          class="text-text font-semibold"
-        >GitLab</strong>
-      </span>
     </div>
   </div>
 </template>
