@@ -423,6 +423,10 @@ export default defineConfig({
                   link: "/docs/cdviz-grafana/incidents_tickets",
                 },
                 {
+                  text: "Changes",
+                  link: "/docs/cdviz-grafana/changes",
+                },
+                {
                   text: "Annotate Runtime Metrics",
                   link: "/docs/cdviz-grafana/annotations",
                 },

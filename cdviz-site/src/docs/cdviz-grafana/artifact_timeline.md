@@ -57,6 +57,14 @@ WHERE $__timeFilter(timestamp)
   AND predicate = ANY(ARRAY['deployed', 'upgraded', 'rolledback'])
 ```
 
+## Also in CDviz Cloud
+
+The same timeline is built into [CDviz Cloud](/cloud) — managed, nothing to install:
+
+![CDviz Cloud artifact timeline overview](/screenshots/cloud_artifact_timeline_dashboard-20260717.png)
+
+![CDviz Cloud artifact timeline detail](/screenshots/cloud_artifact_timleline_panel-20260717.png)
+
 ## Technical Notes
 
 - Package identification follows the [Package URL (PURL) specification](https://github.com/package-url/purl-spec/blob/main/PURL-TYPES.rst)

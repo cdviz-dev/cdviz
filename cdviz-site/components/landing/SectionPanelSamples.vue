@@ -1,8 +1,7 @@
 <script setup>
-import { gsap } from "gsap";
-import { onMounted } from "vue";
 import Btn from "./Btn.vue";
 import H2 from "./H2.vue";
+import ScreenshotCarousel from "./ScreenshotCarousel.vue";
 import PanelTimelineSvg from "../diagrams/GrafanaPanelTimelineVersionOnStageWithLegend.vue";
 
 const executionShots = [
@@ -13,45 +12,27 @@ const executionShots = [
     height: 1185,
   },
   {
-    src: "/screenshots/cloud_pipelines_dashboards-20260705.png",
+    src: "/screenshots/cloud_pipelines_dashboard_top-20260717.png",
     alt: "CDviz Cloud pipelines dashboard — the managed equivalent view",
-    width: 1160,
-    height: 1200,
+    width: 1396,
+    height: 905,
   },
 ];
 
-let executionShotIndex = 0;
-
-function cycleExecutionShot() {
-  const items = Array.from(document.querySelectorAll(".execution-shot"));
-  if (items.length < 2) return;
-
-  const current = items[executionShotIndex];
-  const nextIndex = (executionShotIndex + 1) % executionShots.length;
-  const next = items[nextIndex];
-  executionShotIndex = nextIndex;
-
-  gsap.to(current, {
-    opacity: 0,
-    duration: 0.5,
-    ease: "power2.in",
-  });
-  gsap.to(next, {
-    opacity: 1,
-    duration: 0.5,
-    ease: "power2.out",
-    onComplete() {
-      gsap.delayedCall(4, cycleExecutionShot);
-    },
-  });
-}
-
-onMounted(() => {
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) return;
-
-  gsap.delayedCall(3, cycleExecutionShot);
-});
+const incidentShots = [
+  {
+    src: "/screenshots/grafana_dashboard_incidents_tickets-20260222.png",
+    alt: "Incidents and tickets dashboard showing open incidents, time to restore, and change cycle time",
+    width: 1419,
+    height: 1059,
+  },
+  {
+    src: "/screenshots/cloud_tickets_dashboard_top-20260717.png",
+    alt: "CDviz Cloud tickets dashboard — the managed equivalent view",
+    width: 1406,
+    height: 874,
+  },
+];
 </script>
 <template>
   <section class="space-section">
@@ -94,23 +75,11 @@ onMounted(() => {
           href="/docs/cdviz-grafana/pipeline_runs.html"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
-          <div
-            class="md:col-span-3 md:order-1 p-md relative"
-            :style="{ aspectRatio: `${executionShots[0].width} / ${executionShots[0].height}` }"
-          >
-            <img
-              v-for="(shot, i) in executionShots"
-              :key="shot.src"
-              class="execution-shot absolute inset-0 w-full h-full object-contain rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
-              :src="shot.src"
-              :alt="shot.alt"
-              :width="shot.width"
-              :height="shot.height"
-              loading="lazy"
-              decoding="async"
-              :style="{ opacity: i === 0 ? 1 : 0 }"
-            />
-          </div>
+          <ScreenshotCarousel
+            :shots="executionShots"
+            frame-class="rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+            class="md:col-span-3 md:order-1 p-md"
+          />
           <div class="md:col-span-2 md:order-2 p-lg flex flex-col justify-center">
             <h3 class="text-lg sm:text-xl font-semibold mb-sm group-hover:text-primary transition-colors">
               Pipeline &amp; Test Runs
@@ -135,15 +104,11 @@ onMounted(() => {
               management and ticketing tools via CDEvents.
             </p>
           </div>
-          <div class="md:col-span-3 p-md flex items-center">
-            <img
-              src="/screenshots/grafana_dashboard_incidents_tickets-20260222.png"
-              alt="Incidents and tickets dashboard showing open incidents, time to restore, and change cycle time"
-              class="w-full h-auto rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+          <ScreenshotCarousel
+            :shots="incidentShots"
+            frame-class="rounded-lg border border-secondary/20 shadow-lg overflow-hidden"
+            class="md:col-span-3 p-md"
+          />
         </a>
         <!-- DORA Metrics — image left (col-3), text right (col-2) -->
         <a

@@ -51,14 +51,15 @@ CDviz Grafana provides a comprehensive visualization layer for continuous delive
 
 Available dashboards:
 
-| Dashboard                                     | Description                                                                                     |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [Artifact Timeline](./artifact_timeline.md)   | Deployment and version tracking across environments                                             |
-| [Pipeline & Task Runs](./pipeline_runs.md)    | Spot slow, flaky, or failing pipelines and tasks: duration, queue time, and failure-rate trends |
-| [Test Results](./test_results.md)             | Find flaky tests and slow suites: pass/fail history per test and suite                          |
-| [DORA Metrics](./dora_metrics.md)             | Deployment frequency, lead time, time to restore, change failure rate                           |
-| [Incidents & Tickets](./incidents_tickets.md) | Open incidents, MTTR, and change cycle time                                                     |
-| [CDEvents Activity](./cdevents_activity.md)   | Raw CDEvent stream and activity overview                                                        |
+| Dashboard                                     | Description                                                                                                           |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [Artifact Timeline](./artifact_timeline.md)   | Deployment and version tracking across environments                                                                   |
+| [Pipeline & Task Runs](./pipeline_runs.md)    | Spot slow, flaky, or failing pipelines and tasks: duration, queue time, and failure-rate trends                       |
+| [Test Results](./test_results.md)             | Find flaky tests and slow suites: pass/fail history per test and suite                                                |
+| [DORA Metrics](./dora_metrics.md)             | Deployment frequency, lead time, time to restore, change failure rate                                                 |
+| [Incidents & Tickets](./incidents_tickets.md) | Open incidents, MTTR, and change cycle time                                                                           |
+| [Changes](./changes.md)                       | Change lifecycle — created, in review, merged, abandoned — with merge throughput and cycle time _(CDviz Cloud today)_ |
+| [CDEvents Activity](./cdevents_activity.md)   | Raw CDEvent stream and activity overview                                                                              |
 
 ### Kubernetes Deployment with Helm
 

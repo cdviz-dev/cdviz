@@ -43,9 +43,9 @@ The **Task: Executions** dashboard offers the same views at the individual task 
 
 The same insights are built into [CDviz Cloud](/cloud) — managed, nothing to install:
 
-![CDviz Cloud pipelines overview](/screenshots/cloud_pipelines_dashboards-20260705.png)
+![CDviz Cloud pipelines overview](/screenshots/cloud_pipelines_dashboard_top-20260717.png)
 
-![CDviz Cloud pipeline executions detail](/screenshots/cloud_pipelines_executions-20260705.png)
+![CDviz Cloud pipeline executions detail](/screenshots/cloud_pipelines_executions_panel-20260717.png)
 
 ## Implementation Details
 

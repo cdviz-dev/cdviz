@@ -37,6 +37,14 @@ Hover a sparkline for per-run details (timestamps, durations, outcomes):
 
 Use the **Test Suite** dashboard to watch suite-level duration and stability, and the **Test** dashboard to drill down to the individual test cases responsible.
 
+## Also in CDviz Cloud
+
+The same insights are built into [CDviz Cloud](/cloud) — managed, nothing to install:
+
+![CDviz Cloud test suites overview](/screenshots/cloud_testsuites_dashboard_top-20260717.png)
+
+![CDviz Cloud test suite executions detail](/screenshots/cloud_testsuites_executions_panel-20260717.png)
+
 ## Under the hood
 
 These dashboards share their panels and queries with [Pipeline & Task Runs](./pipeline_runs.md#implementation-details), backed by the `cdviz.testcaserun` and `cdviz.testsuiterun` database views instead. See the [dashboard generator source](https://github.com/cdviz-dev/cdviz/blob/main/cdviz-grafana/dashboards_generator/src/dashboards/execution_dashboards.ts).

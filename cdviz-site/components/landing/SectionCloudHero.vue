@@ -1,65 +1,30 @@
 <script setup>
-import { gsap } from "gsap";
-import { onMounted } from "vue";
 import Btn from "./Btn.vue";
 import { CTA_TRIAL } from "./ctas.js";
+import ScreenshotCarousel from "./ScreenshotCarousel.vue";
 
 const screenshots = [
   {
-    key: "home",
-    src: "/screenshots/cloud_home-20260705_2016.png",
+    src: "/screenshots/cloud_home-20260717.png",
     alt: "CDviz Cloud home dashboard overview",
-    width: 1429,
-    height: 611,
+    width: 1645,
+    height: 931,
   },
   {
-    key: "pipelines-dashboards",
-    src: "/screenshots/cloud_pipelines_dashboards-20260705.png",
+    src: "/screenshots/cloud_pipelines_dashboard_top-20260717.png",
     alt: "CDviz Cloud pipelines dashboard showing duration and success rate over time",
-    width: 1168,
-    height: 841,
+    width: 1396,
+    height: 905,
+    fit: "cover",
   },
   {
-    key: "pipelines-executions",
-    src: "/screenshots/cloud_pipelines_executions-20260705.png",
+    src: "/screenshots/cloud_pipelines_executions_panel-20260717.png",
     alt: "CDviz Cloud pipelines dashboard, execution list detail",
-    width: 1170,
-    height: 678,
+    width: 1370,
+    height: 497,
+    fit: "cover",
   },
 ];
-
-let shotIndex = 0;
-
-function cycleScreenshot() {
-  const items = Array.from(document.querySelectorAll(".cloud-hero-shot"));
-  if (items.length < 2) return;
-
-  const current = items[shotIndex];
-  const nextIndex = (shotIndex + 1) % screenshots.length;
-  const next = items[nextIndex];
-  shotIndex = nextIndex;
-
-  gsap.to(current, {
-    opacity: 0,
-    duration: 0.5,
-    ease: "power2.in",
-  });
-  gsap.to(next, {
-    opacity: 1,
-    duration: 0.5,
-    ease: "power2.out",
-    onComplete() {
-      gsap.delayedCall(4, cycleScreenshot);
-    },
-  });
-}
-
-onMounted(() => {
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) return;
-
-  gsap.delayedCall(3, cycleScreenshot);
-});
 </script>
 
 <template>
@@ -90,25 +55,11 @@ onMounted(() => {
 
     <!-- Dashboard screenshots -->
     <div
-      class="max-w-[920px] mx-auto mt-2xl border border-secondary/20 rounded-2xl bg-gradient-to-b from-[var(--vp-c-bg-soft)] to-background shadow-[0_30px_80px_-30px_color-mix(in_oklch,var(--primary)_18%,transparent)] overflow-hidden relative"
-      :style="{ aspectRatio: `${screenshots[0].width} / ${screenshots[0].height}` }"
+      class="max-w-[920px] mx-auto mt-2xl border border-secondary/20 rounded-2xl bg-gradient-to-b from-[var(--vp-c-bg-soft)] to-background shadow-[0_30px_80px_-30px_color-mix(in_oklch,var(--primary)_18%,transparent)] overflow-hidden"
       role="img"
       aria-label="CDviz Cloud dashboards showing pipeline home overview and execution details"
     >
-      <img
-        v-for="(shot, i) in screenshots"
-        :key="shot.key"
-        class="cloud-hero-shot absolute inset-0 w-full h-full"
-        :class='i === 0 ? "object-contain" : "object-cover"'
-        :src="shot.src"
-        :alt="shot.alt"
-        :width="shot.width"
-        :height="shot.height"
-        :aria-hidden="i !== 0"
-        loading="lazy"
-        decoding="async"
-        :style="{ opacity: i === 0 ? 1 : 0 }"
-      />
+      <ScreenshotCarousel :shots="screenshots" />
     </div>
   </section>
 </template>

@@ -64,6 +64,14 @@ Distribution of cycle times (creation → merge). Helps identify whether most ch
 
 Scrollable list of recent changes with their current state, subject, source, and timestamps.
 
+## Also in CDviz Cloud
+
+The same insights are built into [CDviz Cloud](/cloud) — managed, nothing to install. Cloud splits tickets and changes into their own dashboards; see the [Changes](./changes.md) dashboard for the pull-request side.
+
+![CDviz Cloud tickets overview](/screenshots/cloud_tickets_dashboard_top-20260717.png)
+
+![CDviz Cloud latest tickets detail](/screenshots/cloud_tickets_latest_panel-20260717.png)
+
 ## Dashboard Variables
 
 - **`environment`** — filter incidents by environment (from the CDEvent subject or payload fields)
