@@ -1,4 +1,6 @@
 <script setup>
+import Btn from "./Btn.vue";
+import { CTA_TRIAL } from "./ctas.js";
 import End from "./SectionEnd.vue";
 </script>
 
@@ -14,16 +16,7 @@ import End from "./SectionEnd.vue";
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mb-md">
-        <a
-          href="https://app.cdviz.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-background font-semibold hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-200"
-          aria-label="Start CDviz Cloud free trial"
-        >
-          <span class="icon-[lucide--rocket] h-5 w-5" aria-hidden="true"></span>
-          Start free trial
-        </a>
+        <Btn v-bind="CTA_TRIAL" primary />
       </div>
 
       <p class="text-sm text-text/60 mb-lg">

@@ -2,6 +2,7 @@
 import { gsap } from "gsap";
 import { onMounted } from "vue";
 import Btn from "./Btn.vue";
+import { CTA_DEMO, CTA_TRIAL } from "./ctas.js";
 
 const headlines = [
   {
@@ -184,15 +185,9 @@ onMounted(() => {
         id="hero-actions"
         class="my-lg flex flex-col sm:flex-row gap-3 sm:gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out delay-700"
       >
-        <!-- CTA: lowest friction first (demo), then the two adoption paths: managed trial, self-host -->
-        <Btn
-          href="https://demo.cdviz.dev/grafana/"
-          target="_blank"
-          rel="noopener"
-          primary
-        >Try Live Demo</Btn>
-        <Btn href="/cloud">CDviz Cloud — 14-day free trial</Btn>
-        <Btn href="/docs">Get Started Free</Btn>
+        <!-- Shared CTAs (see ctas.js) — identical to the End section and the cloud page -->
+        <Btn v-bind="CTA_TRIAL" primary />
+        <Btn v-bind="CTA_DEMO" />
       </div>
       <div
         id="hero-social-proof"

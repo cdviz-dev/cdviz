@@ -1,11 +1,6 @@
 <script setup>
-const props = defineProps({
-  // Main landing routes trial-seekers through /cloud (sets expectations first);
-  // the cloud page links straight to the app.
-  trialHref: { type: String, default: "/cloud" },
-});
-
-const trialIsExternal = props.trialHref.startsWith("http");
+import Btn from "./Btn.vue";
+import { CTA_DEMO, CTA_TRIAL } from "./ctas.js";
 </script>
 
 <template>
@@ -21,41 +16,10 @@ const trialIsExternal = props.trialHref.startsWith("http");
           Or let us run it: CDviz Cloud, 14-day free trial, no credit card.
         </p>
 
-        <!-- Primary CTA row -->
+        <!-- Shared CTAs (see ctas.js) — identical to the hero and the cloud page -->
         <div class="flex flex-wrap justify-center gap-4 mb-lg">
-          <a
-            :href="trialHref"
-            :target='trialIsExternal ? "_blank" : undefined'
-            :rel='trialIsExternal ? "noopener noreferrer" : undefined'
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-background font-semibold hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-200"
-            aria-label="Start CDviz Cloud free trial"
-          >
-            <span class="icon-[lucide--rocket] h-5 w-5" aria-hidden="true"></span>
-            Start Free Trial
-          </a>
-          <a
-            href="https://demo.cdviz.dev/grafana/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-transparent border border-secondary/50 text-text font-semibold hover:border-primary/50 hover:bg-secondary/10 hover:scale-105 transition-all duration-200"
-            aria-label="Open CDviz live demo"
-          >
-            <span class="icon-[lucide--eye] h-5 w-5" aria-hidden="true"></span>
-            Try Live Demo
-          </a>
-          <a
-            href="https://github.com/cdviz-dev/cdviz"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-transparent border border-secondary/50 text-text font-semibold hover:border-primary/50 hover:bg-secondary/10 hover:scale-105 transition-all duration-200"
-            aria-label="Star CDviz on GitHub"
-          >
-            <span
-              class="icon-[simple-icons--github] h-5 w-5"
-              aria-hidden="true"
-            ></span>
-            Star on GitHub
-          </a>
+          <Btn v-bind="CTA_TRIAL" primary />
+          <Btn v-bind="CTA_DEMO" />
         </div>
       </slot>
 

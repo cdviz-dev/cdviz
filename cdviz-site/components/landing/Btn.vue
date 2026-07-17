@@ -5,12 +5,20 @@ const props = defineProps({
   href: String,
   primary: Boolean,
   ariaLabel: String,
+  title: String,
+  icon: String, // iconify class, e.g. "icon-[lucide--rocket]"
+  label: String, // when set, used instead of the default slot
   loading: Boolean,
   disabled: Boolean,
 });
 
 const isLoading = ref(false);
 const isHovered = ref(false);
+
+// External links open in a new tab. Callers no longer need to pass target/rel.
+// ponytail: untouched slot-based callers may still pass their own target/rel via
+// fallthrough; values match for http hrefs so there's no conflict.
+const isExternal = computed(() => props.href?.startsWith("http") ?? false);
 
 const buttonClasses = computed(() => {
   const base = `
@@ -74,6 +82,9 @@ const handleClick = (event) => {
   <a
     :href="href"
     :aria-label="ariaLabel"
+    :title="title"
+    :target='isExternal ? "_blank" : undefined'
+    :rel='isExternal ? "noopener noreferrer" : undefined'
     :class="buttonClasses"
     @click="handleClick"
     @mouseenter="(isHovered = true)"
@@ -91,9 +102,16 @@ const handleClick = (event) => {
     <!-- Button Content -->
     <span
       :class='{ "opacity-0": loading || isLoading }'
-      class="relative z-10 transition-opacity duration-200"
+      class="relative z-10 inline-flex items-center gap-2 transition-opacity duration-200"
     >
-      <slot></slot>
+      <span
+        v-if="icon"
+        :class="icon"
+        class="h-5 w-5 shrink-0"
+        aria-hidden="true"
+      ></span>
+      <span v-if="label">{{ label }}</span>
+      <slot v-else></slot>
     </span>
 
     <!-- Ripple Effect -->

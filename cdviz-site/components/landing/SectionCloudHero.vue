@@ -2,6 +2,7 @@
 import { gsap } from "gsap";
 import { onMounted } from "vue";
 import Btn from "./Btn.vue";
+import { CTA_TRIAL } from "./ctas.js";
 
 const screenshots = [
   {
@@ -79,7 +80,7 @@ onMounted(() => {
       place that shows where your pipelines fail, how often, and whether it's getting worse.
     </div>
     <div class="flex flex-col sm:flex-row gap-4 justify-center mb-sm">
-      <Btn href="https://app.cdviz.dev" primary>Start free trial</Btn>
+      <Btn v-bind="CTA_TRIAL" primary />
     </div>
     <p class="cdviz-mono text-text/40 text-xs">
       Connect in minutes ·
