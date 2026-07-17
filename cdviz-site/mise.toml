@@ -10,6 +10,7 @@ dev = "bun run docs:dev"
 preview = "bun run docs:preview"
 
 [tasks."build"]
+env = { NODE_ENV = "production" }
 run = "bun run docs:build"
 wait_for = [":build:images", ":build:markdown", ":build:help"]
 

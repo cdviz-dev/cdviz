@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
-@import "tailwindcss";
+/* `important` flag: VitePress's default theme ships UNLAYERED base resets
+   (e.g. `h1..h6{margin:0}`, `a{color:inherit}`) which outrank Tailwind's
+   `@layer utilities` in the production build — so utilities like `mx-auto`
+   (heading centering) and `text-background` (Btn text color) silently lose in
+   prod while working in dev (dev emits utilities unlayered). Marking utilities
+   important lets them win. Don't remove without re-verifying /cloud hero
+   centering + primary button text color in a production build. */
+@import "tailwindcss" important;
 @source "../../components/";
 @source "../../src/";
 
