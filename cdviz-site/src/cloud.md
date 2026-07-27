@@ -22,9 +22,19 @@ faq:
       switch to self-hosting the open-source stack at any time.
   - q: What access does CDviz Cloud need to my repositories?
     a: |
-      Read-only access to pipeline and workflow events and their metadata (names,
-      statuses, durations, timestamps) via a GitHub App or GitLab webhook. CDviz
-      never reads your source code and never needs write access to your repositories.
+      Two things, both under your control. A <strong>webhook</strong> you configure in your
+      own GitHub or GitLab organization settings, which pushes pipeline event metadata to
+      CDviz — names, statuses, durations, timestamps. And, optionally, a
+      <strong>read-only token you create and scope yourself</strong> so CDviz can import
+      your last 30 days of history. There is no GitHub App and no OAuth grant. CDviz never
+      reads your source code, never needs write access, and you can revoke either one from
+      your own settings without contacting us.
+  - q: How long does setup actually take?
+    a: |
+      Around ten minutes for the webhook, which is what gets live data flowing. Importing
+      your last 30 days of history is a separate optional step and needs a read-only token
+      you create yourself — budget another five minutes. We'd rather tell you that up front
+      than have you discover it after signing up.
   - q: Where is my data and who can see it?
     a: |
       Pipeline event metadata is stored in our managed database, isolated per
@@ -33,7 +43,7 @@ faq:
   - q: How is Cloud different from self-hosting CDviz?
     a: |
       Same open-source core. Cloud adds managed hosting, built-in pipeline-reliability
-      dashboards, GitLab support, and a 30-day history import on connect — with nothing
+      dashboards, GitLab support, and an optional 30-day history import — with nothing
       to run. If you stop, you can always self-host the Apache 2.0 components.
       <a href="/pricing">Compare plans →</a>
 ---

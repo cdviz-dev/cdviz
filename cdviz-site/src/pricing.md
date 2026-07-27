@@ -27,8 +27,9 @@ faq:
   - q: What does Cloud actually show me?
     a: |
       A cross-repo view of which pipelines fail, which fail repeatedly, and whether reliability
-      is trending worse — across all your connected GitHub and GitLab repos. On connect, we
-      import ~30 days of history so the dashboard is useful immediately.
+      is trending worse — across all your connected GitHub and GitLab repos. You can optionally
+      import ~30 days of history so the dashboard is useful immediately, using a read-only
+      token you create yourself.
   - q: How does this relate to CDEvents?
     a: |
       CDviz is built on <a href="https://cdevents.dev">CDEvents</a>, the CD Foundation standard

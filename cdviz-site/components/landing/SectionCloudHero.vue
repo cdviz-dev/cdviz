@@ -48,7 +48,7 @@ const screenshots = [
       <Btn v-bind="CTA_TRIAL" primary />
     </div>
     <p class="cdviz-mono text-text/40 text-xs">
-      Connect in minutes ·
+      Webhook setup, about 10 minutes ·
       <span class="text-text/60 font-medium">14-day free trial, no credit card</span> · Open-source
       under the hood, no lock-in
     </p>
