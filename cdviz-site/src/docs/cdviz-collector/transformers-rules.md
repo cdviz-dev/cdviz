@@ -1,7 +1,3 @@
----
-description: "CDviz Collector transformer rules: conditional routing, multi-output transforms, and VRL scripting patterns for CDEvents normalization."
----
-
 # Rules
 
 Opinionated rules for creating CDEvents and transformers.
@@ -70,6 +66,7 @@ Extract from [subject.id](https://github.com/cdevents/spec/blob/main/spec.md#id-
 Use **unique, hierarchical identifiers** scoped to your organization or globally.
 
 - Use a URI (URL, PURL, or absolute path starting with `/`)
+  - use PURL format as id for `artifact` (look at [PURL's type](https://github.com/package-url/purl-spec/tree/main/types))
 - Prefer API URIs over human-facing view URIs
 - **DO NOT use `subject.source`** - it's confusing and optional. Instead, make `subject.id` globally unique and let `context.source` identify the event origin
 
@@ -90,6 +87,10 @@ Use **unique, hierarchical identifiers** scoped to your organization or globally
 "subject.id": "run-12345" # Not globally unique
 "subject.id": "production" # Too generic, not a path
 ```
+
+### subject.source
+
+**DO NOT use**, it will be removed on 0.6+
 
 ### environment.id - Deployment Environment
 
@@ -150,22 +151,79 @@ Guidelines:
 - **Registry Encoding**: OCI requires `repository_url` query parameter; other types encode registries differently
 - **Type-Specific Rules**: Each PURL type has unique encoding rules - consult the specification
 
+### xxxName - Name of a entity
+
+eg: `taskName`, `pipelineName`
+
+- Use a global name (consider a larger scope like a company, organization)
+- Use `/` to compose a name like a path (or `subject.id`) from general (left) to specific (right)
+
+**Why**: Names can be used in larger scope dashboard or to group subjects. Often local names are duplicated between lower scope (eg same task names `test`, `publish`,... and pipeline names are reused between project / repository)
+
+### Use `customData`
+
+- Use `customData` to preserve complementary information not covered by CDEvents standard fields
+- Use `customData.links` to add / repeat relation with other 'subject', use a similar format than `context.links` (until context.links supports linking subject, maybe with 0.6+), below an example for a `testsuiterun`
+
+  ```jsonc
+  "customData": { "links": [
+    {
+      "linkKind": "testedAgainst", // what is the kind of relation between current subject and the target
+      "target": {
+        "subject": {
+          "type": "artifact", // use same value as fragment `subject` type used in `context.type`
+          "id": "pkg:oci/my-app@sha256:abc123def456...?repository_url=ghcr.io/myorg/my-app&tag=v1.2.3" // guessed `subject.id` of the target
+        }
+      }
+    },
+    {
+      "linkKind": "testedAgainst", // multiple link can use the same kind
+      "target": {
+        "subject": {
+          "type": "environment",
+          "id": "/cluster/A-dev"
+        }
+      }
+    },
+    {
+      "linkKind": "storedAt",
+      "target": {
+        "subject": {
+          "type": "repository", // use same value as fragment `subject` type used in `context.type`
+          "id": "https://github.com/my-org/my-repo" // guessed `subject.id` of the target
+        }
+      }
+    },
+    {
+      "linkKind": "runsIn",
+      "target": {
+        "subject": {
+          "type": "pipelinerun", // use same value as fragment `subject` type used in `context.type`
+          "id": "https://api.github.com/my-org/my-repo/aaaaa-aaaaaaaaa/actions/runs/11111111111/attempts/1" // guessed `subject.id` of the target
+        }
+      }
+    },
+  ]}
+  ```
+
+- Avoid redundancy between `customData.links` and required info under `subject.content` or `context.links`
+- Structure as a JSON object with the source name at the first level (`github`, `argocd`, etc.)
+- For webhook events, mirror the original event structure under the first level (can be complete or filtered, the purpose is to allow post-processing to be able to extract information if needed)
+- Additional first-level keys may be added for information useful to other consumers
+
 ## Rules for Transformers
+
+The following rules apply specifically when writing VRL transformer files, in addition to the CDEvents field conventions above.
 
 ### Use metadata for transformer chaining
 
-- Use `metadata` to transfer information between transformers in a chain.
-- **Since v0.19 (recommended):** initialize shared information in the extractor's `metadata`
-  block, so every message enters the chain pre-populated. This is the simplest path and keeps
-  initialization out of the transformers.
-- **For earlier versions, or the `transform` subcommand** (which has no extractor): initialize
-  the information in the **first transformer** of the chain instead. Do the same — even on
-  recent versions — when you want to share one initialization transformer across multiple
-  sources and chains.
+- Use `metadata` to transfer information between transformers
+- Use `metadata` from extractors to initialize information (not available with the `transform` subcommand)
+- Use the first transformer to initialize information when:
+  - Not possible via extractor (pre-0.19 or `transform` subcommand)
+  - Sharing information/transformers between multiple sources and transformer chains
 
-Example of a "first" transformer that initializes `.metadata`. It guards against a missing or
-non-object `.metadata` with `object(.metadata) ?? {}`, then merges in the new keys so existing
-metadata is preserved:
+Example of "first" transformer:
 
 ```toml
 [transformers.init_metadata]
@@ -175,7 +233,7 @@ template = """
 
 [{
   "metadata": merge(.metadata, {
-    "environment_id": "cluster/A-dev",
+    "environment_id": "/cluster/A-dev",
   }),
   "headers": .headers,
   "body": .body,
@@ -205,6 +263,22 @@ template = """
 - Creates reproducible output for the same input
 - Ensures the same automatic ID generation, enabling reliable testing with transform CLI
 
+### Polling Transformers — Idempotent Backfill
+
+When a polling snapshot returns a terminal state (e.g., `completed`), synthesize events for **all prior lifecycle phases** so the CDEvents timeline is complete. Each synthesized event must be **idempotent**: re-generating it from a later poll of the same resource must produce identical content (and thus the same content-based `context.id`).
+
+Rules:
+
+- Use the **phase-specific timestamp field**, not the latest update time for all events:
+  - queued → `created_at`
+  - started → `run_started_at`
+  - finished → `updated_at`
+- `customData` must only contain fields that are **stable for that phase** — i.e., they would have the same value if the event were regenerated from any future poll:
+  - ✅ Include: immutable identifiers (`id`, `url`, `head_sha`, `head_branch`, `name`), phase-specific timestamps
+  - ❌ Exclude: fields that change as the subject progresses (`status`, `conclusion`) — their values differ from what was true at queue/start time and would produce different content on re-poll
+
+**Why**: The content-based `context.id` computed by cdviz-collector must be identical across polls of the same run, enabling deduplication. Including a field like `conclusion` in a synthetic `queued` event would make it differ from a real `queued` event captured at webhook time, breaking idempotency.
+
 ### Define `context.source`
 
 As defined in the CDEvents rules above, `context.source` should be the URI of the cdviz-collector service that creates or modifies the event.
@@ -215,13 +289,7 @@ The value depends on cdviz-collector's running mode and external address:
 - **`send` mode**: Use the URL of the triggering system (pipeline, workflow, etc.)
 - **`transform` mode**: Use `http://cdviz-collector.example.com?source=cli-transform`
 
-To simplify development, cdviz-collector provides a suggested value in metadata. Transformers may use or override it.
+To simplify development, cdviz-collector provides a suggested value in metadata `.metadata.context.source`. Transformers may use or override it.
 
 - Customize the URL using `http.root_url` in `cdviz-collector.toml` (default: `http://cdviz-collector.example.com`)
-
-### Use `customData` for source-specific information
-
-- Use `customData` to preserve complementary information not covered by CDEvents standard fields
-- Structure as a JSON object with the source name at the first level (`github`, `argocd`, etc.)
-- For webhook events, mirror the original event structure under the first level (can be complete or filtered)
-- Additional first-level keys may be added for information useful to other consumers
+- If `context.source` is empty or undef after transformers chain, then the value is automatically set the default/suggested value
