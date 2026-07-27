@@ -196,6 +196,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 { text: "JUnit Reports", link: "/docs/integrations/junit" },
+                { text: "TAP Reports", link: "/docs/integrations/tap" },
                 {
                   text: "SARIF (Linters & Scanners)",
                   link: "/docs/integrations/sarif",

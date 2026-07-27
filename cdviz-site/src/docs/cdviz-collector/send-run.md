@@ -109,8 +109,10 @@ cdviz-collector send --run testsuiterun_tap \
   --metadata "tested_artifact_id=pkg:npm/my-package@$NPM_VERSION" \
   --url "$CDVIZ_URL" \
   --header "Authorization: Bearer $CDVIZ_TOKEN" \
-  -- node --test --test-reporter=tap
+  -- node --test --test-reporter=tap --test-reporter-destination=TEST-results.tap
 ```
+
+The report must be written to a file (stdout is not captured) — see [TAP Reports](../integrations/tap.md).
 
 ### SARIF (static analysis / security scanning)
 

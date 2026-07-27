@@ -301,6 +301,20 @@ export const integrations: Integration[] = [
     ],
   },
   {
+    id: "tap",
+    group: "tests",
+    name: "TAP",
+    page: "/docs/integrations/tap",
+    plans: ["community", "cloud", "pro"],
+    mappings: [
+      {
+        input: "TAP report (node --test, bats, prove, …)",
+        subject: "testSuiteRun",
+        predicates: ["started", "finished"],
+      },
+    ],
+  },
+  {
     id: "sarif",
     group: "tests",
     name: "SARIF",

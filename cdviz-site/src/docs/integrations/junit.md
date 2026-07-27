@@ -88,7 +88,7 @@ cdviz-collector send --run testsuiterun_junit \
 
 ### Node.js — built-in test runner
 
-Node 21+ ships a `junit` reporter (older versions can use the [TAP reporter](../cdviz-collector/send-run.md) with `--run testsuiterun_tap` instead):
+Node 21+ ships a `junit` reporter (older versions emit TAP — see [TAP Reports](./tap.md)):
 
 ```bash
 cdviz-collector send --run testsuiterun_junit \
@@ -138,6 +138,7 @@ cdviz-collector send --run testsuiterun_junit \
 
 ## Related
 
+- **[TAP Reports](./tap.md)** — the same pattern for TAP output (node --test, bats, prove)
 - **[SARIF](./sarif.md)** — the same pattern for linters and scanners
 - CI pipelines: **[GitHub Actions CI](./github-actions-ci.md)**, **[GitLab CI](./gitlab-ci.md)**, **[Jenkins](./jenkins.md)**
 - Full flag list: [`send --run` reference](../cdviz-collector/send-run.md)

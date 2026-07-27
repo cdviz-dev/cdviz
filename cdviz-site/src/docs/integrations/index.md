@@ -2,7 +2,7 @@
 title: Integrations
 description: |
   Connect your SDLC tools to CDviz: collect events from GitHub, GitLab, Jenkins, ArgoCD, and Kubernetes;
-  report test and quality results from pytest, JUnit, and SARIF; store and visualize with PostgreSQL,
+  report test and quality results from JUnit, TAP, and SARIF; store and visualize with PostgreSQL,
   ClickHouse, and Grafana; trigger automation with Argo Workflows.
 ---
 
@@ -36,6 +36,7 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 Emit `testSuiteRun` CDEvents from any CI job with [`cdviz-collector send --run`](../cdviz-collector/send-run.md):
 
 - **[JUnit Reports](./junit.md)** — Maven, Gradle, pytest, and any tool producing JUnit XML
+- **[TAP Reports](./tap.md)** — Node test runner, bats, shellspec, and any TAP producer
 - **[SARIF](./sarif.md)** — linters, static analysis, and security scanners
 
 ## Store & Visualize
