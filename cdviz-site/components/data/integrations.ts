@@ -274,7 +274,7 @@ export const integrations: Integration[] = [
       {
         input: "action_run_success/_recover/_failure",
         subject: "pipelineRun",
-        predicates: ["finished"],
+        predicates: ["queued", "started", "finished"],
       },
       { input: "repository.created/deleted", subject: "repository", predicates: ["created"] },
       { input: "fork", subject: "repository", predicates: ["created"] },

@@ -87,35 +87,43 @@ For webhook troubleshooting, see the [Webhook Extractor documentation](../cdviz-
 
 Event type detection is performed in VRL, mostly from body fields rather than the `X-Forgejo-Event` header, since Forgejo's ~28 hook event types share only a handful of payload structs.
 
-| Forgejo Event                                                 | Action                         | CDEvent Type                                   |
-| ------------------------------------------------------------- | ------------------------------ | ---------------------------------------------- |
-| `action_run_success` / `action_run_recover`                   |                                | `pipelineRun.finished` (outcome `success`)     |
-| `action_run_failure`                                          |                                | `pipelineRun.finished` (outcome `failure`)     |
-| `package`                                                     | `created`                      | `artifact.published`                           |
-| `package`                                                     | `deleted`                      | `artifact.deleted`                             |
-| `release`                                                     | `published`                    | `artifact.published` (+ one per release asset) |
-| `release`                                                     | `deleted`                      | `artifact.deleted`                             |
-| `pull_request` (+ `_assign`, `_label`, `_milestone`, `_sync`) | `opened`                       | `change.created`                               |
-| `pull_request`                                                | `closed` (merged / not merged) | `change.merged` / `change.abandoned`           |
-| `pull_request`                                                | any other                      | `change.updated`                               |
-| `pull_request_review_approved` / `_rejected` / `_comment`     | `reviewed`                     | `change.reviewed`                              |
-| `pull_request_comment`                                        | any                            | `change.updated`                               |
-| `issues` (+ `issue_assign`, `_label`, `_milestone`)           | `opened`                       | `ticket.created`                               |
-| `issues`                                                      | `closed`                       | `ticket.closed`                                |
-| `issues`                                                      | any other                      | `ticket.updated`                               |
-| `issue_comment`                                               | any                            | `ticket.updated`                               |
-| `create` (`ref_type: branch`)                                 |                                | `branch.created`                               |
-| `delete` (`ref_type: branch`)                                 |                                | `branch.deleted`                               |
-| `repository`                                                  | `created` / `deleted`          | `repository.created` / `repository.deleted`    |
-| `fork`                                                        |                                | `repository.created` (for the fork)            |
+| Forgejo Event                                                 | Action                         | CDEvent Type                                                                |
+| ------------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------------------- |
+| `action_run_success` / `action_run_recover`                   |                                | `pipelineRun.` queued + started (inferred) + `finished` (outcome `success`) |
+| `action_run_failure`                                          |                                | `pipelineRun.` queued + started (inferred) + `finished` (outcome `failure`) |
+| `package`                                                     | `created`                      | `artifact.published`                                                        |
+| `package`                                                     | `deleted`                      | `artifact.deleted`                                                          |
+| `release`                                                     | `published`                    | `artifact.published` (+ one per release asset)                              |
+| `release`                                                     | `deleted`                      | `artifact.deleted`                                                          |
+| `pull_request` (+ `_assign`, `_label`, `_milestone`, `_sync`) | `opened`                       | `change.created`                                                            |
+| `pull_request`                                                | `closed` (merged / not merged) | `change.merged` / `change.abandoned`                                        |
+| `pull_request`                                                | any other                      | `change.updated`                                                            |
+| `pull_request_review_approved` / `_rejected` / `_comment`     | `reviewed`                     | `change.reviewed`                                                           |
+| `pull_request_comment`                                        | any                            | `change.updated`                                                            |
+| `issues` (+ `issue_assign`, `_label`, `_milestone`)           | `opened`                       | `ticket.created`                                                            |
+| `issues`                                                      | `closed`                       | `ticket.closed`                                                             |
+| `issues`                                                      | any other                      | `ticket.updated`                                                            |
+| `issue_comment`                                               | any                            | `ticket.updated`                                                            |
+| `create` (`ref_type: branch`)                                 |                                | `branch.created`                                                            |
+| `delete` (`ref_type: branch`)                                 |                                | `branch.deleted`                                                            |
+| `repository`                                                  | `created` / `deleted`          | `repository.created` / `repository.deleted`                                 |
+| `fork`                                                        |                                | `repository.created` (for the fork)                                         |
 
-A single payload produces at most one CDEvent (except `release.published`, which produces one per asset).
+A single payload produces at most one CDEvent, except `release.published` (one per asset) and `action_run_*` (up to three, see below).
 
 Any other event (`push`, `wiki`, `workflow_dispatch`, `schedule`, `create`/`delete` for tags, …) produces **no** event — there is no CDEvents subject for raw pushes or tags outside of the artifact model.
 
-### Why no `pipelineRun.queued` / `.started`?
+### Inferred `pipelineRun.queued` / `.started`
 
-Forgejo Actions only notify on terminal states (`action_run_success` / `action_run_failure` / `action_run_recover`), so only `pipelineRun.finished` is reachable. There is also no job-level webhook, so `taskRun` is not emitted at all. Gitea, which has `workflow_run:requested` / `:in_progress`, does emit the full pipeline lifecycle — see the [Gitea integration](./gitea.md).
+Forgejo Actions only notify on terminal states (`action_run_success` / `action_run_failure` / `action_run_recover`), so the two earlier phases are **inferred**: the terminal payload already carries `run.created` and `run.started`, and the transformer re-emits them as `pipelineRun.queued` and `pipelineRun.started`, each stamped with its own timestamp.
+
+Consequences:
+
+- The three events are sent **at once, after the run ended** — useless for real-time alerting, but queue time, run duration and DORA-style metrics stay computable from CDEvents alone.
+- Inferred events carry `customData.inferred = true`, so consumers can tell them apart from observed ones.
+- A phase that never happened is skipped rather than faked: a run cancelled while still queued has a Go zero timestamp (`0001-01-01T00:00:00Z`) for `run.started`, and produces no `pipelineRun.started`.
+
+There is still no job-level webhook, so `taskRun` is not emitted at all — and, unlike the pipeline phases, the payload carries no per-job data to infer it from. Gitea, which has `workflow_run:requested` / `:in_progress` and `workflow_job`, observes those directly — see the [Gitea integration](./gitea.md).
 
 ### Artifact Identification
 
@@ -134,11 +142,11 @@ pkg:oci/<name>@<tag>?repository_url=<url>&tag=<tag>
 - ✅ Issues (created, updated, closed)
 - ✅ Releases and packages (artifact published / deleted)
 - ✅ Repository created/deleted, forks
-- ✅ CI pipeline outcome via Forgejo Actions (`pipelineRun.finished` only)
+- ✅ CI pipeline lifecycle via Forgejo Actions (`pipelineRun.finished`, plus `queued` / `started` inferred from the terminal payload)
 
 **Not Yet Supported**:
 
-- `pipelineRun.queued` / `.started` and `taskRun` (not available from Forgejo Actions webhooks)
+- `taskRun` (no job-level webhook in Forgejo)
 - Push events, wiki events, tag create/delete
 - `release.updated` (would re-publish identical artifact coordinates)
 
