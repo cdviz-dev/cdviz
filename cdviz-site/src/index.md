@@ -1,6 +1,7 @@
 ---
 title: Monitor Your Software Delivery Pipeline With Confidence
 description: Open-source event-driven CI/CD platform built on CDEvents. Collect software delivery events, visualize DORA metrics and deployment timelines in Grafana, and trigger automated workflows — observe your pipelines before acting on them.
+keywords: "CDEvents,open-source CI/CD observability,software delivery pipeline monitoring,improve software delivery,engineering analytics platform,DORA metrics,Grafana dashboards,event-driven CI/CD,CDviz"
 layout: home
 markdownStyles: false
 

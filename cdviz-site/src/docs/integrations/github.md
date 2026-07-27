@@ -1,5 +1,6 @@
 ---
 title: GitHub WebHook Integration
+keywords: "GitHub webhook integration,GitHub CDEvents,GitHub Actions CI events,cdviz-collector GitHub"
 description: |
   Collect GitHub events (via webhooks), transform them to cdevents.
   <ul>

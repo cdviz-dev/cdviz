@@ -46,14 +46,6 @@ export default defineConfig({
     "Open-source event-driven CI/CD platform built on CDEvents. Collect software delivery events, visualize DORA metrics and deployment timelines in Grafana, and trigger automated workflows — observe your pipelines before acting on them.",
   cleanUrls: true, // supported by Cloudflare, and when false google search console warns about page with redirect
   head: [
-    [
-      "meta",
-      {
-        name: "keywords",
-        content:
-          "CDEvents,SDLC observability,DORA metrics,deployment tracking,pipeline observability,CI/CD visibility,software delivery events,Grafana DORA metrics,DevOps,DevSecOps",
-      },
-    ],
     ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "CDviz" }],
@@ -534,8 +526,14 @@ export default defineConfig({
       "Open-source SDLC observability platform built on CDEvents. Monitor software delivery pipelines with Grafana dashboards.";
     const image =
       pageData.frontmatter.image || `${siteUrl}/illustrations/hero-dashboard-01-q60.webp`;
+    const keywords = pageData.frontmatter.keywords
+      ? Array.isArray(pageData.frontmatter.keywords)
+        ? pageData.frontmatter.keywords.join(",")
+        : pageData.frontmatter.keywords
+      : "CDEvents,SDLC observability,DORA metrics,deployment tracking,pipeline observability,CI/CD visibility,software delivery events,Grafana DORA metrics,DevOps,DevSecOps";
 
     const head: ReturnType<typeof defineConfig>["head"] = [
+      ["meta", { name: "keywords", content: keywords }],
       ["link", { rel: "canonical", href: canonicalUrl }],
       ["meta", { property: "og:url", content: canonicalUrl }],
       ["meta", { property: "og:title", content: title }],

@@ -1,5 +1,6 @@
 ---
 description: "CDviz platform architecture: event-driven pipeline from CDviz Collector to PostgreSQL TimescaleDB and Grafana dashboards for DORA metrics."
+keywords: "CDviz architecture,cdviz-collector,PostgreSQL TimescaleDB,event-driven pipeline,Grafana dashboards"
 ---
 
 <script setup>

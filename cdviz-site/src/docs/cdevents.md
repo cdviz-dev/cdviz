@@ -1,5 +1,6 @@
 ---
 description: "CDEvents: open standard for CI/CD events. How CDviz uses CDEvents to normalize software delivery data across pipelines, tools, and teams."
+keywords: "CDEvents,CDEvents specification,CI/CD event standard,software delivery events,CloudEvents CI/CD"
 ---
 
 # [![cdevents logo](/logos/cdevents.svg)](https://cdevents.dev/)

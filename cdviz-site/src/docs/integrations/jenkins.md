@@ -1,5 +1,6 @@
 ---
 title: Jenkins Integration
+keywords: "Jenkins integration,Jenkins CDEvents,Jenkins pipeline monitoring,cdviz-collector Jenkins"
 description: |
   Instrument Jenkins pipelines with CDEvents using cdviz-collector send --run.
   <ul>

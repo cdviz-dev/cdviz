@@ -2,6 +2,7 @@
 tags:
   - tutorial
 description: Get started with CDviz in minutes. Set up the collector, send your first CDEvents, and explore Grafana dashboards for pipeline visibility.
+keywords: "CDviz getting started,cdviz-collector setup,CDEvents quickstart,Grafana pipeline dashboards"
 faq:
   - q: How long does CDviz take to set up?
     a: |

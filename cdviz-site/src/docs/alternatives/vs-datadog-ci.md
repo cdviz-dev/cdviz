@@ -1,6 +1,7 @@
 ---
 title: "CDviz vs Datadog CI Visibility: Self-Hosted Alternative"
 description: "Self-hosted Datadog CI Visibility alternative. CDviz vs Datadog CI: open-source, data ownership, cost comparison. No vendor lock-in."
+keywords: "CDviz vs Datadog CI,Datadog CI Visibility alternative,self-hosted CI observability,open-source Datadog alternative"
 head:
   - - script
     - type: application/ld+json

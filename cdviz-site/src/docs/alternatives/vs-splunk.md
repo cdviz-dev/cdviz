@@ -1,6 +1,7 @@
 ---
 title: "CDviz vs Splunk for CI/CD Observability"
 description: "Open-source Splunk alternative for CI/CD observability. CDviz vs Splunk: self-hosted, data ownership, cost comparison."
+keywords: "CDviz vs Splunk,Splunk alternative,open-source Splunk alternative,self-hosted CI/CD observability"
 head:
   - - script
     - type: application/ld+json

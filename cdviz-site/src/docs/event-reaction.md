@@ -3,6 +3,7 @@ title: Event Reaction
 description: |
   Trigger automation from CDEvents: forward delivery events to Argo Workflows, n8n, Zapier, or any
   webhook via the HTTP sink, stream them to Kafka or NATS consumers, or subscribe live over SSE.
+keywords: "event-driven automation,CDEvents webhook,Argo Workflows,Kafka NATS events,SSE event stream"
 ---
 
 # Event Reaction

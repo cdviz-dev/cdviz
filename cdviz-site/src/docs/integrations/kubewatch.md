@@ -1,5 +1,6 @@
 ---
 title: Kubernetes (via Kubewatch) Integration
+keywords: "Kubernetes integration,kubewatch CDEvents,Kubernetes deployment events,cdviz-collector Kubernetes"
 description: |
   Collect Kubernetes events (via kubewatch), transform them to cdevents.
   <ul>

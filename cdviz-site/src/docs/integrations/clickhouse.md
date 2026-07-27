@@ -1,5 +1,6 @@
 ---
 title: ClickHouse Integration
+keywords: "ClickHouse integration,CDEvents storage,ClickHouse analytics,cdviz-collector ClickHouse sink"
 description: |
   Store CDEvents in ClickHouse for large-scale analytics: configure the cdviz-collector
   ClickHouse sink and query delivery events with ClickHouse SQL.

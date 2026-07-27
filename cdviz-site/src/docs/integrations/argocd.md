@@ -1,5 +1,6 @@
 ---
 title: ArgoCD Notifications Integration
+keywords: "ArgoCD integration,ArgoCD notifications,ArgoCD CDEvents,GitOps deployment tracking,cdviz-collector ArgoCD"
 description: |
   Collect ArgoCD application lifecycle events, transform them to CDEvents.
   <ul>

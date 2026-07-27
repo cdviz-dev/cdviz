@@ -1,6 +1,7 @@
 ---
 title: "CDviz vs Jellyfish: CI/CD Observability vs Engineering Investment Intelligence"
 description: "Self-hosted Jellyfish alternative. CDviz vs Jellyfish: open-source, data ownership, CDEvents standard, engineering metrics without vendor lock-in."
+keywords: "CDviz vs Jellyfish,Jellyfish alternative,engineering analytics platform,open-source engineering intelligence,self-hosted engineering metrics"
 head:
   - - script
     - type: application/ld+json

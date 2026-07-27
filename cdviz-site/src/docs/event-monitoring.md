@@ -3,6 +3,7 @@ title: Event Monitoring
 description: |
   Monitor your software delivery from CDEvents: DORA metrics, deployment timelines, pipeline
   performance, and incidents — with Grafana today, CDviz Cloud and other viewers tomorrow.
+keywords: "event monitoring,DORA metrics,deployment timelines,pipeline performance,Grafana dashboards"
 ---
 
 # Event Monitoring

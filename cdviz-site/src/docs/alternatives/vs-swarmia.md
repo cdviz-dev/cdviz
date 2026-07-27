@@ -1,6 +1,7 @@
 ---
 title: "CDviz vs Swarmia: Free Open-Source Alternative"
 description: "Looking for a Swarmia alternative? CDviz is a free, self-hosted, open-source Swarmia alternative — data ownership, CDEvents standard, DORA metrics, no per-seat pricing."
+keywords: "CDviz vs Swarmia,Swarmia alternative,engineering analytics platform,open-source DORA metrics,no per-seat pricing"
 head:
   - - script
     - type: application/ld+json

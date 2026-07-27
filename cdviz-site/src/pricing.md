@@ -1,6 +1,7 @@
 ---
 title: Pricing & Plans
 description: Transparent pricing for CDviz. Community free forever, Cloud at €20/month, Pro at €200/month. No "contact us" to get started.
+keywords: "CDviz pricing,CI/CD observability pricing,open-source vs cloud pricing,DORA metrics pricing"
 layout: home
 markdownStyles: false
 

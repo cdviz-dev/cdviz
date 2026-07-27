@@ -1,6 +1,7 @@
 ---
 title: "CDviz vs LinearB: Open-Source LinearB Alternatives"
 description: "Looking for LinearB alternatives? CDviz is a free, self-hosted open-source alternative to LinearB — CDEvents-native, no per-contributor pricing, full data ownership."
+keywords: "CDviz vs LinearB,LinearB alternative,engineering analytics platform,open-source LinearB alternative,DORA metrics tool comparison"
 head:
   - - script
     - type: application/ld+json

@@ -1,5 +1,6 @@
 ---
 title: GitLab WebHook Integration
+keywords: "GitLab webhook integration,GitLab CDEvents,GitLab CI events,cdviz-collector GitLab"
 description: |
   Collect GitLab events (via webhooks), transform them to cdevents.
   <ul>

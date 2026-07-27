@@ -1,6 +1,7 @@
 ---
 title: CDviz Cloud — CI/CD visibility for small teams
 description: Managed CI/CD observability for small teams. See which pipelines break across all your repos, without running any infrastructure.
+keywords: "CDviz Cloud,managed CI/CD observability,SaaS pipeline monitoring,CI/CD visibility for small teams,hosted DORA metrics"
 layout: home
 markdownStyles: false
 faq:

@@ -1,6 +1,7 @@
 ---
 title: CDviz Use Cases
 description: Real-world use cases for CDviz across the whole platform and each component — for CTOs, DevOps, platform engineers and developers.
+keywords: "CDviz use cases,engineering analytics platform,improve software delivery,DORA metrics use cases,deployment tracking use cases,CI/CD observability for platform teams"
 layout: home
 markdownStyles: false
 
