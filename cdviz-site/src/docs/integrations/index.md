@@ -35,8 +35,7 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 
 Emit `testSuiteRun` CDEvents from any CI job with [`cdviz-collector send --run`](../cdviz-collector/send-run.md):
 
-- **[pytest](./pytest.md)** — Python test results via JUnit XML
-- **[JUnit Reports](./junit.md)** — Maven, Gradle, and any tool producing JUnit XML
+- **[JUnit Reports](./junit.md)** — Maven, Gradle, pytest, and any tool producing JUnit XML
 - **[SARIF](./sarif.md)** — linters, static analysis, and security scanners
 
 ## Store & Visualize

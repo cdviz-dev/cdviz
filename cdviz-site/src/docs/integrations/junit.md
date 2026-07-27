@@ -1,7 +1,7 @@
 ---
 title: JUnit Reports Integration
 description: |
-  Emit testSuiteRun CDEvents from any tool producing JUnit XML — Maven, Gradle, Jest, and more —
+  Emit testSuiteRun CDEvents from any tool producing JUnit XML — Maven, Gradle, pytest, Jest, and more —
   by wrapping the test command with cdviz-collector send --run testsuiterun_junit.
 ---
 
@@ -55,7 +55,7 @@ cdviz-collector send --run testsuiterun_junit \
   -- pytest --junit-xml=TEST-results.xml
 ```
 
-See the [pytest integration](./pytest.md) for the full walkthrough.
+The `TEST-` prefix matches the default glob; use `--data` for another path.
 
 ### JavaScript / TypeScript — Bun
 
@@ -138,7 +138,6 @@ cdviz-collector send --run testsuiterun_junit \
 
 ## Related
 
-- **[pytest](./pytest.md)** — Python-specific example (pytest emits JUnit XML)
 - **[SARIF](./sarif.md)** — the same pattern for linters and scanners
 - CI pipelines: **[GitHub Actions CI](./github-actions-ci.md)**, **[GitLab CI](./gitlab-ci.md)**, **[Jenkins](./jenkins.md)**
 - Full flag list: [`send --run` reference](../cdviz-collector/send-run.md)

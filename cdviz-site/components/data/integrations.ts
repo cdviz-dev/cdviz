@@ -287,20 +287,6 @@ export const integrations: Integration[] = [
     ],
   },
   {
-    id: "pytest",
-    group: "tests",
-    name: "pytest",
-    page: "/docs/integrations/pytest",
-    plans: ["community", "cloud", "pro"],
-    mappings: [
-      {
-        input: "pytest run (JUnit XML)",
-        subject: "testSuiteRun",
-        predicates: ["started", "finished"],
-      },
-    ],
-  },
-  {
     id: "junit",
     group: "tests",
     name: "JUnit XML",

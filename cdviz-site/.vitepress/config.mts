@@ -195,7 +195,6 @@ export default defineConfig({
               text: "Testing & Quality",
               collapsed: true,
               items: [
-                { text: "pytest", link: "/docs/integrations/pytest" },
                 { text: "JUnit Reports", link: "/docs/integrations/junit" },
                 {
                   text: "SARIF (Linters & Scanners)",

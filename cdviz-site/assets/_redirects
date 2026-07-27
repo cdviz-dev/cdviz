@@ -12,6 +12,9 @@
 # Integrations promoted to top-level /docs/integrations/
 /docs/cdviz-collector/integrations/*    /docs/integrations/:splat    301
 
+# pytest folded into the JUnit page
+/docs/integrations/pytest    /docs/integrations/junit    301
+
 # Specific path changes (must be before generic rules — first match wins)
 /docs/cdviz-grafana/execution_dashboards        /docs/cdviz-grafana/pipeline_runs    301
 /docs/cdviz-grafana/execution_dashboards.html   /docs/cdviz-grafana/pipeline_runs    301

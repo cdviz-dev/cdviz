@@ -34,6 +34,6 @@ cdviz-collector send --run testsuiterun_sarif \
 
 ## Related
 
-- **[JUnit Reports](./junit.md)** and **[pytest](./pytest.md)** — same pattern for test results
+- **[JUnit Reports](./junit.md)** — same pattern for test results
 - CI pipelines: **[GitHub Actions CI](./github-actions-ci.md)**, **[GitLab CI](./gitlab-ci.md)**, **[Jenkins](./jenkins.md)**
 - Full flag list: [`send --run` reference](../cdviz-collector/send-run.md)
