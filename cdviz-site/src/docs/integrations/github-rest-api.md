@@ -65,6 +65,28 @@ The transformation logic lives in the
 [`github_rest_api`](https://github.com/cdviz-dev/transformers-community/tree/main/github_rest_api)
 transformers in the community repository.
 
+### Reconstructed lifecycle events
+
+A REST snapshot only reports the **current** state of an item, so backfilling something already
+finished would otherwise never produce its lifecycle start. Each item therefore fans out into every
+phase whose timestamp its payload carries:
+
+| Polled item                   | CDEvents emitted                                       |
+| ----------------------------- | ------------------------------------------------------ |
+| open pull request             | `change.created` (at `created_at`)                     |
+| merged pull request           | `change.created` + `change.merged` (at `merged_at`)    |
+| closed, unmerged pull request | `change.created` + `change.abandoned` (at `closed_at`) |
+| open issue (non-PR)           | `ticket.created`                                       |
+| closed issue (non-PR)         | `ticket.created` + `ticket.closed`                     |
+| completed workflow run        | `pipelineRun.queued` + `.started` + `.finished`        |
+
+This keeps lead time, cycle time and run duration computable from CDEvents alone, even for a repository
+whose whole history is imported after the fact.
+
+`customData` of the earlier phases deliberately omits volatile fields (`state`, `conclusion`,
+`merged_at`, …), so re-polling the same item later produces the same content-based `context.id` — an
+overlapping window updates nothing and duplicates nothing.
+
 ## Configuration
 
 ### 1. Reference the transformers
