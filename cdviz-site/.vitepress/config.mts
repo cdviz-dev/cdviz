@@ -184,6 +184,8 @@ export default defineConfig({
               ],
             },
             { text: "Bitbucket", link: "/docs/integrations/bitbucket" },
+            { text: "Forgejo", link: "/docs/integrations/forgejo" },
+            { text: "Gitea", link: "/docs/integrations/gitea" },
             { text: "Jenkins", link: "/docs/integrations/jenkins" },
             { text: "ArgoCD", link: "/docs/integrations/argocd" },
             { text: "Jira", link: "/docs/integrations/jira" },

@@ -27,6 +27,8 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 - **[GitLab Webhook](./gitlab.md)** — repository, MR, and pipeline events
 - **[GitLab CI](./gitlab-ci.md)** — test and task reporting from CI jobs
 - **[Bitbucket Webhook](./bitbucket.md)** — repository, PR, issue, and commit status events (Pro plan, beta)
+- **[Forgejo Webhook](./forgejo.md)** — repository, PR, issue, release, package, and Actions events
+- **[Gitea Webhook](./gitea.md)** — repository, PR, issue, release, package, and Actions events
 - **[Jenkins](./jenkins.md)** — job and pipeline events
 - **[ArgoCD](./argocd.md)** — GitOps deployment events via notifications
 - **[Kubernetes (via Kubewatch)](./kubewatch.md)** — cluster deployment events
