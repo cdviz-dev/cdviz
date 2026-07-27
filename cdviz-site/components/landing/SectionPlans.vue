@@ -1,5 +1,26 @@
 <script setup>
+import { GROUPS, integrations } from "../data/integrations.ts";
 import H2 from "./H2.vue";
+
+const cell = (members, plan) =>
+  members.some((i) => i.plans.includes(plan))
+    ? { text: "✓", good: true }
+    : plan === "community"
+      ? { text: "DIY" } // no community transformer, but a custom VRL one is always possible
+      : { text: "—", muted: true };
+
+// Same source of truth as the coverage matrix of /docs/integrations/.
+const integrationRows = GROUPS.filter((g) => g.id !== "custom") // covered by "Customization" below
+  .map((group) => {
+    const members = integrations.filter((i) => i.group === group.id);
+    return {
+      feature: group.label,
+      icon: group.icon,
+      community: cell(members, "community"),
+      cloud: cell(members, "cloud"),
+      pro: cell(members, "pro"),
+    };
+  });
 
 const comparisonRows = [
   {
@@ -20,34 +41,11 @@ const comparisonRows = [
     cloud: { text: "—", muted: true },
     pro: { text: "✓", good: true },
   },
+  ...integrationRows,
   {
-    feature: "GitHub",
+    feature: "Kafka, NATS, S3-like, SSE sources & sinks",
     community: { text: "✓", good: true },
-    cloud: { text: "✓", good: true },
-    pro: { text: "✓", good: true },
-  },
-  {
-    feature: "GitLab",
-    community: { text: "DIY" },
-    cloud: { text: "✓", good: true },
-    pro: { text: "✓", good: true },
-  },
-  {
-    feature: "Jenkins, Jira, ...",
-    community: { text: "DIY" },
     cloud: { text: "—", muted: true },
-    pro: { text: "✓", good: true },
-  },
-  {
-    feature: "CDEvents (0.3–0.5) via webhook",
-    community: { text: "✓", good: true },
-    cloud: { text: "✓", good: true },
-    pro: { text: "✓", good: true },
-  },
-  {
-    feature: "Kubernetes, ArgoCD",
-    community: { text: "✓", good: true },
-    cloud: { text: "Self-hosted agent" },
     pro: { text: "✓", good: true },
   },
   {
@@ -126,7 +124,9 @@ const comparisonRows = [
             :key="row.feature"
             class="border-b border-gray-100 hover:bg-gray-50"
           >
-            <td class="p-4 text-gray-700">{{ row.feature }}</td>
+            <td class="p-4 text-gray-700">
+              <span v-if="row.icon" :class="row.icon" aria-hidden="true"></span> {{ row.feature }}
+            </td>
             <td
               v-for='tier in ["community", "cloud", "pro"]'
               :key="tier"
@@ -149,7 +149,9 @@ const comparisonRows = [
 
     <p class="text-center text-sm text-gray-500 mt-4">
       Full connector &amp; transformer matrix in the
-      <a href="/docs" class="text-primary hover:underline">documentation</a>.
+      <a href="/docs/integrations/" class="text-primary hover:underline"
+      >integrations documentation</a>. Kubernetes &amp; ArgoCD on Cloud require a self-hosted
+      collector agent.
     </p>
 
     <div class="text-center mt-8">

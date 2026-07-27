@@ -212,6 +212,7 @@ export default defineConfig({
             { text: "Grafana", link: "/docs/cdviz-grafana/" },
             { text: "PostgreSQL", link: "/docs/integrations/postgresql" },
             { text: "ClickHouse", link: "/docs/integrations/clickhouse" },
+            { text: "CDEvents", link: "/docs/integrations/cdevents" },
             { text: "Custom", link: "/docs/integrations/custom" },
           ],
         },

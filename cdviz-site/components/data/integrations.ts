@@ -44,6 +44,7 @@ export const GROUPS = [
   { id: "kubernetes", label: "Kubernetes", icon: "icon-[simple-icons--kubernetes]" },
   { id: "jira", label: "Jira", icon: "icon-[simple-icons--jira]" },
   { id: "tests", label: "Test & Quality Reports", icon: "icon-[lucide--flask-conical]" },
+  { id: "cdevents", label: "CDEvents", icon: "icon-[lucide--webhook]" },
   { id: "custom", label: "Custom", icon: "icon-[lucide--code]" },
 ] as const;
 export type GroupId = (typeof GROUPS)[number]["id"];
@@ -423,6 +424,68 @@ export const integrations: Integration[] = [
         input: "SARIF report (Trivy, Semgrep, CodeQL, …)",
         subject: "testSuiteRun",
         predicates: ["started", "finished"],
+      },
+    ],
+  },
+  {
+    // Predicates come from the `cdevents-spec/` submodule, re-extract on bump with:
+    // rg -o '"dev\.cdevents\.[a-z]+\.[a-z]+\.[0-9.]+"' cdevents-spec/schemas/*.json
+    id: "cdevents",
+    group: "cdevents",
+    name: "Native producer or agent",
+    page: "/docs/integrations/cdevents",
+    plans: ["community", "cloud", "pro"],
+    mappings: [
+      {
+        input: "dev.cdevents.artifact.*",
+        subject: "artifact",
+        predicates: ["published", "signed", "packaged", "downloaded", "deleted"],
+      },
+      { input: "dev.cdevents.branch.*", subject: "branch", predicates: ["created", "deleted"] },
+      {
+        input: "dev.cdevents.change.*",
+        subject: "change",
+        predicates: ["created", "updated", "reviewed", "merged", "abandoned"],
+      },
+      {
+        input: "dev.cdevents.repository.*",
+        subject: "repository",
+        predicates: ["created", "modified", "deleted"],
+      },
+      {
+        input: "dev.cdevents.pipelinerun.*",
+        subject: "pipelineRun",
+        predicates: ["queued", "started", "finished"],
+      },
+      { input: "dev.cdevents.taskrun.*", subject: "taskRun", predicates: ["started", "finished"] },
+      {
+        input: "dev.cdevents.testsuiterun.*",
+        subject: "testSuiteRun",
+        predicates: ["queued", "started", "finished"],
+      },
+      {
+        input: "dev.cdevents.service.*",
+        subject: "service",
+        predicates: ["deployed", "upgraded", "rolledback", "removed", "published"],
+      },
+      {
+        input: "dev.cdevents.environment.*",
+        subject: "environment",
+        predicates: ["created", "modified", "deleted"],
+      },
+      {
+        input: "dev.cdevents.incident.*",
+        subject: "incident",
+        predicates: ["detected", "reported", "resolved"],
+      },
+      {
+        input: "dev.cdevents.ticket.*",
+        subject: "ticket",
+        predicates: ["created", "updated", "closed"],
+      },
+      {
+        input: "dev.cdevents.{build,testcaserun,testoutput}.*",
+        output: "stored as received (no coverage-matrix column)",
       },
     ],
   },

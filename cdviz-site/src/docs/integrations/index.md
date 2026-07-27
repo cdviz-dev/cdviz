@@ -33,6 +33,7 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 - **[ArgoCD](./argocd.md)** — GitOps deployment events via notifications
 - **[Kubernetes (via Kubewatch)](./kubewatch.md)** — cluster deployment events
 - **[Jira](./jira.md)** — ticket and version events (Pro plan, beta)
+- **[CDEvents](./cdevents.md)** — any native producer, agent, or proxy sending CDEvents (v0.3–v0.5) to the webhook
 
 ## Report Test & Quality Results
 
