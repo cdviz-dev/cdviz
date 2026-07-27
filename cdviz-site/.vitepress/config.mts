@@ -123,6 +123,13 @@ export default defineConfig({
     logo: "/favicon.svg",
     search: {
       provider: "local",
+      options: {
+        // strip code blocks before indexing — biggest low-value contributor to index size
+        _render(src, env, md) {
+          const html = md.render(src, env);
+          return html.replace(/<pre[^>]*>[\s\S]*?<\/pre>/g, "");
+        },
+      },
     },
     nav: [
       { text: "Get Started", link: "/docs/getting-started" },
@@ -772,7 +779,8 @@ export default defineConfig({
       // Enable compression for smaller bundles
       minify: true,
       // Local search index is a lazily-loaded data chunk that legitimately exceeds 500 kB
-      chunkSizeWarningLimit: 700,
+      // (trimmed via search.options._render above to slow its growth)
+      chunkSizeWarningLimit: 900,
     },
     plugins: [
       {
