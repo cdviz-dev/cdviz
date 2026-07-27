@@ -184,6 +184,7 @@ export default defineConfig({
                 { text: "GitLab CI", link: "/docs/integrations/gitlab-ci" },
               ],
             },
+            { text: "Bitbucket", link: "/docs/integrations/bitbucket" },
             { text: "Jenkins", link: "/docs/integrations/jenkins" },
             { text: "ArgoCD", link: "/docs/integrations/argocd" },
             { text: "Jira", link: "/docs/integrations/jira" },

@@ -26,6 +26,7 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 - **[GitHub REST API (Polling)](./github-rest-api.md)** — backfill and pull-based tracking without webhooks
 - **[GitLab Webhook](./gitlab.md)** — repository, MR, and pipeline events
 - **[GitLab CI](./gitlab-ci.md)** — test and task reporting from CI jobs
+- **[Bitbucket Webhook](./bitbucket.md)** — repository, PR, issue, and commit status events (Pro plan, beta)
 - **[Jenkins](./jenkins.md)** — job and pipeline events
 - **[ArgoCD](./argocd.md)** — GitOps deployment events via notifications
 - **[Kubernetes (via Kubewatch)](./kubewatch.md)** — cluster deployment events
