@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useData } from "vitepress";
+import { integrationById } from "./data/integrations.ts";
 
-const { frontmatter } = useData();
+const { frontmatter, page } = useData();
 
 const labels: Record<string, string> = {
   community: "Community",
@@ -10,9 +11,15 @@ const labels: Record<string, string> = {
   pro: "Pro",
 };
 
-const plans = computed<string[]>(() =>
-  (frontmatter.value.plans ?? []).filter((plan: string) => plan in labels),
-);
+// Integration pages get their plans from components/data/integrations.ts, other pages
+// from their own frontmatter.
+const plans = computed<string[]>(() => {
+  const id = page.value.relativePath.split("/").pop()?.replace(/\.md$/, "") ?? "";
+  const fromData = page.value.relativePath.startsWith("docs/integrations/")
+    ? integrationById(id)?.plans
+    : undefined;
+  return (fromData ?? frontmatter.value.plans ?? []).filter((plan: string) => plan in labels);
+});
 </script>
 
 <template>

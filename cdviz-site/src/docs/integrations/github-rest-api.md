@@ -7,39 +7,11 @@ description: |
   <li>Ingest GitHub activity in environments where webhooks are not available (no inbound endpoint, GitHub Enterprise behind a firewall).</li>
   <li>Multi-pass discovery: list an org's repositories/packages, then fan out to fetch each one's resources — no per-repo configuration.</li>
   </ul>
-plans:
-  - community
-  - cloud
-  - pro
-integration:
-  icon: /icons/github.svg
-  type: source/http_polling
-  events:
-    - input: "GET /repos/{owner}/{repo}/actions/runs"
-      output: pipelineRun.{queued,started,finished}
-    - input: "GET /repos/{owner}/{repo}/pulls"
-      output: change.{created,merged,abandoned}
-    - input: "GET /repos/{owner}/{repo}/releases (+ assets)"
-      output: artifact.published
-    - input: "GET /{orgs|users}/{owner}/packages/.../versions"
-      output: artifact.published
-    - input: "GET /repos/{owner}/{repo}/issues (non-PR)"
-      output: ticket.{created,closed}
-    - input: "GET /repos/{owner}/{repo}/deployments"
-      output: service.deployed
-    - input: "GET /orgs/{org}/repos"
-      output: repository.created
-    - input: "GET /repos/{owner}/{repo}/environments"
-      output: environment.created
-    - input: "GET /repos/{owner}/{repo}/branches"
-      output: branch.created
 references:
   - title: HTTP Polling Source reference
     url: /docs/cdviz-collector/sources/http_polling
   - title: GitHub Webhook Integration (real-time)
     url: /docs/integrations/github
-  - title: github_rest_api transformers (source + example config)
-    url: https://github.com/cdviz-dev/transformers-community/tree/main/github_rest_api
   - title: GitHub REST API documentation
     url: https://docs.github.com/en/rest
 ---

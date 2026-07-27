@@ -6,29 +6,11 @@ description: |
   <li>Jira notifies a webhook when issues are created, updated, or deleted, and when versions are released.</li>
   <li>cdviz-collector transforms these events to CDEvents, and sends them to the database, listeners,...</li>
   </ul>
-plans:
-  - pro
-integration:
-  icon: /icons/jira.svg
-  type: source/webhook
-  events:
-    - input: issue_created
-      output: ticket.created
-    - input: issue_updated (status done)
-      output: ticket.closed
-    - input: issue_updated (other status)
-      output: ticket.updated
-    - input: issue_deleted (no resolution)
-      output: ticket.closed
-    - input: version_released
-      output: artifact.published
 references:
   - title: JIRA Cloud Webhook Documentation
     url: https://developer.atlassian.com/cloud/jira/platform/webhooks/
   - title: JIRA Server Webhook Documentation
     url: https://developer.atlassian.com/server/jira/platform/webhooks/
-  - title: Source code of the transformation of Jira webhooks to CDEvents
-    url: https://github.com/cdviz-dev/transformers-pro/blob/main/jira_events/to_v0_5.vrl
   - title: Examples of CDEvents converted from Jira's events
     url: https://github.com/cdviz-dev/transformers-pro/tree/main/jira_events/inputs/examples
 ---

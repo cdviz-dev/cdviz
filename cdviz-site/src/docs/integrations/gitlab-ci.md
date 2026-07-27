@@ -6,21 +6,6 @@ description: |
   <li>Wrap test jobs to emit testSuiteRun CDEvents with JUnit XML or TAP results automatically parsed.</li>
   <li>Wrap non-test jobs (build, deploy) with taskRun events — no changes to your existing scripts.</li>
   </ul>
-plans:
-  - cloud
-  - pro
-integration:
-  icon: /icons/gitlab.svg
-  type: action/direct
-  events:
-    - input: test suite results (JUnit XML)
-      output: testSuiteRun.started
-    - input: test suite results (JUnit XML)
-      output: testSuiteRun.finished
-    - input: job start
-      output: taskRun.started
-    - input: job finish
-      output: taskRun.finished
 references:
   - title: cdviz-collector send --run reference
     url: /docs/cdviz-collector/send-run

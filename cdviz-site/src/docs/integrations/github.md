@@ -6,51 +6,11 @@ description: |
   <li>Github tracks all changes to repositories, issues, pull requests, releases, workflows, and more. And it notifies a webhook about these changes.</li>
   <li>cdviz-collector transforms these events to cdevents, and sends them to the database, listeners,...</li>
   </ul>
-plans:
-  - community
-  - cloud
-  - pro
-integration:
-  icon: /icons/github.svg
-  type: source/webhook
-  events:
-    - input: package.published
-      output: artifact.published
-    - input: release.published
-      output: artifact.published
-    - input: workflow_run.requested
-      output: pipelineRun.queued
-    - input: workflow_run.in_progress
-      output: pipelineRun.started
-    - input: workflow_run.completed
-      output: pipelineRun.finished
-    - input: workflow_job.in_progress
-      output: taskRun.started
-    - input: workflow_job.completed
-      output: taskRun.finished
-    - input: issue.opened
-      output: ticket.created
-    - input: issue.closed
-      output: ticket.closed
-    - input: issue.*
-      output: ticket.updated
-    - input: branch.
-      output: branch.created
-    - input: pull_request.opened
-      output: change.created
-    - input: pull_request.closed
-      output: change.{merged,abandoned}
-    - input: pull_request.*
-      output: change.updated
-    - input: pull_request_review.submitted
-      output: change.reviewed
 references:
   - title: GitHub Webhooks and Events
     url: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
-  - title: Source code of the transformation of GitHub Webhooks to cdevents
-    url: https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/github_events.vrl
   - title: Examples of cdevents converted from github's events
-    url: https://github.com/cdviz-dev/cdviz-collector/tree/main/examples/assets/outputs/transform-github_events
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/github_events/outputs
 ---
 
 <script setup>

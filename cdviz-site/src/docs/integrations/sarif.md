@@ -3,10 +3,6 @@ title: SARIF Integration (Linters & Scanners)
 description: |
   Emit testSuiteRun CDEvents from linters, static analysis, and security scanners producing SARIF
   output — Trivy, Semgrep, ESLint, and more — with cdviz-collector send --run testsuiterun_sarif.
-plans:
-  - community
-  - cloud
-  - pro
 ---
 
 # SARIF Integration

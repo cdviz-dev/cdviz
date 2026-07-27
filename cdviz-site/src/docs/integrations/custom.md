@@ -4,12 +4,6 @@ description: |
   cdviz-collector is open source (Apache 2.0) and extensible.
   Build custom integrations by writing VRL transformer scripts, configuring custom sources and sinks,
   or contributing new connectors back to the project.
-plans:
-  - community
-  - pro
-integration:
-  icon: /logos/cdviz.svg
-  type: custom
 ---
 
 <script setup>

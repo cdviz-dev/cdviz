@@ -6,13 +6,19 @@ description: |
   ClickHouse, and Grafana; trigger automation with Argo Workflows.
 ---
 
+<script setup>
+import IntegrationsCoverage from '../../../components/IntegrationsCoverage.vue'
+</script>
+
 # Integrations
 
 Connect the tools you already use. Each integration is a focused setup guide: what events you get, how to wire it up, and where the data lands.
 
 ## Collect Events From
 
-Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md):
+Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md) — which subject each source can emit, toggle to see the predicates:
+
+<IntegrationsCoverage />
 
 - **[GitHub Webhook](./github.md)** — repository, PR, and workflow events with signature validation
 - **[GitHub Action](./github-action.md)** — send hand-crafted CDEvents from workflow steps

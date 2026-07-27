@@ -6,20 +6,6 @@ description: |
   <li>Wrap sh/bat steps in Declarative or Scripted pipelines to emit testSuiteRun CDEvents with JUnit XML results.</li>
   <li>Wrap non-test stages (build, deploy) with taskRun events — no changes to your existing scripts.</li>
   </ul>
-plans:
-  - pro
-integration:
-  icon: /icons/jenkins.svg
-  type: action/direct
-  events:
-    - input: test suite results (JUnit XML)
-      output: testSuiteRun.started
-    - input: test suite results (JUnit XML)
-      output: testSuiteRun.finished
-    - input: stage start
-      output: taskRun.started
-    - input: stage finish
-      output: taskRun.finished
 references:
   - title: cdviz-collector send --run reference
     url: /docs/cdviz-collector/send-run

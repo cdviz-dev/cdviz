@@ -6,29 +6,11 @@ description: |
   <li>ArgoCD tracks application deployments, sync operations, and health status.</li>
   <li>cdviz-collector transforms these events to CDEvents, and sends them to the database, listeners,...</li>
   </ul>
-plans:
-  - community
-  - cloud
-  - pro
-integration:
-  icon: /icons/argocd.svg
-  type: source/webhook
-  events:
-    - input: sync.succeeded + healthy
-      output: service.deployed
-    - input: sync.failed/error
-      output: incident.detected
-    - input: health.degraded
-      output: incident.detected
-    - input: app.deleted
-      output: service.removed
 references:
   - title: ArgoCD Notifications Documentation
     url: https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/
-  - title: Source code of the transformation of ArgoCD notifications to CDEvents
-    url: https://github.com/cdviz-dev/cdviz-collector/blob/main/transformers/argocd_notifications/transformer.vrl
   - title: Examples of CDEvents converted from ArgoCD events
-    url: https://github.com/cdviz-dev/cdviz-collector/tree/main/transformers/argocd_notifications/outputs/captured
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/argocd_notifications/outputs
 ---
 
 <script setup>

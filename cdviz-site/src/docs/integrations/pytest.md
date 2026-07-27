@@ -3,10 +3,6 @@ title: pytest Integration
 description: |
   Emit testSuiteRun CDEvents from pytest: wrap your test command with cdviz-collector send --run
   and get per-suite results, pass/fail counts, and CI context in your delivery dashboards.
-plans:
-  - community
-  - cloud
-  - pro
 ---
 
 # pytest Integration

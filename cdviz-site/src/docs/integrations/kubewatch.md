@@ -8,27 +8,11 @@ description: |
   </ul>
   A CDEvent "service" is created for each containers defined in Kubernetes resource (deployment, statefulset, daemonset) that is created, updated, or deleted.
   Using the container allows to link with packages'events (e.g. from GitHub, GitLab, etc.) that are related to the container.
-plans:
-  - community
-  - cloud
-  - pro
-integration:
-  icon: /icons/kubewatch.svg
-  type: source/webhook
-  events:
-    - input: "{deployment, statefulset, daemonset}.create"
-      output: "service.deployed"
-    - input: "{deployment, statefulset, daemonset}.delete"
-      output: "service.removed"
-    - input: "{deployment, statefulset, daemonset}.update"
-      output: "service.{deployed, upgraded, removed}"
 references:
   - title: Kubewatch
     url: https://github.com/robusta-dev/kubewatch/
-  - title: Source code of the transformation of Kubewatch cloudevents to cdevents
-    url: https://github.com/cdviz-dev/cdviz-collector/blob/main/config/transformers/kubewatch_cloudevents.vrl
   - title: Examples of cdevents converted from kubewatch's events
-    url: https://github.com/cdviz-dev/cdviz-collector/tree/main/examples/assets/outputs/transform-kubewtach_cloudevents
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/kubewatch_cloudevents/outputs
 ---
 
 <script setup>

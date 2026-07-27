@@ -3,10 +3,6 @@ title: JUnit Reports Integration
 description: |
   Emit testSuiteRun CDEvents from any tool producing JUnit XML — Maven, Gradle, Jest, and more —
   by wrapping the test command with cdviz-collector send --run testsuiterun_junit.
-plans:
-  - community
-  - cloud
-  - pro
 ---
 
 # JUnit Reports Integration

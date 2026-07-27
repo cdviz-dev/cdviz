@@ -6,50 +6,9 @@ description: |
   <li>GitLab tracks all changes to repositories, issues, merge requests, releases, pipelines, jobs, and more. And it notifies a webhook about these changes.</li>
   <li>cdviz-collector transforms these events to cdevents, and sends them to the database, listeners,...</li>
   </ul>
-plans:
-  - cloud
-  - pro
-integration:
-  icon: /icons/gitlab.svg
-  type: source/webhook
-  events:
-    - input: pipeline.created/pending
-      output: pipelineRun.queued
-    - input: pipeline.running
-      output: pipelineRun.started
-    - input: pipeline.success/failed
-      output: pipelineRun.finished
-    - input: build.running
-      output: taskRun.started
-    - input: build.success/failed
-      output: taskRun.finished
-    - input: release.created
-      output: artifact.published
-    - input: tag_push
-      output: artifact.published
-    - input: issue.open/reopen
-      output: ticket.created
-    - input: issue.close
-      output: ticket.closed
-    - input: issue.update
-      output: ticket.updated
-    - input: merge_request.open/reopen
-      output: change.created
-    - input: merge_request.merge
-      output: change.merged
-    - input: merge_request.close
-      output: change.abandoned
-    - input: merge_request.approved
-      output: change.reviewed
-    - input: merge_request.update
-      output: change.updated
-    - input: push (branch)
-      output: branch.created/deleted
 references:
   - title: GitLab Webhooks and Events
     url: https://docs.gitlab.com/user/project/integrations/webhook_events/
-  - title: Source code of the transformation of GitLab Webhooks to cdevents
-    url: https://github.com/cdviz-dev/transformers-pro/blob/main/gitlab_events/transformer.vrl
   - title: Examples of cdevents converted from GitLab's events
     url: https://github.com/cdviz-dev/transformers-pro/tree/main/gitlab_events/outputs
 ---

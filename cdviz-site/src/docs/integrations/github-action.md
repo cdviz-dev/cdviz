@@ -6,22 +6,6 @@ description: |
   <li>Integrate CDEvents into your CI/CD pipelines without webhooks or external infrastructure.</li>
   <li>Send custom CDEvents directly from your GitHub Actions workflows to any CDEvents consumer or HTTP endpoint.</li>
   </ul>
-plans:
-  - community
-  - cloud
-  - pro
-integration:
-  icon: /icons/github.svg
-  type: action/direct
-  events:
-    - input: workflow trigger
-      output: custom cdevents
-    - input: deployment success
-      output: service.deployed
-    - input: test completion
-      output: test.finished
-    - input: artifact build
-      output: artifact.packaged
 references:
   - title: send-cdevents GitHub Action
     url: https://github.com/cdviz-dev/send-cdevents
