@@ -28,15 +28,12 @@ depends = [":build:images", ":build:markdown", ":build:help", "build:site", "che
 [tasks."build:help"]
 description = "build help snippet from cdviz-collector, to be imported into docs"
 run = [
-  "cdviz-collector --help > src/docs/cdviz-collector/help.txt",
-  "cdviz-collector connect --help > src/docs/cdviz-collector/connect-help.txt",
-  "cdviz-collector send --help > src/docs/cdviz-collector/send-help.txt",
-  "cdviz-collector transform --help > src/docs/cdviz-collector/transform-help.txt",
-  "cdviz-collector config --help > src/docs/cdviz-collector/config-help.txt",
+  "cdviz-collector --help | sed 's/[[:space:]]*$//' > src/docs/cdviz-collector/help.txt",
+  "cdviz-collector connect --help | sed 's/[[:space:]]*$//' > src/docs/cdviz-collector/connect-help.txt",
+  "cdviz-collector send --help | sed 's/[[:space:]]*$//' > src/docs/cdviz-collector/send-help.txt",
+  "cdviz-collector transform --help | sed 's/[[:space:]]*$//' > src/docs/cdviz-collector/transform-help.txt",
+  "cdviz-collector config --help | sed 's/[[:space:]]*$//' > src/docs/cdviz-collector/config-help.txt",
 ]
-
-sources = ["favicon.svg"]
-outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
 
 [tasks."build:favicon"]
 description = "rebuild favicon.{ico,png,webp} from favicon.svg"
@@ -46,12 +43,12 @@ run = [
   # use imagemagick
   # -background none to keep transparency, should be before the input file
   "magick -background none favicon.svg -define icon:auto-resize=16,32,48,64 favicon.ico",
-  "magick -background none favicon.svg -resize 48x48 favicon.png",
+  "magick -background none favicon.svg -resize 48x48 -define png:exclude-chunks=date,time favicon.png",
   "magick -background none favicon.svg -resize 48x48 favicon.webp",
-  "magick -background none favicon.svg -resize 320x320 logos/cdviz-320x320-c.png",
+  "magick -background none favicon.svg -resize 320x320 -define png:exclude-chunks=date,time logos/cdviz-320x320-c.png",
 ]
-sources = ["favicon.svg"]
-outputs = ["favicon.ico", "favicon.png", "favicon.webp"]
+sources = ["assets/favicon.svg"]
+outputs = ["favicon.ico", "favicon.png", "favicon.webp", "logos/cdviz-320x320-c.png"]
 
 [tasks."build:hero-images"]
 description = "rebuild optimized hero images from hero-dashboard-01.webp"
@@ -82,7 +79,7 @@ run = [
   "magick hero-dashboard-01-600w.webp -quality 75 hero-dashboard-01-600w.avif",
   "magick hero-dashboard-01-400w.webp -quality 75 hero-dashboard-01-400w.avif",
 ]
-sources = ["hero-dashboard-01.webp"]
+sources = ["assets/illustrations/hero-dashboard-01.webp"]
 outputs = [
   "hero-dashboard-01-q75.webp",
   "hero-dashboard-01-q60.webp",
