@@ -15,7 +15,7 @@ AI agent instructions for CDviz, an SDLC observability platform built around CDE
 
 ## Monorepo Structure
 
-This is a **mise monorepo** with `experimental_monorepo_root = true` configuration. Components are organized as:
+This is a **mise monorepo** with `monorepo_root = true` configuration. Components are organized as:
 
 - **cdviz-db/**: PostgreSQL + TimescaleDB schema with golang-migrate migrations
 - **cdviz-grafana/**: TypeScript-based Grafana dashboard generator (Bun + Grafana Foundation SDK)
