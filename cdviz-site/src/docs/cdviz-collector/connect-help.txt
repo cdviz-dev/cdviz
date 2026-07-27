@@ -7,11 +7,11 @@ Usage: cdviz-collector connect [OPTIONS]
 Options:
       --config <CONFIG>
           Configuration file path or HTTP/HTTPS URL for sources, sinks, and transformers.
-          
+
           Specifies the TOML configuration that defines the pipeline behavior. If not provided, the collector will use the base configuration with default settings. The configuration can also be specified via the `CDVIZ_COLLECTOR_CONFIG` environment variable.
-          
+
           Example: `--config cdviz-collector.toml` Example: `--config https://config.example.com/cdviz.toml`
-          
+
           [env: CDVIZ_COLLECTOR_CONFIG=]
 
   -v, --verbose...
@@ -19,7 +19,7 @@ Options:
 
       --config-header <CONFIG_HEADERS>
           HTTP headers to use when fetching config from a URL.
-          
+
           Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
 
   -q, --quiet...
@@ -27,19 +27,19 @@ Options:
 
       --disable-otel
           Disable OpenTelemetry initialization and use minimal tracing setup.
-          
+
           This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
 
       --set <SET>
           Override individual config key/value pairs.
-          
+
           Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
-          
+
           Example: `--set sources.my-source.enabled=true`
 
   -C, --directory <DIRECTORY>
           Change working directory before executing the command.
-          
+
           This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
 
   -h, --help

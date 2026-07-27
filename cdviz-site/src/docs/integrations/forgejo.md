@@ -87,27 +87,27 @@ For webhook troubleshooting, see the [Webhook Extractor documentation](../cdviz-
 
 Event type detection is performed in VRL, mostly from body fields rather than the `X-Forgejo-Event` header, since Forgejo's ~28 hook event types share only a handful of payload structs.
 
-| Forgejo Event                                                   | Action                            | CDEvent Type                                    |
-| ---------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------- |
-| `action_run_success` / `action_run_recover`                     |                                    | `pipelineRun.finished` (outcome `success`)       |
-| `action_run_failure`                                             |                                    | `pipelineRun.finished` (outcome `failure`)       |
-| `package`                                                        | `created`                          | `artifact.published`                             |
-| `package`                                                        | `deleted`                          | `artifact.deleted`                               |
-| `release`                                                        | `published`                        | `artifact.published` (+ one per release asset)   |
-| `release`                                                        | `deleted`                          | `artifact.deleted`                               |
-| `pull_request` (+ `_assign`, `_label`, `_milestone`, `_sync`)    | `opened`                           | `change.created`                                 |
-| `pull_request`                                                   | `closed` (merged / not merged)     | `change.merged` / `change.abandoned`             |
-| `pull_request`                                                   | any other                          | `change.updated`                                 |
-| `pull_request_review_approved` / `_rejected` / `_comment`        | `reviewed`                         | `change.reviewed`                                |
-| `pull_request_comment`                                           | any                                | `change.updated`                                 |
-| `issues` (+ `issue_assign`, `_label`, `_milestone`)              | `opened`                           | `ticket.created`                                 |
-| `issues`                                                         | `closed`                           | `ticket.closed`                                  |
-| `issues`                                                         | any other                          | `ticket.updated`                                 |
-| `issue_comment`                                                  | any                                | `ticket.updated`                                 |
-| `create` (`ref_type: branch`)                                    |                                    | `branch.created`                                 |
-| `delete` (`ref_type: branch`)                                    |                                    | `branch.deleted`                                 |
-| `repository`                                                     | `created` / `deleted`              | `repository.created` / `repository.deleted`      |
-| `fork`                                                           |                                    | `repository.created` (for the fork)              |
+| Forgejo Event                                                 | Action                         | CDEvent Type                                   |
+| ------------------------------------------------------------- | ------------------------------ | ---------------------------------------------- |
+| `action_run_success` / `action_run_recover`                   |                                | `pipelineRun.finished` (outcome `success`)     |
+| `action_run_failure`                                          |                                | `pipelineRun.finished` (outcome `failure`)     |
+| `package`                                                     | `created`                      | `artifact.published`                           |
+| `package`                                                     | `deleted`                      | `artifact.deleted`                             |
+| `release`                                                     | `published`                    | `artifact.published` (+ one per release asset) |
+| `release`                                                     | `deleted`                      | `artifact.deleted`                             |
+| `pull_request` (+ `_assign`, `_label`, `_milestone`, `_sync`) | `opened`                       | `change.created`                               |
+| `pull_request`                                                | `closed` (merged / not merged) | `change.merged` / `change.abandoned`           |
+| `pull_request`                                                | any other                      | `change.updated`                               |
+| `pull_request_review_approved` / `_rejected` / `_comment`     | `reviewed`                     | `change.reviewed`                              |
+| `pull_request_comment`                                        | any                            | `change.updated`                               |
+| `issues` (+ `issue_assign`, `_label`, `_milestone`)           | `opened`                       | `ticket.created`                               |
+| `issues`                                                      | `closed`                       | `ticket.closed`                                |
+| `issues`                                                      | any other                      | `ticket.updated`                               |
+| `issue_comment`                                               | any                            | `ticket.updated`                               |
+| `create` (`ref_type: branch`)                                 |                                | `branch.created`                               |
+| `delete` (`ref_type: branch`)                                 |                                | `branch.deleted`                               |
+| `repository`                                                  | `created` / `deleted`          | `repository.created` / `repository.deleted`    |
+| `fork`                                                        |                                | `repository.created` (for the fork)            |
 
 A single payload produces at most one CDEvent (except `release.published`, which produces one per asset).
 

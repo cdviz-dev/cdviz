@@ -7,7 +7,7 @@ Usage: cdviz-collector config [OPTIONS]
 Options:
       --config <CONFIG>
           Configuration file path or HTTP/HTTPS URL
-          
+
           [env: CDVIZ_COLLECTOR_CONFIG=]
 
   -v, --verbose...
@@ -15,7 +15,7 @@ Options:
 
       --config-header <CONFIG_HEADERS>
           HTTP headers to use when fetching config from a URL.
-          
+
           Format: `"Header-Name: value"`. Can be repeated. Example: `--config-header "Authorization: Bearer token"`
 
   -q, --quiet...
@@ -23,19 +23,19 @@ Options:
 
       --disable-otel
           Disable OpenTelemetry initialization and use minimal tracing setup.
-          
+
           This is useful for testing environments or when you want to avoid OpenTelemetry overhead. When disabled, only basic console logging will be available without distributed tracing capabilities.
 
       --set <SET>
           Override individual config key/value pairs.
-          
+
           Format: `key=value`. Can be repeated. Values are auto-typed: `true`/`false` → bool, integers → int, decimals → float, everything else → quoted string.
-          
+
           Example: `--set sources.my-source.enabled=true`
 
   -C, --directory <DIRECTORY>
           Change working directory before executing the command.
-          
+
           This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
 
       --print
@@ -49,14 +49,14 @@ Options:
 
       --for <FOR_COMMAND>
           Select which subcommand's base configuration to apply.
-          
+
           Controls which embedded base TOML is merged before your configuration file. Match this to the subcommand you intend to run the config with: `connect` (default) for server mode, `send` for the send subcommand, `transform` for batch transformation mode.
 
           Possible values:
           - connect:   Base config for the `connect` server subcommand (default)
           - send:      Base config for the `send` subcommand
           - transform: Base config for the `transform` subcommand (same embedded base as `connect`)
-          
+
           [default: connect]
 
   -h, --help

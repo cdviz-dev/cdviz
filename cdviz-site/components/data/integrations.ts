@@ -266,7 +266,11 @@ export const integrations: Integration[] = [
       { input: "pull_request.opened", subject: "change", predicates: ["created"] },
       { input: "pull_request.closed", subject: "change", predicates: ["merged", "abandoned"] },
       { input: "pull_request.*", subject: "change", predicates: ["updated"] },
-      { input: "pull_request_review_approved/_rejected", subject: "change", predicates: ["reviewed"] },
+      {
+        input: "pull_request_review_approved/_rejected",
+        subject: "change",
+        predicates: ["reviewed"],
+      },
       {
         input: "action_run_success/_recover/_failure",
         subject: "pipelineRun",
@@ -295,7 +299,11 @@ export const integrations: Integration[] = [
       { input: "pull_request.closed", subject: "change", predicates: ["merged", "abandoned"] },
       { input: "pull_request.*", subject: "change", predicates: ["updated"] },
       { input: "pull_request_review.reviewed", subject: "change", predicates: ["reviewed"] },
-      { input: "workflow_run.requested/queued/waiting", subject: "pipelineRun", predicates: ["queued"] },
+      {
+        input: "workflow_run.requested/queued/waiting",
+        subject: "pipelineRun",
+        predicates: ["queued"],
+      },
       { input: "workflow_run.in_progress", subject: "pipelineRun", predicates: ["started"] },
       { input: "workflow_run.completed", subject: "pipelineRun", predicates: ["finished"] },
       { input: "workflow_job.in_progress", subject: "taskRun", predicates: ["started"] },
