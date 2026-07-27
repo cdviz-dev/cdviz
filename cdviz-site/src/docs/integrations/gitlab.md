@@ -16,13 +16,17 @@ references:
 
 <script setup>
 import IntegrationCard from '../../../components/IntegrationCard.vue'
+import EditionTabs from '../../../components/EditionTabs.vue'
 </script>
 
 <IntegrationCard />
 
 ## Configuration
 
-### Setting Up cdviz-collector
+### CDviz Side
+
+<EditionTabs>
+<template #selfhosted>
 
 Configure `cdviz-collector.toml` to receive GitLab webhook events:
 
@@ -53,19 +57,53 @@ Replace `"token-changeme"` with your actual secret token configured in GitLab we
 
 The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
+The webhook endpoint to declare on GitLab's side is then `http://your-collector-url/webhook/000-gitlab`.
+
+</template>
+<template #cloud>
+
+Nothing to run, and no transformer to configure: the endpoint is provisioned for your tenant.
+
+1. Open [app.cdviz.dev](https://app.cdviz.dev) → **Settings** → **Collector**.
+2. Enable **GitLab Webhook**.
+3. Copy the **Endpoint** — `https://app.cdviz.dev/collect/<your-tenant>/webhook/gitlab`.
+4. Reveal (or regenerate) the token sent as the `x-gitlab-token` header. You are free to change it, as long as GitLab and CDviz hold the same value.
+
+![CDviz Cloud GitLab Webhook settings](/screenshots/cloud_settings_gitlab_webhook-20260727.png)
+
+</template>
+</EditionTabs>
+
 ### Testing the access to the webhook
 
 Make an empty POST to the endpoint, it should be rejected with HTTP status 400.
 
+<EditionTabs>
+<template #selfhosted>
+
 ```
-❯ curl -i -X POST https://demo.cdviz.dev/webhook/000-gitlab -H 'X-Gitlab-Token: xxxxxxx'
+❯ curl -i -X POST https://your-collector-url/webhook/000-gitlab -H 'X-Gitlab-Token: xxxxxxx'
 
 HTTP/2 400
 ...
 Failed to parse the request body as JSON
 ```
 
-### Setting Up GitLab Webhook
+</template>
+<template #cloud>
+
+```
+❯ curl -i -X POST https://app.cdviz.dev/collect/your-tenant/webhook/gitlab -H 'X-Gitlab-Token: xxxxxxx'
+
+HTTP/2 400
+...
+Failed to parse the request body as JSON
+```
+
+</template>
+</EditionTabs>
+
+### GitLab Side
 
 Configure a webhook in your GitLab project or group:
 
@@ -73,8 +111,8 @@ Configure a webhook in your GitLab project or group:
    - For projects: `https://gitlab.com/<namespace>/<project>/-/hooks`
    - For groups: `https://gitlab.com/groups/<group>/-/hooks`
 2. Click **Add new webhook**
-3. **URL**: `http://your-collector-url/webhook/000-gitlab`
-4. **Secret token**: Enter the token from your collector configuration (the same as `value` for header `x-gitlab-token` defined in the configuration)
+3. **URL**: <EditionTabs inline><template v-slot:selfhosted>`http://your-collector-url/webhook/000-gitlab`</template><template v-slot:cloud>the endpoint copied above, `https://app.cdviz.dev/collect/<your-tenant>/webhook/gitlab`</template></EditionTabs>
+4. **Secret token**: Enter the token from the [CDviz Side](#cdviz-side) section above (the value of the `x-gitlab-token` header)
 5. Select **Trigger** events:
    - ✅ Push events
    - ✅ Tag push events
@@ -96,6 +134,7 @@ Test webhook delivery: use the **Test** button
 
 Check webhook delivery logs in GitLab: **Settings > Webhooks > Edit > Recent events**
 
+::: tip Self-hosted only
 To verify webhook reception before transformation:
 
 ```toml
@@ -104,6 +143,7 @@ transformer_refs = ["log", "discard_all"]  # Log payloads without processing
 ```
 
 For webhook troubleshooting, see the [Webhook Extractor documentation](../cdviz-collector/sources/webhook.md#testing).
+:::
 
 ## Event Mapping
 

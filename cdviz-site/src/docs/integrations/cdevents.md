@@ -16,6 +16,7 @@ references:
 
 <script setup>
 import IntegrationCard from '../../../components/IntegrationCard.vue'
+import EditionTabs from '../../../components/EditionTabs.vue'
 </script>
 
 <IntegrationCard />
@@ -36,7 +37,10 @@ already a CDEvent:
 For a tool that does **not** emit CDEvents, transform its payload instead: see the existing
 integrations, or [Custom Integration](./custom.md).
 
-## Setting Up cdviz-collector's Side
+## CDviz Side
+
+<EditionTabs>
+<template #selfhosted>
 
 A [webhook source](../cdviz-collector/sources/webhook.md) with **no** `transformer_refs`:
 
@@ -49,18 +53,47 @@ type = "webhook"
 id = "000-cdevents"
 ```
 
-Producers then POST to `https://your-cdviz-collector.example.com/webhook/000-cdevents`.
+The endpoint is then `https://your-cdviz-collector.example.com/webhook/000-cdevents`.
 
 > [!WARNING]
 > An open endpoint accepts events from anyone. Protect it with an API key or an HMAC signature —
 > see [Header Validation](../cdviz-collector/header-validation.md); on the producer side, see
 > [Header Authentication](../cdviz-collector/header-authentication.md).
 
+</template>
+<template #cloud>
+
+This is the path [CDviz Cloud](/cloud) exposes: a webhook URL to configure in your producer, no
+self-hosted component to run.
+
+1. Open [app.cdviz.dev](https://app.cdviz.dev) → **Settings** → **Collector**.
+2. Enable **CDEvents Webhook**.
+3. Copy the **Endpoint** — `https://app.cdviz.dev/collect/<your-tenant>/webhook/cdevents`.
+4. Choose the **Authentication Mode**: a **Token** on a custom header, or an **HMAC Signature** on
+   the `x-signature` header. Then reveal (or regenerate) the secret — you are free to change it, as
+   long as the producer and CDviz hold the same value.
+
+![CDviz Cloud CDEvents Webhook settings](/screenshots/cloud_settings_cdevents_webhook-20260727.png)
+
+</template>
+</EditionTabs>
+
+## Producer Side
+
+POST the CDEvent JSON to <EditionTabs inline><template v-slot:selfhosted>`https://your-cdviz-collector.example.com/webhook/000-cdevents`</template><template v-slot:cloud>the endpoint copied above, `https://app.cdviz.dev/collect/<your-tenant>/webhook/cdevents`</template></EditionTabs>, with the authentication header from the [CDviz Side](#cdviz-side) section above.
+
+The payload is already a CDEvent: no transformer is involved, and no CDviz-specific envelope is
+expected. See [Header Authentication](../cdviz-collector/header-authentication.md) for the producer
+side of the token or signature.
+
 ## CDEvents Versions
 
 Producers rarely agree on a version: an integration built before CDEvents v0.5 emits v0.3 or v0.4.
-All of them are accepted, and normalized at ingestion by the global pipeline chain so that the
-database holds a single version:
+All of them are accepted, and normalized at ingestion so that the database holds a single version.
+On CDviz Cloud this normalization is already in place — nothing to configure.
+
+::: tip Self-hosted only
+Normalization is done by the global pipeline chain:
 
 ```toml
 [pipeline]
@@ -70,8 +103,4 @@ transformer_refs = ["cdevents_v0_3_to_v0_4", "cdevents_v0_4_to_v0_5"]
 Both transformers are idempotent — an already-current event passes through unchanged. See
 [CDEvents Version Conversion](../cdviz-collector/cdevents-version-conversion.md) for the full
 configuration and the CLI conversion of existing files.
-
-## On CDviz Cloud
-
-This is the path CDviz Cloud exposes: a webhook URL to configure in your producer, no self-hosted
-component to run. See [CDviz Cloud](/cloud).
+:::

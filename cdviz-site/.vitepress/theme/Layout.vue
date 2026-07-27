@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 
 import Comments from "../../components/Comments.vue";
 import PlanBadges from "../../components/PlanBadges.vue";
 import { useExternalLinkTracking } from "../../composables/useExternalLinkTracking";
+import { initEdition } from "../../composables/useEdition";
 
 const { Layout } = DefaultTheme;
 const { page, frontmatter } = useData();
 
 useExternalLinkTracking();
+// After hydration and once for the whole app: the EditionTabs of a page are reused across routes.
+onMounted(initEdition);
 
 const isBlogPost = computed(() => page.value.relativePath.startsWith("blog/"));
 const showBlogMeta = computed(

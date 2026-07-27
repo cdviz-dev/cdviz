@@ -16,13 +16,17 @@ references:
 
 <script setup>
 import IntegrationCard from '../../../components/IntegrationCard.vue'
+import EditionTabs from '../../../components/EditionTabs.vue'
 </script>
 
 <IntegrationCard />
 
 ## Configuration
 
-### Setting Up cdviz-collector's side
+### CDviz Side
+
+<EditionTabs>
+<template #selfhosted>
 
 Setting up `cdviz-collector.toml` to receive GitHub events involves defining a webhook source in the collector configuration file. Below is an example configuration snippet:
 
@@ -56,16 +60,33 @@ The `template_rfile` references the VRL (Vector Remap Language) file from the [t
 
 For more details on remote transformers, including using specific tags or commits, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
-### Setting Up GitHub Webhook
+The webhook endpoint to declare on GitHub's side is then `http://your-collector-url/webhook/000-github`.
+
+</template>
+<template #cloud>
+
+Nothing to run, and no transformer to configure: the endpoint is provisioned for your tenant.
+
+1. Open [app.cdviz.dev](https://app.cdviz.dev) → **Settings** → **Collector**.
+2. Enable **GitHub Webhook**.
+3. Copy the **Endpoint** — `https://app.cdviz.dev/collect/<your-tenant>/webhook/github`.
+4. Reveal (or regenerate) the **Signature secret** sent as the `x-hub-signature-256` header. You are free to change it, as long as GitHub and CDviz hold the same value.
+
+![CDviz Cloud GitHub Webhook settings](/screenshots/cloud_settings_github_webhook-20260727.png)
+
+</template>
+</EditionTabs>
+
+### GitHub Side
 
 To configure the GitHub integration, you need to set up a webhook in your GitHub repository or in your GitHub Organization. Here are the steps to do that:
 
 1. Go to your GitHub repository or organization settings.
 2. Navigate to the "Webhooks" section.
 3. Click on "Add webhook".
-4. In the "Payload URL" field, enter the URL where your `cdviz-collector` is running, followed by `/webhook/{id_of_webhook_extractor}`. For example: `http://your-collector-url/webhook/000-github`.
+4. In the "Payload URL" field, enter <EditionTabs inline><template v-slot:selfhosted>the URL where your `cdviz-collector` is running, followed by `/webhook/{id_of_webhook_extractor}`. For example: `http://your-collector-url/webhook/000-github`</template><template v-slot:cloud>the endpoint copied above: `https://app.cdviz.dev/collect/<your-tenant>/webhook/github`</template></EditionTabs>.
 5. Set the "Content type" to `application/json`.
-6. In the "Secret" field, enter the secret token that you specified in your `cdviz-collector.toml` configuration.
+6. In the "Secret" field, enter the secret from the [CDviz Side](#cdviz-side) section above.
 7. Select the events you want to trigger the webhook. You can choose "Let me select individual events" and select the events you are interested in, or you can select "Send me everything" to receive all events.
    - Branch or tag creation
    - Branch or tag deletion
