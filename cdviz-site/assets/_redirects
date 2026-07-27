@@ -8,8 +8,12 @@
 /docs/cdviz-collector/parsers/xml       /docs/cdviz-collector/parsers/    301
 /docs/cdviz-collector/parsers/tap       /docs/cdviz-collector/parsers/    301
 /docs/cdviz-collector/parsers/metadata  /docs/cdviz-collector/parsers/    301
+# ...and their .html variants, so they don't chain through the generic rule below
+/docs/cdviz-collector/parsers/*.html    /docs/cdviz-collector/parsers/    301
 
 # Integrations promoted to top-level /docs/integrations/
+# (bare path first: the wildcard below doesn't match it)
+/docs/cdviz-collector/integrations      /docs/integrations/          301
 /docs/cdviz-collector/integrations/*    /docs/integrations/:splat    301
 
 # pytest folded into the JUnit page
@@ -34,10 +38,17 @@
 /docs/vs-powerpipe.html        /docs/alternatives/vs-powerpipe          301
 /docs/vs-splunk.html           /docs/alternatives/vs-splunk             301
 
+# Directory index: the generic .html rule below would drop the trailing slash
+/docs/alternatives.html        /docs/alternatives/                      301
+
 # Stable legal URLs, independent of the /pro/ section layout
 /terms      /pro/terms      301
 /privacy    /pro/privacy    301
 /legal      /pro/legal      301
+
+# /pro/ has no index page; Google reaches it by truncating /pro/terms etc.
+/pro        /pricing        301
+/pro/       /pricing        301
 
 # Generic /index suffix redirects (covers any current and future path)
 /index          /               301

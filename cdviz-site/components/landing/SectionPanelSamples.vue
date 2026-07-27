@@ -50,7 +50,7 @@ const incidentShots = [
       <div class="flex flex-col gap-lg">
         <!-- Artifact Timeline -->
         <a
-          href="/docs/cdviz-grafana/artifact_timeline.html"
+          href="/docs/cdviz-grafana/artifact_timeline"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div class="md:col-span-2 p-lg flex flex-col justify-center">
@@ -72,7 +72,7 @@ const incidentShots = [
 
         <!-- Pipeline & Test Runs — alternated: image left, text right -->
         <a
-          href="/docs/cdviz-grafana/pipeline_runs.html"
+          href="/docs/cdviz-grafana/pipeline_runs"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-gradient-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <ScreenshotCarousel
@@ -92,7 +92,7 @@ const incidentShots = [
         </a>
         <!-- Incidents & Tickets — text left (col-2), icon right (col-3) -->
         <a
-          href="/docs/cdviz-grafana/incidents_tickets.html"
+          href="/docs/cdviz-grafana/incidents_tickets"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-linear-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div class="md:col-span-2 p-lg flex flex-col justify-center">
@@ -112,7 +112,7 @@ const incidentShots = [
         </a>
         <!-- DORA Metrics — image left (col-3), text right (col-2) -->
         <a
-          href="/docs/cdviz-grafana/dora_metrics.html"
+          href="/docs/cdviz-grafana/dora_metrics"
           class="group block rounded-xl border border-secondary/20 overflow-hidden bg-linear-to-br from-background/80 to-secondary/5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:scale-[1.01] transform-gpu transition-all duration-300 md:grid md:grid-cols-5"
         >
           <div class="md:col-span-3 md:order-1 p-md flex items-center">

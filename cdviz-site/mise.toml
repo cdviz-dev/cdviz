@@ -9,13 +9,21 @@ install = "bun install"
 dev = "bun run docs:dev"
 preview = "bun run docs:preview"
 
-[tasks."build"]
+[tasks."build:site"]
 env = { NODE_ENV = "production" }
 run = "bun run docs:build"
 wait_for = [":build:images", ":build:markdown", ":build:help"]
 
-[tasks."build:all"]
-depends = [":build:images", ":build:markdown", ":build:help", "build"]
+[tasks."check:urls"]
+description = "guard against the indexation issues GSC flagged: no links to redirecting or missing URLs, no page dir without an index"
+wait_for = ["build:site"]
+run = "bun run scripts/check-urls.ts"
+
+[tasks.ci]
+depends = ["build"]
+
+[tasks."build"]
+depends = [":build:images", ":build:markdown", ":build:help", "build:site", "check:urls"]
 
 [tasks."build:help"]
 description = "build help snippet from cdviz-collector, to be imported into docs"
