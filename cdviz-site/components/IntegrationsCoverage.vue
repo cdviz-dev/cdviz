@@ -32,13 +32,19 @@ const rows = GROUPS.map((group) => {
       <thead>
         <tr>
           <th>Source</th>
-          <th v-for="subject in SUBJECTS" :key="subject">{{ subject }}</th>
+          <!-- Rotated bottom-to-top: body cells are a single "✓", so the label was the only
+               thing holding each column at 10-13ch and forcing a horizontal scroll. -->
+          <th v-for="subject in SUBJECTS" :key="subject" class="px-1 align-bottom text-center">
+            <span class="inline-block [writing-mode:vertical-rl] rotate-180 whitespace-nowrap">{{
+              subject
+            }}</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="row in rows" :key="row.group.id">
-          <td class="whitespace-nowrap">
-            <span class="inline-flex items-center gap-1.5 font-semibold">
+          <td class="max-w-[16rem]">
+            <span class="inline-flex items-center gap-1.5 font-semibold whitespace-nowrap">
               <span :class="row.group.icon" aria-hidden="true"></span>
               <a v-if="row.members.length === 1" :href="row.members[0].page">{{
                 row.group.label
@@ -56,7 +62,7 @@ const rows = GROUPS.map((group) => {
             v-for="(cell, index) in row.cells"
             :key="index"
             :title="cell.title"
-            class="text-center"
+            class="px-1 text-center"
           >
             <template v-if="cell.predicates.length">
               <span v-show="!showPredicates" aria-label="supported">✓</span>
