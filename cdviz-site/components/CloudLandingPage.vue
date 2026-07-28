@@ -6,6 +6,7 @@ import CloudHow from "./landing/SectionCloudHow.vue";
 import CloudPricing from "./landing/SectionCloudPricing.vue";
 import CloudProblem from "./landing/SectionCloudProblem.vue";
 import CloudTrust from "./landing/SectionCloudTrust.vue";
+import CloudVideo from "./landing/SectionVideo.vue";
 import Faq from "./landing/SectionFaq.vue";
 </script>
 
@@ -25,6 +26,7 @@ import Faq from "./landing/SectionFaq.vue";
     <CloudTrust />
     <CloudProblem />
     <CloudHow />
+    <CloudVideo />
     <CloudFeatures />
     <CloudPricing />
     <Faq />

@@ -630,6 +630,27 @@ export default defineConfig({
       head.push(["script", { type: "application/ld+json" }, JSON.stringify(personSchema)]);
     }
 
+    if (pageData.relativePath === "cloud.md") {
+      const videoSchema = {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: "See Which Pipelines Break — And Keep Breaking — CDviz Cloud",
+        description:
+          "Launch video for CDviz Cloud: connect GitHub or GitLab and get one place that shows where your pipelines fail, how often, and whether it's getting worse.",
+        thumbnailUrl: `${siteUrl}/screenshots/cloud_launch_video_poster.jpg`,
+        uploadDate: "2026-07-28",
+        duration: "PT41S",
+        contentUrl: "https://www.youtube.com/watch?v=YgWLUMKqQ3k",
+        embedUrl: "https://www.youtube.com/embed/YgWLUMKqQ3k",
+        publisher: {
+          "@type": "Organization",
+          name: "CDviz",
+          url: siteUrl,
+        },
+      };
+      head.push(["script", { type: "application/ld+json" }, JSON.stringify(videoSchema)]);
+    }
+
     if (pageData.relativePath.startsWith("blog/")) {
       const dateMatch = pageData.relativePath.match(/(\d{8})/);
       const dateStr = dateMatch ? dateMatch[1] : null;

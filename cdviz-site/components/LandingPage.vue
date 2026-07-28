@@ -6,6 +6,7 @@ import How from "./landing/SectionHow.vue";
 import PanelSamples from "./landing/SectionPanelSamples.vue";
 import Problem from "./landing/SectionProblem.vue";
 import Stats from "./landing/SectionStats.vue";
+import Video from "./landing/SectionVideo.vue";
 import Why from "./landing/SectionWhy.vue";
 </script>
 
@@ -24,6 +25,10 @@ import Why from "./landing/SectionWhy.vue";
   >
     <!-- AIDA funnel: Attention → Interest → Desire → Action -->
     <Hero />
+    <Video
+      cloud-link
+      subhead="41 seconds of CDviz Cloud. Self-hosted shows the same data in Grafana — same open core."
+    />
     <Problem />
     <Stats />
     <PanelSamples />
