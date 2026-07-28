@@ -1,37 +1,68 @@
 # CDviz
 
-> CDviz is an open-source event-driven CI/CD platform built on the CDEvents standard. It collects continuous delivery events from CI/CD tools, stores them in PostgreSQL with TimescaleDB, visualizes them in Grafana dashboards, and can trigger automated workflows from the same event stream. It follows an "observe before act" philosophy — gain visibility into your pipelines before automating decisions.
+> CDviz is an open-source, event-driven SDLC observability platform built on the CDEvents standard. It collects software delivery events from CI/CD, SCM, GitOps and Kubernetes tools, normalizes them to CDEvents, stores them in PostgreSQL/TimescaleDB (or ClickHouse), visualizes them in Grafana dashboards (DORA metrics, deployments, pipeline runs, incidents, test results), and can trigger automated workflows from the same event stream. It follows an "observe before act" philosophy — gain visibility into your pipelines before automating decisions.
 
-CDviz is developed by Alchim312. The platform is licensed under Apache License v2. A SaaS option is planned — currently accepting waitlist signups at <https://cdviz.dev/pricing>. Development will be prioritized based on interest.
+CDviz is built by Alchim312, a French company. The core components (collector v0.15+, database schemas, Grafana components) are licensed under Apache License v2. Three plans exist: Community (free, self-hosted), Cloud (managed, €20/month) and Pro (self-hosted with support and extra integrations, €200/month). Prices exclude VAT, are billed per organization (not per seat), and every plan is purchasable directly — no "contact us" required.
 
 ## Core Components
 
-- [CDviz Collector](https://cdviz.dev/docs/cdviz-collector/): Event collection agent that ingests webhooks, Kafka, NATS, SSE, and file-based events, normalizes them to CDEvents, and routes to configured sinks. Written in Rust.
-- [CDviz Database](https://cdviz.dev/docs/cdviz-db/): PostgreSQL + TimescaleDB schema for storing CDEvents as a time-series hypertable with JSONB payloads. Uses golang-migrate for schema evolution.
-- [CDviz Grafana](https://cdviz.dev/docs/cdviz-grafana/): TypeScript-generated Grafana dashboards (Grafana Foundation SDK) for deployment tracking, DORA metrics, artifact timelines, and CDEvents activity feeds.
+- [CDviz Collector](https://cdviz.dev/docs/cdviz-collector/): Event collection agent (Rust) that ingests webhooks, HTTP polling, Kafka, NATS, SSE and files/S3-like storage, transforms payloads to CDEvents with VRL transformers, and routes to configured sinks (PostgreSQL, ClickHouse, HTTP, Kafka, NATS, SSE, folder, debug).
+- [CDviz Database](https://cdviz.dev/docs/cdviz-db/): PostgreSQL + TimescaleDB schema storing CDEvents in a hypertable with JSONB payload and extracted metadata. golang-migrate for schema evolution, 13-month retention policy.
+- [CDviz Grafana](https://cdviz.dev/docs/cdviz-grafana/): TypeScript-generated Grafana dashboards (Grafana Foundation SDK) — DORA metrics, changes, artifact timeline, pipeline runs, test results, incidents & tickets, CDEvents activity, annotations.
+
+## Plans & Pricing
+
+- [Pricing & Plans](https://cdviz.dev/pricing): Full feature comparison table across Community, Cloud and Pro.
+- **Community — €0, forever free**: collector, database schemas and Grafana components under Apache 2.0; GitHub, Forgejo, Gitea, Kubernetes, ArgoCD, CDEvents and custom webhook integrations; full customization (sources, transformers, sinks, database, dashboards); Kafka/NATS/S3-like/SSE sources and sinks; community support. You host, you own the data.
+- **Cloud — €20/month** ([CDviz Cloud](https://cdviz.dev/cloud)): hosted and managed, nothing to run; cross-repo pipeline reliability and duration trends across GitHub and GitLab; optional 30-day history import via a read-only token you create yourself; built-in pipeline reliability dashboards; email & Discord support with 2 business-day response; commercial license included; sized for teams of 1–5 (larger teams by request). 14-day free trial, no credit card required. Setup is a webhook you configure in your own org settings — no GitHub App, no OAuth grant, no source-code access, no write access. Data hosted and operated in Europe.
+- **Pro — €200/month**: everything in Community, plus additional integrations (GitLab, Jenkins, Bitbucket, Jira, ...), on-premise deployment, optional commercial license, email & Discord support with 2 business-day response. You host, you own the data.
+- Cancelling a paid plan never removes access to the Apache 2.0 components. Bespoke work (custom development, consulting) is handled as Services, not as a plan.
+
+## Integrations
+
+- [Integrations catalog](https://cdviz.dev/docs/integrations/): all supported tools with the CDEvents subjects and predicates each one emits.
+- Collect events from: [GitHub Webhook](https://cdviz.dev/docs/integrations/github), [GitHub Action](https://cdviz.dev/docs/integrations/github-action), [GitHub Actions CI](https://cdviz.dev/docs/integrations/github-actions-ci), [GitHub REST API polling](https://cdviz.dev/docs/integrations/github-rest-api), [GitLab Webhook](https://cdviz.dev/docs/integrations/gitlab), [GitLab CI](https://cdviz.dev/docs/integrations/gitlab-ci), [Bitbucket](https://cdviz.dev/docs/integrations/bitbucket), [Forgejo](https://cdviz.dev/docs/integrations/forgejo), [Gitea](https://cdviz.dev/docs/integrations/gitea), [Jenkins](https://cdviz.dev/docs/integrations/jenkins), [ArgoCD](https://cdviz.dev/docs/integrations/argocd), [Kubernetes via Kubewatch](https://cdviz.dev/docs/integrations/kubewatch), [Jira](https://cdviz.dev/docs/integrations/jira), [CDEvents native producers](https://cdviz.dev/docs/integrations/cdevents).
+- Report test & quality results with [`cdviz-collector send --run`](https://cdviz.dev/docs/cdviz-collector/send-run): [JUnit XML](https://cdviz.dev/docs/integrations/junit) (Maven, Gradle, pytest), [TAP](https://cdviz.dev/docs/integrations/tap) (Node test runner, bats, shellspec), [SARIF](https://cdviz.dev/docs/integrations/sarif) (linters, SAST, security scanners).
+- Store & visualize: [PostgreSQL](https://cdviz.dev/docs/integrations/postgresql), [ClickHouse](https://cdviz.dev/docs/integrations/clickhouse), [Grafana](https://cdviz.dev/docs/cdviz-grafana/).
+- Trigger automation: [Argo Workflows](https://cdviz.dev/docs/integrations/argo-workflows) and any HTTP/Kafka/NATS consumer.
+- Anything else: [Custom integration](https://cdviz.dev/docs/integrations/custom) via webhooks, polling and VRL transformers.
+- Plan availability: GitHub, Forgejo, Gitea, ArgoCD, Kubernetes, CDEvents, JUnit/TAP/SARIF are available on all plans; GitLab is Cloud and Pro; Bitbucket, Jenkins and Jira are Pro (beta); custom VRL transformers are Community and Pro.
 
 ## Key Concepts
 
-- CDEvents is a CD Foundation (CDF) initiative defining a standard event format for continuous delivery pipelines. CDviz is built natively on CDEvents.
-- CDviz differs from Apache DevLake (polling-based, proprietary model) by using real-time event push and the open CDEvents standard.
-- CDviz differs from Datadog CI Visibility by being self-hosted, open-source, and owning your data.
-- CDviz supports both passive monitoring (via webhook transformers for GitHub, GitLab, ArgoCD) and active integration (send-cdevents GitHub Action).
+- CDEvents is a CD Foundation (CDF) initiative defining a standard event format for continuous delivery pipelines. CDviz is built natively on CDEvents and supports v0.3–v0.5 with automatic version conversion.
+- Two complementary usages: [Event Monitoring](https://cdviz.dev/docs/event-monitoring) (dashboards, metrics, audit trail) and [Event Reaction](https://cdviz.dev/docs/event-reaction) (trigger workflows from the same stream).
+- Passive monitoring requires zero pipeline changes (webhook transformers for GitHub, GitLab, ArgoCD, Kubernetes); active integration is available via the send-cdevents GitHub Action and `cdviz-collector send`/`send --run`.
+- Data ownership: self-hosted, events stay in your own PostgreSQL and are queryable with plain SQL; on Cloud, ownership can be transferred on demand. No proprietary event model, no lock-in.
 
 ## Use Cases
 
-- Track DORA metrics (deployment frequency, lead time, change failure rate, time to restore) without a commercial tool
-- Monitor CI/CD pipeline performance and test flakiness across environments
-- Replace homegrown internal dashboards built on GitLab or GitHub data
-- Visualize CDEvents across a multi-tool software delivery pipeline
-- Trigger automated workflows from deployment or test events via CDEvents
+- [Use cases catalog](https://cdviz.dev/use-cases): filtered by component and by audience (CTO, DevOps, platform engineer, developer).
+- Track DORA metrics (deployment frequency, lead time, change failure rate, time to restore) as a live dashboard instead of a hand-maintained spreadsheet.
+- Get a shared timeline of what changed, where and when during incidents to shorten MTTR.
+- Keep an auditable, SQL-queryable trail of every delivery event for compliance and post-mortems.
+- Unify many CI/CD tools into one normalized event stream, and see which version runs on which environment.
+- Rank pipeline reliability and duration across all repositories, including across GitHub and GitLab together.
+- Detect flaky pipelines and tests, long-pending pull requests, and CI/CD cost or resource waste.
+- Replace homegrown internal dashboards built on GitLab or GitHub data.
+- Trigger automated workflows (post-deployment tests, environment promotion, artifact validation) from deployment or test events.
 
 ## Documentation
 
+- [What is CDviz?](https://cdviz.dev/docs/): Documentation entry point
 - [Getting Started](https://cdviz.dev/docs/getting-started): Local demo setup with Docker Compose
+- [Collector Quick Start](https://cdviz.dev/docs/cdviz-collector/quick-start): Fastest path to a first CDEvent
 - [Architecture](https://cdviz.dev/docs/architecture): Collector → Database → Grafana → Event Reactions pipeline
 - [CDEvents Standard](https://cdviz.dev/docs/cdevents): CDEvent JSON structure and field reference
-- [Alternatives Comparison](https://cdviz.dev/docs/alternatives): CDviz vs Apache DevLake, Datadog CI Visibility, Powerpipe
-- [Pricing](https://cdviz.dev/pricing): Open-source (free), commercial subscriptions available
+- [Collector configuration](https://cdviz.dev/docs/cdviz-collector/configuration) and [TOML guide](https://cdviz.dev/docs/cdviz-collector/toml-guide)
+- [Transformers](https://cdviz.dev/docs/cdviz-collector/transformers) and [transformer rules](https://cdviz.dev/docs/cdviz-collector/transformers-rules): VRL-based payload transformation
+- [Webhook source](https://cdviz.dev/docs/cdviz-collector/sources/webhook), [header authentication](https://cdviz.dev/docs/cdviz-collector/header-authentication), [header validation](https://cdviz.dev/docs/cdviz-collector/header-validation)
+- [Sinks](https://cdviz.dev/docs/cdviz-collector/sinks/): db (PostgreSQL), clickhouse, http, kafka, nats, sse, folder, debug
+- [Troubleshooting](https://cdviz.dev/docs/cdviz-collector/troubleshooting)
+- [Alternatives Comparison](https://cdviz.dev/docs/alternatives/): CDviz vs Apache DevLake, Datadog CI Visibility, Sleuth, Jellyfish, Swarmia, GetDX, LinearB, Middleware, Kargo, Powerpipe, Splunk, DevStats/CNCF DevStats
+- [Licensing & compliance](https://cdviz.dev/compliance): Apache 2.0 details (collector v0.15+; v0.14 and earlier were AGPL v3)
+- [Privacy policy](https://cdviz.dev/pro/privacy), [Terms](https://cdviz.dev/pro/terms), [Legal](https://cdviz.dev/pro/legal)
+- [Contact](https://cdviz.dev/contact): contact@cdviz.dev
 
 ## Blog
 
@@ -42,6 +73,7 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [Episode 4: Webhook Transformers](https://cdviz.dev/blog/20251020-episode-4-webhook-transformers): Passive monitoring with GitHub, GitLab, ArgoCD
 - [Episode 5: The Kubernetes Deployment Blind Spot](https://cdviz.dev/blog/20260311-episode-5-k8s-blind-spot)
 - [Episode 6: Monitor Every Kubernetes Deployment with One Helm Command](https://cdviz.dev/blog/20260318-episode-6-kubewatch-helm-recipe): Passive monitoring with Kubernetes
+- [Episode 7: Instrument Any CI Step in a Few Lines](https://cdviz.dev/blog/20260413-episode-7-send-run): `cdviz-collector send --run` wraps any CI command and emits CDEvents with branch, commit and job auto-detected
 
 ## Optional
 
@@ -49,13 +81,14 @@ CDviz is developed by Alchim312. The platform is licensed under Apache License v
 - [YouTube Channel](https://www.youtube.com/@CDviz): Videos and demos
 - [dev.to Articles](https://dev.to/davidb31): Blog posts and tutorials
 - [Live Demo](https://demo.cdviz.dev/grafana/): Read-only Grafana dashboard instance
+- [CDviz Cloud app](https://app.cdviz.dev): Sign-up and 14-day free trial
 
 ## Key facts
 
 - CDviz follows an "observe before act" philosophy: the same event stream used for metrics can trigger automated workflows
 - DORA metrics thresholds: Elite (≥1 deploy/day, lead time <1h, restore <1h, failure rate ≤5%) to Low (<1 deploy/month, >1 week lead time)
-- CDEvents types tracked include: service.deployed, service.upgraded, service.rolledback, artifact.published, build.finished, pipelinerun.queued, pipelinerun.finished, incident.detected, incident.resolved
-- 15+ integration sources: GitHub, GitLab, ArgoCD, Kubernetes (Kubewatch), Kafka, NATS, Jenkins, custom webhooks
+- CDEvents types tracked include: service.deployed, service.upgraded, service.rolledback, artifact.published, build.finished, pipelinerun.queued, pipelinerun.finished, testsuiterun.finished, incident.detected, incident.resolved, ticket.created, ticket.closed
+- 20+ integrations: GitHub, GitLab, Bitbucket, Forgejo, Gitea, Jenkins, ArgoCD, Kubernetes (Kubewatch), Jira, Argo Workflows, JUnit, TAP, SARIF, Kafka, NATS, SSE, S3-like storage, PostgreSQL, ClickHouse, custom webhooks
 - CDviz Collector is written in Rust; dashboards generated from TypeScript via Grafana Foundation SDK
-- Zero pipeline changes required for passive monitoring via webhook transformers (GitHub, GitLab, ArgoCD)
-- Apache License v2 for all components (cdviz-collector v0.15+, cdviz-db, cdviz-grafana)
+- Zero pipeline changes required for passive monitoring via webhook transformers (GitHub, GitLab, ArgoCD, Kubernetes)
+- Apache License v2 for all core components (cdviz-collector v0.15+, cdviz-db, cdviz-grafana)
