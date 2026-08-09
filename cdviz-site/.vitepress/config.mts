@@ -638,7 +638,7 @@ export default defineConfig({
         description:
           "Launch video for CDviz Cloud: connect GitHub or GitLab and get one place that shows where your pipelines fail, how often, and whether it's getting worse.",
         thumbnailUrl: `${siteUrl}/screenshots/cloud_launch_video_poster.jpg`,
-        uploadDate: "2026-07-28",
+        uploadDate: "2026-07-28T22:25:27+02:00",
         duration: "PT41S",
         contentUrl: "https://www.youtube.com/watch?v=YgWLUMKqQ3k",
         embedUrl: "https://www.youtube.com/embed/YgWLUMKqQ3k",
