@@ -12,7 +12,7 @@ references:
   - title: JIRA Server Webhook Documentation
     url: https://developer.atlassian.com/server/jira/platform/webhooks/
   - title: Examples of CDEvents converted from Jira's events
-    url: https://github.com/cdviz-dev/transformers-pro/tree/main/jira_events/inputs/examples
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/jira_webhook/inputs/examples
 ---
 
 <script setup>
@@ -42,16 +42,16 @@ headers_to_keep = []
 # secure the endpoint with a secret & signature, see
 # https://developer.atlassian.com/cloud/jira/platform/webhooks/#secure-admin-webhooks
 
-# Transformer from transformers-pro repository
-[remote.transformers-pro]
-type = "github://cdviz-dev/transformers-pro"
-# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO'
+# Transformer from transformers-community repository
+[remote.transformers-community]
+type = "github://cdviz-dev/transformers-community"
+# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-COMMUNITY'
 
 [transformers]
-jira_events = { type = "vrl", template_rfile = "transformers-pro:///jira_events/to_v0_5.vrl" }
+jira_events = { type = "vrl", template_rfile = "transformers-community:///jira_webhook/to_v0_5.vrl" }
 ```
 
-The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro) (Pro plan). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
+The `template_rfile` references the VRL transformation logic from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 ### Setting Up the Jira Webhook
 
@@ -107,4 +107,4 @@ pkg:generic/<projectKey>@<version_name>?repository_url=<base_url>
 - Sprint / board events
 - Attachment events
 
-These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-pro/blob/main/jira_events/to_v0_5.vrl).
+These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-community/blob/main/jira_webhook/to_v0_5.vrl).

@@ -166,10 +166,10 @@ GitLab webhooks automatically notify cdviz-collector about project activity:
 **cdviz-collector side** (`cdviz-collector.toml`):
 
 ```toml
-[remote.transformers-pro]
+[remote.transformers-community]
 type = "github"
 owner = "cdviz-dev"
-repo = "transformers-pro"
+repo = "transformers-community"
 
 [sources.gitlab_webhook]
 enabled = true
@@ -191,11 +191,8 @@ case_sensitive = true
 
 [transformers.gitlab_events]
 type = "vrl"
-template_rfile = "transformers-pro:///gitlab_events/transformer.vrl"
+template_rfile = "transformers-community:///gitlab_webhook/transformer.vrl"
 ```
-
-> [!NOTE]
-> GitLab transformer is part of the **Pro plan**. See [CDviz Plans](https://cdviz.dev/).
 
 **GitLab side**: Create a webhook at the group or project level
 

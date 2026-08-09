@@ -11,7 +11,7 @@ references:
   - title: GitLab Webhooks and Events
     url: https://docs.gitlab.com/user/project/integrations/webhook_events/
   - title: Examples of cdevents converted from GitLab's events
-    url: https://github.com/cdviz-dev/transformers-pro/tree/main/gitlab_events/outputs
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/gitlab_webhook/outputs
 ---
 
 <script setup>
@@ -44,18 +44,18 @@ headers_to_keep = ["X-Gitlab-Event"]
 # value set by env CDVIZ_COLLECTOR__SOURCES__GITLAB_WEBHOOK__EXTRACTOR__HEADERS__X-GITLAB-TOKEN__VALUE
 "x-gitlab-token" = { type = "equals", value = "xxx", case_sensitive = true }
 
-# Transformer from transformers-pro repository
-[remote.transformers-pro]
-type = "github://cdviz-dev/transformers-pro"
-# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO'
+# Transformer from transformers-community repository
+[remote.transformers-community]
+type = "github://cdviz-dev/transformers-community"
+# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-COMMUNITY'
 
 [transformers]
-gitlab_events = { type = "vrl", template_rfile = "transformers-pro:///gitlab_events/transformer.vrl" }
+gitlab_events = { type = "vrl", template_rfile = "transformers-community:///gitlab_webhook/transformer.vrl" }
 ```
 
 Replace `"token-changeme"` with your actual secret token configured in GitLab webhook settings.
 
-The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
+The `template_rfile` references the VRL transformation logic from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 The webhook endpoint to declare on GitLab's side is then `http://your-collector-url/webhook/000-gitlab`.
 
@@ -204,4 +204,4 @@ For `artifact.published` events, the `subject.id` is a PURL (Package URL):
 - Confidential issues/MRs
 - System hooks
 
-These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-pro/blob/main/gitlab_events/transformer.vrl).
+These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-community/blob/main/gitlab_webhook/transformer.vrl).

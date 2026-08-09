@@ -12,7 +12,7 @@ references:
   - title: Bitbucket Cloud - Event payloads
     url: https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/
   - title: Examples of CDEvents converted from Bitbucket's events
-    url: https://github.com/cdviz-dev/transformers-pro/tree/main/bitbucket_events/outputs
+    url: https://github.com/cdviz-dev/transformers-community/tree/main/bitbucket_webhook/outputs
 ---
 
 <script setup>
@@ -45,16 +45,16 @@ headers_to_keep = ["x-event-key"]
 # value set by env CDVIZ_COLLECTOR__SOURCES__BITBUCKET_WEBHOOK__EXTRACTOR__HEADERS__X-HUB-SIGNATURE__TOKEN
 "x-hub-signature" = { type = "signature", signature_encoding = "hex", signature_on = "body", signature_prefix = "sha256=", token = "changeme" }
 
-# Transformer from transformers-pro repository
-[remote.transformers-pro]
-type = "github://cdviz-dev/transformers-pro"
-# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-PRO'
+# Transformer from transformers-community repository
+[remote.transformers-community]
+type = "github://cdviz-dev/transformers-community"
+# token = "xxx"  # set by env 'CDVIZ_COLLECTOR__REMOTE__TRANSFORMERS-COMMUNITY'
 
 [transformers]
-bitbucket_events = { type = "vrl", template_rfile = "transformers-pro:///bitbucket_events/to_v0_5.vrl" }
+bitbucket_events = { type = "vrl", template_rfile = "transformers-community:///bitbucket_webhook/to_v0_5.vrl" }
 ```
 
-The `template_rfile` references the VRL transformation logic from the [transformers-pro repository](https://github.com/cdviz-dev/transformers-pro) (Pro plan). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
+The `template_rfile` references the VRL transformation logic from the [transformers-community repository](https://github.com/cdviz-dev/transformers-community). For more details on remote transformers, see the [Transformers documentation](../cdviz-collector/transformers.md#using-remote-transformers).
 
 > [!WARNING] `headers_to_keep` is mandatory
 > Unlike GitLab or Jira, Bitbucket does **not** include the event type in the payload body: it is only available in the `X-Event-Key` HTTP header. Without `headers_to_keep = ["x-event-key"]`, the transformer cannot determine the event type and emits nothing.
@@ -154,7 +154,7 @@ Bitbucket tags may reference any kind of artifact (container images, packages, b
 - Deployments
 - `pullrequest:unapproved`, `pullrequest:changes_request_*`
 
-These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-pro/blob/main/bitbucket_events/to_v0_5.vrl).
+These can be added following the existing pattern in the [transformer VRL file](https://github.com/cdviz-dev/transformers-community/blob/main/bitbucket_webhook/to_v0_5.vrl).
 
 ## Troubleshooting
 

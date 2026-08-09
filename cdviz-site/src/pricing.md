@@ -11,8 +11,8 @@ faq:
       If you have no devops and want it to just work, start with <strong>Cloud</strong> —
       hosted, focused on cross-repo pipeline reliability, free for 14 days —
       no credit card required.
-      If you want to self-host and need extra integrations (GitLab, Jenkins, ...)
-      plus support, choose <strong>Pro</strong>.
+      If you want to self-host and need professional support and an on-premise commercial
+      license, choose <strong>Pro</strong>.
       If you're a hands-on team happy to self-host the open-source stack,
       <strong>Community</strong> is free forever.
   - q: Why is there no "contact us" to buy?
@@ -45,4 +45,10 @@ faq:
 import PricingPage from '../components/PricingPage.vue'
 </script>
 <h1 style="opacity:0; margin:0; padding:0">Pricing, plans, features</h1>
+
+> [!NOTE] 100% open source
+> All CDviz transformers (GitHub, GitLab, Bitbucket, Jira, Jenkins, and more) are Apache 2.0 and
+> public in [transformers-community](https://github.com/cdviz-dev/transformers-community) — free
+> to self-host on every plan, including Community.
+
 <PricingPage />

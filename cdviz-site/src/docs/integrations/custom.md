@@ -52,8 +52,7 @@ Refer to the [collector configuration documentation](../cdviz-collector/configur
 
 If your integration would benefit others, consider contributing it to one of the following repositories:
 
-- [transformers-community](https://github.com/cdviz-dev/transformers-community) — open VRL transformer scripts for community integrations.
-- [transformers-pro](https://github.com/cdviz-dev/transformers-pro) — curated transformers for enterprise integrations.
+- [transformers-community](https://github.com/cdviz-dev/transformers-community) — open VRL transformer scripts for all CDviz integrations.
 - [cdviz-collector](https://github.com/cdviz-dev/cdviz-collector) — new source or sink connectors that require changes to the collector itself.
 
 [Open an issue](https://github.com/cdviz-dev/cdviz-collector/issues) to discuss before building, or submit a pull request directly. Community contributions are the best way to grow the ecosystem of supported tools.

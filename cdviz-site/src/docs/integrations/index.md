@@ -26,13 +26,13 @@ Track repository, pipeline, and deployment activity as [CDEvents](../cdevents.md
 - **[GitHub REST API (Polling)](./github-rest-api.md)** — backfill and pull-based tracking without webhooks
 - **[GitLab Webhook](./gitlab.md)** — repository, MR, and pipeline events
 - **[GitLab CI](./gitlab-ci.md)** — test and task reporting from CI jobs
-- **[Bitbucket Webhook](./bitbucket.md)** — repository, PR, issue, and commit status events (Pro plan, beta)
+- **[Bitbucket Webhook](./bitbucket.md)** — repository, PR, issue, and commit status events (beta)
 - **[Forgejo Webhook](./forgejo.md)** — repository, PR, issue, release, package, and Actions events
 - **[Gitea Webhook](./gitea.md)** — repository, PR, issue, release, package, and Actions events
 - **[Jenkins](./jenkins.md)** — job and pipeline events
 - **[ArgoCD](./argocd.md)** — GitOps deployment events via notifications
 - **[Kubernetes (via Kubewatch)](./kubewatch.md)** — cluster deployment events
-- **[Jira](./jira.md)** — ticket and version events (Pro plan, beta)
+- **[Jira](./jira.md)** — ticket and version events (beta)
 - **[CDEvents](./cdevents.md)** — any native producer, agent, or proxy sending CDEvents (v0.3–v0.5) to the webhook
 
 ## Report Test & Quality Results

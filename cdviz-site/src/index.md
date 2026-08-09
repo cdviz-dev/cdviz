@@ -26,9 +26,9 @@ faq:
   - q: What services does CDviz offer?
     a: |
       Three options: the <strong>open-source</strong> components (collector, database schema,
-      Grafana dashboards) — free to self-host; <strong>CDviz Cloud</strong>, a hosted, managed
-      service at €20/month; and <strong>CDviz Pro</strong>, self-hosted with professional
-      support and additional integrations at €200/month.
+      Grafana dashboards, and all transformers) — free to self-host; <strong>CDviz Cloud</strong>,
+      a hosted, managed service at €20/month; and <strong>CDviz Pro</strong>, self-hosted with
+      professional support at €200/month.
       <a href="/pricing">See pricing →</a>
   - q: What are the key features of CDviz?
     a: |
@@ -51,12 +51,14 @@ faq:
       <strong>Cloud</strong> is a hosted, managed service for small teams who don't want to run
       infrastructure — focused on cross-repo pipeline visibility at €20/month.
       <strong>Pro</strong> is for organizations that want to self-host with professional support
-      and additional integrations (GitLab, Jenkins, ...) at €200/month.
+      at €200/month.
   - q: What is CDviz's commitment to open source?
     a: |
-      The collector (from v0.15+), database schemas, and Grafana components are all licensed
-      under Apache 2.0. You can always keep using the open-source components — even if a
-      commercial subscription ends. No lock-in.
+      The collector (from v0.15+), database schemas, Grafana components, and all transformers
+      (GitHub, GitLab, Bitbucket, Jira, Jenkins, and more, in
+      <a href="https://github.com/cdviz-dev/transformers-community">transformers-community</a>)
+      are all licensed under Apache 2.0. You can always keep using the open-source components —
+      even if a commercial subscription ends. No lock-in.
   - q: How does it relate to CDEvents?
     a: |
       CDviz is built on <a href="https://cdevents.dev">CDEvents</a>, the CD Foundation standard

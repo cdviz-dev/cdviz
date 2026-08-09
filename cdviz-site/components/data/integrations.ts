@@ -5,8 +5,8 @@
  * `/docs/integrations/` (`IntegrationsCoverage.vue`), the per-page mapping table
  * (`IntegrationCard.vue`) and the plan badges (`PlanBadges.vue`).
  *
- * Kept in sync (by hand) with the "CDEvents Coverage" tables of
- * `cdviz-dev/transformers-community` and `cdviz-dev/transformers-pro`.
+ * Kept in sync (by hand) with the "CDEvents Coverage" table of
+ * `cdviz-dev/transformers-community`.
  * Do NOT re-declare this data in a page frontmatter.
  */
 
@@ -72,7 +72,6 @@ export interface Integration {
 }
 
 const community = "https://github.com/cdviz-dev/transformers-community/tree/main";
-const pro = "https://github.com/cdviz-dev/transformers-pro/tree/main";
 
 export const integrations: Integration[] = [
   {
@@ -185,8 +184,8 @@ export const integrations: Integration[] = [
     group: "gitlab",
     name: "Webhook",
     page: "/docs/integrations/gitlab",
-    source: `${pro}/gitlab_events`,
-    plans: ["cloud", "pro"],
+    source: `${community}/gitlab_webhook`,
+    plans: ["community", "cloud", "pro"],
     mappings: [
       { input: "release.created", subject: "artifact", predicates: ["published"] },
       { input: "tag_push", subject: "artifact", predicates: ["published"] },
@@ -211,7 +210,7 @@ export const integrations: Integration[] = [
     group: "gitlab",
     name: "CI (send --run)",
     page: "/docs/integrations/gitlab-ci",
-    plans: ["cloud", "pro"],
+    plans: ["community", "cloud", "pro"],
     mappings: [
       { input: "job start / finish", subject: "taskRun", predicates: ["started", "finished"] },
       {
@@ -226,8 +225,8 @@ export const integrations: Integration[] = [
     group: "bitbucket",
     name: "Webhook",
     page: "/docs/integrations/bitbucket",
-    source: `${pro}/bitbucket_events`,
-    plans: ["pro"],
+    source: `${community}/bitbucket_webhook`,
+    plans: ["community", "pro"],
     mappings: [
       { input: "repo:push (tag created)", subject: "artifact", predicates: ["published"] },
       { input: "repo:push (branch created)", subject: "branch", predicates: ["created"] },
@@ -321,7 +320,8 @@ export const integrations: Integration[] = [
     group: "jenkins",
     name: "Pipelines (send --run)",
     page: "/docs/integrations/jenkins",
-    plans: ["pro"],
+    source: `${community}/jenkins_rest_api`,
+    plans: ["community", "pro"],
     mappings: [
       { input: "stage start / finish", subject: "taskRun", predicates: ["started", "finished"] },
       {
@@ -375,8 +375,8 @@ export const integrations: Integration[] = [
     group: "jira",
     name: "Webhook",
     page: "/docs/integrations/jira",
-    source: `${pro}/jira_events`,
-    plans: ["pro"],
+    source: `${community}/jira_webhook`,
+    plans: ["community", "pro"],
     mappings: [
       { input: "version_released", subject: "artifact", predicates: ["published"] },
       { input: "issue_created", subject: "ticket", predicates: ["created"] },

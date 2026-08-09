@@ -27,7 +27,10 @@ const pricingPlans = [
       { icon: "icon-[lucide--antenna]", text: "Collector (ASL v2)" },
       { icon: "icon-[lucide--database]", text: "Database schemas (ASL v2)" },
       { icon: "icon-[lucide--line-chart]", text: "Grafana components (ASL v2)" },
-      { icon: "icon-[lucide--github]", text: "GitHub, Kubernetes, ArgoCD, webhooks" },
+      {
+        icon: "icon-[lucide--github]",
+        text: "GitHub, GitLab, Bitbucket, Jira, Jenkins, Kubernetes, ArgoCD",
+      },
       { icon: "icon-[lucide--users]", text: "Community support" },
     ],
     button: {
@@ -69,17 +72,16 @@ const pricingPlans = [
   {
     id: "pro",
     title: "Pro",
-    subtitle: "Self-host with more integrations & support.",
+    subtitle: "Self-host with commercial support.",
     pricing: {
       monthly: 200,
       yearly: 2160,
     },
     features: [
       { icon: "icon-[lucide--check]", text: "Everything in Community" },
-      { icon: "icon-[lucide--plug]", text: "GitLab, Jenkins, Jira, ..." },
       { icon: "icon-[lucide--building]", text: "On-premise deployment" },
-      { icon: "icon-[lucide--workflow]", text: "Optional commercial license" },
-      { icon: "icon-[lucide--headphones]", text: "Email & Discord support · 2 business days" },
+      //{ icon: "icon-[lucide--workflow]", text: "Optional commercial license" },
+      { icon: "icon-[lucide--headphones]", text: "Email & Discord support · 1 business days" },
     ],
     // products in Creem. The monthly/yearly toggle picks the URL (see getButtonHref).
     button: {

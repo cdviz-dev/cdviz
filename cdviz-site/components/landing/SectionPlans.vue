@@ -69,14 +69,8 @@ const comparisonRows = [
   {
     feature: "Response time",
     community: { text: "—", muted: true },
-    cloud: { text: "2 business days" },
-    pro: { text: "2 business days" },
-  },
-  {
-    feature: "Commercial license",
-    community: { text: "—", muted: true },
-    cloud: { text: "Included", good: true },
-    pro: { text: "Optional" },
+    cloud: { text: "1 business days" },
+    pro: { text: "1 business days" },
   },
   {
     feature: "Price",

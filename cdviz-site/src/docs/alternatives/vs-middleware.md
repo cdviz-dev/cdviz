@@ -36,7 +36,7 @@ Both CDviz and Middleware are open-source, Apache 2.0 platforms targeting SDLC o
 | Cost (self-hosted)                        |      Free (Community) · Pro €200/mo per org      |         Free community         |
 | Cost (SaaS)                               |             Cloud €20/month per org              |   $39/user/month (Standard)    |
 
-_¹ Jira issue/version webhooks are mapped to CDEvents by a beta transformer in the [Pro plan](/pricing), or via a [custom webhook mapping](/docs/integrations/custom) on any plan._\
+_¹ Jira issue/version webhooks are mapped to CDEvents by a beta transformer, open source and free to self-host on any plan (see [Jira integration](/docs/integrations/jira)), or via a [custom webhook mapping](/docs/integrations/custom)._\
 _² Slack notifications work through the [HTTP sink](/docs/cdviz-collector/sinks/http) plus a workflow tool (n8n, Make, Zapier…) or a custom webhook — there is no ready-made Slack app._
 
 ## Key differences
@@ -77,7 +77,7 @@ Middleware and CDviz are both open-source Apache 2.0 tools, but they solve adjac
 
 **Does Middleware support CDEvents?** No. Middleware uses a proprietary data model based on polling GitHub/GitLab/Jira APIs. CDEvents integration is not supported.
 
-**Does CDviz support Jira?** Yes — a Jira webhook transformer (beta, [Pro plan](/pricing)) maps issue and version events to CDEvents (`ticket.*`, `artifact.published`); on any plan you can ingest Jira webhooks via a [custom mapping](/docs/integrations/custom). Sprint-level flow metrics are not a current focus.
+**Does CDviz support Jira?** Yes — a Jira webhook transformer (beta) maps issue and version events to CDEvents (`ticket.*`, `artifact.published`); it's open source and free to self-host on any plan, or you can ingest Jira webhooks via a [custom mapping](/docs/integrations/custom). Sprint-level flow metrics are not a current focus.
 
 **Is CDviz free?** Yes — the Community plan is free forever (Apache 2.0, infrastructure costs only). [Cloud](/pricing) (€20/month) adds managed hosting; [Pro](/pricing) (€200/month) adds extra integrations and support. Both are billed per organization, not per seat.
 
