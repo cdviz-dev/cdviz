@@ -5,6 +5,8 @@ export interface BlogPost {
   file: string;
   url: string;
   title: string;
+  date: string;
+  series: string;
   series_part: number;
   status: Status;
 }
@@ -44,10 +46,12 @@ export function getBlogPosts(blogDir: string, includeUnpublished: boolean): Blog
         file: f,
         url: `/blog/${f.replace(/\.md$/, "")}`,
         title: String(fm.title ?? f),
+        date: String(fm.date ?? ""),
+        series: String(fm.series ?? ""),
         series_part: Number(fm.series_part ?? -1),
         status,
       };
     })
     .filter((p) => includeUnpublished || p.status === Status.Published)
-    .sort((a, b) => b.series_part - a.series_part);
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
