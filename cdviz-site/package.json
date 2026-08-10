@@ -10,7 +10,7 @@
     "@types/node": "26.2.0",
     "gsap": "3.15.0",
     "markdown-it": "15.0.0",
-    "prettier": "3.9.5",
+    "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",
     "tailwindcss": "4.3.3",
     "vite-svg-loader": "5.1.1",
