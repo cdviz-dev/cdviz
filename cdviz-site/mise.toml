@@ -1,6 +1,6 @@
 [tools]
 "bun" = "1.4.0"
-"dprint" = "0.55.2"
+"dprint" = "0.56.1"
 # "magick" = "latest" # imagemagick
 "github:cdviz-dev/cdviz-collector" = "0.48.3"
 
