@@ -1,5 +1,5 @@
 [tools]
-"dprint" = "0.55.2"
+"dprint" = "0.56.1"
 
 [tasks.format]
 alias = "fmt"
