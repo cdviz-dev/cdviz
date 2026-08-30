@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-08-30
+
+### Added
+
+- Refresh cloud screenshots, add Changes dashboard doc, shared carousel ([776b449](776b44950213a266dfdb3cee108b96dd6492b083))
+
+### Changed
+
+- Add doc about annotate runtime metrics ([f56ad2f](f56ad2fd56657bc62ff6bc72ababe4575098917b))
+
+### Fixed
+
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([21e67f1](21e67f1728a3daf8b7d8db6756c6577890de4154))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([d77505c](d77505c797357f3efef65ba2746ac306a075421d))
+- Avoid 404 or redirect when try to access the grafana demo ([84ef72c](84ef72c843c7d818a252d7b6af972cf839eff0ac))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([59e8af5](59e8af59e86991a0fd53c1e654878e7cc209a8d7))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([5c1a6c1](5c1a6c1252acfcdf517f07b045661a25e5ef712a))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([2d91403](2d91403f8971e7129e166e83a15631d5cbc89e95))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([e3750ad](e3750ad3dd7278bad002683239fb396018ceb5d0))
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([d53ad98](d53ad989278b976073a604d8c81b8d4262d97755))
+- Bump bun in cdviz-grafana/dashboards_generator/mise.toml ([9918af2](9918af238bf4429a99101de0d23dd7d16afc63aa))
+- Bump yq in cdviz-grafana/mise.toml ([5080542](5080542890046db6b2e181830861a846526f02b6))
+
 ## [1.11.6] - 2026-06-16
 
 ### Changed

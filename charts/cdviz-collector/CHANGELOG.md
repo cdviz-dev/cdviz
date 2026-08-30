@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.10] - 2026-08-30
+
+### Fixed
+
+- Bump cdviz-collector to 0.47.1 ([5b9aba6](5b9aba663d45c6ec60fa2025bbd7ac80f59072be))
+- Bump cdviz-collector to 0.48.1 ([106ac49](106ac49a324dcc96d1155d3fc57a47f8be129fc1))
+- Bump cdviz-collector in charts/cdviz-collector/values.yaml ([2f292a2](2f292a2fa88347193987d4b159cc9dfd9c0538aa))
+- Bump cdviz-collector in charts/cdviz-collector/values.yaml ([ce1b847](ce1b847b2cd0e370afda2aa1b35fd8703608e30a))
+- Bump kubectl in charts/cdviz-collector/mise.toml ([534c3da](534c3dadd39986a4e754915d81d61a08e907bec8))
+- Bump kubectl in charts/cdviz-collector/mise.toml ([eaa5e67](eaa5e6746e3184906acfa4d11d1ea3b70827fded))
+
 ## [1.2.9] - 2026-06-16
 
 ### Changed
