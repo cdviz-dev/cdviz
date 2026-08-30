@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2026-08-30
+
+### Fixed
+
+- Replace `search_path` in postgresql url by `options` ([38d0685](38d0685a455ed69b444920987c41e55616df5848))
+- Bump sqruff in cdviz-db/mise.toml ([bc35525](bc3552553cd28e1bca51e27fba0be5182db0e8c5))
+- Bump sqruff in cdviz-db/mise.toml ([4a8d619](4a8d619fbd8acddfde058d67d8d1bc49deb3d6b3))
+- Bump bun in cdviz-db/mise.toml ([d75cdcc](d75cdcc644ff5b9adb58dc2f05fd246ee3d0efd6))
+
 ## [1.3.3] - 2026-06-16
 
 ### Fixed
