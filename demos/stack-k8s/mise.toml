@@ -90,7 +90,7 @@ run = ["kubectl config use-context kind-local"]
 wait_for = [":create"]
 
 [tools]
-ctlptl = "0.9.4"
+ctlptl = "0.9.5"
 kind = "0.33.0"
 kubectl = "1.36.4"
 
