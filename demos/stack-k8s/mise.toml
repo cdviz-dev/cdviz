@@ -92,7 +92,7 @@ wait_for = [":create"]
 [tools]
 ctlptl = "0.9.5"
 kind = "0.33.0"
-kubectl = "1.36.4"
+kubectl = "1.37.0"
 
 [tools."github:helmwave/helmwave"]
 matching = "helmwave"
