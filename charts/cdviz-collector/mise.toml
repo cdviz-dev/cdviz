@@ -28,5 +28,5 @@
     wait_for = [":lint"]
 
 [tools]
-  kind = "0.32.0"
-  kubectl = "1.36.4"
+  kind = "0.33.0"
+  kubectl = "1.37.0"
