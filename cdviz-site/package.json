@@ -5,7 +5,7 @@
     "@iconify-json/simple-icons": "1.2.94",
     "@iconify/tailwind4": "1.2.3",
     "@tailwindcss/vite": "4.3.3",
-    "@types/bun": "1.4.0",
+    "@types/bun": "1.4.1",
     "@types/markdown-it": "14.2.0",
     "@types/node": "26.4.0",
     "gsap": "3.15.0",
