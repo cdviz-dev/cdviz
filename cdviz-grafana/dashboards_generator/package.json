@@ -4,7 +4,7 @@
     "dedent": "1.7.2"
   },
   "devDependencies": {
-    "@types/bun": "1.4.1"
+    "@types/bun": "1.4.2"
   },
   "module": "index.ts",
   "name": "dashboards-generator",
