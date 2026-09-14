@@ -1,5 +1,5 @@
 [tools]
-helm = "4.2.4"
+helm = "4.3.0"
 
 [tasks]
 [tasks.ci]
