@@ -154,3 +154,108 @@ test("graph trigger normalises linkkind 'trigger' to 'triggeredBy' in customData
   expect(edges.length).toBe(1);
   expect(edges[0].relation).toBe("triggeredBy");
 });
+
+// ── views: lifecycle-start timestamps are the FIRST occurrence ────────────────
+// Regression for upstreams that re-deliver a start event (GitHub sends
+// `workflow_run.in_progress` once per job pick-up; a REST backfill re-emits
+// `change.created`/`ticket.created` on every pass). See migration
+// 202609152300_fix_view_first_timestamp.
+
+const event = (id: string, type: string, timestamp: string, subjectId: string, content = {}) => ({
+  context: { id, type, timestamp },
+  subject: { id: subjectId, content },
+});
+
+test("pipelinerun view reports the FIRST started event, not the last", async () => {
+  const subjectId = `${PREFIX}pipelinerun-dupstart-01`;
+  // Shape taken from a real incident: one `queued`, three `in_progress`, one `completed`.
+  await storeEvent(event("test-unit-dupstart-q", "dev.cdevents.pipelinerun.queued.0.3.0", "2026-09-15T19:36:49Z", subjectId));
+  await storeEvent(event("test-unit-dupstart-s1", "dev.cdevents.pipelinerun.started.0.3.0", "2026-09-15T19:36:53Z", subjectId));
+  await storeEvent(event("test-unit-dupstart-s2", "dev.cdevents.pipelinerun.started.0.3.0", "2026-09-15T19:38:16Z", subjectId));
+  await storeEvent(event("test-unit-dupstart-s3", "dev.cdevents.pipelinerun.started.0.3.0", "2026-09-15T19:50:01Z", subjectId));
+  await storeEvent(event("test-unit-dupstart-f", "dev.cdevents.pipelinerun.finished.0.3.0", "2026-09-15T19:50:32Z", subjectId, { outcome: "success" }));
+
+  const rows = await sql`
+    SELECT EXTRACT(epoch FROM (started_at - queued_at))::int AS queue_secs,
+           EXTRACT(epoch FROM (finished_at - started_at))::int AS run_secs,
+           outcome
+    FROM cdviz.pipelinerun WHERE subject_id = ${subjectId}
+  `;
+  expect(rows.length).toBe(1);
+  expect(rows[0].queue_secs).toBe(4); // 19:36:49 -> 19:36:53, NOT 19:50:01
+  expect(rows[0].run_secs).toBe(819); // 13m39s, NOT 31s
+  expect(rows[0].outcome).toBe("success");
+});
+
+test("taskrun view reports the FIRST started event", async () => {
+  const subjectId = `${PREFIX}taskrun-dupstart-01`;
+  await storeEvent(event("test-unit-tr-dup-s1", "dev.cdevents.taskrun.started.0.3.0", "2026-09-15T10:00:00Z", subjectId));
+  await storeEvent(event("test-unit-tr-dup-s2", "dev.cdevents.taskrun.started.0.3.0", "2026-09-15T10:05:00Z", subjectId));
+  await storeEvent(event("test-unit-tr-dup-f", "dev.cdevents.taskrun.finished.0.3.0", "2026-09-15T10:10:00Z", subjectId));
+
+  const rows = await sql`
+    SELECT EXTRACT(epoch FROM (finished_at - started_at))::int AS run_secs
+    FROM cdviz.taskrun WHERE subject_id = ${subjectId}
+  `;
+  expect(rows[0].run_secs).toBe(600);
+});
+
+test("ticket view reports the FIRST created event (backfill re-emits it every pass)", async () => {
+  const subjectId = `${PREFIX}ticket-dupcreate-01`;
+  await storeEvent(event("test-unit-tk-dup-c1", "dev.cdevents.ticket.created.0.2.0", "2026-09-01T10:00:00Z", subjectId));
+  await storeEvent(event("test-unit-tk-dup-c2", "dev.cdevents.ticket.created.0.2.0", "2026-09-10T10:00:00Z", subjectId));
+  await storeEvent(event("test-unit-tk-dup-cl", "dev.cdevents.ticket.closed.0.2.0", "2026-09-12T10:00:00Z", subjectId));
+
+  const rows = await sql`
+    SELECT EXTRACT(epoch FROM (closed_at - created_at))::int AS lifetime_secs
+    FROM cdviz.ticket WHERE subject_id = ${subjectId}
+  `;
+  expect(rows[0].lifetime_secs).toBe(11 * 24 * 3600); // 09-01 -> 09-12, not 09-10 -> 09-12
+});
+
+test("service view keeps the LATEST deployed event (long-lived entity, current state)", async () => {
+  const subjectId = `${PREFIX}service-redeploy-01`;
+  await storeEvent(event("test-unit-svc-d1", "dev.cdevents.service.deployed.0.4.0", "2026-09-01T10:00:00Z", subjectId, { environment: { id: `${PREFIX}env-02` } }));
+  await storeEvent(event("test-unit-svc-d2", "dev.cdevents.service.deployed.0.4.0", "2026-09-10T10:00:00Z", subjectId, { environment: { id: `${PREFIX}env-02` } }));
+
+  const rows = await sql`
+    SELECT deployed_at::text AS deployed_at FROM cdviz.service WHERE subject_id = ${subjectId}
+  `;
+  expect(rows[0].deployed_at).toStartWith("2026-09-10");
+});
+
+// ── normalize_run_name ────────────────────────────────────────────────────────
+
+test("normalize_run_name collapses per-run tokens and leaves meaningful suffixes alone", async () => {
+  const cases: [string, string][] = [
+    // collapsed: per-run noise
+    ["org/repo/CI #1234", "org/repo/CI #..."],
+    ["org/repo/CI #...", "org/repo/CI #..."], // idempotent with the VRL transformer output
+    ["org/repo/Bump dep #42 / build", "org/repo/Bump dep #... / build"],
+    ["deploy @3f2a1b9", "deploy @..."],
+    ["deploy @...", "deploy @..."],
+    ["org/repo/deploy@3f2a1b9c4d5e6f7", "org/repo/deploy@..."],
+    ["build a1b2c3", "build ..."],
+    ["build 3f2a1b9c", "build ..."],
+    ["build 8473625", "build ..."],
+    // kept: meaningful matrix axes / version suffixes
+    ["org/repo/CI/test 3.11", "org/repo/CI/test 3.11"],
+    ["org/repo/CI (ubuntu-22.04)", "org/repo/CI (ubuntu-22.04)"],
+    ["release v1.2.3", "release v1.2.3"],
+    ["org/repo/CI 2026", "org/repo/CI 2026"],
+    ["org/repo/test python3", "org/repo/test python3"],
+    ["org/repo/build node18", "org/repo/build node18"],
+    ["org/repo/build ubuntu24", "org/repo/build ubuntu24"],
+    ["org/repo/build win2019", "org/repo/build win2019"],
+    ["org/repo/build x86_64", "org/repo/build x86_64"],
+    ["org/repo/build deadbeef", "org/repo/build deadbeef"],
+    ["org/repo/integration tests", "org/repo/integration tests"],
+    ["org/repo/CI", "org/repo/CI"],
+  ];
+  for (const [input, expected] of cases) {
+    const rows = await sql`SELECT cdviz.normalize_run_name(${input}) AS out`;
+    expect(`${input} => ${rows[0].out}`).toBe(`${input} => ${expected}`);
+  }
+  const nullRows = await sql`SELECT cdviz.normalize_run_name(NULL) AS out`;
+  expect(nullRows[0].out).toBeNull();
+});
