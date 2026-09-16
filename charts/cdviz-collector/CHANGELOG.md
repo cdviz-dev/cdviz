@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.11] - 2026-09-16
+
+### Fixed
+
+- Update cdviz-collector 0.51.0 ([2da8c72](2da8c7212ca236f121852dbe88beb6592f68a4ed))
+
 ## [1.2.10] - 2026-09-15
 
 ### Fixed
