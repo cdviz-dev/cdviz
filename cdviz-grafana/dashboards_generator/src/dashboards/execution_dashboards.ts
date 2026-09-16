@@ -44,14 +44,16 @@ const DASHBOARD_CONFIGS: DashboardSpec[] = [
   {
     subject: "pipelinerun",
     label: "Pipeline",
-    payloadSelector: "payload -> 'subject' -> 'content' ->> 'pipelineName'",
+    payloadSelector:
+      "cdviz.normalize_run_name(payload -> 'subject' -> 'content' ->> 'pipelineName')",
     withQueuedAt: true,
     lifecycleType: "traditional",
   },
   {
     subject: "taskrun",
     label: "Task",
-    payloadSelector: "payload -> 'subject' -> 'content' ->> 'taskName'",
+    payloadSelector:
+      "cdviz.normalize_run_name(payload -> 'subject' -> 'content' ->> 'taskName')",
     withQueuedAt: false,
     lifecycleType: "traditional",
   },
@@ -59,7 +61,7 @@ const DASHBOARD_CONFIGS: DashboardSpec[] = [
     subject: "testcaserun",
     label: "Test",
     payloadSelector:
-      "payload -> 'subject' -> 'content' -> 'testCase' ->> 'name'",
+      "cdviz.normalize_run_name(payload -> 'subject' -> 'content' -> 'testCase' ->> 'name')",
     idFallbackSelector:
       "payload -> 'subject' -> 'content' -> 'testCase' ->> 'id'",
     withQueuedAt: true,
@@ -69,7 +71,7 @@ const DASHBOARD_CONFIGS: DashboardSpec[] = [
     subject: "testsuiterun",
     label: "Test Suite",
     payloadSelector:
-      "payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name'",
+      "cdviz.normalize_run_name(payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name')",
     idFallbackSelector:
       "payload -> 'subject' -> 'content' -> 'testSuite' ->> 'id'",
     withQueuedAt: true,

@@ -70,12 +70,12 @@ export async function buildDashboard(): Promise<Dashboard> {
                   cl.timestamp,
                   cl.subject || '.' || cl.predicate      AS action,
                   ge.relation                            AS relation,
-                  CASE cl.subject
+                  cdviz.normalize_run_name(CASE cl.subject
                     WHEN 'pipelinerun'  THEN COALESCE(cl.payload -> 'subject' -> 'content' ->> 'pipelineName', cl.payload -> 'subject' ->> 'id')
                     WHEN 'taskrun'      THEN COALESCE(cl.payload -> 'subject' -> 'content' ->> 'taskName', cl.payload -> 'subject' ->> 'id')
                     WHEN 'testcaserun'  THEN COALESCE(cl.payload -> 'subject' -> 'content' -> 'testCase' ->> 'name', cl.payload -> 'subject' -> 'content' -> 'testCase' ->> 'id', cl.payload -> 'subject' ->> 'id')
                     WHEN 'testsuiterun' THEN COALESCE(cl.payload -> 'subject' -> 'content' -> 'testSuite' ->> 'name', cl.payload -> 'subject' -> 'content' -> 'testSuite' ->> 'id', cl.payload -> 'subject' ->> 'id')
-                  END                                    AS run_def_name,
+                  END)                                   AS run_def_name,
                   an.node_id                             AS artifact_id,
                   gn.node_type                           AS entity_type,
                   cl.payload -> 'subject' ->> 'id'       AS entity_id,
