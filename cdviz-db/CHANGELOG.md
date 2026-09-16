@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-09-16
+
+### Added
+
+- Add store_cdevents batch procedure ([ff5031e](ff5031e33c5c1c21f98b88cf5b6dcda53fca88c1))
+
 ## [1.3.4] - 2026-09-15
 
 ### Fixed
