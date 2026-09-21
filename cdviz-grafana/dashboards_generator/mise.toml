@@ -1,6 +1,6 @@
 [tools]
 "bun" = "1.4.2"
-"biome" = "2.5.13"
+"biome" = "2.5.14"
 # "watchexec" = "latest"
 
 [tasks."build"]
