@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.2] - 2026-10-01
+
+### Fixed
+
+- Bump biome in cdviz-grafana/dashboards_generator/mise.toml ([11c06e4](11c06e407a21a8065975d3583b791149feb457a6))
+
 ## [1.12.1] - 2026-09-16
 
 ### Fixed

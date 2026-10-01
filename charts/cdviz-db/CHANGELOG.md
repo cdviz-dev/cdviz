@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.5] - 2026-10-01
+
+### Fixed
+
+- Bump cdviz-db-migration in charts/cdviz-db/values.yaml ([43563ed](43563edb6dca43574e2046c79555cd456e638fc5))
+
 ## [1.2.4] - 2026-09-15
 
 ### Fixed
