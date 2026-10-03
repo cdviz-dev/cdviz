@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-10-03
+
+### Added
+
+- Add cdviz.executions rollup and rebuild run views on it ([0c6cc18](0c6cc18ecf969aadf732282c8f4bc9ee8f078710))
+- Drop unused payload GIN index, add cdviz.apply_retention procedure ([e0835e4](e0835e4953dac606b5e2619b845db0b66ac5cc80))
+
 ## [1.4.0] - 2026-09-16
 
 ### Added
