@@ -15,6 +15,7 @@ afterAll(async () => {
   await sql`DELETE FROM cdviz.graph_edges WHERE source_event_id LIKE ${PREFIX + "%"}`;
   await sql`DELETE FROM cdviz.graph_nodes WHERE node_id LIKE ${PREFIX + "%"} OR node_id LIKE ${"pkg:oci/" + PREFIX + "%"}`;
   await sql`DELETE FROM cdviz.cdevents_lake WHERE context_id LIKE ${PREFIX + "%"}`;
+  await sql`DELETE FROM cdviz.executions WHERE subject_id LIKE ${PREFIX + "%"}`;
 });
 
 test("store_cdevent parses subject, predicate and version from context.type", async () => {
@@ -198,6 +199,60 @@ test("taskrun view reports the FIRST started event", async () => {
     FROM cdviz.taskrun WHERE subject_id = ${subjectId}
   `;
   expect(rows[0].run_secs).toBe(600);
+});
+
+test("executions trigger matches view semantics whatever the arrival order", async () => {
+  const subjectId = `${PREFIX}pipelinerun-exec-01`;
+  // Out of order: finished first, a re-delivered (later) started, then the first started/queued.
+  await storeEvent(event("test-unit-exec-f", "dev.cdevents.pipelinerun.finished.0.3.0", "2026-09-15T19:50:32Z", subjectId, { outcome: "success", pipelineName: "ci #12", uri: "https://ci/run/12" }));
+  await storeEvent(event("test-unit-exec-s2", "dev.cdevents.pipelinerun.started.0.3.0", "2026-09-15T19:38:16Z", subjectId));
+  await storeEvent(event("test-unit-exec-s1", "dev.cdevents.pipelinerun.started.0.3.0", "2026-09-15T19:36:53Z", subjectId));
+  await storeEvent(event("test-unit-exec-q", "dev.cdevents.pipelinerun.queued.0.3.0", "2026-09-15T19:36:49Z", subjectId, { pipelineName: "ci #12" }));
+
+  const rows = await sql`
+    SELECT EXTRACT(epoch FROM (e.started_at - e.queued_at))::int AS queue_secs,
+           EXTRACT(epoch FROM (e.finished_at - e.started_at))::int AS run_secs,
+           e.outcome, e.name, e.url, e.last_event_id,
+           v.outcome AS view_outcome, v.started_at = e.started_at AND v.finished_at = e.finished_at AS same_times
+    FROM cdviz.executions e JOIN cdviz.pipelinerun v USING (subject_id)
+    WHERE e.subject = 'pipelinerun' AND e.subject_id = ${subjectId}
+  `;
+  expect(rows.length).toBe(1);
+  expect(rows[0].queue_secs).toBe(4);
+  expect(rows[0].run_secs).toBe(819);
+  expect(rows[0].outcome).toBe("success");
+  expect(rows[0].view_outcome).toBe("success");
+  expect(rows[0].same_times).toBe(true);
+  expect(rows[0].name).toBe("ci #..."); // normalized at insert (cdviz.normalize_run_name)
+  expect(rows[0].url).toBe("https://ci/run/12"); // kept: older events without uri don't erase it
+  expect(rows[0].last_event_id).toBe("test-unit-exec-f");
+
+  // a taskrun of that pipeline run records it as parent (same rule as the graph partOf edge)
+  const taskId = `${PREFIX}taskrun-exec-01`;
+  await storeEvent(event("test-unit-exec-t", "dev.cdevents.taskrun.started.0.3.0", "2026-09-15T19:37:00Z", taskId, { taskName: "build", pipelineRun: { id: subjectId } }));
+  const tasks = await sql`
+    SELECT t.name, p.name AS pipeline_name
+    FROM cdviz.executions t JOIN cdviz.executions p ON p.subject = 'pipelinerun' AND p.subject_id = t.parent_id
+    WHERE t.subject = 'taskrun' AND t.subject_id = ${taskId}
+  `;
+  expect(tasks.length).toBe(1);
+  expect(tasks[0].name).toBe("build");
+  expect(tasks[0].pipeline_name).toBe("ci #...");
+});
+
+test("testcaserun view (built on executions) exposes skipped_at and the latest payload", async () => {
+  const subjectId = `${PREFIX}testcaserun-skip-01`;
+  await storeEvent(event("test-unit-tc-q", "dev.cdevents.testcaserun.queued.0.2.0", "2026-09-15T10:00:00Z", subjectId));
+  await storeEvent(event("test-unit-tc-sk", "dev.cdevents.testcaserun.skipped.0.2.0", "2026-09-15T10:01:00Z", subjectId, { reason: "flaky" }));
+
+  const rows = await sql`
+    SELECT EXTRACT(epoch FROM (skipped_at - queued_at))::int AS skip_secs,
+           last_payload -> 'subject' -> 'content' ->> 'reason' AS reason
+    FROM cdviz.testcaserun WHERE subject_id = ${subjectId}
+  `;
+  expect(rows.length).toBe(1);
+  expect(rows[0].skip_secs).toBe(60);
+  expect(rows[0].reason).toBe("flaky");
 });
 
 test("ticket view reports the FIRST created event (backfill re-emits it every pass)", async () => {

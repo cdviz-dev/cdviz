@@ -68,6 +68,7 @@ mise run ci                     # Full CI pipeline (includes linting)
 - **Primary Table**: `cdviz.cdevents_lake` - TimescaleDB hypertable for all CDEvents
 - **Partitioning**: Time-based partitioning by 7-day intervals + hash partitioning by subject
 - **Indexing**: Unique index on `context_id`, GIN index on JSONB payload
+- **Executions rollup**: `cdviz.executions` — one narrow row per pipelinerun/taskrun/testcaserun/testsuiterun, upserted by trigger `trg_cdevents_lake_executions`; the `pipelinerun`/`taskrun`/`testcaserun`/`testsuiterun` views are built on it (`last_payload` joined from the lake via `last_event_id`)
 - **Retention**: Automatic deletion after 13 months via TimescaleDB policies
 
 ### Key Features
