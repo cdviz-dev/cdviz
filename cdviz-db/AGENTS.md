@@ -67,16 +67,16 @@ mise run ci                     # Full CI pipeline (includes linting)
 
 - **Primary Table**: `cdviz.cdevents_lake` - TimescaleDB hypertable for all CDEvents
 - **Partitioning**: Time-based partitioning by 7-day intervals + hash partitioning by subject
-- **Indexing**: Unique index on `context_id`, GIN index on JSONB payload
+- **Indexing**: Unique index on `context_id` (no GIN on payload: dropped in `202610031300`, unused and ~90% of insert cost)
 - **Executions rollup**: `cdviz.executions` — one narrow row per pipelinerun/taskrun/testcaserun/testsuiterun, upserted by trigger `trg_cdevents_lake_executions`; the `pipelinerun`/`taskrun`/`testcaserun`/`testsuiterun` views are built on it (`last_payload` joined from the lake via `last_event_id`)
-- **Retention**: Automatic deletion after 13 months via TimescaleDB policies
+- **Retention**: `CALL cdviz.apply_retention(INTERVAL '93 days')`, scheduled externally (no TimescaleDB policy: Apache-licensed deployments such as Neon lack them)
 
 ### Key Features
 
 - **JSONB Storage**: Full CDEvents stored as JSON with extracted metadata columns
 - **Time-Series Optimization**: TimescaleDB hypertables for efficient time-range queries
 - **Event Deduplication**: Unique constraint on context_id prevents duplicates
-- **Compression**: Automatic compression of older data (via TimescaleDB hypercore)
+- **Compression**: none configured (Community-license feature)
 
 ## Schema Management Workflow
 
@@ -129,8 +129,8 @@ CREATE TABLE "cdviz"."cdevents_lake" (
 ### TimescaleDB Configuration
 
 - **Hypertable**: Partitioned by timestamp (7-day chunks) + subject hash
-- **Compression**: Older data automatically compressed
-- **Retention**: Events older than 13 months automatically deleted
+- **Compression**: not configured
+- **Retention**: `cdviz.apply_retention(interval)`, scheduled externally
 - **Indexing**: Optimized for time-range and event ID queries
 
 ## Development Patterns

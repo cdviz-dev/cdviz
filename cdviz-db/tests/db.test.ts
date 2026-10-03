@@ -314,3 +314,24 @@ test("normalize_run_name collapses per-run tokens and leaves meaningful suffixes
   const nullRows = await sql`SELECT cdviz.normalize_run_name(NULL) AS out`;
   expect(nullRows[0].out).toBeNull();
 });
+
+// Last on purpose: drop_chunks removes whole chunks, so it would also drop older rows that
+// earlier tests stored in the same chunks.
+test("apply_retention drops old lake chunks and executions, keeps recent ones", async () => {
+  const oldId = `${PREFIX}pipelinerun-retention-old`;
+  const newId = `${PREFIX}pipelinerun-retention-new`;
+  const recent = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+  await storeEvent(event("test-unit-ret-old", "dev.cdevents.pipelinerun.finished.0.3.0", "2020-01-15T10:00:00Z", oldId));
+  await storeEvent(event("test-unit-ret-new", "dev.cdevents.pipelinerun.finished.0.3.0", recent, newId));
+
+  await sql`CALL cdviz.apply_retention(INTERVAL '93 days')`;
+
+  const lake = await sql`
+    SELECT context_id FROM cdviz.cdevents_lake WHERE context_id LIKE 'test-unit-ret-%' ORDER BY 1
+  `;
+  expect(lake.map((r: { context_id: string }) => r.context_id)).toEqual(["test-unit-ret-new"]);
+  const execs = await sql`
+    SELECT subject_id FROM cdviz.executions WHERE subject_id IN (${oldId}, ${newId})
+  `;
+  expect(execs.map((r: { subject_id: string }) => r.subject_id)).toEqual([newId]);
+});
