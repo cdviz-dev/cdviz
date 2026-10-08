@@ -12,7 +12,6 @@ config_roots = [
   "charts/*",                           # Individual chart directories
   "demos",
   "demos/*",                            # Single-level glob pattern
-  "updatecli",
 ]
 
 [settings]
@@ -25,15 +24,6 @@ CHARTS_OCI_REGISTRY = "oci://ghcr.io/cdviz-dev/charts"
 [tools]
 yq = "4.54.1"                            # used by build to update / normalize dashboards / release
 git-cliff = "2.14.2"
-"github:updatecli/updatecli" = "0.122.1"
-
-[tasks."updatecli:diff"]
-description = "Show what updatecli would update (dry run, no changes)"
-run = "GITHUB_TOKEN=$(gh auth token) updatecli diff --config updatecli/updatecli.d/ --values updatecli/values.yaml"
-
-[tasks."updatecli:apply"]
-description = "Apply all pending dependency updates via updatecli (creates PRs)"
-run = "GITHUB_TOKEN=$(gh auth token) updatecli apply --config updatecli/updatecli.d/ --values updatecli/values.yaml"
 
 [tasks."cdevents:change-branch"]
 description = "Change the branch of the cdevents-specs submodules (eg to reflect version update)"

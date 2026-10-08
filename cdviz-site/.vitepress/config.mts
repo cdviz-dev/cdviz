@@ -13,7 +13,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 // Single source of truth for the cdviz-collector version shown in docs.
 // Use %%COLLECTOR_VERSION%% in any markdown (works inside code blocks).
-// Bumped automatically by updatecli (updatecli/updatecli.d/cdviz-collector.yaml).
+// Bumped automatically by renovate (.github/renovate.json5, customManagers).
 const COLLECTOR_VERSION = "0.53.0";
 
 function getDraftExcludes(): string[] {

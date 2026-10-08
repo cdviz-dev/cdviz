@@ -1,0 +1,51 @@
+# https://github.com/renovatebot/github-action
+# config: .github/renovate.json5
+name: renovate
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Override default log level (debug, info, warn, error)"
+        required: false
+        default: "info"
+        type: choice
+        options:
+          - "debug"
+          - "info"
+          - "warn"
+          - "error"
+  # Weekly on Wednesday at 04:30 UTC (automerge is done by GitHub, no follow-up run needed)
+  schedule:
+    - cron: "30 4 * * 3"
+
+permissions:
+  contents: read
+
+concurrency: renovate
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # GitHub App token (not GITHUB_TOKEN) so renovate's PRs trigger CI workflows
+      - uses: actions/create-github-app-token@v2
+        id: get_token
+        with:
+          private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.INTBOT_APP_ID }}
+          repositories: ${{ github.event.repository.name }}
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      # pinned by SHA: this step holds the app token (renovate keeps the digest updated)
+      - uses: renovatebot/github-action@44f24283a60f64273f1294932f16ba61193cccca # v46.1.0
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Onboarding not needed for self hosted
+          RENOVATE_ONBOARDING: "false"
+          # Use GitHub API to create commits (signed commits from GitHub App)
+          RENOVATE_PLATFORM_COMMIT: "enabled"
+          LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
+        with:
+          configurationFile: .github/renovate.json5
+          token: "${{ steps.get_token.outputs.token }}"

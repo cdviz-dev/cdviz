@@ -97,6 +97,18 @@ mise run :test
 - **Generated Dashboards**: Grafana dashboards created programmatically from TypeScript
 - **Container-First Development**: All components designed for containerized deployment
 
+## Dependency updates
+
+[Renovate](https://docs.renovatebot.com/) (config: `.github/renovate.json5`) runs weekly on Wednesday
+and on demand (Actions → renovate → Run workflow).
+
+- Commit types drive releases (`cliff.toml`): `build(deps)` for tooling/dev deps (no release),
+  `fix(deps)` for deps shipped in a released chart (patch release).
+- Non-major tooling updates (GitHub Actions, mise tools, npm, docker) automerge once CI passes; majors and
+  `fix(deps)` PRs are reviewed manually. Merge with **Rebase and merge**.
+- Pinned on purpose: `timescale/timescaledb-ha` (pg18), `migrate/migrate` (major 4). `ghcr.io/cdviz-dev/*:latest`
+  in demos are not versioned.
+
 ## How to release
 
 ???

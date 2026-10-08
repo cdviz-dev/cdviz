@@ -1,0 +1,111 @@
+// https://docs.renovatebot.com/configuration-options/
+// Run by .github/workflows/renovate.yml (weekly on Wednesday + manual trigger).
+//
+// Commit types matter: git-cliff (cliff.toml) derives chart/db releases from them.
+// - `build(deps)` (default): tooling / dev deps, skipped by git-cliff, no release.
+// - `fix(deps)`: deps shipped in a released artifact (chart image tags, subcharts), patch release.
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitScope(deps)",
+  ],
+  // commit types are set by packageRules below (git-cliff relies on them)
+  ignorePresets: [":semanticPrefixFixDepsChoreOthers"],
+  labels: ["dependencies"],
+  rebaseWhen: "conflicted",
+  // GitHub merges once required checks pass, so one renovate run per week is enough
+  platformAutomerge: true,
+  packageRules: [
+    {
+      description: "Default commit type (skipped by git-cliff, no release); rules below use `fix` for released artifacts",
+      matchFileNames: ["**/*"],
+      semanticCommitType: "build",
+    },
+    {
+      description: "Automerge non-major updates of tooling (CI actions, mise tools, npm, docker digests)",
+      matchManagers: ["github-actions", "mise", "npm", "bun", "docker-compose", "dockerfile"],
+      matchUpdateTypes: ["minor", "patch", "digest", "pin", "pinDigest"],
+      automerge: true,
+    },
+    {
+      description: "No automerge where CI does not build: ci.yml has no cdviz-site job (pages.yml only builds after merge on main)",
+      matchFileNames: ["cdviz-site/**"],
+      automerge: false,
+    },
+    {
+      description: "The renovate action holds the app token: review its updates (SHA pin is pointless if auto-updated)",
+      matchPackageNames: ["renovatebot/github-action"],
+      automerge: false,
+    },
+    {
+      description: "Group mise tools in one PR",
+      matchManagers: ["mise"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "mise tools",
+    },
+    {
+      description: "Group GitHub Actions in one PR",
+      matchManagers: ["github-actions"],
+      groupName: "github actions",
+    },
+    {
+      description: "Group non-major npm/bun updates in one PR",
+      matchManagers: ["npm", "bun"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "npm packages",
+    },
+    {
+      description: "vitepress: follow the 2.0.0-alpha track until 2.x is stable",
+      matchPackageNames: ["vitepress"],
+      ignoreUnstable: false,
+    },
+    {
+      description: "cdviz-collector: one PR for chart, docs and mise; ships in the chart (fix → patch release), reviewed manually",
+      matchPackageNames: ["cdviz-dev/cdviz-collector", "github:cdviz-dev/cdviz-collector", "ghcr.io/cdviz-dev/cdviz-collector"],
+      groupName: "cdviz-collector",
+      semanticCommitType: "fix",
+      automerge: false,
+    },
+    {
+      description: "Deps shipped in released charts: fix → patch release, reviewed manually",
+      matchFileNames: ["charts/**/values.yaml", "charts/**/Chart.yaml"],
+      semanticCommitType: "fix",
+      automerge: false,
+    },
+    {
+      description: "PostgreSQL major upgrade needs schema review + manual migration runbook",
+      matchPackageNames: ["timescale/timescaledb-ha"],
+      allowedVersions: "/^pg18/",
+    },
+    {
+      description: "migrate CLI may change across majors",
+      matchPackageNames: ["migrate/migrate"],
+      allowedVersions: "4",
+    },
+  ],
+  customManagers: [
+    {
+      description: "cdviz-collector version shown in docs",
+      customType: "regex",
+      managerFilePatterns: ["/^cdviz-site/\\.vitepress/config\\.mts$/"],
+      matchStrings: ['const COLLECTOR_VERSION = "(?<currentValue>[^"]+)";'],
+      datasourceTemplate: "github-releases",
+      depNameTemplate: "cdviz-dev/cdviz-collector",
+      extractVersionTemplate: "^v?(?<version>.+)$",
+    },
+    {
+      description: "cdviz-executiontable-panel Grafana plugin (version repeated 3x in one URL-ish string)",
+      customType: "regex",
+      managerFilePatterns: ["/^demos/stack-compose/docker-compose\\.yaml$/", "/^demos/stack-k8s/values/grafana\\.yaml$/"],
+      matchStrings: [
+        "cdviz-executiontable-panel@(?<currentValue>[0-9.]+)@https://github\\.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v[0-9.]+/cdviz-executiontable-panel-[0-9.]+\\.zip",
+      ],
+      datasourceTemplate: "github-releases",
+      depNameTemplate: "cdviz-dev/cdviz-executiontable-panel",
+      extractVersionTemplate: "^v?(?<version>.+)$",
+      autoReplaceStringTemplate: "cdviz-executiontable-panel@{{newValue}}@https://github.com/cdviz-dev/cdviz-executiontable-panel/releases/download/v{{newValue}}/cdviz-executiontable-panel-{{newValue}}.zip",
+    },
+  ],
+}
