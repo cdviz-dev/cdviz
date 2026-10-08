@@ -84,7 +84,7 @@ Events flow **Sources → cdviz-collector → Database → Dashboards**. Grafana
 
 Generated dashboards cover DORA metrics, artifact timelines, service deployments, pipeline and task runs, test suite/case results, incidents, and ticket lifecycles. → [Dashboard documentation](https://cdviz.dev/docs/cdviz-grafana)
 
-Dashboards are generated from TypeScript via the Grafana Foundation SDK — never edit the JSON directly. See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, and [CLAUDE.md](CLAUDE.md) for the repository conventions.
+Dashboards are generated from TypeScript via the Grafana Foundation SDK — never edit the JSON directly. See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, and [AGENTS.md](AGENTS.md) for the repository conventions.
 
 ### Related projects
 

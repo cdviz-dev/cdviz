@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 # AGENTS.md - CDviz Monorepo
 
 AI agent instructions for CDviz, an SDLC observability platform built around CDEvents.
@@ -136,7 +132,9 @@ mise run //demos/stack-k8s:up                       # Deploy via Helmwave
 - **Migration Tool**: golang-migrate (NOT Atlas) - timestamp-based versioning
 - **Table Structure**: `cdviz.cdevents_lake` hypertable with JSONB payload + extracted metadata
 - **Partitioning**: Time-based (7-day chunks) + hash partitioning by subject
-- **Retention**: Automatic deletion after 13 months via TimescaleDB policies
+- **Ingestion**: `cdviz.store_cdevent(jsonb)` (one event) and `cdviz.store_cdevents(jsonb[])` (batch, skips duplicates; used by the collector db sink)
+- **Executions**: `cdviz.executions` rollup (one row per pipeline/task/test run, maintained by trigger); run views and dashboards read it instead of scanning `cdevents_lake`
+- **Retention**: Not automatic (TimescaleDB retention policies need the Community license, absent on Apache-only hosts like Neon). Schedule `CALL cdviz.apply_retention(INTERVAL '...')` externally
 
 #### Dashboard Generation (TypeScript + Grafana Foundation SDK)
 
@@ -147,7 +145,7 @@ mise run //demos/stack-k8s:up                       # Deploy via Helmwave
 
 #### Documentation Site (VitePress)
 
-- **Framework**: VitePress 2.0 (Vue-based static site generator)
+- **Framework**: VitePress 2.x (alpha track, pinned manually) (Vue-based static site generator)
 - **Styling**: TailwindCSS 4.x with custom plugins
 - **Assets**: ImageMagick-based optimization pipeline
 - **Target**: DevOps engineers, tech leads, platform engineers
