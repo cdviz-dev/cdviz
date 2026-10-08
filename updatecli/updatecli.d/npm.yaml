@@ -40,7 +40,7 @@ autodiscovery:
         kind: latest
       ignore:
         - packages:
-            vitepress: ".*"
+            vitepress: ""  # "" = any version; ".*" is not a semver constraint and matches nothing
 
 ---
 # npm dependencies for cdviz-grafana/dashboards_generator.
@@ -84,4 +84,4 @@ autodiscovery:
         kind: latest
       # ignore:
       #   - packages:
-      #       "@grafana/grafana-foundation-sdk": ".*"
+      #       "@grafana/grafana-foundation-sdk": ""
