@@ -791,6 +791,8 @@ export default defineConfig({
 
   // see https://github.com/vuejs/vitepress/issues/4433#issuecomment-2551789595
   vite: {
+    // Static assets live in ../assets (relative to srcDir); avoids a src/public symlink that breaks on Windows
+    publicDir: "../assets",
     build: {
       // Optimize bundle splitting for better caching
       rollupOptions: {
