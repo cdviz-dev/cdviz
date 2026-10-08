@@ -165,10 +165,13 @@ Define custom source keys in a TOML config file and reference them with `--run`:
 ```toml
 # my-run.toml
 [sources.testsuiterun_cargo]
-type = "send_run"
-data_globs = ["**/test-results.json"]
-parser = { type = "json" }
-transformer_refs = ["ci_env_detection", "to_testsuiterun"]
+enabled = false  # --run enables it
+transformer_refs = ["ci_env_detection", "to_testsuiterun_junit", "testoutput_from_testsuiterun", "ci_links"]
+
+[sources.testsuiterun_cargo.extractor]
+type = "subprocess"
+data_globs = ["**/junit.xml"]
+parser = "xml"
 ```
 
 ```bash
@@ -179,6 +182,10 @@ cdviz-collector send --run testsuiterun_cargo \
 ```
 
 The `--config` file is merged on top of the built-in `send.base.toml`, so built-in keys (`testsuiterun_junit`, `testsuiterun_tap`, `testsuiterun_sarif`, `taskrun`) remain available.
+
+::: warning Environment variables in custom transformers
+VRL `get_env_var()` only reads variables allowlisted in `[vrl] allowed_env_vars` (see [VRL Configuration](./configuration.md#vrl-configuration)). The built-in list covers the CI variables used by `ci_env_detection`. Arrays are replaced, not merged, so to read more variables copy that list from `cdviz-collector config --for send --print` and extend it — never with broad patterns like `GITHUB_*` that also match `GITHUB_TOKEN`.
+:::
 
 ## Additional Flags
 

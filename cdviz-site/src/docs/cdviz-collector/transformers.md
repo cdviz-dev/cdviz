@@ -176,6 +176,10 @@ template_file = "path/to/template.vrl"
 
 Using an external file allows you to take advantage of VRL editor support and syntax highlighting. Note that the template file must be deployed alongside your configuration.
 
+::: tip Reading environment variables
+`get_env_var("NAME")` fails unless `NAME` matches a glob in `[vrl] allowed_env_vars` (empty by default). See [VRL Configuration](./configuration.md#vrl-configuration).
+:::
+
 ### Using Remote Transformers
 
 You can reference transformers from remote storage (GitHub, S3, HTTP), which makes it easier to maintain and update transformation logic without rebuilding your configuration.

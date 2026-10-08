@@ -25,7 +25,8 @@ When running, the server provides HTTP endpoints for:
 
 - **Webhook Sources** - Receive events from external systems at `POST /webhook/{id}`
 - **SSE Sinks** - Real-time event streaming to subscribers at `GET /sse/{id}`
-- **Health Checks** - Liveness probe at `GET /healthz` for Kubernetes and load balancers
+- **Health Checks** - Liveness probe at `GET /healthz`, readiness probe at `GET /readyz`
+- **Metrics** - Prometheus scrape endpoint at `GET /metrics` (unless `--disable-otel`)
 
 The exact endpoints depend on your configuration.
 
@@ -73,6 +74,17 @@ OpenTelemetry is enabled by default for distributed tracing and metrics. Configu
 ```bash
 OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317 cdviz-collector connect --config config.toml
 ```
+
+The collector also exposes its metrics at `GET /metrics` (Prometheus format), including per-stage counters:
+
+| Metric                         | Meaning                                                                                                  |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `pipe_events_total`            | Events flowing through sources and transformers                                                          |
+| `sink_events_total`            | Events dispatched to sinks                                                                               |
+| `source_queue_saturated_total` | Events refused by a source because the queue to sinks is full (backpressure: upstream is asked to retry) |
+| `sink_queue_lagged_events`     | Events a too-slow sink missed                                                                            |
+
+A growing `source_queue_saturated_total` means a sink can't keep up: tune its batching (see [Database Sink](./sinks/db.md#batching)) or `[pipeline] queue_capacity` (default `1024`).
 
 Disable in environments without an OTLP receiver:
 

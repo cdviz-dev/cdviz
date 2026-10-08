@@ -31,7 +31,8 @@ parameters = { root = "./events" }
 
 ### Main Sections
 
-- **`[http]`** - HTTP server configuration (host, port, root_url)
+- **`[http]`** - HTTP server configuration (host, port, root_url, request_timeout)
+- **`[vrl]`** - VRL runtime settings (`allowed_env_vars`)
 - **`[sources.*]`** - Event collection (see [Sources](./sources/))
 - **`[transformers.*]`** - Event processing (see [Transformers](./transformers.md))
 - **`[sinks.*]`** - Event delivery (see [Sinks](./sinks/))
@@ -45,6 +46,10 @@ The `[http]` section configures the HTTP server:
 host = "0.0.0.0"           # Bind address (default: "0.0.0.0")
 port = 8080                # Port to listen on (default: 8080)
 root_url = "http://cdviz-collector.example.com"  # Base URL for generating source URLs
+request_timeout = "3s"     # Per-request timeout; slower requests get 408 (default: "3s")
+
+[http.access_log]
+filter = ["4xx", "5xx"]    # Status codes ("404") or classes ("5xx") to log; [] disables
 ```
 
 **`root_url`** is used to automatically populate `context.source` in CDEvents when not explicitly set. The format is:
@@ -58,6 +63,21 @@ For example, with `root_url = "https://cdviz.example.com"` and a source named `g
 ```
 https://cdviz.example.com/?source=github_webhook
 ```
+
+### VRL Configuration
+
+VRL's `get_env_var()` can only read environment variables matching the `[vrl] allowed_env_vars` glob patterns. The default is **empty** (no variable readable), so a transformer — possibly fetched from a [remote source](./transformers.md#using-remote-transformers) — cannot read the collector's secrets.
+
+```toml
+[vrl]
+allowed_env_vars = ["DEPLOY_ENV", "MYAPP_*"]
+```
+
+Keep patterns narrow: `GITHUB_*` or `CI_*` would also match `GITHUB_TOKEN` or `CI_JOB_TOKEN`. The `send` command pre-allows the CI variables used by [`--run` CI detection](./send-run.md#ci-env-detection).
+
+### Strict Keys
+
+Unknown keys are rejected: a typo like `pool_conections_max` fails at startup instead of being silently ignored. Validate a config with `cdviz-collector config --config config.toml --check` (it also compiles VRL templates).
 
 ## Environment Variables
 

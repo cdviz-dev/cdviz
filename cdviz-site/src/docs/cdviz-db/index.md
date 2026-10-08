@@ -22,13 +22,19 @@ The conceptual architecture of the CDviz database is as follows:
 <DbConceptual/>
 
 - a schema for CDEvents storage and analytics: `cdviz`
-- a stored procedure for event ingestion (used by the collector service or other event sources): `cdviz.store_cdevent`
+- stored procedures for event ingestion (used by the collector service or other event sources): `cdviz.store_cdevent(jsonb)` for one event, `cdviz.store_cdevents(jsonb[])` for a batch (duplicates are skipped)
 - an hypertable for raw CDEvents storage `cdviz.cdevents_lake`
-- a set of views for data retrieval, analytics and pre-computed metrics
+- a table `cdviz.executions` with one row per pipelinerun / taskrun / testcaserun / testsuiterun, maintained by trigger on insert, so dashboards don't scan the whole event history
+- a set of views for data retrieval, analytics and pre-computed metrics (the run views `cdviz.pipelinerun`, `cdviz.taskrun`, … are built on `cdviz.executions`)
+- a procedure for data retention: `cdviz.apply_retention(interval)`
 - 3 roles for data access (recommanded, not provisioned by the migrations):
   - `cdviz` - for administrative tasks (owner of the database)
   - `cdviz_collector` - for event ingestion
   - `cdviz_reader` - for read-only access to the data
+
+::: tip No GIN index on `payload`
+Since 1.5.0 the full-payload GIN index is dropped (unused by shipped queries, and most of the insert cost). If your custom SQL filters `payload` with `@>`, `?`, `@?`…, create a targeted index on the JSON path you query.
+:::
 
 When views (materialized or not) are missing, you can :
 
@@ -50,6 +56,16 @@ The database implementation requires PostgreSQL with specific extensions:
   - adding support for periodic maintenance tasks (metrics aggregation, vacuuming, update of materialized view etc.)
 
 Please refer to the hosting documentation for supported deployment options.
+
+### Data Retention
+
+Retention is not automatic: TimescaleDB retention policies need the Community license, unavailable on Apache-only deployments (e.g. Neon). Schedule the procedure externally (cron, Kubernetes CronJob, `pg_cron`…):
+
+```sql
+CALL cdviz.apply_retention(INTERVAL '13 months');
+```
+
+It drops whole `cdevents_lake` chunks (7 days) older than the interval, so events are kept between `keep` and `keep` + 7 days, and deletes `executions` whose latest event is older than the cutoff.
 
 ### Database Schema
 

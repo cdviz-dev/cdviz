@@ -17,12 +17,14 @@ max_retries = 10
 
 ## Parameters
 
-| Parameter     | Type    | Default | Description                                                                 |
-| ------------- | ------- | ------- | --------------------------------------------------------------------------- |
-| `url`         | string  | —       | SSE endpoint URL                                                            |
-| `max_retries` | integer | `10`    | Maximum reconnection attempts                                               |
-| `headers`     | array   | `[]`    | Outgoing request headers (auth, etc.)                                       |
-| `metadata`    | object  | —       | Static metadata for all events; `context.source` is auto-populated if unset |
+| Parameter                | Type    | Default                     | Description                                                                                                                                         |
+| ------------------------ | ------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `url`                    | string  | —                           | SSE endpoint URL                                                                                                                                    |
+| `max_retries`            | integer | `10`                        | Maximum reconnection attempts                                                                                                                       |
+| `headers`                | table   | `{}`                        | Outgoing request headers (auth, etc.)                                                                                                               |
+| `trusted_redirect_hosts` | array   | `[]`                        | Glob patterns of hosts a cross-origin redirect may reach while keeping `headers` (headers are dropped otherwise; `https` → `http` is never trusted) |
+| `user_agent`             | string  | `cdviz-collector/<version>` | `User-Agent` header                                                                                                                                 |
+| `metadata`               | object  | —                           | Static metadata for all events; `context.source` is auto-populated if unset                                                                         |
 
 ## Event Processing
 
@@ -110,7 +112,7 @@ The SSE extractor implements automatic reconnection with exponential backoff:
 - Retry 3: wait 8s
 - ... up to max 64s between retries
 
-Set `max_retries = 0` for unlimited reconnection attempts (recommended for production).
+`max_retries` counts **consecutive** failures: once a connection is established, the budget resets, so a stream closed by an idle-timeout proxy reconnects with a fresh budget. When the budget is exhausted the source stops (`max_retries = 0` disables reconnection). Events rejected downstream are logged and skipped; they do not break the stream.
 
 ## Related
 

@@ -12,18 +12,23 @@ Forwards CDEvents to an external HTTP endpoint via POST request. Use for webhook
 [sinks.webhook]
 enabled = true
 type = "http"
-url = "https://example.com/webhook"
+destination = "https://example.com/webhook"
 ```
 
 ## Parameters
 
-| Parameter          | Type    | Default | Description                                                                                 |
-| ------------------ | ------- | ------- | ------------------------------------------------------------------------------------------- |
-| `type`             | string  | —       | Must be `"http"`                                                                            |
-| `url`              | string  | —       | Destination endpoint URL                                                                    |
-| `enabled`          | boolean | `true`  | Enable/disable this sink                                                                    |
-| `headers`          | table   | `{}`    | Outgoing request headers (auth, signatures, etc.)                                           |
-| `transformer_refs` | array   | `[]`    | **(beta)** [Transformers](../transformers.md) applied to events before this sink sends them |
+| Parameter                    | Type     | Default                     | Description                                                                                                                            |
+| ---------------------------- | -------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                       | string   | —                           | Must be `"http"`                                                                                                                       |
+| `destination`                | string   | —                           | Destination endpoint URL                                                                                                               |
+| `enabled`                    | boolean  | `true`                      | Enable/disable this sink                                                                                                               |
+| `headers`                    | table    | `{}`                        | Outgoing request headers (auth, signatures, etc.)                                                                                      |
+| `trusted_redirect_hosts`     | array    | `[]`                        | Glob patterns (e.g. `"*.example.com"`) of hosts a cross-origin redirect may reach while keeping `headers`. See [Redirects](#redirects) |
+| `total_duration_of_retries`  | duration | `"30m"`                     | Retry budget for transient failures (network errors, 5xx)                                                                              |
+| `log_errors`                 | boolean  | `true`                      | Log a warning on non-2xx responses                                                                                                     |
+| `log_full_response_on_error` | boolean  | `false`                     | Also log response headers and body on non-2xx (handy in CI)                                                                            |
+| `user_agent`                 | string   | `cdviz-collector/<version>` | `User-Agent` header                                                                                                                    |
+| `transformer_refs`           | array    | `[]`                        | **(beta)** [Transformers](../transformers.md) applied to events before this sink sends them                                            |
 
 ## Request Format
 
@@ -31,6 +36,17 @@ url = "https://example.com/webhook"
 - **Content-Type**: `application/json`
 - **Body**: Complete CDEvent serialized as JSON
 - **Errors**: Failed requests (HTTP 3xx+ or network errors) are logged; processing continues
+
+## Redirects
+
+Redirects are followed, but configured `headers` (tokens, API keys, signatures) are **dropped on a cross-origin redirect** so credentials never leak to another server. To keep them for a known host (e.g. an API redirecting to its own CDN), allowlist it:
+
+```toml
+[sinks.webhook]
+trusted_redirect_hosts = ["*.example.com"]
+```
+
+An `https` → `http` downgrade is never trusted.
 
 ## Authentication
 
@@ -86,7 +102,7 @@ Reshaping lets the destination consume the payload as-is, and can replace an int
 [sinks.github_dispatch]
 enabled = true
 type = "http"
-url = "https://api.github.com/repos/my-org/my-repo/dispatches"
+destination = "https://api.github.com/repos/my-org/my-repo/dispatches"
 transformer_refs = ["service_deployed_to_dispatch"]
 
 [sinks.github_dispatch.headers]
@@ -118,13 +134,13 @@ if !contains(string!(.body.context.type), "service.deployed") {
 [sinks.slack]
 enabled = true
 type = "http"
-url = "https://hooks.slack.com/services/T00/B00/XXX"
+destination = "https://hooks.slack.com/services/T00/B00/XXX"
 
 # Forward to authenticated internal API
 [sinks.internal_api]
 enabled = true
 type = "http"
-url = "https://platform.company.com/api/events"
+destination = "https://platform.company.com/api/events"
 
 [sinks.internal_api.headers]
 "authorization" = { type = "secret", value = "Bearer PLATFORM_API_TOKEN" }
@@ -133,12 +149,12 @@ url = "https://platform.company.com/api/events"
 [sinks.backup_receiver]
 enabled = true
 type = "http"
-url = "https://backup-collector.company.com/webhook/events"
+destination = "https://backup-collector.company.com/webhook/events"
 ```
 
 ## Error Handling
 
-Failed requests (non-2xx responses, network errors, timeouts) are logged at ERROR level. Processing continues — the event is not retried. For guaranteed delivery, use the [Kafka sink](./kafka.md) or [NATS sink](./nats.md) with a durable consumer.
+Transient failures (network errors, timeouts, 5xx) are retried with exponential backoff for up to `total_duration_of_retries`. Once the budget is exhausted, or on a non-retryable response, the failure is logged and processing continues — the event is not stored for later. For guaranteed delivery, use the [Kafka sink](./kafka.md) or [NATS sink](./nats.md) with a durable consumer.
 
 ## Related
 

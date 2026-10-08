@@ -32,15 +32,19 @@ query = """
 
 ## Parameters
 
-| Parameter  | Type    | Required | Description                                               |
-| ---------- | ------- | -------- | --------------------------------------------------------- |
-| `type`     | string  | yes      | Must be `"clickhouse"`                                    |
-| `url`      | string  | yes      | ClickHouse HTTP endpoint (e.g. `http://host:8123`)        |
-| `database` | string  | yes      | Target database                                           |
-| `query`    | string  | yes      | INSERT query template — see [Placeholders](#placeholders) |
-| `user`     | string  | no       | ClickHouse username                                       |
-| `password` | string  | no       | ClickHouse password                                       |
-| `enabled`  | boolean | yes      | Enable/disable this sink                                  |
+| Parameter                   | Type     | Required     | Description                                                          |
+| --------------------------- | -------- | ------------ | -------------------------------------------------------------------- |
+| `type`                      | string   | yes          | Must be `"clickhouse"`                                               |
+| `url`                       | string   | yes          | ClickHouse HTTP endpoint (e.g. `http://host:8123`)                   |
+| `database`                  | string   | yes          | Target database                                                      |
+| `query`                     | string   | yes          | INSERT query template — see [Placeholders](#placeholders)            |
+| `user`                      | string   | no           | ClickHouse username                                                  |
+| `password`                  | string   | no           | ClickHouse password                                                  |
+| `enabled`                   | boolean  | yes          | Enable/disable this sink                                             |
+| `total_duration_of_retries` | duration | no (`"30m"`) | Retry budget for transient connection errors (`"0s"` disables)       |
+| `batch_max_size`            | integer  | no (`50`)    | Flush once this many events are buffered; max rows per `INSERT`      |
+| `batch_max_wait`            | duration | no (`"1s"`)  | Flush buffered events at least this often                            |
+| `batch_spool_dir`           | path     | no           | Directory where buffered events are also written, to survive a crash |
 
 ## Placeholders
 
@@ -88,6 +92,19 @@ parseDateTime64BestEffort(timestamp) AS ts
 ```
 
 :::
+
+## Batching
+
+ClickHouse prefers few large inserts over many small ones, so events are buffered and inserted in batches: a flush happens when `batch_max_size` events are buffered or every `batch_max_wait`, whichever comes first. While ClickHouse is unreachable, buffered events are kept and retried.
+
+Set `batch_spool_dir` (on a persistent volume) to also survive a crash: buffered events are written to disk and replayed at startup. A replay may insert an event twice; if duplicates matter, use a `ReplacingMergeTree` keyed on `id`.
+
+```toml
+[sinks.clickhouse]
+batch_max_size = 1000
+batch_max_wait = "10s"
+batch_spool_dir = "/var/lib/cdviz-collector/spool/clickhouse"
+```
 
 ## Keeping Credentials Out of Config
 

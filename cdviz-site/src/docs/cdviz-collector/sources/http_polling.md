@@ -68,6 +68,12 @@ driver_vrl = """
 ## Retry budget for transient HTTP failures (humantime format). Default: "30s".
 # total_duration_of_retries = "30s"
 
+## Per-request timeout (connect + response). Default: "30s".
+# request_timeout = "30s"
+
+## What to do on non-2xx responses, by exact code or class. See "Non-2xx Responses".
+# on_status = { "404" = "skip", "5xx" = "retry" }
+
 ## Static or secret request headers.
 # [sources.my_source.extractor.headers]
 # "Authorization" = { type = "secret", value = "Bearer TOKEN" }
@@ -79,21 +85,26 @@ driver_vrl = """
 
 ## Parameters
 
-| Parameter                   | Type     | Default                     | Description                                                                       |
-| --------------------------- | -------- | --------------------------- | --------------------------------------------------------------------------------- |
-| `polling_interval`          | duration | —                           | How often to poll the endpoint (required).                                        |
-| `driver_vrl`                | string   | —                           | VRL driver script; must set `.requests` (array), may set `.state` (required).     |
-| `ts_after`                  | datetime | `Timestamp::MIN`            | Initial lower bound of the time window. Overridden by persisted state on restart. |
-| `ts_before_limit`           | datetime | none                        | Optional upper cap. When `ts_after` reaches this value the source stops.          |
-| `parser`                    | string   | `"auto"`                    | Default response-body parser. Overridable per request via `requests[].parser`.    |
-| `min_request_interval`      | duration | none                        | Minimum delay between the start of consecutive requests (rate limiting).          |
-| `max_concurrency`           | usize    | `4`                         | Max requests fetched concurrently within one poll.                                |
-| `max_requests`              | u32      | `1000`                      | Hard budget on total requests issued per poll (runaway guard).                    |
-| `max_depth`                 | u32      | `50`                        | Max feedback-chain depth (recursion guard); bootstrap requests are depth 0.       |
-| `total_duration_of_retries` | duration | `"30s"`                     | Retry budget for transient HTTP failures.                                         |
-| `headers`                   | object   | `{}`                        | Static or secret headers added to every request.                                  |
-| `metadata`                  | object   | `{}`                        | Static metadata merged into every `EventSource`.                                  |
-| `user_agent`                | string   | `cdviz-collector/<version>` | `User-Agent` header sent with every request.                                      |
+| Parameter                   | Type     | Default                         | Description                                                                       |
+| --------------------------- | -------- | ------------------------------- | --------------------------------------------------------------------------------- |
+| `polling_interval`          | duration | —                               | How often to poll the endpoint (required).                                        |
+| `driver_vrl`                | string   | —                               | VRL driver script; must set `.requests` (array), may set `.state` (required).     |
+| `ts_after`                  | datetime | `Timestamp::MIN`                | Initial lower bound of the time window. Overridden by persisted state on restart. |
+| `ts_before_limit`           | datetime | none                            | Optional upper cap. When `ts_after` reaches this value the source stops.          |
+| `parser`                    | string   | `"auto"`                        | Default response-body parser. Overridable per request via `requests[].parser`.    |
+| `min_request_interval`      | duration | none                            | Minimum delay between the start of consecutive requests (rate limiting).          |
+| `max_concurrency`           | usize    | `4`                             | Max requests fetched concurrently within one poll.                                |
+| `max_requests`              | u32      | `1000`                          | Hard budget on total requests issued per poll (runaway guard).                    |
+| `max_depth`                 | u32      | `50`                            | Max feedback-chain depth (recursion guard); bootstrap requests are depth 0.       |
+| `total_duration_of_retries` | duration | `"30s"`                         | Retry budget for transient HTTP failures.                                         |
+| `request_timeout`           | duration | `"30s"`                         | Per-request timeout (connect + response); a hung upstream can't stall the poll.   |
+| `on_status`                 | table    | see [below](#non-2xx-responses) | Behavior per non-2xx status code (`"404"`) or class (`"4xx"`).                    |
+| `log_errors`                | boolean  | `true`                          | Log a warning on non-2xx responses.                                               |
+| `headers_to_keep`           | array    | `[]`                            | Response header names (case-insensitive) forwarded into the pipeline.             |
+| `trusted_redirect_hosts`    | array    | `[]`                            | Glob patterns of hosts a cross-origin redirect may reach while keeping `headers`. |
+| `headers`                   | object   | `{}`                            | Static or secret headers added to every request.                                  |
+| `metadata`                  | object   | `{}`                            | Static metadata merged into every `EventSource`.                                  |
+| `user_agent`                | string   | `cdviz-collector/<version>`     | `User-Agent` header sent with every request.                                      |
 
 ## How It Works
 
@@ -358,6 +369,23 @@ A driver loop is bounded by three guards, all configurable:
 
 When `max_requests` or `max_depth` is reached the remaining work is dropped and logged; the poll still completes and the window advances.
 
+## Non-2xx Responses
+
+`on_status` maps a status — exact code (`"404"`) first, then class (`"4xx"`) — to a behavior:
+
+| Behavior | Effect                                                                                                   |
+| -------- | -------------------------------------------------------------------------------------------------------- |
+| `skip`   | Ignore the response; the time window advances.                                                           |
+| `hold`   | Keep the time window; the whole query sequence is retried next poll.                                     |
+| `retry`  | Retry this request with exponential backoff (up to `total_duration_of_retries`), then degrade to `hold`. |
+| `abort`  | Stop the source (loud signal for a misconfiguration).                                                    |
+
+Defaults: `401`/`403` → `abort`, `5xx` → `hold`, everything else → `skip`.
+
+```toml
+on_status = { "404" = "skip", "403" = "hold", "5xx" = "retry" }
+```
+
 ## Rate Limiting and Retry-After
 
 `cdviz-collector` automatically handles HTTP-level retry and redirect signals via the `RetryAfterMiddleware` built into every `http_polling` source:
@@ -377,7 +405,13 @@ Use `min_request_interval` to space out the start of consecutive requests (appli
 min_request_interval = "720ms"  # ≈ 83 req/min
 ```
 
-Automatic redirect following is disabled in the underlying HTTP client; all redirect and retry behaviour is managed by the middleware stack.
+When a response reports the rate-limit budget as spent (`x-ratelimit-remaining: 0`, e.g. GitHub), the source **pauses** until `x-ratelimit-reset` (capped at 1 hour) and re-queues the request, instead of failing or aborting. The pause survives across polls, so the API is not hammered every `polling_interval`.
+
+Automatic redirect following is disabled in the underlying HTTP client; all redirect and retry behaviour is managed by the middleware stack. On a **cross-origin** redirect, configured `headers` are dropped so credentials never reach another server (e.g. an API redirecting a download to blob storage). Allowlist trusted hosts to keep them; `https` → `http` is never trusted:
+
+```toml
+trusted_redirect_hosts = ["*.example.com"]
+```
 
 ## Header Authentication
 
