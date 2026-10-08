@@ -1,4 +1,4 @@
-cdviz-collector provides a configurable pipeline architecture that can receive events from various sources (webhooks, files, SSE), transform them using VRL or Handlebars, and send them to multiple destinations (HTTP endpoints, databases, files). It supports real-time event processing with CloudEvents format and CDEvents specification compliance.
+cdviz-collector provides a configurable pipeline architecture that can receive events from various sources (webhooks, files, SSE), transform them using VRL, and send them to multiple destinations (HTTP endpoints, databases, files). It supports real-time event processing with CloudEvents format and CDEvents specification compliance.
 
 Usage: cdviz-collector config [OPTIONS]
        cdviz-collector connect [OPTIONS]
@@ -49,10 +49,10 @@ Inspect or validate the resolved configuration
           Example: `--set sources.my-source.enabled=true`
 
       --print
-          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
+          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied. Secrets (tokens, passwords, DB URLs, ...) are redacted
 
       --print-raw
-          Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files
+          Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files. Unlike `--print`, this dumps the raw figment value, NOT the typed `Config` — secrets are NOT redacted here. Intended for debugging config merging only
 
       --check
           Validate the configuration by parsing it into the typed `Config` structure, and compile all transformer templates (including VRL) to catch runtime errors early

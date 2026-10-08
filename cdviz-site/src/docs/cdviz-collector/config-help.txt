@@ -39,10 +39,10 @@ Options:
           This affects relative paths in configuration files and data files. Useful when running the collector from a different location than where your configuration and data files are located.
 
       --print
-          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied
+          Print the resolved/consolidated configuration to stdout (TOML format), with `FileAdapter` and `RemoteFileAdapter` applied. Secrets (tokens, passwords, DB URLs, ...) are redacted
 
       --print-raw
-          Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files
+          Print merged config BEFORE `FileAdapter`/`RemoteFileAdapter` resolve paths and remote files. Unlike `--print`, this dumps the raw figment value, NOT the typed `Config` — secrets are NOT redacted here. Intended for debugging config merging only
 
       --check
           Validate the configuration by parsing it into the typed `Config` structure, and compile all transformer templates (including VRL) to catch runtime errors early
