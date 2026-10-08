@@ -35,7 +35,7 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
       - uses: docker/setup-buildx-action@v3
       - name: check changed files
-        uses: tj-actions/changed-files@v47
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47.0.0
         id: changed-files
         with:
           files: |
@@ -43,7 +43,7 @@ jobs:
       - name: log
         if: steps.changed-files.outputs.any_changed != 'true'
         run: echo "::notice ::no changed files on ${{ matrix.folder }} - skipping"
-      - uses: jdx/mise-action@v4
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         if: steps.changed-files.outputs.any_changed == 'true'
         with:
           install: false
@@ -59,3 +59,36 @@ jobs:
           mise run '//${{ matrix.folder }}:ci'
         if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
+
+  site:
+    # same build as pages.yml (deploy only on main), so deps updates are checked before merge
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: check changed files
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47.0.0
+        id: changed-files
+        with:
+          files: |
+            cdviz-site/**
+      - name: log
+        if: steps.changed-files.outputs.any_changed != 'true'
+        run: echo "::notice ::no changed files on cdviz-site - skipping"
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        if: steps.changed-files.outputs.any_changed == 'true'
+        with:
+          install: false
+          working_directory: ./cdviz-site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          mise run :install
+          mise run :build:site
+        if: steps.changed-files.outputs.any_changed == 'true'
+        working-directory: ./cdviz-site
+        shell: bash
+        env:
+          NODE_ENV: "production"

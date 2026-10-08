@@ -30,11 +30,6 @@
       automerge: true,
     },
     {
-      description: "No automerge where CI does not build: ci.yml has no cdviz-site job (pages.yml only builds after merge on main)",
-      matchFileNames: ["cdviz-site/**"],
-      automerge: false,
-    },
-    {
       description: "The renovate action holds the app token: review its updates (SHA pin is pointless if auto-updated)",
       matchPackageNames: ["renovatebot/github-action"],
       automerge: false,
