@@ -15,12 +15,11 @@ This is a **mise monorepo** with `monorepo_root = true` configuration. Component
 
 - **cdviz-db/**: PostgreSQL + TimescaleDB schema with golang-migrate migrations
 - **cdviz-grafana/**: TypeScript-based Grafana dashboard generator (Bun + Grafana Foundation SDK)
-- **cdviz-site/**: VitePress documentation site (Bun + TailwindCSS)
 - **charts/**: Helm charts for Kubernetes deployment (cdviz-collector, cdviz-db, cdviz-grafana)
 - **demos/**: Integration testing environments (Docker Compose & Kubernetes)
 - **cdevents-spec/**: Git submodule with CDEvents specification and conformance tests
 
-**Note**: [cdviz-collector](https://github.com/cdviz-dev/cdviz-collector) (event collection service) is a separate repository.
+**Note**: [cdviz-collector](https://github.com/cdviz-dev/cdviz-collector) (event collection service) and [cdviz-site](https://github.com/cdviz-dev/cdviz-site) (documentation site, cdviz.dev) are separate repositories.
 
 ### Task Execution Pattern
 
@@ -28,7 +27,7 @@ Run tasks from monorepo root using mise's path syntax:
 
 ```bash
 mise tasks --all                      # List all available tasks across components
-mise run //cdviz-site:dev             # Run task in specific component
+mise run //cdviz-grafana:build        # Run task in specific component
 mise run //cdviz-db:migrate:create    # Run nested task
 mise run '//...:ci'                   # Run :ci task in all components
 ```
@@ -42,7 +41,6 @@ Each component has detailed AGENTS.md with specialized guidance:
 
 - **[cdviz-db/AGENTS.md](cdviz-db/AGENTS.md)**: Database schema, golang-migrate migrations, TimescaleDB patterns
 - **[cdviz-grafana/AGENTS.md](cdviz-grafana/AGENTS.md)**: TypeScript dashboard generation, ECharts panels, query patterns
-- **[cdviz-site/AGENTS.md](cdviz-site/AGENTS.md)**: VitePress documentation, Vue components, content guidelines
 
 **When to use component-specific files**: If working primarily in one component (e.g., writing dashboards, updating docs, modifying schema), read that component's AGENTS.md for detailed patterns and workflows.
 
@@ -103,14 +101,6 @@ mise run //cdviz-grafana:build                      # Generate JSON dashboards
 git add cdviz-grafana/dashboards_generator/src cdviz-grafana/dashboards/*.json  # Commit both source and output
 ```
 
-#### Documentation Updates
-
-```bash
-mise run //cdviz-site:dev                           # Start dev server at http://localhost:5173
-# Edit markdown in cdviz-site/src/ or Vue components in cdviz-site/components/
-mise run //cdviz-site:build                         # Verify production build
-```
-
 #### Full Stack Integration Testing
 
 ```bash
@@ -143,13 +133,6 @@ mise run //demos/stack-k8s:up                       # Deploy via Helmwave
 - **Custom Panels**: Apache ECharts scripts via volkovlabs-echarts-panel in `src/panels/browser_scripts/`
 - **Versioning**: Auto-generated from git history or timestamp for dirty files
 
-#### Documentation Site (VitePress)
-
-- **Framework**: VitePress 2.x (alpha track, pinned manually) (Vue-based static site generator)
-- **Styling**: TailwindCSS 4.x with custom plugins
-- **Assets**: ImageMagick-based optimization pipeline
-- **Target**: DevOps engineers, tech leads, platform engineers
-
 ## Critical Constraints
 
 - **Schema Evolution**: All database changes via golang-migrate migrations (see cdviz-db/AGENTS.md)
@@ -157,6 +140,7 @@ mise run //demos/stack-k8s:up                       # Deploy via Helmwave
 - **Container-First**: All components designed for containerized deployment
 - **DCO Compliance**: All commits require `git commit -s` sign-off
 - **Generated Files**: Commit both source and generated output (TypeScript + JSON for dashboards)
+- **Docs Snippets**: cdviz-site copies `demos/stack-compose/docker-compose.yaml` (`#region database`), `cdviz-db/migrations/202601010000_baseline.up.sql` and `charts/cdviz-collector/values.yaml` from `main`: keep those paths and region markers stable
 
 ## Quick Command Reference
 
@@ -170,10 +154,6 @@ mise run '//...:ci'                   # Run CI in all components
 **Component tasks** (examples):
 
 ```bash
-# Documentation
-mise run //cdviz-site:dev             # Start dev server
-mise run //cdviz-site:build           # Production build
-
 # Dashboards
 mise run //cdviz-grafana:build        # Generate dashboards from TypeScript
 mise run //cdviz-grafana:ci           # Full CI pipeline
@@ -196,7 +176,7 @@ mise run //charts/cdviz-db:test          # Test chart in k8s cluster
 
 - **Project Overview & Architecture**: [README.md](README.md)
 - **Development Setup & Commands**: [CONTRIBUTING.md](CONTRIBUTING.md)
-- **Component-Specific Instructions**: [cdviz-db/AGENTS.md](cdviz-db/AGENTS.md), [cdviz-grafana/AGENTS.md](cdviz-grafana/AGENTS.md), [cdviz-site/AGENTS.md](cdviz-site/AGENTS.md)
+- **Component-Specific Instructions**: [cdviz-db/AGENTS.md](cdviz-db/AGENTS.md), [cdviz-grafana/AGENTS.md](cdviz-grafana/AGENTS.md)
 - **Architecture Decisions**: [adr/](adr/) directory
 - **Live Documentation**: [cdviz.dev](https://cdviz.dev)
 - **CDEvents Specification**: [cdevents-spec/](cdevents-spec/) (git submodule)

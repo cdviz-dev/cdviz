@@ -52,12 +52,7 @@
       groupName: "npm packages",
     },
     {
-      description: "vitepress: follow the 2.0.0-alpha track until 2.x is stable",
-      matchPackageNames: ["vitepress"],
-      ignoreUnstable: false,
-    },
-    {
-      description: "cdviz-collector: one PR for chart, docs and mise; ships in the chart (fix → patch release), reviewed manually",
+      description: "cdviz-collector: one PR for chart and mise; ships in the chart (fix → patch release), reviewed manually",
       matchPackageNames: ["cdviz-dev/cdviz-collector", "github:cdviz-dev/cdviz-collector", "ghcr.io/cdviz-dev/cdviz-collector"],
       groupName: "cdviz-collector",
       semanticCommitType: "fix",
@@ -81,15 +76,6 @@
     },
   ],
   customManagers: [
-    {
-      description: "cdviz-collector version shown in docs",
-      customType: "regex",
-      managerFilePatterns: ["/^cdviz-site/\\.vitepress/config\\.mts$/"],
-      matchStrings: ['const COLLECTOR_VERSION = "(?<currentValue>[^"]+)";'],
-      datasourceTemplate: "github-releases",
-      depNameTemplate: "cdviz-dev/cdviz-collector",
-      extractVersionTemplate: "^v?(?<version>.+)$",
-    },
     {
       description: "cdviz-executiontable-panel Grafana plugin (version repeated 3x in one URL-ish string)",
       customType: "regex",

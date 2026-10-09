@@ -7,7 +7,6 @@ config_roots = [
   "cdviz-db",
   "cdviz-grafana",
   "cdviz-grafana/dashboards_generator",
-  "cdviz-site",
   "charts",
   "charts/*",                           # Individual chart directories
   "demos",

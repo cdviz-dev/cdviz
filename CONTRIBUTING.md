@@ -65,7 +65,7 @@ mise run '//...:ci'
 2. **Component Development**: Each subdirectory has `.mise.toml` with specific tasks
 3. **Database Changes**: Use `mise run plan` in cdviz-db/ to create migrations
 4. **Dashboard Updates**: Modify TypeScript in `cdviz-grafana/dashboards_generator/src/`, then `mise run build`
-5. **Documentation**: Update VitePress content in `cdviz-site/src/`, then `mise run build`
+5. **Documentation**: lives in [cdviz-site](https://github.com/cdviz-dev/cdviz-site) (separate repository)
 6. **Testing**: Use `mise run ci` in each component for full CI pipeline
 7. **Local Stack**: Use `demos/` directory for full integration testing
 

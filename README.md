@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="cdviz-site/assets/logos/cdviz.svg" alt="CDviz" width="110">
+<img src="https://raw.githubusercontent.com/cdviz-dev/cdviz-site/main/assets/logos/cdviz.svg" alt="CDviz" width="110">
 
 # See every deploy, test, and incident on one timeline.
 
@@ -12,7 +12,7 @@ Connect GitHub, GitLab, Kubernetes, and more. Get DORA metrics, deployment timel
 
 [![GitHub stars](https://img.shields.io/github/stars/cdviz-dev/cdviz?style=flat-square&color=1a7f37)](https://github.com/cdviz-dev/cdviz) [![License](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](./LICENSE) [![CDEvents](https://img.shields.io/badge/CDEvents-compatible-8a2be2?style=flat-square)](https://cdevents.dev)
 
-[![CDviz DORA metrics dashboard — deployment frequency, lead time, time to restore, change failure rate](cdviz-site/assets/screenshots/grafana_dashboard_dora_metrics-20260222.png)](https://demo.cdviz.dev/grafana/d/dora_metrics/dora-metrics)
+[![CDviz DORA metrics dashboard — deployment frequency, lead time, time to restore, change failure rate](https://raw.githubusercontent.com/cdviz-dev/cdviz-site/main/assets/screenshots/grafana_dashboard_dora_metrics-20260222.png)](https://demo.cdviz.dev/grafana/d/dora_metrics/dora-metrics)
 
 <sup>Real dashboard, live data — <a href="https://demo.cdviz.dev/grafana/d/dora_metrics/dora-metrics">click to open this exact dashboard</a>. No signup.</sup>
 
@@ -70,7 +70,7 @@ Free forever, self-hosted, no lock-in. [Cloud](https://cdviz.dev/pricing) (€20
 - **[cdviz-collector](https://github.com/cdviz-dev/cdviz-collector)**: Event collection service that gathers events (CI, CD, test, artifacts, etc.) from multiple sources and forwards them to other components (PostgreSQL, third-party services, etc.) — _separate repository_
 - **cdviz-db**: PostgreSQL database with TimescaleDB extension and golang-migrate migrations for schema management
 - **cdviz-grafana**: Dashboard components with custom Grafana panels and dashboards for visualization
-- **cdviz-site**: Documentation website built with VitePress and Bun
+- **[cdviz-site](https://github.com/cdviz-dev/cdviz-site)**: Documentation website ([cdviz.dev](https://cdviz.dev)) built with VitePress and Bun — _separate repository_
 - **charts/**: Helm charts for Kubernetes deployment
 - **demos/**: Docker Compose and Kubernetes deployment examples
 
@@ -78,7 +78,7 @@ Free forever, self-hosted, no lock-in. [Cloud](https://cdviz.dev/pricing) (€20
 
 Events flow **Sources → cdviz-collector → Database → Dashboards**. Grafana connects directly to PostgreSQL rather than through an API layer, so you keep full SQL query power over your own data.
 
-![cdviz architecture](cdviz-site/components/diagrams/CdvizArchitecture.svg)
+![cdviz architecture](https://raw.githubusercontent.com/cdviz-dev/cdviz-site/main/components/diagrams/CdvizArchitecture.svg)
 
 ### Dashboards
 
