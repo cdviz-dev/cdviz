@@ -256,6 +256,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reformat code ([f114dc3](f114dc35738afff57b26f72f3d85aea145b8b87c))
 - Migrate from biome to dprint (yaml, md, json, ts, vue) ([0343c2e](0343c2e76e166f556258332ba5fb897d42911940))
 - Reformat ([9f6e809](9f6e809def39036a9d730c6075f9b4874c5d9b34))
+- Change the versionning policy (semver only) and the release flow ([130ce27](130ce274eeda71854d1b8be906bd14d28162710f))
 
 ### Fixed
 

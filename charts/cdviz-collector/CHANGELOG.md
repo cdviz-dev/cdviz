@@ -159,6 +159,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Change the versionning policy (semver only) and the release flow ([130ce27](130ce274eeda71854d1b8be906bd14d28162710f))
 - Update ghcr.io/cdviz-dev/cdviz-collector docker tag to v0.19.0 ([dd58b51](dd58b512881280c03831d4b1fa7391e0839e384c))
 - Update dependency kubectl to v1.35.0 (#329) ([d8817ab](d8817abd71ae7050e832a57dec7821826d2b1b53))
 - Update dependency kind to v0.31.0 (#328) ([b673990](b67399041ef4258e73e3d79aaff3ceca21d3b4fb))
