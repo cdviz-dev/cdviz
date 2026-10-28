@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "@grafana/grafana-foundation-sdk": "0.0.20",
+    "@grafana/grafana-foundation-sdk": "0.0.21",
     "dedent": "1.7.2"
   },
   "devDependencies": {
-    "@types/bun": "1.4.2"
+    "@types/bun": "1.4.4"
   },
   "module": "index.ts",
   "name": "dashboards-generator",
