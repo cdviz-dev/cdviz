@@ -6,8 +6,8 @@ PG_LOCAL_URL = "postgres://{{env.PG_LOCAL_USER}}:{{env.PG_LOCAL_PWD}}@127.0.0.1:
 [tools]
 # docker = "latest"
 "github:golang-migrate/migrate" = "4.20.1"
-"github:quarylabs/sqruff" = "0.40.0"
-"bun" = "1.4.2"
+"github:quarylabs/sqruff" = "0.43.0"
+"bun" = "1.4.4"
 
 [tasks."migrate:create"]
 description = "Create a new migration file (usage: mise run migrate:create name)"
