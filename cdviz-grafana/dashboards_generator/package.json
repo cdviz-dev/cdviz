@@ -9,7 +9,7 @@
   "module": "index.ts",
   "name": "dashboards-generator",
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3 || ^7.0.0"
   },
   "type": "module"
 }
