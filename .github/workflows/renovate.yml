@@ -38,7 +38,7 @@ jobs:
         with:
           persist-credentials: false
       # pinned by SHA: this step holds the app token (renovate keeps the digest updated)
-      - uses: renovatebot/github-action@44f24283a60f64273f1294932f16ba61193cccca # v46.1.0
+      - uses: renovatebot/github-action@266fef21329c44765ad42f9dea1f01f5d2d91084 # v46.3.13
         env:
           RENOVATE_REPOSITORIES: ${{ github.repository }}
           # Onboarding not needed for self hosted
