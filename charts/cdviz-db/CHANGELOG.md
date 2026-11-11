@@ -88,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update ghcr.io/cloudnative-pg/postgresql docker tag to v17.4 ([20d2ef6](20d2ef665bb930958a253bec9e3d01776eb84698))
 - Update ghcr.io/cdviz-dev/cdviz-db-migration docker tag to v0.20250306201500.0 ([9b6bbc3](9b6bbc3a46039cef6b4653134ccc2be72bb2e577))
 - Update ghcr.io/cdviz-dev/cdviz-db-migration docker tag to v0.20250607150000.0 ([d90b34f](d90b34f64838cdbd417344dee4c41f5ce8f5cda0))
+- Change the versionning policy (semver only) and the release flow ([130ce27](130ce274eeda71854d1b8be906bd14d28162710f))
 
 ### Fixed
 
