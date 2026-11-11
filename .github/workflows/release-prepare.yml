@@ -20,18 +20,18 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: get_token
         with:
           private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
           app-id: ${{ secrets.INTBOT_APP_ID }}
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Full history needed for git-cliff
           token: ${{ steps.get_token.outputs.token }}
       - name: Install mise
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@v5
         with:
           install: false
           experimental: true
