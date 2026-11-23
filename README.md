@@ -10,6 +10,8 @@ Connect GitHub, GitLab, Kubernetes, and more. Get DORA metrics, deployment timel
 
 [**▶ Try the live demo**](https://demo.cdviz.dev/grafana/) · [**Self-host it free**](https://cdviz.dev/docs) · [**CDviz Cloud — 14-day free trial**](https://cdviz.dev/cloud)
 
+[![Plumber Score](https://score.getplumber.io/github.com/cdviz-dev/cdviz.svg)](https://score.getplumber.io/github.com/cdviz-dev/cdviz)
+
 [![GitHub stars](https://img.shields.io/github/stars/cdviz-dev/cdviz?style=flat-square&color=1a7f37)](https://github.com/cdviz-dev/cdviz) [![License](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](./LICENSE) [![CDEvents](https://img.shields.io/badge/CDEvents-compatible-8a2be2?style=flat-square)](https://cdevents.dev)
 
 [![CDviz DORA metrics dashboard — deployment frequency, lead time, time to restore, change failure rate](https://raw.githubusercontent.com/cdviz-dev/cdviz-site/main/assets/screenshots/grafana_dashboard_dora_metrics-20260222.png)](https://demo.cdviz.dev/grafana/d/dora_metrics/dora-metrics)
