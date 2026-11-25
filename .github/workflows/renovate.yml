@@ -28,13 +28,13 @@ jobs:
     timeout-minutes: 30
     steps:
       # GitHub App token (not GITHUB_TOKEN) so renovate's PRs trigger CI workflows
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: get_token
         with:
           private-key: ${{ secrets.INTBOT_PRIVATE_KEY }}
           app-id: ${{ secrets.INTBOT_APP_ID }}
           repositories: ${{ github.event.repository.name }}
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       # pinned by SHA: this step holds the app token (renovate keeps the digest updated)
